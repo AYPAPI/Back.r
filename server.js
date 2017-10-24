@@ -21,6 +21,7 @@ function handleError(res, reason, message, code) {
 
 // API Endpoints 
 app.post("/createUser", function(req, res) {
+    res.setHeader('Content-Type', 'application/json');
     res.send({
         "user" : "test_user",
         "isMaker" : true,
