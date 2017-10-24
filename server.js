@@ -20,7 +20,7 @@ function handleError(res, reason, message, code) {
 }
 
 // API Endpoints 
-app.get("/createUser", function(req, res) {
+app.post("/createUser", function(req, res) {
     res.send({
         "user" : "test_user",
         "isMaker" : true,
