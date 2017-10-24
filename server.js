@@ -20,6 +20,8 @@ function handleError(res, reason, message, code) {
 }
 
 // API Endpoints 
+
+// POST request to create user
 app.post("/createUser", function(req, res) {
     res.setHeader('Content-Type', 'application/json');
     res.json({
@@ -34,7 +36,7 @@ app.post("/createUser", function(req, res) {
                 icon: true,
             },
             "backer" : {
-             longBio: "this is the maker long bio",  
+             longBio: "this is the backer long bio",  
                 photos: "",
                 icon: true,   
             }
