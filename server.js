@@ -3,6 +3,7 @@ var bodyParser = require("body-parser");
 
 var app = express();app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.json());
+app.use(bodyParser.urlencoded())
 
 app.get('/', function(req, res){
    res.send("Hello world!");
@@ -21,8 +22,13 @@ function handleError(res, reason, message, code) {
 
 // API Endpoints 
 
-// POST request to create user
 app.post("/createUser", function(req, res) {
+  console.log("Hello  " + req.body + '\n');
+  res.json(req.body);
+});
+
+// GET request to create user
+app.get("/createUser", function(req, res) {
     res.setHeader('Content-Type', 'application/json');
     res.json({
         "user" : "test_user",
@@ -41,5 +47,5 @@ app.post("/createUser", function(req, res) {
                 icon: true,   
             }
         }
-             });
+    });
 })
