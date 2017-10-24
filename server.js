@@ -22,7 +22,7 @@ function handleError(res, reason, message, code) {
 // API Endpoints 
 app.post("/createUser", function(req, res) {
     res.setHeader('Content-Type', 'application/json');
-    res.send({
+    res.json({
         "user" : "test_user",
         "isMaker" : true,
         "shortBio" : "this is the shorter bio.",
