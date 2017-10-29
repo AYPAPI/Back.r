@@ -13,7 +13,7 @@ const config = {
     ssl: true
 };
 const client = new pg.Client(config);
-var username = 'Nelson';
+var username = 'Brandon';
 var tablename = 'groupmembers';
 
 client.connect(err => {
