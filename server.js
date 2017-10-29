@@ -12,13 +12,8 @@ app.use(bodyParser.urlencoded());
 app.use('/', index);
 app.use('/user', user);
 
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
+// view engine setup (not going to be used)
 app.set('view engine', 'jade');
-
-// app.get('/', function(req, res){
-//    res.send("Hello world!");
-// });
 
 var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
@@ -38,26 +33,3 @@ app.post("/createUser", function(req, res) {
   console.log("Hello  " + req.body + '\n');
   res.json(req.body);
 });
-
-// GET request to get a test user
-// app.get("/createUser", function(req, res) {
-//     res.setHeader('Content-Type', 'application/json');
-//     res.json({
-//         "user" : "test_user",
-//         "isMaker" : true,
-//         "shortBio" : "this is the shorter bio.",
-//         "age" : 21,
-//         "profiles" : {
-//             "maker" : {
-//               longBio: "this is the maker long bio",  
-//                 photos: "",
-//                 icon: true,
-//             },
-//             "backer" : {
-//              longBio: "this is the backer long bio",  
-//                 photos: "",
-//                 icon: true,   
-//             }
-//         }
-//     });
-// })
