@@ -4,6 +4,10 @@ var router = express.Router();
 // POST request to create user 
 router.post("/", function(req, res) {
   console.log("Hello  " + req.body + '\n');
+  console.log(req.body + '\n');
+  console.log(req.body.name + '\n');
+  var name = req.body.name;
+  var age = req.body.age;
   res.json(req.body);
 });
 
