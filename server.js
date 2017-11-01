@@ -12,13 +12,8 @@ app.use(bodyParser.urlencoded());
 app.use('/', index);
 app.use('/user', user);
 
-// view engine setup
-// app.set('views', path.join(__dirname, 'views'));
+// view engine setup (not going to be used)
 app.set('view engine', 'jade');
-
-// app.get('/', function(req, res){
-//    res.send("Hello world!");
-// });
 
 var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;
