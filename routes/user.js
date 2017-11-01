@@ -3,11 +3,23 @@ var router = express.Router();
 
 // POST request to create user 
 router.post("/", function(req, res) {
-  console.log("Hello  " + req.body + '\n');
-  console.log(req.body + '\n');
-  console.log(req.body.name + '\n');
+//  console.log("Hello  " + req.body + '\n');
+//  console.log(req.body + '\n');
   var name = req.body.name;
   var age = req.body.age;
+  var isMaker = req.body.isMaker;
+  var shortBio = req.body.shortBio;
+    // Maker
+  var makerLongBio = req.body.profiles.maker.longBio;
+  var makerPhotos = req.body.profiles.maker.photos;
+  var makerIcon = req.body.profiles.maker.icon;
+    // Backer
+  var backerLongBio = req.body.profiles.backer.longBio;
+  var backerPhotos = req.body.profiles.backer.photos;
+  var backerIcon = req.body.profiles.backer.icon;
+    //comment
+
+    console.log(name + " is " + age);
   res.json(req.body);
 });
 
