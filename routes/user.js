@@ -1,6 +1,12 @@
 var express = require('express');
 var router = express.Router();
 
+// POST request to create user 
+router.post("/", function(req, res) {
+  console.log("Hello  " + req.body + '\n');
+  res.json(req.body);
+});
+
 router.get('/', function(req, res) {
 	res.setHeader('Content-Type', 'application/json');
     res.json({
