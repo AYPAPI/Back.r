@@ -25,9 +25,9 @@ router.post("/", function(req, res) {
   var backerPhotos = req.body.profiles.backer.photos;
   var backerIcon = req.body.profiles.backer.icon;
 
-  db.create(name,age,email,isMaker,"Users", database);
-  db.createProfile(makerLongBio,makerPhotos,makerIcon,email,"Maker", database)
-  db.createProfile(backerLongBio,backerPhotos,backerIcon,email,"Backer", database)
+  db.create(name,age,email,isMaker,"users", database);
+  db.createProfile(makerLongBio,makerPhotos,makerIcon,email,"maker", database)
+  db.createProfile(backerLongBio,backerPhotos,backerIcon,email,"backer", database)
   
 
   console.log(name + " is " + age);
@@ -36,7 +36,7 @@ router.post("/", function(req, res) {
   console.log(makerLongBio + " " + makerPhotos + " " + makerIcon);
   console.log(backerLongBio + " " + backerPhotos + " " + backerIcon);
   
-  db.addUser(req.body, database, "User");
+  db.addUser(req.body, database, 'Users');
   res.json(req.body);
 });
 

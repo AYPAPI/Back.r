@@ -2,20 +2,20 @@ const request = require('request');
 
 var test_user = {
 	"name":"vinay",
-	"age":"old",
+	"age": 21,
 	"email": "test@aypapi.com",
 	"isMaker":true,
 	"shortBio":"dumb dumb",
 	"profiles":{
 		"maker": {
 			"longBio":"I have a dumb idea for a project",
-			"photos":"url for pic",
-			"icon":true
+			"photos":["url for pic"],
+			"icons":[true]
 		},
 		"backer": {
 			"longBio":"I am a dumb investor, let me fund you",
-			"photos":"url for pic",
-			"icon":true
+			"photos":["url for pic"],
+			"icons":[true]
 		}
 	}
 }

@@ -51,9 +51,9 @@ module.exports.create = function (name,age,email,isMaker,tablename, client){
   })
 }
 //create the maker and backer profiles
-module.exports.createProfile = function (bio,photos,icon,email,tablename, client){
-  let query = 'INSERT INTO ' + tablename + ' (Bio,Photos,Icon,Email) values ($1,$2,$3,$4)';
-  client.query(query,[bio,photos,icon,email], function(err,res) {
+module.exports.createProfile = function (bio,photos,icons,email,tablename, client){
+  let query = 'INSERT INTO ' + tablename + ' (bio,photos,icons,email) values ($1,$2,$3,$4)';
+  client.query(query,[bio,photos,icons,email], function(err,res) {
     if (err) throw err;
     else{
       console.log('inserted ' + email + ' into Maker/Backer')
