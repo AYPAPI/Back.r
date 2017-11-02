@@ -25,22 +25,13 @@ var user_email = {
   email: "test@aypapi.com" 
 }
 
-// request.get('http://localhost:8080/user', function(e, res, body) {
-// 	console.log(res.body);
-// });
-
-// request.post('http://localhost:8080/user', test_user, function(e, res, body) {
-// 	console.log(res);
-// 	console.log(body);
-// 	console.log(res.body);
-// });
 request.post({
     url: url + "user",
     // method: "POST",
     json: true,   // <--Very important!!!
     body: test_user
 }, function(err, res, body) {
-	console.log(res.body);
+	console.log("POST response body  - " + res.body);
 });
 
 // Get user
@@ -49,17 +40,5 @@ request.get({
   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
   body: user_email
 }, function(err, res) {
-  console.log("BODY: " + res);
+  console.log("User's email is : " + res.body.email);
 });
-
-// request.post('http://localhost:8080/user/addNew', function(err, res, body) {
-// 	console.log(res);
-// });
-// console.log(res);
-// request.post({
-//   headers: {'content-type' : 'application/x-www-form-urlencoded'},
-//   url:     'http://localhost:8080/user',
-//   form:    {test_user}
-// }, function(error, response, body){
-//   console.log(body);
-// });

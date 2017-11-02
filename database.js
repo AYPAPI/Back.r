@@ -40,8 +40,9 @@ module.exports.addUser = function (username,client,tablename){
     }
   })
 }
+
 //create user profile
-module.exports.create = function (name,age,email,isMaker,tablename, client){
+module.exports.createUser = function (name,age,email,isMaker,tablename, client){
   let query = 'INSERT INTO ' + tablename + ' (name,age,email,ismaker) values ($1,$2,$3,$4)';
   client.query(query,[name,age,email,isMaker], function(err,res) {
     if (err) throw err;
@@ -50,8 +51,9 @@ module.exports.create = function (name,age,email,isMaker,tablename, client){
     }
   })
 }
+
 //create the maker and backer profiles
-module.exports.createProfile = function (bio,photos,icons,email,tablename, client){
+module.exports.createUserProfile = function (bio,photos,icons,email,tablename, client){
   let query = 'INSERT INTO ' + tablename + ' (bio,photos,icons,email) values ($1,$2,$3,$4)';
   client.query(query,[bio,photos,icons,email], function(err,res) {
     if (err) throw err;
@@ -60,8 +62,9 @@ module.exports.createProfile = function (bio,photos,icons,email,tablename, clien
     }
   })
 }
+
 //get user profile
-module.exports.getUser = function (email,tablename,client, callback) {
+module.exports.readUser = function (email,tablename,client, callback) {
 	let query = 'SELECT * FROM ' + tablename 
   client.query(query, function(err,res) {
     if (err) throw err;
@@ -78,11 +81,12 @@ module.exports.getUser = function (email,tablename,client, callback) {
 				
 			}
 		}
-        callback(obj);
+    callback(obj);
 	})	
 }
+
 //get maker/backer profile
-module.exports.getProfile = function (email,tablename,client) {
+module.exports.readUserProfile = function (email,tablename,client, callback) {
   let query = 'SELECT * FROM ' + tablename
     client.query(query, function(err,res) {
       if (err) throw err;
@@ -95,9 +99,9 @@ module.exports.getProfile = function (email,tablename,client) {
                       "photos":row.photos,
                       "icons":row.icons
                     }
-          return obj
         }
       }
+      callback(obj);
     })	
 }
 
