@@ -20,8 +20,9 @@ var test_user = {
 }
 
 request.post({
-        url: 'http://localhost:8080/user',
-         body: test_user
-         }, function(error, response, body){
-            console.log(body);
-    });
+  headers: {'content-type' : 'application/x-www-form-urlencoded'},
+  url:     'http://localhost:8080/user',
+  body:    test_user
+}, function(error, response, body){
+  console.log(body);
+});

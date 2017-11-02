@@ -1,4 +1,4 @@
-function connect(){
+module.exports.connect = function() {
   const pg = require('pg');
   const express = require('express');
   var app = express();
@@ -24,7 +24,7 @@ function connect(){
   return client;
 }
 
-function addUser(username,client,tablename){
+module.exports.addUser = function (username,client,tablename){
   let query = 'INSERT INTO ' + tablename + ' (Name) values ($1)';
   client.query(query,[username], function(err,res) {
     if (err) throw err;
@@ -34,4 +34,3 @@ function addUser(username,client,tablename){
   })
 }
 
-export { connect }; 
