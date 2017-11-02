@@ -34,5 +34,4 @@ function addUser(username,client,tablename){
   })
 }
 
-
-             
+export { connect }; 
