@@ -4,6 +4,7 @@ module.exports.connect = function() {
   var app = express();
   var username = 'backr@backr'
   var password = 'cse110$$$'
+  var tablename = 'groupmembers'
 
   const config = {
       host: 'backr.postgres.database.azure.com',

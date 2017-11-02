@@ -16,7 +16,7 @@ app.use('/user', user);
 // view engine setup (not going to be used)
 app.set('view engine', 'jade');
 
-var database = db.connect();
+global.database = db.connect();
 
 var server = app.listen(process.env.PORT || 8080, function () {
     var port = server.address().port;

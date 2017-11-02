@@ -1,5 +1,12 @@
 var express = require('express');
 var router = express.Router();
+var server = require('../server.js');
+var db = global.database;
+console.log("This is a global variable:" + global.something)
+
+router.post('/addNew', function(req, res) {
+ global.database.addUser("NAME", db, "groupmembers")
+});
 
 // POST request to create user 
 router.post("/", function(req, res) {
