@@ -41,8 +41,8 @@ module.exports.addUser = function (username,client,tablename){
   })
 }
 //create user profile
-module.exports.create = function (name,age,email,isMaker,tablename){
-  let query = 'INSERT INTO ' + tablename + ' (Name,Age,Email,isMaker) ($1,$2,$3,$4)';
+module.exports.create = function (name,age,email,isMaker,tablename, client){
+  let query = 'INSERT INTO ' + tablename + ' (Name,Age,Email,isMaker) values ($1,$2,$3,$4)';
   client.query(query,[name,age,email,isMaker], function(err,res) {
     if (err) throw err;
     else{
@@ -51,8 +51,8 @@ module.exports.create = function (name,age,email,isMaker,tablename){
   })
 }
 //create the maker and backer profiles
-module.exports.createProfile = function (bio,photos,icon,email,tablename){
-  let query = 'INSERT INTO ' + tablename + ' (Bio,Photos,Icon,Email) ($1,$2,$3,$4)';
+module.exports.createProfile = function (bio,photos,icon,email,tablename, client){
+  let query = 'INSERT INTO ' + tablename + ' (Bio,Photos,Icon,Email) values ($1,$2,$3,$4)';
   client.query(query,[bio,photos,icon,email], function(err,res) {
     if (err) throw err;
     else{

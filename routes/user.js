@@ -15,6 +15,7 @@ router.post("/", function(req, res) {
   var email = req.body.email;
   var isMaker = req.body.isMaker;
   var shortBio = req.body.shortBio;
+  console.log(name);
   // Maker
   var makerLongBio = req.body.profiles.maker.longBio;
   var makerPhotos = req.body.profiles.maker.photos;
@@ -24,9 +25,9 @@ router.post("/", function(req, res) {
   var backerPhotos = req.body.profiles.backer.photos;
   var backerIcon = req.body.profiles.backer.icon;
 
-  db.create(name,age,email,isMaker,"Users");
-  db.createProfile(makerLongBio,makerPhotos,makerIcon,email,"Maker")
-  db.createProfile(backerLongBio,backerPhotos,backerIcon,email,"Backer")
+  db.create(name,age,email,isMaker,"Users", database);
+  db.createProfile(makerLongBio,makerPhotos,makerIcon,email,"Maker", database)
+  db.createProfile(backerLongBio,backerPhotos,backerIcon,email,"Backer", database)
   
 
   console.log(name + " is " + age);
