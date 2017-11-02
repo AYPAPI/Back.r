@@ -46,10 +46,8 @@ router.get('/', function(req, res) {
   console.log(email)
   var user = db.getUser(email, 'users', database, function(user) {
     console.log("GOT USER: " + user.email)
-    res.setHeader('Content-Type', 'application/json');
-    res.json(user)
+    return user;
   }) // Call to database function
-  console.log("GOT USER: " + user)
 });
 
 //router.get('/', function(req, res) {

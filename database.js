@@ -74,10 +74,11 @@ module.exports.getUser = function (email,tablename,client, callback) {
 										"email":row.email,
 										"ismaker":row.ismaker
 									}
-        console.log("user is :" + obj.email);
-				callback(obj);
+
+				
 			}
 		}
+        callback(obj);
 	})	
 }
 //get maker/backer profile

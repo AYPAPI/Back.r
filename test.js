@@ -48,8 +48,8 @@ request.get({
   url: url + "user",
   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
   body: user_email
-}, function(err, res, body) {
-  console.log(res.body);
+}, function(err, res) {
+  console.log("BODY: " + res);
 });
 
 // request.post('http://localhost:8080/user/addNew', function(err, res, body) {
