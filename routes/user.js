@@ -5,7 +5,6 @@ var router = express.Router();
 var db = require("../database");
 
 router.post('/addNew', function(req, res) {
-  console.log(database)
   db.addUser("NAME", database, "groupmembers")
 });
 
@@ -24,16 +23,22 @@ router.post("/", function(req, res) {
   var backerLongBio = req.body.profiles.backer.longBio;
   var backerPhotos = req.body.profiles.backer.photos;
   var backerIcon = req.body.profiles.backer.icon;
+<<<<<<< HEAD
   //comment
   db.create(name,age,email,isMaker,"Users");
   db.createProfile(makerLongBio,makerPhotos,makerIcon,email,"Maker")
   db.createProfile(backerLongBio,backerPhotos,backerIcon,email,"Backer")
   
+=======
+
+>>>>>>> 8e1855dabe6b383ec495bb53f90af7bd206cc9d6
   console.log(name + " is " + age);
   console.log(isMaker);
   console.log("She is " + shortBio);
   console.log(makerLongBio + " " + makerPhotos + " " + makerIcon);
   console.log(backerLongBio + " " + backerPhotos + " " + backerIcon);
+  
+  db.addUser(req.body, database, "User");
   res.json(req.body);
 });
 
