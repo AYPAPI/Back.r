@@ -34,4 +34,5 @@ function addUser(username,client,tablename){
   })
 }
 
-export { connect }; 
+module.exports = { connect: connect, };
+
