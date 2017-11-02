@@ -40,3 +40,24 @@ module.exports.addUser = function (username,client,tablename){
     }
   })
 }
+//create user profile
+module.exports.create = function (name,age,email,isMaker,tablename){
+  let query = 'INSERT INTO ' + tablename + ' (Name,Age,Email,isMaker) ($1,$2,$3,$4)';
+  client.query(query,[name,age,email,isMaker], function(err,res) {
+    if (err) throw err;
+    else{
+      console.log('inserted ' + email + ' into database')
+    }
+  })
+}
+//create the maker and backer profiles
+module.exports.createProfile = function (bio,photos,icon,email,tablename){
+  let query = 'INSERT INTO ' + tablename + ' (Bio,Photos,Icon,Email) ($1,$2,$3,$4)';
+  client.query(query,[bio,photos,icon,email], function(err,res) {
+    if (err) throw err;
+    else{
+      console.log('inserted ' + email + ' into Maker/Backer')
+    }
+  })
+}
+

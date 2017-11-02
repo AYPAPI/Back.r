@@ -25,7 +25,10 @@ router.post("/", function(req, res) {
   var backerPhotos = req.body.profiles.backer.photos;
   var backerIcon = req.body.profiles.backer.icon;
   //comment
-
+  db.create(name,age,email,isMaker,"Users");
+  db.createProfile(makerLongBio,makerPhotos,makerIcon,email,"Maker")
+  db.createProfile(backerLongBio,backerPhotos,backerIcon,email,"Backer")
+  
   console.log(name + " is " + age);
   console.log(isMaker);
   console.log("She is " + shortBio);
