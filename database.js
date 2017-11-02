@@ -33,4 +33,3 @@ module.exports.addUser = function (username,client,tablename){
     }
   })
 }
-
