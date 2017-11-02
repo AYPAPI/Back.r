@@ -5,6 +5,7 @@ var router = express.Router();
 router.post("/", function(req, res) {
   var name = req.body.name;
   var age = req.body.age;
+  var email = req.body.email;
   var isMaker = req.body.isMaker;
   var shortBio = req.body.shortBio;
   // Maker
