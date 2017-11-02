@@ -62,13 +62,11 @@ module.exports.createProfile = function (bio,photos,icons,email,tablename, clien
 }
 //get user profile
 module.exports.getUser = function (email,tablename,client) {
-	let query = 'SELECT * FROM ' + tablename
-  client.query(query, function(err,rows,fields) {
+	let query = 'SELECT * FROM ' + tablename 
+  client.query(query, function(err,res) {
+    rows = res.rows;
     if (err) throw err;
-    console.log("FIELDS: "+fields)
-    console.log("ROWS: "+ rows.length)
 		for (var i = 0; i < rows.length; i++){
-          console.log("NAME: "+ rows[i].name)
 			if (rows[i].email === email){
 				var row = rows[i]
 				var obj = { "name":row.name,
@@ -76,6 +74,7 @@ module.exports.getUser = function (email,tablename,client) {
 										"email":row.email,
 										"ismaker":row.ismaker
 									}
+        console.log("user is :" + obj.email);
 				return obj
 			}
 		}
