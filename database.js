@@ -64,8 +64,8 @@ module.exports.createProfile = function (bio,photos,icons,email,tablename, clien
 module.exports.getUser = function (email,tablename,client) {
 	let query = 'SELECT * FROM ' + tablename 
   client.query(query, function(err,res) {
-    rows = res.rows;
     if (err) throw err;
+    rows = res.rows;
 		for (var i = 0; i < rows.length; i++){
 			if (rows[i].email === email){
 				var row = rows[i]
@@ -83,7 +83,9 @@ module.exports.getUser = function (email,tablename,client) {
 //get maker/backer profile
 module.exports.getProfile = function (email,tablename,client) {
   let query = 'SELECT * FROM ' + tablename
-    client.query(query, function(err,rows,fields) {
+    client.query(query, function(err,res) {
+      if (err) throw err;
+      rows = res.rows
       for (var i = 0; i < rows.length; i++){
         if (rows[i].email === email){
           var row = rows[i]
