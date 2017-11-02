@@ -5,7 +5,6 @@ var router = express.Router();
 var db = require("../database");
 
 router.post('/addNew', function(req, res) {
-  console.log(database)
   db.addUser("NAME", database, "groupmembers")
 });
 
