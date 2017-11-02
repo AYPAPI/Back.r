@@ -1,3 +1,8 @@
+// This file contains databse functions.
+// All functions will be in the form of: module.exports.[function_name]
+// so they can be accessed from outside the file.
+
+// Connect to the remote database
 module.exports.connect = function() {
   const pg = require('pg');
   const express = require('express');
@@ -25,6 +30,7 @@ module.exports.connect = function() {
   return client;
 }
 
+// Create a user in the database
 module.exports.addUser = function (username,client,tablename){
   let query = 'INSERT INTO ' + tablename + ' (Name) values ($1)';
   client.query(query,[username], function(err,res) {
