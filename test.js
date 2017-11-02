@@ -19,10 +19,15 @@ var test_user = {
 	}
 }
 
-request.post({
-  headers: {'content-type' : 'application/x-www-form-urlencoded'},
-  url:     'http://localhost:8080/user',
-  body:    test_user
-}, function(error, response, body){
-  console.log(body);
-});
+var res = request.get({
+	headers: {'content-type' : 'application/x-www-form-urlencoded'},
+	url:     'http://localhost:8080/user'}
+);
+console.log(res);
+// request.post({
+//   headers: {'content-type' : 'application/x-www-form-urlencoded'},
+//   url:     'http://localhost:8080/user',
+//   form:    {test_user}
+// }, function(error, response, body){
+//   console.log(body);
+// });
