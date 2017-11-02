@@ -3,23 +3,25 @@ var router = express.Router();
 
 // POST request to create user 
 router.post("/", function(req, res) {
-//  console.log("Hello  " + req.body + '\n');
-//  console.log(req.body + '\n');
   var name = req.body.name;
   var age = req.body.age;
   var isMaker = req.body.isMaker;
   var shortBio = req.body.shortBio;
-    // Maker
+  // Maker
   var makerLongBio = req.body.profiles.maker.longBio;
   var makerPhotos = req.body.profiles.maker.photos;
   var makerIcon = req.body.profiles.maker.icon;
-    // Backer
+  // Backer
   var backerLongBio = req.body.profiles.backer.longBio;
   var backerPhotos = req.body.profiles.backer.photos;
   var backerIcon = req.body.profiles.backer.icon;
-    //comment
+  //comment
 
-    console.log(name + " is " + age);
+  console.log(name + " is " + age);
+  console.log(isMaker);
+  console.log("She is " + shortBio);
+  console.log(makerLongBio + " " + makerPhotos + " " + makerIcon);
+  console.log(backerLongBio + " " + backerPhotos + " " + backerIcon);
   res.json(req.body);
 });
 
@@ -33,13 +35,13 @@ router.get('/', function(req, res) {
         "profiles" : {
             "maker" : {
               longBio: "this is the maker long bio",  
-                photos: "",
-                icon: true,
+              photos: "",
+              icon: true,
             },
             "backer" : {
-             longBio: "this is the backer long bio",  
-                photos: "",
-                icon: true,   
+              longBio: "this is the backer long bio",  
+              photos: "",
+              icon: true,   
             }
         }
     });
