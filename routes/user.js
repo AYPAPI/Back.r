@@ -44,9 +44,12 @@ router.post("/", function(req, res) {
 router.get('/', function(req, res) {
   var email = req.body.email
   console.log(email)
-  var user = db.getUser(email, 'users', database) // Call to database function
+  var user = db.getUser(email, 'users', database, function(user) {
+    console.log("GOT USER: " + user.email)
+    res.setHeader('Content-Type', 'application/json');
+    res.json(user)
+  }) // Call to database function
   console.log("GOT USER: " + user)
-  res.json(user);
 });
 
 //router.get('/', function(req, res) {

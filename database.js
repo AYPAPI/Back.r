@@ -61,7 +61,7 @@ module.exports.createProfile = function (bio,photos,icons,email,tablename, clien
   })
 }
 //get user profile
-module.exports.getUser = function (email,tablename,client) {
+module.exports.getUser = function (email,tablename,client, callback) {
 	let query = 'SELECT * FROM ' + tablename 
   client.query(query, function(err,res) {
     rows = res.rows;
@@ -75,7 +75,7 @@ module.exports.getUser = function (email,tablename,client) {
 										"ismaker":row.ismaker
 									}
         console.log("user is :" + obj.email);
-				return obj
+				callback(obj);
 			}
 		}
 	})	
