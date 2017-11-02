@@ -72,13 +72,12 @@ module.exports.readUser = function (email,tablename,client, callback) {
 		for (var i = 0; i < rows.length; i++){
 			if (rows[i].email === email){
 				var row = rows[i]
-				var obj = { "name":row.name,
-										"age":row.age,
-										"email":row.email,
-										"ismaker":row.ismaker
-									}
-
-				
+				var obj = { 
+          "name":row.name,
+					"age":row.age,
+					"email":row.email,
+					"ismaker":row.ismaker
+				}
 			}
 		}
     callback(obj);
@@ -94,11 +93,12 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
       for (var i = 0; i < rows.length; i++){
         if (rows[i].email === email){
           var row = rows[i]
-          var obj = { "bio":row.bio,
-                      "email":row.email,
-                      "photos":row.photos,
-                      "icons":row.icons
-                    }
+          var obj = { 
+            "bio":row.bio,
+            "email":row.email,
+            "photos":row.photos,
+            "icons":row.icons
+          }
         }
       }
       callback(obj);
