@@ -40,26 +40,35 @@ router.post("/", function(req, res) {
   res.json(req.body);
 });
 
+// Get user
 router.get('/', function(req, res) {
-	res.setHeader('Content-Type', 'application/json');
-    res.json({
-        "user" : "test_user",
-        "isMaker" : true,
-        "shortBio" : "this is the shorter bio.",
-        "age" : 21,
-        "profiles" : {
-            "maker" : {
-              longBio: "this is the maker long bio",  
-              photos: "",
-              icon: true,
-            },
-            "backer" : {
-              longBio: "this is the backer long bio",  
-              photos: "",
-              icon: true,   
-            }
-        }
-    });
+  var email = req.body.email
+  console.log(email)
+  var user = db.getUser(email, 'users', database) // Call to database function
+  console.log("GOT USER: " + user)
+  res.json(user);
 });
+
+//router.get('/', function(req, res) {
+//	res.setHeader('Content-Type', 'application/json');
+//    res.json({
+//        "user" : "test_user",
+//        "isMaker" : true,
+//        "shortBio" : "this is the shorter bio.",
+//        "age" : 21,
+//        "profiles" : {
+//            "maker" : {
+//              longBio: "this is the maker long bio",  
+//              photos: "",
+//              icon: true,
+//            },
+//            "backer" : {
+//              longBio: "this is the backer long bio",  
+//              photos: "",
+//              icon: true,   
+//            }
+//        }
+//    });
+//});
 
 module.exports = router;
