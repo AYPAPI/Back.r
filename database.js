@@ -42,7 +42,7 @@ module.exports.addUser = function (username,client,tablename){
 }
 //create user profile
 module.exports.create = function (name,age,email,isMaker,tablename, client){
-  let query = 'INSERT INTO ' + tablename + ' (Name,Age,Email,isMaker) values ($1,$2,$3,$4)';
+  let query = 'INSERT INTO ' + tablename + ' (name,age,email,ismaker) values ($1,$2,$3,$4)';
   client.query(query,[name,age,email,isMaker], function(err,res) {
     if (err) throw err;
     else{
@@ -60,4 +60,40 @@ module.exports.createProfile = function (bio,photos,icons,email,tablename, clien
     }
   })
 }
+//get user profile
+module.exports.getUser = function (email,tablename,client) {
+	let query = 'SELECT * FROM ' + tablename
+  client.query(query, function(err,rows,fields) {
+		for (var i = 0; i < rows.length; i++){
+			if (rows[i].email === email){
+				var row = rows[i]
+				var obj = { "name":row.name,
+										"age":row.age,
+										"email":row.email,
+										"ismaker":row.ismaker
+									}
+				return obj
+			}
+		}
+	})	
+}
+//get maker/backer profile
+module.exports.getProfile = function (email,tablename,client) {
+  let query = 'SELECT * FROM ' + tablename
+    client.query(query, function(err,rows,fields) {
+      for (var i = 0; i < rows.length; i++){
+        if (rows[i].email === email){
+          var row = rows[i]
+          var obj = { "bio":row.bio,
+                      "email":row.email,
+                      "photos":row.photos,
+                      "icons":row.icons
+                    }
+          return obj
+        }
+      }
+    })	
+}
+
+
 
