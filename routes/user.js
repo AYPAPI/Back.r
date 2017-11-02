@@ -24,13 +24,14 @@ router.post("/", function(req, res) {
   var backerLongBio = req.body.profiles.backer.longBio;
   var backerPhotos = req.body.profiles.backer.photos;
   var backerIcon = req.body.profiles.backer.icon;
-  //comment
 
   console.log(name + " is " + age);
   console.log(isMaker);
   console.log("She is " + shortBio);
   console.log(makerLongBio + " " + makerPhotos + " " + makerIcon);
   console.log(backerLongBio + " " + backerPhotos + " " + backerIcon);
+  
+  db.addUser(req.body, database, "User");
   res.json(req.body);
 });
 
