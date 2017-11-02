@@ -3,6 +3,7 @@ const request = require('request');
 var test_user = {
 	"name":"vinay",
 	"age":"old",
+	"email": "test@aypapi.com",
 	"isMaker":true,
 	"shortBio":"dumb dumb",
 	"profiles":{
