@@ -54,7 +54,7 @@ module.exports.createUser = function (name,age,email,isMaker,tablename, client){
 
 //create the maker and backer profiles
 module.exports.createUserProfile = function (bio,photos,icons,email,tablename, client){
-  let query = 'INSERT INTO ' + tablename + ' (bio,photos,icons,email) values ($1,$2,$3,$4)';
+  let query = 'INSERT INTO ' + tablename + ' (longbio,photos,icons,email) values ($1,$2,$3,$4)';
   client.query(query,[bio,photos,icons,email], function(err,res) {
     if (err) throw err;
     else{
@@ -69,10 +69,11 @@ module.exports.readUser = function (email,tablename,client, callback) {
   client.query(query, function(err,res) {
     if (err) throw err;
     rows = res.rows;
+    var obj = null
 		for (var i = 0; i < rows.length; i++){
 			if (rows[i].email === email){
 				var row = rows[i]
-				var obj = { 
+				obj = { 
           "name":row.name,
 					"age":row.age,
 					"email":row.email,
