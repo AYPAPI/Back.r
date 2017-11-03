@@ -43,24 +43,44 @@ module.exports.addUser = function (username,client,tablename){
 
 //create user profile
 module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,client){
-  let query = 'INSERT INTO ' + tablename + ' (name,age,email,ismaker,shortbio) values ($1,$2,$3,$4,$5)';
-  client.query(query,[name,age,email,isMaker,shortbio], function(err,res) {
-    if (err) throw err;
-    else{
-      console.log('inserted ' + email + ' into database')
+  let check = 'SELECT email FROM ' + tablename
+  client.query(check, function(err,res) {
+    rows = res.rows
+    for (var i = 0; i < rows.length; i++){
+      if (rows[i]['email'] === email){
+        console.log('user already in database')
+        return
+      }
     }
-  })
+    let query = 'INSERT INTO ' + tablename + ' (name,age,email,ismaker,shortbio) values ($1,$2,$3,$4,$5)';
+    client.query(query,[name,age,email,isMaker,shortbio], function(err,res) {
+      if (err) throw err;
+      else{
+        console.log('inserted ' + email + ' into database')
+      }
+    })
+  })  
 }
 
 //create the maker and backer profiles
 module.exports.createUserProfile = function (longbio,photos,icons,email,tablename, client){
-  let query = 'INSERT INTO ' + tablename + ' (longbio,photos,icons,email) values ($1,$2,$3,$4)';
-  client.query(query,[longbio,photos,icons,email], function(err,res) {
-    if (err) throw err;
-    else{
-      console.log('inserted ' + email + ' into Maker/Backer')
+  let check = 'SELECT email FROM ' + tablename
+  client.query(check, function(err,res) {
+    rows = res.rows
+    for (var i = 0; i < rows.length; i++){
+      if (rows[i]['email'] === email){
+        console.log('user already in database')
+        return
+      }
     }
-  })
+    let query = 'INSERT INTO ' + tablename + ' (longbio,photos,icons,email) values ($1,$2,$3,$4)';
+    client.query(query,[longbio,photos,icons,email], function(err,res) {
+      if (err) throw err;
+      else{
+        console.log('inserted ' + email + ' into Maker/Backer')
+      }
+    })
+  })  
 }
 
 //get user profile
@@ -95,7 +115,7 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
         if (rows[i].email === email){
           var row = rows[i]
           var obj = { 
-            "bio":row.bio,
+            "bio":row.longbio,
             "email":row.email,
             "photos":row.photos,
             "icons":row.icons
