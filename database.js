@@ -97,7 +97,7 @@ module.exports.readUser = function (email,tablename,client, callback) {
 					"age":row.age,
 					"email":row.email,
 					"ismaker":row.ismaker,
-          "shortbio":row.shorbio
+          "shortbio":row.shortbio
 				}
 			}
 		}
@@ -115,7 +115,7 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
         if (rows[i].email === email){
           var row = rows[i]
           var obj = { 
-            "bio":row.longbio,
+            "longbio":row.longbio,
             "email":row.email,
             "photos":row.photos,
             "icons":row.icons
