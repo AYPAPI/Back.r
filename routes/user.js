@@ -25,7 +25,7 @@ router.post("/", function(req, res) {
   var backerPhotos = req.body.profiles.backer.photos
   var backerIcon = req.body.profiles.backer.icons
 
-  db.createUser(name,age,email,isMaker,"users", database);
+  db.createUser(name,age,email,isMaker,shortBio,"users", database);
   db.createUserProfile(makerLongBio,makerPhotos,makerIcon,email,"maker", database)
   db.createUserProfile(backerLongBio,backerPhotos,backerIcon,email,"backer", database)
   

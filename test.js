@@ -40,5 +40,7 @@ request.get({
   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
   body: user_email
 }, function(err, res) {
-  console.log("User's email is : " + res.body.email);
+  if (res !== null){
+    console.log("User's email is : " + res.body.email);
+  }
 });
