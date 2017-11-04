@@ -21,8 +21,8 @@ var test_user = {
 	}
 }
 
-var user_email = { 
-  email: "test@aypapi.com" 
+var user_email = {
+  email: "test@aypapi.com"
 }
 
 request.post({
@@ -44,3 +44,33 @@ request.get({
     console.log("User's email is : " + res.body.email);
   }
 });
+
+//////////////////////////SETTINGS/////////////////////
+var test_settings = {
+	"location":'w',
+	"isVisible":true,
+	"newMatchNotif":true,
+	"messageNotif":false
+	"blockedUsers":["David@leaveMeAlone.aol", "Abena.lol@gmail.com", "Vylana@me.com", "Gary@professionalism.com"]
+}
+
+request.post({
+    url: url + "settings/user",
+    // method: "POST",
+    json: true,   // <--Very important!!!
+    body: test_settings
+}, function(err, res, body) {
+	console.log("POST response body  - " + res.body);
+});
+
+// Get user
+request.get({
+  url: url + "settings/user",
+  json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
+  body: user_email
+}, function(err, res) {
+  if (res !== null){
+    console.log("User's settings are : " + res.body); //unsure if it should be res.body or something else?
+  }
+});
+///////////////////////////////////////////////////////

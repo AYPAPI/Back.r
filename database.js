@@ -13,7 +13,7 @@ module.exports.connect = function() {
 
   const config = {
       host: 'backr.postgres.database.azure.com',
-      user: username,     
+      user: username,
       password: password,
       database: 'postgres',
       port: 5432,
@@ -59,7 +59,7 @@ module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,
         console.log('inserted ' + email + ' into database')
       }
     })
-  })  
+  })
 }
 
 //create the maker and backer profiles
@@ -80,19 +80,19 @@ module.exports.createUserProfile = function (longbio,photos,icons,email,tablenam
         console.log('inserted ' + email + ' into Maker/Backer')
       }
     })
-  })  
+  })
 }
 
 //get user profile
 module.exports.readUser = function (email,tablename,client, callback) {
-	let query = 'SELECT * FROM ' + tablename 
+	let query = 'SELECT * FROM ' + tablename
   client.query(query, function(err,res) {
     if (err) throw err;
     rows = res.rows;
 		for (var i = 0; i < rows.length; i++){
 			if (rows[i].email === email){
 				var row = rows[i]
-				var obj = { 
+				var obj = {
           "name":row.name,
 					"age":row.age,
 					"email":row.email,
@@ -102,7 +102,7 @@ module.exports.readUser = function (email,tablename,client, callback) {
 			}
 		}
     callback(obj);
-	})	
+	})
 }
 
 //get maker/backer profile
@@ -114,7 +114,7 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
       for (var i = 0; i < rows.length; i++){
         if (rows[i].email === email){
           var row = rows[i]
-          var obj = { 
+          var obj = {
             "bio":row.longbio,
             "email":row.email,
             "photos":row.photos,
@@ -123,8 +123,49 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
         }
       }
       callback(obj);
-    })	
+    })
 }
 
+//////////SETTINGS/////////////////////////
+module.exports.updateSettings = function(location, isVisible, newMatchNotif, messageNotif, blockedUsers) {
+  let query = 'SET * FROM ' + tablename   //unsure about SQL syntax
+    client.query(query, function(err,res) {
+      if (err) throw err;
+      rows = res.rows
+      for (var i = 0; i < rows.length; i++){
+        if (rows[i].email === email){
+          var row = rows[i]
+          var obj = {
+            "location":row.location,
+            "isVisible":row.isVisible,
+            "newMatchNotif":row.newMatchNotif,
+            "messageNotif":row.messageNotif,
+            "blockedUsers":row.blockedUsers,
+          }
+        }
+      }
+      callback(obj);
+    })
+}
 
-
+module.exports.readSettings = function (location, isVisible, newMatchNotif, messageNotif, blockedUsers) {
+	let query = 'SELECT * FROM ' + tablename
+  client.query(query, function(err,res) {
+    if (err) throw err;
+    rows = res.rows;
+		for (var i = 0; i < rows.length; i++){
+			if (rows[i].email === email){
+				var row = rows[i]
+				var obj = {
+          "location":row.location,
+          "isVisible":row.isVisible,
+          "newMatchNotif":row.newMatchNotif,
+          "messageNotif":row.messageNotif,
+          "blockedUsers":row.blockedUsers,
+				}
+			}
+		}
+    callback(obj);
+	})
+}
+//////////////////////////////////////////

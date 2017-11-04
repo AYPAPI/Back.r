@@ -28,7 +28,7 @@ router.post("/", function(req, res) {
   db.createUser(name,age,email,isMaker,shortBio,"users", database);
   db.createUserProfile(makerLongBio,makerPhotos,makerIcon,email,"maker", database)
   db.createUserProfile(backerLongBio,backerPhotos,backerIcon,email,"backer", database)
-  
+
   res.json(req.body);
 });
 
@@ -41,4 +41,29 @@ router.get('/', function(req, res) {
   })
 });
 
+//////////////////SETTTINGS////////////////////////
+router.post("/settings", function(req, res) {
+
+  var location = req.body.location;
+  var isVisible = req.body.isVisible;
+  var newMatchNotif = req.body.newMatchNotif;
+  var messageNotif = req.body.messageNotif;
+  var blockedUsers = req.body.blockedUsers;
+  // do we need one for log out?
+  // do we need one for delete account?
+  // do we need one for blocked user list?
+
+  db.updateSettings(location, isVisible, newMatchNotif,messageNotif, blockedUsers)
+  res.json(req.body);
+});
+
+router.get('/settings', function(req, res) {
+  var email = req.body.email
+  var settings = db.readSettings(email, 'users', database, function(user) {
+    if (settings != null) console.log("GOT settings from: " + user.email)
+    res.json(settings);
+  })
+});
+
+//////////////////////////////////////////////////
 module.exports = router;

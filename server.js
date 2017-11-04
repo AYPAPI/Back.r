@@ -18,6 +18,10 @@ app.use(bodyParser.urlencoded());
 app.use('/', index);
 app.use('/user', user);
 
+//////////////////////SETTINGS////////////////
+app.use('/settings', settings);
+/////////////////////////////////////////////
+
 // view engine setup (not going to be used)
 app.set('view engine', 'jade');
 
