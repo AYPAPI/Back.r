@@ -41,4 +41,13 @@ router.get('/', function(req, res) {
   })
 });
 
+// GET request to read maker from database
+router.get('/maker', function(req, res) {
+  var email = req.body.email
+  var user = db.readUserProfile(email, 'maker', database, function(user) {
+    if (user != null) console.log("GOT MAKER USER: " + user.email)
+    res.json(user);
+  })
+});
+
 module.exports = router;
