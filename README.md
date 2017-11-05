@@ -1,1 +1,28 @@
-# Spendr
+# back.r
+
+back.r is a software engineering class project built by 11 students at the University of California, San Diego.
+
+## the team
+* David Owens - Project Manager
+* Vylana Trang - Business Analyst
+* Eric Yuan - Senior Systems Analyst
+* Nicole Ekiss - Quality Assurance Lead
+* Vinnie Chen - Software Development Lead
+* Brandon Paw - Software Architect Lead
+* Andrew Ho - Database Specialist
+* Sarah Gemperle - Software Architect
+* Abena Bonsu - User Interface Specialist
+* Allison Reiss - User Interface Specialist
+* Grace Flusche - Algorithms Specialist
+
+## about the app
+back.r is based around the concept of an “Idea”, defined simply as any project, creation, or interesting problem that a user is currently working on. Ideas can be published to back.r regardless of their current progress; an abstract thought or a nearly finished project are both acceptable. back.r helps connect people who are pitching their own Idea to those looking to contribute to Ideas. It does this primarily through distinguishing users into two different modes: Backers and Makers. Makers are the owners of the Ideas; they can post their Idea and list which “needs” apply to them. These needs can be (but aren’t limited to) any of the following: money, team members, expertise advice, or materials. On the other end, Backers are people interested in collaborating with Makers on their Ideas. They provide assistance by helping with any needs detailed within the description of the Maker's Idea. Makers can search and find others interested in collaborating with them through a filtration system. This filtering happens based on the Maker’s needs and topics. Conversely, Backers can use these filters to find Ideas that need what they’re willing to contribute. In this way, back.r is an app that truly transforms the collaboration process. Its many features and functions will work together in order to connect a diverse set of users to a common goal — to build, grow and create together. The three primary ways in which users will be able to work together function through the following components: switching modes, matching users, and messaging users.
+
+Switching modes within the app allows a user to toggle between being a Backer or a Maker. This implies that any user can be both a Backer and a Maker--however the user’s view of the app will change depending on which mode they are currently on. Switching modes is done with the click of a button on either the explore page or the match list page. On the explore page, users in “Backer Mode” can view new Ideas while users in “Maker Mode” can view a variety of Backers who may be interested in their Idea. On the match list page, users in “Backer Mode” are able to see all of the Ideas they have matched with. Similarly, users in “Maker Mode” will be able to see all of the Backers who have expressed interest in their Idea. We envision a platform where users are able to present their own ideas, projects and problems while also being able to easily participate as Backers to other user’s Ideas. Mode switching serves to seamlessly allow for both. However, mode switching is only one way to facilitate a vibrant and active user community. In order for this community to thrive, we need a good way to promote user discovery. 
+
+Matching users is an idea inspired by popular dating apps such as “Tinder” and “Bumble”. Essentially, Backers will be able to view potential Ideas (associated with a particular maker) and swipe left or right, indicating either a “no” or “yes” for whether they want a Maker as a potential collaborator. Backers will view Ideas in a similar way, with the same swiping mechanism used to indicate whether they are interested in working on an Idea. If a Backer and a Maker swipe right on each other, then we have a match! Each is notified of the match and connected via back.r. Once users have expressed interest in each others’ skills and Ideas, back.r leaves it up to the users to decide how they wish to collaborate. This feature is not only a fun and intuitive mechanism for discovering other Backers and Makers, but also a vital defense to filter out spammers that users are not interested in working with. 
+
+Messaging users is the key component to the collaboration aspect of this app, allowing an open connection and forum for the Backer and the Maker to communicate. Upon matching, a blank conversation thread will appear in both the Maker’s and Backer’s match lists. From this thread, users will be able to send each other messages, and also review each other's profiles and Ideas. This means that a user can only message another user if they have both swiped yes on each other, a key feature of back.r. Furthermore, the user can view and filter through all of their conversations with other people as well, allowing them to be able to communicate with a limitless amount of matched Backers or Idea Makers. By uniting Makers with their Ideas to Backers who are passionate about contributing, we are able to develop an active community of innovators.
+
+In our modern society, where people are more connected than ever through technology and social media, back.r is a tool that utilizes the power of connection in order to fuel people’s passion projects into tangible ideas. With these multi-purpose, smart-matching, and social features, we focus on being able to create a network of people, unrestrained by distance, to work together in a mutually beneficial manner. Users would then be able to crowdsource to a whole new world and demographic of people, unhampered by the needs that couldn’t be fulfilled by their location. In this way, our app would spur a whole new generation of creativity and innovation without any restraint, igniting ideas.
+

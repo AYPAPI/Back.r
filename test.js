@@ -59,3 +59,17 @@ request.get({
   }
 });
 
+// Get Backer test
+request.get({
+  url: url + "user/backer",
+  json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
+  body: user_email
+}, function(err, res) {
+  if (res !== null){
+    console.log("User's email is : " + res.body.email);
+    console.log("User's long bio is : " + res.body.longbio);
+    console.log(res.body.photos);
+    console.log(res.body.icons);
+
+  }
+});

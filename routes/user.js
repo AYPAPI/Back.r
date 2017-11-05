@@ -25,7 +25,7 @@ router.post("/", function(req, res) {
   var backerPhotos = req.body.profiles.backer.photos
   var backerIcon = req.body.profiles.backer.icons
 
-  db.createUser(name,age,email,isMaker,"users", database);
+  db.createUser(name,age,email,isMaker,shortBio,"users", database);
   db.createUserProfile(makerLongBio,makerPhotos,makerIcon,email,"maker", database)
   db.createUserProfile(backerLongBio,backerPhotos,backerIcon,email,"backer", database)
   
@@ -46,6 +46,15 @@ router.get('/maker', function(req, res) {
   var email = req.body.email
   var user = db.readUserProfile(email, 'maker', database, function(user) {
     if (user != null) console.log("GOT MAKER USER: " + user.email)
+   res.json(user);
+  })
+});
+
+// GET request to read backer profile from database
+router.get('/backer', function(req, res) {
+  var email = req.body.email
+  var user = db.readUserProfile(email, 'backer', database, function(user) {
+    if (user != null) console.log("GOT USER in backer: " + user.email)
     res.json(user);
   })
 });
