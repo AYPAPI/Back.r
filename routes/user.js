@@ -41,4 +41,13 @@ router.get('/', function(req, res) {
   })
 });
 
+// GET request to read backer profile from database
+router.get('/backer', function(req, res) {
+  var email = req.body.email
+  var user = db.readUserProfile(email, 'backer', database, function(user) {
+    if (user != null) console.log("GOT USER in backer: " + user.email)
+    res.json(user);
+  })
+});
+
 module.exports = router;
