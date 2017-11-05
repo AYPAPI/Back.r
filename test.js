@@ -50,12 +50,12 @@ var test_settings = {
 	"location":'w',
 	"isVisible":true,
 	"newMatchNotif":true,
-	"messageNotif":false
-	"blockedUsers":["David@leaveMeAlone.aol", "Abena.lol@gmail.com", "Vylana@me.com", "Gary@professionalism.com"]
+	"messageNotif":false,
+	"blockedUsers":"David@leaveMeAlone.aol"["David@leaveMeAlone.aol", "Abena.lol@gmail.com", "Vylana@me.com", "Gary@professionalism.com"]
 }
 
 request.post({
-    url: url + "settings/user",
+    url: url + "user/settings",
     // method: "POST",
     json: true,   // <--Very important!!!
     body: test_settings
@@ -65,12 +65,12 @@ request.post({
 
 // Get user
 request.get({
-  url: url + "settings/user",
+  url: url + "user/settings",
   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
   body: user_email
 }, function(err, res) {
   if (res !== null){
-    console.log("User's settings are : " + res.body); //unsure if it should be res.body or something else?
+    console.log("User's settings are : " + res.body.settings); //unsure if it should be res.body or something else?
   }
 });
 ///////////////////////////////////////////////////////
