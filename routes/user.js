@@ -16,18 +16,27 @@ router.post("/", function(req, res) {
   var email = req.body.email;
   var isMaker = req.body.isMaker;
   var shortBio = req.body.shortBio;
+  var location = req.body.location;
 
   var makerLongBio = req.body.profiles.maker.longBio
   var makerPhotos = req.body.profiles.maker.photos
   var makerIcon = req.body.profiles.maker.icons
+  var makerSwipedRight = req.body.profiles.maker.swipedright
+  var makerMatches = req.body.profiles.maker.matches
+  var makerSwipedOn = req.body.profiles.maker.swipedon
 
   var backerLongBio = req.body.profiles.backer.longBio
   var backerPhotos = req.body.profiles.backer.photos
   var backerIcon = req.body.profiles.backer.icons
+  var backerSwipedRight = req.body.profiles.backer.swipedright
+  var backerMatches = req.body.profiles.backer.matches
+  var backerSwipedOn = req.body.profiles.backer.swipedon
 
-  db.createUser(name,age,email,isMaker,shortBio,"users", database);
-  db.createUserProfile(makerLongBio,makerPhotos,makerIcon,email,"maker", database)
-  db.createUserProfile(backerLongBio,backerPhotos,backerIcon,email,"backer", database)
+  db.createUser(name,age,email,isMaker,shortBio,"users",location, database);
+  db.createUserProfile(makerLongBio,makerPhotos,makerIcon,email,"maker", 
+                       makerSwipedRight,makerMatches,makerSwipedOn, database)
+  db.createUserProfile(backerLongBio,backerPhotos,backerIcon,email,"backer", 
+                       backerSwipedRight,backerMatches,backerSwipedOn,database)
   
   res.json(req.body);
 });
