@@ -41,6 +41,25 @@ router.post("/", function(req, res) {
   res.json(req.body);
 });
 
+//POST request to update swipedRight and swipedOn
+router.post("/swipe", function(req, res){
+
+  var email = req.body.email;//email of user doing the swiping
+  var swipedEmail = req.body.swipedEmail;//email of user being swiped on
+  var isMaker = req.body.isMaker;
+  var swipedRight = req.body.swipedRight;//boolean val, true if swiped right
+
+    if(swipedRight){
+      //add swipedEmail to email's swipedRight array
+        //db.addSwipedRight(email, isMaker, swipedEmail);
+    }
+
+    //add swipedEmail to email's swipedOn array
+    //db.addSwipedOn(email, isMaker, swipedEmail);
+
+    res.json(req.body);
+});
+
 // GET request to read user from database
 router.get('/', function(req, res) {
   var email = req.body.email

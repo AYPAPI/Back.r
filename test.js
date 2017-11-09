@@ -32,6 +32,13 @@ var user_email = {
   email: "test@aypapi.com" 
 }
 
+var test_swipe = {
+    "email":"test@aypapi.com",
+    "swipedEmail":"abc@def.com",//need an email that currently exists in the database
+    "isMaker":true,
+    "swipedRight":true
+}
+
 request.post({
     url: url + "user",
     // method: "POST",
@@ -80,3 +87,16 @@ request.get({
 
   }
 });
+
+//test swipe
+/*
+request.post({
+    url: url + "user",
+    // method: "POST",
+    json: true,   // <--Very important!!!
+    body: test_swipe
+}, function(err, res, body) {
+  console.log("testing swipedRight/swipedOn POST request");
+	console.log("POST response body  - " + res.body);
+});
+ */
