@@ -7,16 +7,23 @@ var test_user = {
 	"email": "test@aypapi.com",
 	"isMaker":true,
 	"shortBio":"dumb dumb",
+  "location":"123-123",
 	"profiles":{
 		"maker": {
 			"longBio":"I have a dumb idea for a project",
 			"photos":["url for pic"],
-			"icons":[true]
+			"icons":[true],
+      "matches":[],
+      "swipedright":[],
+      "swipedon":[]
 		},
 		"backer": {
 			"longBio":"I am a dumb investor, let me fund you",
 			"photos":["url for pic"],
-			"icons":[true]
+			"icons":[true],
+      "matches":[],
+      "swipedright":[],
+      "swipedon":[]
 		}
 	}
 }

@@ -42,7 +42,7 @@ module.exports.addUser = function (username,client,tablename){
 }
 
 //create user profile
-module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,client){
+module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,location,client){
   let check = 'SELECT email FROM ' + tablename
   client.query(check, function(err,res) {
     rows = res.rows
@@ -52,8 +52,8 @@ module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,
         return
       }
     }
-    let query = 'INSERT INTO ' + tablename + ' (name,age,email,ismaker,shortbio) values ($1,$2,$3,$4,$5)';
-    client.query(query,[name,age,email,isMaker,shortbio], function(err,res) {
+    let query = 'INSERT INTO ' + tablename + ' (name,age,email,ismaker,shortbio,location) values ($1,$2,$3,$4,$5,$6)';
+    client.query(query,[name,age,email,isMaker,shortbio,location], function(err,res) {
       if (err) throw err;
       else{
         console.log('inserted ' + email + ' into database')
@@ -63,7 +63,8 @@ module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,
 }
 
 //create the maker and backer profiles
-module.exports.createUserProfile = function (longbio,photos,icons,email,tablename, client){
+module.exports.createUserProfile = function (longbio,photos,icons,email,tablename, 
+                                             swipedRight,matches,swipedOn,client){
   let check = 'SELECT email FROM ' + tablename
   client.query(check, function(err,res) {
     rows = res.rows
@@ -73,8 +74,8 @@ module.exports.createUserProfile = function (longbio,photos,icons,email,tablenam
         return
       }
     }
-    let query = 'INSERT INTO ' + tablename + ' (longbio,photos,icons,email) values ($1,$2,$3,$4)';
-    client.query(query,[longbio,photos,icons,email], function(err,res) {
+    let query = 'INSERT INTO ' + tablename + ' (longbio,photos,icons,email,swipedright,matches,swipedon) values ($1,$2,$3,$4,$5,$6,$7)';
+    client.query(query,[longbio,photos,icons,email,swipedRight,matches,swipedOn], function(err,res) {
       if (err) throw err;
       else{
         console.log('inserted ' + email + ' into Maker/Backer')
@@ -118,7 +119,10 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
             "longbio":row.longbio,
             "email":row.email,
             "photos":row.photos,
-            "icons":row.icons
+            "icons":row.icons,
+            "swipedright":rows.swipedright,
+            "matches":rows.matches,
+            "swipedon":rows.swipedon
           }
         }
       }
