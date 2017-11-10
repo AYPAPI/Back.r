@@ -68,4 +68,21 @@ router.get('/backer', function(req, res) {
   })
 });
 
+// GET list of matches for a user
+router.get('/matches', function(req, res){
+  var email = req.body.email //email of user to get matches for
+ /*
+  var matchedUsers =
+    db.readMatchedUsers(
+    email,
+    'settings',
+    database,
+    function(matchedUsers){
+      if(matchedUsers != null) console.log("GOT matches for: " + email)
+      res.json(matchedUsers)
+      }) //array of matched users profiles 
+      */
+  res.json(req.body)
+  });
+
 module.exports = router;

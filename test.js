@@ -80,3 +80,15 @@ request.get({
 
   }
 });
+
+// Get list of matched users
+request.get({
+   url: url + "user/matches",
+   json: true, //impopo
+   body: user_email
+   }, function(err, res) {
+   if (res !== null){
+    console.log("User's email is : " + res.body.email);        
+    console.log("User's list of matches is : " + res.body.matchedUsers);        
+  }
+});

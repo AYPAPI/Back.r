@@ -130,18 +130,5 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
     })	
 }
 
-//get list of matches
-module.exports.readMatchedUsers = function(email, tablename, client, callback){
-    let query = 'SELECT matchedUsers FROM ' + tablename
-    client.query(query, function(err,res){
-        if (err) throw err;
-        rows = res.rows
-        for(var i=0; i < rows.length; i++){
-            //get each user profile?
-            //get only an array of user emails?
-            //TODO
-        }
-        callback(obj);
-    })
-}
+
 
