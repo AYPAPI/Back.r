@@ -42,26 +42,33 @@ router.get('/', function(req, res) {
 });
 
 //////////////////SETTTINGS////////////////////////
+router.post("/settings/create", function(req, res) {
+  var location = req.body.location;
+  var isVisible = req.body.isVisible;
+  var blockedUsers = req.body.blockedUsers;
+  var email = "brandonisadumdum@msn.com"
+  db.createSettings(location, isVisible, blockedUsers, email, database)
+  res.json(req.body)
+});
+
 router.post("/settings", function(req, res) {
 
   var location = req.body.location;
   var isVisible = req.body.isVisible;
-  var newMatchNotif = req.body.newMatchNotif;
-  var messageNotif = req.body.messageNotif;
   var blockedUsers = req.body.blockedUsers;
-  // do we need one for log out?
-  // do we need one for delete account?
-  // do we need one for blocked user list?
+  var email = "brandonisadumdum@msn.com"
 
-  db.updateSettings(location, isVisible, newMatchNotif,messageNotif, blockedUsers)
-  res.json(req.body);
+  db.updateSettings(location, isVisible, blockedUsers, email, database, function(message) {
+    var status = message
+    res.json(status);
+  })
 });
 
 router.get('/settings', function(req, res) {
   var email = req.body.email
-  var settings = db.readSettings(email, 'users', database, function(user) {
-    if (settings != null) console.log("GOT settings from: " + user.email)
-    res.json(settings);
+  var settings = db.readSettings(database, email, function(user_settings) {
+    if (user_settings != null) console.log("GOT settings from: " + email)
+    res.json(user_settings);
   })
 });
 

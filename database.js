@@ -126,29 +126,29 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
     })
 }
 
-//////////SETTINGS/////////////////////////
-module.exports.updateSettings = function(location, isVisible, newMatchNotif, messageNotif, blockedUsers) {
-  let query = 'SET * FROM ' + tablename   //unsure about SQL syntax
-    client.query(query, function(err,res) {
-      if (err) throw err;
-      rows = res.rows
-      for (var i = 0; i < rows.length; i++){
-        if (rows[i].email === email){
-          var row = rows[i]
-          var obj = {
-            "location":row.location,
-            "isVisible":row.isVisible,
-            "newMatchNotif":row.newMatchNotif,
-            "messageNotif":row.messageNotif,
-            "blockedUsers":row.blockedUsers,
-          }
+module.exports.createSettings = function(location, isVisible, blockedUsers, email, client) {
+  var tablename = 'settings'
+  let query = 'INSERT INTO ' + tablename + ' (email, latitude, longitude, isvisible, blockedusers) values ($1,$2,$3,$4, $5)';
+    console.log("called1")
+    client.query(query,[email, location.lat, location.long, isVisible, blockedUsers], function(err,res) {
+        if (err) throw err;
+        else{
+          console.log('created settings for user' + email)
         }
-      }
-      callback(obj);
+      })
+}
+
+module.exports.updateSettings = function(location, isVisible, blockedUsers, email, client, callback) {
+  var tablename = 'settings'
+  let query = 'UPDATE ' + tablename + ' SET latitude = $1, longitude = $2, isvisible = $3, blockedusers = $4 WHERE email = $5'
+    client.query(query, [location.lat, location.long, isVisible, blockedUsers, email], function(err,res) {
+      if (err) throw err;
+      callback("Updated settings");
     })
 }
 
-module.exports.readSettings = function (location, isVisible, newMatchNotif, messageNotif, blockedUsers) {
+module.exports.readSettings = function (client, email, callback) {
+    var tablename = 'settings'
 	let query = 'SELECT * FROM ' + tablename
   client.query(query, function(err,res) {
     if (err) throw err;
@@ -157,11 +157,10 @@ module.exports.readSettings = function (location, isVisible, newMatchNotif, mess
 			if (rows[i].email === email){
 				var row = rows[i]
 				var obj = {
-          "location":row.location,
-          "isVisible":row.isVisible,
-          "newMatchNotif":row.newMatchNotif,
-          "messageNotif":row.messageNotif,
-          "blockedUsers":row.blockedUsers,
+          "latitude":row.latitude,
+          "longitude":row.longitude,
+          "isVisible" : row.isvisible,
+          "blockedUsers":row.blockedusers,
 				}
 			}
 		}
