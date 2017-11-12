@@ -59,4 +59,22 @@ router.get('/backer', function(req, res) {
   })
 });
 
+// GET request to read potential matches from database
+router.get('/potential_matches', function(req, res) {
+  var email = req.body.email
+  var user = db.readUser(email, 'users', database, function(user) {
+    var potentialMatches = db.getPotentialMatches(email, user.ismaker, database,
+    function(potentialMatches) {
+        if(potentialMatches != null) {
+            console.log("GOT POTENTIAL MATCHES: " + potentialMatches.length);
+/*            for(var i = 0; i < potentialMatches.length; i++) {
+                console.log(potentialMatches[i].longbio);
+            }*/
+            res.json(potentialMatches);
+        }
+    })
+  })
+});
+
+
 module.exports = router;

@@ -73,3 +73,15 @@ request.get({
 
   }
 });
+
+
+request.get({
+    url: url + "user/potential_matches",
+    json: true,
+    body: user_email
+}, function(err, res) {
+    if(res !== null) {
+        console.log(res.body);
+    }
+});
+
