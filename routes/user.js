@@ -63,7 +63,7 @@ router.get('/backer', function(req, res) {
 router.get('/potential_matches', function(req, res) {
   var email = req.body.email
   var user = db.readUser(email, 'users', database, function(user) {
-    var potentialMatches = db.getPotentialMatches(email, user.ismaker, database,
+    var potentialMatches = db.getPotentialMatches(email,database,
     function(potentialMatches) {
         if(potentialMatches != null) {
             console.log("GOT POTENTIAL MATCHES: " + potentialMatches.length);

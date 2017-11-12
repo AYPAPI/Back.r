@@ -128,87 +128,49 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
 
 //Pass in email, and isMaker to grab all users and select from those the
 //Potential matches.
-module.exports.getPotentialMatches = function(email, isMaker, client, callback) {
-    let makers = 'SELECT * FROM ' + 'maker';
-    let backers = 'SELECT * FROM ' + 'backer';
+module.exports.getPotentialMatches = function(email,client,callback){
+  let makerQuery = 'SELECT * FROM maker'
+  let backerQuery = 'SELECT * FROM backer'
+  let userQuery = 'SELECT * FROM users'
+  
+  let backer = []
+  let maker = []
+  let user = []
 
-    if(isMaker) {
-    client.query(makers, function(err,res) {
-      if (err) throw err;
-      rows = res.rows
-      for (var i = 0; i < rows.length; i++){
-        if (rows[i].email === email){
-          var row = rows[i]
-          var obj = row.swipedon;
-        }
-      }
-
-      var ret = [];
-      //Loop through users
-      var addToRet = true;
-      for(var i = 0; i < backers.length; i++) {
-          if(backers[i].email === email) {
-              addToRet = false;
-          }
-          //Loop through swipedon.
-          for(var j = 0; j < obj.length; j++) {
-              if(backers[i] === obj[j]) {
-                  addToRet = false;
-              }
-          }
-          if(addToRet && backers.length !== 0) {
-              var add = {
-                  "longbio":backers[i].longbio,
-                  "photos":backers[i].photos,
-                  "icons":backers[i].icons,
-
-              }
-              ret.push(add);
-          }
-          
-      }
-      callback(ret);
-    })	
-
-    } else {
-    client.query(backers, function(err,res) {
-      if (err) throw err;
-      rows = res.rows
-      for (var i = 0; i < rows.length; i++){
-        if (rows[i].email === email){
-          var row = rows[i]
-          var obj = row.swipedon;
-        }
-      }
-
-      var ret = [];
-      //Loop through users
-      var addToRet = true;
-      for(var i = 0; i < makers.length; i++) {
-          if(makers[i].email === email) {
-              addToRet = false;
-          }
-          //Loop through swipedon.
-          for(var j = 0; j < obj.length; j++) {
-              if(makers[i] === obj[j]) {
-                  addToRet = false;
-              }
-          }
-          if(addToRet && makers.length !== 0) {
-              var add = {
-                  "longbio":makers[i].longbio,
-                  "photos":makers[i].photos,
-                  "icons":makers[i].icons,
-
-              }
-              ret.push(add);
-          }
-          
-      }
-      callback(ret);
-    })	
+  client.query(makerQuery, function(err,res) {
+    if (err) throw err;
+    rows = res.rows
+    for (var i = 0;i < rows.length; i++){
+      maker.push(rows[i].email)
     }
+    client.query(backerQuery, function(err,res) {
+      if (err) throw err;
+      rows = res.rows
+      for (var i = 0; i < rows.length; i++){
+        backer.push(rows[i].email)
+      }
+      client.query(userQuery,function(err,res) {
+        if (err) throw err;
+        rows = res.rows
+        for (var i = 0; i < rows.length; i++){
+          console.log(rows[i].email)
+          user.push(rows[i].email)
+        }
+        console.log(backer)
+        console.log(maker)
+        console.log(user)
+        potentialMatches = user.filter(function(x) {return maker.indexOf(x) < 0})
+        potentialMatches = potentialMatches.filter(function(x) {return backer.indexOf(x) < 0})
+        console.log(potentialMatches)
+        callback(potentialMatches)
+
+      })
+    })
+    
+  }) 
+    
 }
+
 
 
 
