@@ -7,16 +7,23 @@ var test_user = {
 	"email": "test@aypapi.com",
 	"isMaker":true,
 	"shortBio":"dumb dumb",
+  "location":"123-123",
 	"profiles":{
 		"maker": {
 			"longBio":"I have a dumb idea for a project",
 			"photos":["url for pic"],
-			"icons":[true]
+			"icons":[true],
+      "matches":[],
+      "swipedright":[],
+      "swipedon":[]
 		},
 		"backer": {
 			"longBio":"I am a dumb investor, let me fund you",
 			"photos":["url for pic"],
-			"icons":[true]
+			"icons":[true],
+      "matches":[],
+      "swipedright":[],
+      "swipedon":[]
 		}
 	}
 }
@@ -40,12 +47,40 @@ request.get({
   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
   body: user_email
 }, function(err, res) {
-  if (res != null && res.body != null){
+  if (res != null) {
     console.log("User's email is : " + res.body.email);
   }
 });
 
-//////////////////////////SETTINGS/////////////////////
+// Get maker 
+request.get({
+  url: url + "user/maker",
+  json: true,
+  body: user_email
+}, function(err, res) {
+  if (res != null) {
+    console.log("Maker's email is : " + res.body.email);
+    console.log("Maker's long bio is : " + res.body.longbio);
+    console.log("Maker's photos are : " + res.body.photos);
+    console.log("Maker's icons are : " + res.body.icons);
+  }
+});
+
+// Get Backer test
+request.get({
+  url: url + "user/backer",
+  json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
+  body: user_email
+}, function(err, res) {
+  if (res !== null){
+    console.log("User's email is : " + res.body.email);
+    console.log("User's long bio is : " + res.body.longbio);
+    console.log(res.body.photos);
+    console.log(res.body.icons);
+
+  }
+});
+
 var test_settings = {
 	"location": {
       lat: 50,
@@ -83,4 +118,3 @@ request.get({
     console.log("lat: "  + res.body.latitude)
   }
 });
-///////////////////////////////////////////////////////
