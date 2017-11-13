@@ -128,7 +128,7 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
 
 //Pass in email, and isMaker to grab all users and select from those the
 //Potential matches.
-module.exports.getPotentialMatches = function(email,client,callback){
+module.exports.getPotentialMatches = function(email,client,isMaker,callback){
   let makerQuery = 'SELECT * FROM maker'
   let backerQuery = 'SELECT * FROM backer'
   let userQuery = 'SELECT * FROM users'
@@ -141,36 +141,72 @@ module.exports.getPotentialMatches = function(email,client,callback){
     if (err) throw err;
     rows = res.rows
     for (var i = 0;i < rows.length; i++){
-      maker.push(rows[i].email)
+      if (email === rows.email){
+        maker = rows.swipedon
+        break;
+      }
     }
     client.query(backerQuery, function(err,res) {
       if (err) throw err;
       rows = res.rows
       for (var i = 0; i < rows.length; i++){
-        backer.push(rows[i].email)
+        if (email === rows.email){
+          maker = rows.swipedon
+        }
       }
       client.query(userQuery,function(err,res) {
         if (err) throw err;
         rows = res.rows
         for (var i = 0; i < rows.length; i++){
-          console.log(rows[i].email)
           user.push(rows[i].email)
         }
-        console.log(backer)
-        console.log(maker)
-        console.log(user)
-        potentialMatches = user.filter(function(x) {return maker.indexOf(x) < 0})
-        potentialMatches = potentialMatches.filter(function(x) {return backer.indexOf(x) < 0})
+        let potentialMatches;
+        if (isMaker){
+          potentialMatches = user.filter(function(x) {return backer.indexOf(x) < 0})
+        }
+        else{
+          potentialMatches = user.filter(function(x) {return maker.indexOf(x) < 0})
+        }
+        var index = potentialMatches.indexOf(email)
+        potentialMatches.splice(index,1)
         console.log(potentialMatches)
+        query = (isMaker === true) : makerQuery ? backerQuery
         callback(potentialMatches)
-
       })
     })
-    
   }) 
-    
 }
 
+module.exports.getMatches = function(email,client,callback){
+  let makerQuery = 'SELECT * FROM maker'
+  let backerQuery = 'SELECT * from backer'
 
+  let matches = []
+  client.query(makerQuery, function(err,res){
+    if (err) throw err;
+    rows = res.rows
+    for (var i = 0; i < rows.length; i++){
+      if (email === rows.email){
+        matches = rows.matches
+        break;
+      }
+    }
+    client.query(backerQuery, function(err,res){
+      if (err) throw err;
+      rows = res.rows
+      for (var i = 0; i < rows.length; i++){
+        if (email === rows.email){
+          backerMatches = rows.matches
+          for (var j = 0; j < backerMatches.length; j++){
+            matches.push(backerMatches[j])
+          }
+          break;
+        }
+      }
+      console.log(matches)
+      callback(matches)
+    })
+  })
+} 
 
 
