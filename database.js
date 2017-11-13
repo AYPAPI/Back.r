@@ -136,13 +136,14 @@ module.exports.getPotentialMatches = function(email,client,isMaker,callback){
   let backer = []
   let maker = []
   let user = []
+  let userDict = []
 
   client.query(makerQuery, function(err,res) {
     if (err) throw err;
     rows = res.rows
     for (var i = 0;i < rows.length; i++){
-      if (email === rows.email){
-        maker = rows.swipedon
+      if (email === rows[i].email){
+        maker = rows[i].swipedon
         break;
       }
     }
@@ -150,8 +151,8 @@ module.exports.getPotentialMatches = function(email,client,isMaker,callback){
       if (err) throw err;
       rows = res.rows
       for (var i = 0; i < rows.length; i++){
-        if (email === rows.email){
-          maker = rows.swipedon
+        if (email === rows[i].email){
+          backer = rows[i].swipedon
         }
       }
       client.query(userQuery,function(err,res) {
@@ -159,19 +160,46 @@ module.exports.getPotentialMatches = function(email,client,isMaker,callback){
         rows = res.rows
         for (var i = 0; i < rows.length; i++){
           user.push(rows[i].email)
+          userDict[rows[i].email] = {
+              "name": rows[i].name,
+              "age": rows[i].age
+          }
         }
         let potentialMatches;
+        let returnedMatches = [];
         if (isMaker){
-          potentialMatches = user.filter(function(x) {return backer.indexOf(x) < 0})
-        }
-        else{
           potentialMatches = user.filter(function(x) {return maker.indexOf(x) < 0})
         }
+        else{
+          potentialMatches = user.filter(function(x) {return backer.indexOf(x) < 0})
+        }
+        //remove the user themselves
         var index = potentialMatches.indexOf(email)
         potentialMatches.splice(index,1)
-        console.log(potentialMatches)
-        query = (isMaker === true) : makerQuery ? backerQuery
-        callback(potentialMatches)
+        query = (isMaker === true) ? backerQuery : makerQuery
+        client.query(query, function(err,res){
+          if (err) throw err;
+          rows = res.rows
+          for (var i = 0; i < rows.length; i++){
+            email = rows[i].email
+            if (potentialMatches.indexOf(email) > -1){
+              //user is in the list of potential matches
+              returnedMatches.push(
+                                  {
+                                    "email":email,
+                                    "longBio":rows[i].longbio,
+                                    "photos":rows[i].photos,
+                                    "icons":rows[i].icons,
+                                    "name":userDict[email].name,
+                                    "age":userDict[email].age
+                                  }
+              )
+            }
+          }
+          
+        console.log(returnedMatches)
+        callback(returnedMatches)
+        })
       })
     })
   }) 
