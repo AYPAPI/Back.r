@@ -31,13 +31,11 @@ router.post("/", function(req, res) {
   var backerSwipedRight = req.body.profiles.backer.swipedright
   var backerMatches = req.body.profiles.backer.matches
   var backerSwipedOn = req.body.profiles.backer.swipedon
-
   db.createUser(name,age,email,isMaker,shortBio,"users",location, database);
   db.createUserProfile(makerLongBio,makerPhotos,makerIcon,email,"maker", 
                        makerSwipedRight,makerMatches,makerSwipedOn, database)
   db.createUserProfile(backerLongBio,backerPhotos,backerIcon,email,"backer", 
                        backerSwipedRight,backerMatches,backerSwipedOn,database)
-  
   res.json(req.body);
 });
 

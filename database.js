@@ -13,7 +13,7 @@ module.exports.connect = function() {
 
   const config = {
       host: 'backr.postgres.database.azure.com',
-      user: username,     
+      user: username,
       password: password,
       database: 'postgres',
       port: 5432,
@@ -59,7 +59,7 @@ module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,
         console.log('inserted ' + email + ' into database')
       }
     })
-  })  
+  })
 }
 
 //create the maker and backer profiles
@@ -81,19 +81,19 @@ module.exports.createUserProfile = function (longbio,photos,icons,email,tablenam
         console.log('inserted ' + email + ' into Maker/Backer')
       }
     })
-  })  
+  })
 }
 
 //get user profile
 module.exports.readUser = function (email,tablename,client, callback) {
-	let query = 'SELECT * FROM ' + tablename 
+	let query = 'SELECT * FROM ' + tablename
   client.query(query, function(err,res) {
     if (err) throw err;
     rows = res.rows;
 		for (var i = 0; i < rows.length; i++){
 			if (rows[i].email === email){
 				var row = rows[i]
-				var obj = { 
+				var obj = {
           "name":row.name,
 					"age":row.age,
 					"email":row.email,
@@ -103,7 +103,7 @@ module.exports.readUser = function (email,tablename,client, callback) {
 			}
 		}
     callback(obj);
-	})	
+	})
 }
 
 //get maker/backer profile
@@ -127,8 +127,47 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
         }
       }
       callback(obj);
-    })	
+    })
 }
 
+module.exports.createSettings = function(location, isVisible, blockedUsers, email, client) {
+  var tablename = 'settings'
+  let query = 'INSERT INTO ' + tablename + ' (email, latitude, longitude, isvisible, blockedusers) values ($1,$2,$3,$4, $5)';
+    console.log("called1")
+    client.query(query,[email, location.lat, location.long, isVisible, blockedUsers], function(err,res) {
+        if (err) throw err;
+        else{
+          console.log('created settings for user' + email)
+        }
+      })
+}
 
+module.exports.updateSettings = function(location, isVisible, blockedUsers, email, client, callback) {
+  var tablename = 'settings'
+  let query = 'UPDATE ' + tablename + ' SET latitude = $1, longitude = $2, isvisible = $3, blockedusers = $4 WHERE email = $5'
+    client.query(query, [location.lat, location.long, isVisible, blockedUsers, email], function(err,res) {
+      if (err) throw err;
+      callback("Updated settings");
+    })
+}
 
+module.exports.readSettings = function (client, email, callback) {
+    var tablename = 'settings'
+	let query = 'SELECT * FROM ' + tablename
+  client.query(query, function(err,res) {
+    if (err) throw err;
+    rows = res.rows;
+		for (var i = 0; i < rows.length; i++){
+			if (rows[i].email === email){
+				var row = rows[i]
+				var obj = {
+          "latitude":row.latitude,
+          "longitude":row.longitude,
+          "isVisible" : row.isvisible,
+          "blockedUsers":row.blockedusers,
+				}
+			}
+		}
+    callback(obj);
+	})
+}
