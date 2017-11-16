@@ -47,7 +47,7 @@ request.get({
   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
   body: user_email
 }, function(err, res) {
-  if (res != null && res.body != null) {
+  if (res != null) {
     console.log("User's email is : " + res.body.email);
   }
 });
@@ -58,7 +58,7 @@ request.get({
   json: true,
   body: user_email
 }, function(err, res) {
-  if (res != null && res.body != null) {
+  if (res != null) {
     console.log("Maker's email is : " + res.body.email);
     console.log("Maker's long bio is : " + res.body.longbio);
     console.log("Maker's photos are : " + res.body.photos);
@@ -72,7 +72,7 @@ request.get({
   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
   body: user_email
 }, function(err, res) {
-  if (res !== null && res.body != null){
+  if (res !== null){
     console.log("User's email is : " + res.body.email);
     console.log("User's long bio is : " + res.body.longbio);
     console.log(res.body.photos);
