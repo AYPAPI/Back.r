@@ -59,6 +59,8 @@ module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,
         console.log('inserted ' + email + ' into database')
       }
     })
+  })
+}
 
 //create the maker and backer profiles
 module.exports.createUserProfile = function (longbio,photos,icons,email,tablename, 
@@ -79,6 +81,8 @@ module.exports.createUserProfile = function (longbio,photos,icons,email,tablenam
         console.log('inserted ' + email + ' into Maker/Backer')
       }
     })
+  })
+}
 
 //get user profile
 module.exports.readUser = function (email,tablename,client, callback) {

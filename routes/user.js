@@ -66,4 +66,34 @@ router.get('/backer', function(req, res) {
   })
 });
 
+router.post("/settings/create", function(req, res) {
+  var location = req.body.location;
+  var isVisible = req.body.isVisible;
+  var blockedUsers = req.body.blockedUsers;
+  var email = "brandonisadumdum@msn.com"
+  db.createSettings(location, isVisible, blockedUsers, email, database)
+  res.json(req.body)
+});
+
+router.post("/settings", function(req, res) {
+
+  var location = req.body.location;
+  var isVisible = req.body.isVisible;
+  var blockedUsers = req.body.blockedUsers;
+  var email = "brandonisadumdum@msn.com"
+
+  db.updateSettings(location, isVisible, blockedUsers, email, database, function(message) {
+    var status = message
+    res.json(status);
+  })
+});
+
+router.get('/settings', function(req, res) {
+  var email = req.body.email
+  var settings = db.readSettings(database, email, function(user_settings) {
+    if (user_settings != null) console.log("GOT settings from: " + email)
+    res.json(user_settings);
+  })
+});
+
 module.exports = router;
