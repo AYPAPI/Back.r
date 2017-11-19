@@ -66,6 +66,25 @@ router.get('/backer', function(req, res) {
   })
 });
 
+//POST request to update swipedRight and swipedOn
+router.post("/swipe", function(req, res){
+
+    var email = req.body.email;//email of user doing the swiping
+    var swipedEmail = req.body.swipedEmail;//email of user being swiped on
+    var isMaker = req.body.isMaker;
+    var swipedRight = req.body.swipedRight;//boolean val, true if swiped right
+
+    if(swipedRight){
+        //add swipedEmail to email's swipedRight array
+        //db.addSwipedRight(email, isMaker, swipedEmail);
+    }
+
+    //add swipedEmail to email's swipedOn array
+    //db.addSwipedOn(email, isMaker, swipedEmail);
+
+    res.json(req.body);
+});
+
 router.post("/settings/create", function(req, res) {
   var location = req.body.location;
   var isVisible = req.body.isVisible;

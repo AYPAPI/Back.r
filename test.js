@@ -117,4 +117,27 @@ request.get({
     console.log("User's settings are : " + res.body);
     console.log("lat: "  + res.body.latitude)
   }
+
+
 });
+
+var test_swipe = {
+    "email":"test@aypapi.com",
+    "swipedEmail":"abc@def.com",//need an email that currently exists in the database
+    "isMaker":true,
+    "swipedRight":true
+}
+
+//test swipe
+/*
+request.post({
+    url: url + "user",
+    // method: "POST",
+    json: true,   // <--Very important!!!
+    body: test_swipe
+}, function(err, res, body) {
+  console.log("testing swipedRight/swipedOn POST request");
+	console.log("POST response body  - " + res.body);
+});
+ */
+
