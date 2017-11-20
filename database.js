@@ -130,6 +130,19 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
     })
 }
 
+//db.addSwipedOn(email, isMaker, swipedEmail);
+module.exports.addSwipedRight = function(email, isMaker, swipedEmail, client)
+{
+    var tablename = isMaker ? 'maker' : 'backer'
+    let query = 'UPDATE ' + tablename + ' SET swipedRight = ' + swipedEmail + 'WHERE email=' + swipedEmail
+    console.log("called db func addSwiped")
+    client.query(query,[email, swipedEmail], function(err,res) {
+        if (err) throw err;
+        else {
+            console.log('added a swipe from ' + email + ' to ' + swipedEmail)
+        }
+    })
+}
 module.exports.createSettings = function(location, isVisible, blockedUsers, email, client) {
   var tablename = 'settings'
   let query = 'INSERT INTO ' + tablename + ' (email, latitude, longitude, isvisible, blockedusers) values ($1,$2,$3,$4, $5)';

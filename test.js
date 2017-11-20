@@ -123,15 +123,14 @@ request.get({
 
 var test_swipe = {
     "email":"test@aypapi.com",
-    "swipedEmail":"abc@def.com",//need an email that currently exists in the database
+    "swipedEmail":"test3@aypapi.com",//need an email that currently exists in the database
     "isMaker":true,
     "swipedRight":true
 }
 
-//test swipe
-/*
+
 request.post({
-    url: url + "user",
+    url: url + "user/swipe",
     // method: "POST",
     json: true,   // <--Very important!!!
     body: test_swipe
@@ -139,5 +138,5 @@ request.post({
   console.log("testing swipedRight/swipedOn POST request");
 	console.log("POST response body  - " + res.body);
 });
- */
+
 
