@@ -74,9 +74,8 @@ router.post("/swipe", function(req, res){
     var isMaker = req.body.isMaker;
     var swipedRight = req.body.swipedRight;//boolean val, true if swiped right
 
-    if(swipedRight){
-        //add swipedEmail to email's swipedRight array
-        //db.addSwipedRight(email, isMaker, swipedEmail);
+    if(swipedRight) {
+        db.addSwipedRight(email, isMaker, swipedEmail);
     }
 
     //add swipedEmail to email's swipedOn array
