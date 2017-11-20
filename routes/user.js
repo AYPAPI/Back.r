@@ -74,15 +74,12 @@ router.post("/swipe", function(req, res){
     var isMaker = req.body.isMaker;
     var swipedRight = req.body.swipedRight;//boolean val, true if swiped right
 
-    if(swipedRight){
-        //add swipedEmail to email's swipedRight array
-        //db.addSwipedRight(email, isMaker, swipedEmail);
-    }
 
-    //add swipedEmail to email's swipedOn array
-    //db.addSwipedOn(email, isMaker, swipedEmail);
+    db.addSwipe(email, isMaker, swipedEmail, swipedRight, database, function(user){
+      res.json(req.body);
+    });
 
-    res.json(req.body);
+
 });
 
 router.post("/settings/create", function(req, res) {

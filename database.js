@@ -130,9 +130,46 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
     })
 }
 
+//db.addSwipedOn(email, isMaker, swipedEmail);
+module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, client, callback) {
+  var tablename;
+  if (isMaker == true) {
+    tablename = 'maker';
+  } else {
+    tablename = 'backer';
+  }
+  var swipedright;
+  var swipedon;
+  var query = 'SELECT * FROM ' + tablename
+    client.query(query, function(err, res) {
+      if (err) throw err;
+      rows = res.rows
+    for(var i = 0; i <rows.length; i++) {
+      if(rows[i].email === email) {
+        console.log("found")
+        var row = rows[i]
+        swipedright = row.swipedright;
+        swipedon = row.swipedon;
+        if(swipedRight == true) {
+          swipedright.push(swipedEmail)
+        }
+        swipedon.push(swipedEmail)
+        let query2 = 'UPDATE ' + tablename + ' SET swipedright = $1, swipedon = $2 WHERE email = $3'
+        client.query(query2,[swipedright, swipedon, email], function(err, res) {
+          if (err) throw err;
+          callback("Updated swipe")
+        })
+        break;
+      }
+    }
+  })
+
+}
 module.exports.createSettings = function(location, isVisible, blockedUsers, email, client) {
   var tablename = 'settings'
+
   let query = 'INSERT INTO ' + tablename + ' (email, latitude, longitude, isvisible, blockedusers) values ($1,$2,$3,$4, $5)';
+    console.log(query)
     console.log("called1")
     client.query(query,[email, location.lat, location.long, isVisible, blockedUsers], function(err,res) {
         if (err) throw err;
