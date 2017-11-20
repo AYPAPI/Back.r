@@ -32,6 +32,11 @@ class ExploreScreen extends Component {
           title="Edit"
           buttonStyle={{ marginTop: 20 }}
       />
+      <Button
+          onPress={() => navigate("Matches")}
+          title="Matches"
+          buttonStyle={{ marginTop: 20 }}
+      />
       </View>
     );
   }
