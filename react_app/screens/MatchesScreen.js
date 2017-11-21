@@ -14,71 +14,67 @@ const twilio = require('twilio');
 
 const AccessToken = twilio.jwt.AccessToken;
 const IpMessagingGrant = AccessToken.IpMessagingGrant;
+var fingerprint = new Fingerprint2();
 var client
 
-function TokenGenerator(identity, deviceId) {
-  fingerprint.get(function(endpointId) {
-    request('/getToken?identity=' + identity + '&endpointId=' + endpointId, function(err, res) {
-      if (err) { throw new Error(res.text); }
+function generateToken(identity){
+  const AccessToken = require('twilio').jwt.AccessToken;
+  const ChatGrant = AccessToken.ChatGrant;
 
-      var token = res.text;
+  // Used when generating any kind of tokens
+  const twilioAccountSid = 'ACdb1667840757150db3f20d6c72432db0';
+  const twilioApiKey = 'SKbc53d3e592df06fb1edea8157432130c';
+  const twilioApiSecret = '8AxjAtZV8iOK0reOaFUlVNVrYWE7ZPI6';
 
-      userContext.identity = identity;
-      userContext.endpoint = endpointId;
+  // Used specifically for creating Chat tokens
+  const serviceSid = 'IS608dc1a183314b68b550a97d6db6006a';
+  const appName = 'Backr';
+  const deviceId = 'unique id for device,possible use shortid module';
+  const endpointId = `${appName}:${identity}:${deviceId}`;
 
-      $('#login').hide();
-      $('#overlay').hide();
+  // Create a "grant" which enables a client to use Chat as a given user,
+  // on a given device
+  const chatGrant = new ChatGrant({
+      serviceSid: serviceSid,
+      endpointId: endpointId,
+  });
 
-      client = new Twilio.Chat.Client(token, { logLevel: 'debug' });
+  // Create an access token which we will sign and return to the client,
+  // containing the grant we just created
+  const token = new AccessToken(twilioAccountSid, twilioApiKey, twilioApiSecret);
 
-      accessManager = new Twilio.AccessManager(token);
-      accessManager.on('tokenUpdated', am => client.updateToken(am.token));
-      accessManager.on('tokenExpired', () => {
-        request('/getToken?identity=' + identity + '&endpointId=' + endpointId, function(err, res) {
-          if (err) {
-            console.error('Failed to get a token ', res.text);
-            throw new Error(res.text);
-          }
-          console.log('Got new token!', res.text);
-          accessManager.updateToken(res.text);
-        });
-      })
+  token.addGrant(chatGrant);
 
-      $('#profile label').text(client.user.friendlyName || client.user.identity);
-      $('#profile img').attr('src', 'http://gravatar.com/avatar/' + MD5(identity) + '?s=40&d=mm&r=g');
+  token.identity = identity;
 
-      client.user.on('updated', function() {
-        $('#profile label').text(client.user.friendlyName || client.user.identity);
-      });
+  // Serialize the token to a JWT string
+  console.log(token.toJwt());
+  //initialize client
+  client = new Twilio.Chat.Client(token);
+}
 
-      var connectionInfo = $('#profile #presence');
-      connectionInfo
-        .removeClass('online offline connecting denied')
-        .addClass(client.connectionState);
-      client.on('connectionStateChanged', function(state) {
-        connectionInfo
-          .removeClass('online offline connecting denied')
-          .addClass(client.connectionState);
-      });
-
-      client.getSubscribedChannels().then(updateChannels);
-
-      client.on('channelJoined', function(channel) {
-        channel.on('messageAdded', updateUnreadMessages);
-        channel.on('messageAdded', updateChannels);
-        updateChannels();
-      });
-
-      client.on('channelInvited', updateChannels);
-      client.on('channelAdded', updateChannels);
-      client.on('channelUpdated', updateChannels);
-      client.on('channelLeft', leaveChannel);
-      client.on('channelRemoved', leaveChannel);
-    });
+function getChannels(){
+  const serviceSid = 'IS608dc1a183314b68b550a97d6db6006a';
+  const service = client.chat.services(serviceSid); 
+	service.channels
+  .list()
+  .then(response => {
+    console.log(response);
+  })
+  .catch(error => {
+    console.log(error);
   });
 }
 
-module.exports = { generate: TokenGenerator };
+function getMessages(channel){
+  const serviceSid = 'IS608dc1a183314b68b550a97d6db6006a';
+  const service = client.chat.services(serviceSid); 
+	service.channels(channel).messages.list().then(function(response) {
+    console.log(response);
+	}).catch(function(error) {
+    console.log(error);
+	});
+}
 
 const users = [
  {
