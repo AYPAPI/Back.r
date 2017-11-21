@@ -5,36 +5,42 @@ import {
   View,
   StyleSheet,
 } from 'react-native';
+import { Card, Icon } from 'react-native-elements';
 import Swiper from 'react-native-swiper-animated'
+import {Dimensions} from 'react-native';
 const { width } = Dimensions.get('window')
 
 const styles = {
   wrapper: {
-    backgroundColor: '#009688',
+    backgroundColor: '#ffffff',
     flex: 1,
   },
   slide1: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#e91e63',
+    backgroundColor: 'white',
+    height: 300
   },
   slide2: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#673ab7',
+    backgroundColor: 'white',
+    height: 300
   },
   slide3: {
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#3f51b5',
+    backgroundColor: 'white',
+    height: 300
   },
   text: {
     color: '#fff',
-    fontSize: 30,
+    fontSize: 100,
     fontWeight: 'bold',
+    height: 300
   },
 };
 
@@ -75,35 +81,103 @@ class ExploreScreen extends Component {
       />
 
 
-     export default () => <Swiper
-  style={styles.wrapper}
-  paginationStyle={{ container: { backgroundColor: 'transparent' } }}
-  paginationLeft={''}
-  paginationRight={''}
-  smoothTransition
-  stack
-  dragDownToBack
-  dragY
->
-  <View style={styles.slide1}>
-    <Text style={styles.text}>Hello Swiper</Text>
-  </View>
-  <View style={styles.slide2}>
-    <Text style={styles.text}>Awesome</Text>
-  </View>
-  <View style={styles.slide3}>
-    <Text style={styles.text}>And simple</Text>
-  </View>
-  <View style={styles.slide2}>
-    <Text style={styles.text}>This is a test slide</Text>
-  </View>
-  <View style={styles.slide1}>
-    <Text style={styles.text}>Isn&apos;t this just mind blowing?</Text>
-  </View>
-  <View style={styles.slide3}>
-    <Text style={styles.text}>Check it Out</Text>
-  </View>
-</Swiper>;
+      <Swiper
+      style={styles.wrapper}
+      paginationStyle={{ container: { backgroundColor: 'transparent' } }}
+      paginationLeft={''}
+      paginationRight={''}
+      smoothTransition
+      stack
+      dragDownToBack
+      dragY
+      >
+
+      <Card style={styles.slide1}
+      title='Computer Science Enthusiast'
+      image={require('../img/gary_mouse.png')}>
+      <Text style={{marginBottom: 10}}>
+      Gary is a computer Science Enthusiast!!!
+      </Text>
+      <Icon
+      raised
+      name='money'
+      type='font-awesome'
+      color='#f50'
+      onPress={() => alert("Money")} />
+      </Card>
+
+      <Card style={styles.slide2}
+      title='Computer Science Enthusiast'
+      image={require('../img/gary_mouse.png')}>
+      <Text style={{marginBottom: 10}}>
+      Gary is a computer Science Enthusiast!!!
+      </Text>
+      <Icon
+      raised
+      name='money'
+      type='font-awesome'
+      color='#f50'
+      onPress={() => alert("Money")} />
+
+      </Card>
+
+      <Card style={styles.slide3}
+      title='Computer Science Enthusiast'
+      image={require('../img/gary_mouse.png')}>
+      <Text style={{marginBottom: 10}}>
+      Gary is a computer Science Enthusiast!!!
+      </Text>
+      <Icon
+      raised
+      name='money'
+      type='font-awesome'
+      color='#f50'
+      onPress={() => alert("Money")} />
+
+      </Card>
+      <Card style={styles.slide4}
+      title='Computer Science Enthusiast'
+      image={require('../img/gary_mouse.png')}>
+      <Text style={{marginBottom: 10}}>
+      Gary is a computer Science Enthusiast!!!
+      </Text>
+      <Icon
+      raised
+      name='money'
+      type='font-awesome'
+      color='#f50'
+      onPress={() => alert("Money")} />
+
+      </Card>
+      <Card style={styles.slide1}
+      title='Computer Science Enthusiast'
+      image={require('../img/gary_mouse.png')}>
+      <Text style={{marginBottom: 10}}>
+      Gary is a computer Science Enthusiast!!!
+      </Text>
+      <Icon
+      raised
+      name='money'
+      type='font-awesome'
+      color='#f50'
+      onPress={() => alert("Money")} />
+
+      </Card>
+      <Card style={styles.slide1}
+      title='Computer Science Enthusiast'
+      image={require('../img/gary_mouse.png')}>
+      <Text style={{marginBottom: 10}}>
+      Gary is a computer Science Enthusiast!!!
+      </Text>
+      <Icon
+      raised
+      name='money'
+      type='font-awesome'
+      color='#f50'
+      onPress={() => alert("Money")} />
+      
+      </Card>
+      </Swiper>
 
       </View>
     );
