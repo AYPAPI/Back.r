@@ -25,20 +25,39 @@ class LoginScreen extends Component {
             <Button
               buttonStyle={{ marginTop: 20 }}
               backgroundColor="#03A9F4"
-              title="LOGIN"
+              title="Sign In"
               onPress={() => {
                 onSignIn().then(() => navigate("SignedIn", {user: "USER"}));
               }}
             />
-            <Text>"Don't have an account?"</Text>
-            <Button
+	    <Button
               buttonStyle={{ marginTop: 20 }}
               backgroundColor="#03A9F4"
-              title="SIGN UP"
-              onPress={() => navigate("SignUp")}
+              title="Sign In with Facebook"
+              onPress={() => {
+                onSignIn().then(() => navigate("SignedIn", {user: "USER"}));
+              }}
             />
+	  </Card>
 
-          </Card>
+	  <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+          <Button
+            buttonStyle={{ marginTop: 20 }}
+            backgroundColor="#03A9F4"
+            title="Forgot Password?"
+            onPress={() => {
+                onSignIn().then(() => navigate("SignedIn", {user: "USER"}));
+	    }}
+          />
+
+  	  <Button
+            buttonStyle={{ marginTop: 20 }}
+            backgroundColor="#03A9F4"
+            title="Create Account"
+            onPress={() => navigate("SignUp")}
+          />
+	  </View>
+
         </View>
 
     );
