@@ -161,22 +161,35 @@ var url = 'http://localhost:8080/'
 //   json: true   // <--Very important, otherwise it will be defaulted to HTML!!!
 // }, function(err, res) {
 //   if (res != null && res.body != null){
-//     console.log("The token is : " + res.body);
+//     console.log("The result is : " + JSON.stringify(res.body));
 //     token = res.body
 //   }
 // });
 
-var test_message = {
-  "messageBody": "Vinay u is a dumb dumb"
-}
+// var test_message = {
+//   "messageBody": "Vinay u is a dumb dumb"
+// }
 
-request.post({
+// request.post({
+//     url: url + "twilio/channels/channel1/messages?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
+//     // method: "POST",
+//     json: true,   // <--Very important!!!
+//     body: test_message
+// }, function(err, res) {
+//   if (err) {
+//     console.log(err)
+//   }
+// });
+
+request.get({
     url: url + "twilio/channels/channel1/messages?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
-    // method: "POST",
-    json: true,   // <--Very important!!!
-    body: test_message
+    json: true
 }, function(err, res) {
   if (err) {
     console.log(err)
+  }
+  else {
+    console.log("The message bodies:\n")
+    console.log(res.body)
   }
 });

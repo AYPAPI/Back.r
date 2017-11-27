@@ -26,11 +26,7 @@ router.get('/getToken', function(req, res) {
 });
 
 router.get('/channels', function(req, res) {
-	// if (!req.query && !req.query.token) {
-	// 	res.status(400).send('Need to pass in token');
-	// }
 
-	// var token = req.query.token
 	var identity = req.query && req.query.identity;
 	var endpointId = req.query && req.query.endpointId;
 
@@ -39,13 +35,9 @@ router.get('/channels', function(req, res) {
 	}
 	var token = tokenProvider.getToken(identity, endpointId);
 
-	// const client = new Twilio(TokenProvider.accountSid, token)
-	// client = new twilio("ACdb1667840757150db3f20d6c72432db0", token)
 	client = new Chat.Client(token)
-	// var client2 = new Twilio(tokenProvider.accountSid, token);
 	console.log(tokenProvider.accountSid)
 
-	// console.log(Chat)
 	var cache = []
     client_str = JSON.stringify(client, function(key, value) {
 		if (typeof value === 'object' && value !== null) {
@@ -59,18 +51,15 @@ router.get('/channels', function(req, res) {
 		return value;
       });
     cache = null
-	// console.log(client_str)
-	// const service = client.chat.services(tokenProvider.serviceSid)
-	// client2.chat.services.list().then(function(response) {
-	//     console.log("Response: \n"+response);
-	// }).catch(function(error) {
-	//     console.log(error);
-	// });
-	getChannels()
-	// console.log(twilio)
-	// getMessages(token)
 
-	res.send(token)
+    getChannels(function(channels) {
+    	result = {
+			"token":token,
+			"channels":channels
+		}
+
+		res.json(result)
+    })
 });
 
 router.post('/channels', function(req,res) {
@@ -78,7 +67,7 @@ router.post('/channels', function(req,res) {
 	res.send("we made it back")
 });
 
-router.post('/channels/:channel_name/messages', function(req, res) {
+router.get('/channels/:channel_name/messages', function(req, res) {
 
 	console.log("channel_name is " + req.params.channel_name)
 
@@ -98,18 +87,19 @@ router.post('/channels/:channel_name/messages', function(req, res) {
 		if (channel !== null) {
 			console.log(channel.uniqueName + " was FOUND!\nHere are the messages:")
 			channel.getMessages(0).then(function(messages) {
+				message_bodies = []
 				messages.items.forEach(function(msg) {
 					console.log(msg.state.body)
+					message_bodies.push(msg.state.body)
 				});
-				// console.log(JSON.stringify(messages, null, 4))
+				res.json(message_bodies)
 			})
-
-			// addMessage(channel, body);	
 		} else {
 	    	console.log("Channel with uniqueName of " + req.body.channel_name + " could not be found :(")
+	    	res.err("No channel with specified name")
 	    }
 	});
-	res.json(req.params)
+	// res.json(req.params)
 });
 
 function createChannel(newChannel) {
@@ -132,14 +122,18 @@ function createChannel(newChannel) {
     })
 }
 
-function getChannels() {
+function getChannels(callback) {
+	channels = []
 	const service = client.getSubscribedChannels().then(page =>{
 		subscribedChannels = page.items.sort(function(a, b) {
           return a.friendlyName > b.friendlyName;
         });
+        channel_names = []
 		subscribedChannels.forEach(function(chan) {
 		    console.log(chan.uniqueName + " is a channel!")
+		    channel_names.push(chan.uniqueName)
 		});
+		callback(channel_names)
 	})
 }
 
@@ -165,13 +159,6 @@ function addMessage(channel, body) {
 }
 
 function getMessages(channel) {
-	// const client = new twilio.Twilio(TokenProvider.accountSid, token)
-	// const service = client.chat.services(TokenProvider.serviceSid)
-	// service.channels(channel).messages.list().then(function(response) {
-	// 	console.log(response);
-	// }).catch(function(error) {
-	// 	console.log(error);
-	// });
 	return channel.getMessages(30)
 }
 
