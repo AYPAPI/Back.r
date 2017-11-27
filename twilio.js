@@ -60,6 +60,7 @@ TokenProvider.prototype.getToken = function(identity, endpointId) {
     ttl: 40000
   });
 
+  // var grant = new ChatGrant({ pushCredentialSid: this.pushCredentialSid });
   var grant = new ChatGrant({ pushCredentialSid: this.pushCredentialSid });
 
   grant.serviceSid = this.serviceSid;
