@@ -107,8 +107,6 @@ router.get('/channels/:channel_name/messages', function(req, res) {
 /* POST a message to a specific channel */
 router.post('/channels/:channel_name/messages', function(req, res) {
 
-	console.log("channel_name is " + req.params.channel_name)
-
 	var body = req.body.messageBody
 
 	var identity = req.query && req.query.identity;
@@ -121,12 +119,9 @@ router.post('/channels/:channel_name/messages', function(req, res) {
 	var client = new Chat.Client(token)
 
 	getChannel(client, req.params.channel_name, function(channel) {
-		console.log("in getChannel's callback")
 		if (channel !== null) {
 			channel.sendMessage(body).then(function(messages) {
 				channel.getMessages(0).then(function(msgs) {
-											console.log("\nTHE LAST MESSAGE: " + msgs.items[msgs.items.length - 1].state.body)
-
 					if (msgs.items[msgs.items.length - 1].state.body === body) {
 						res_string = "message added successfully"
 					} else {
@@ -134,14 +129,11 @@ router.post('/channels/:channel_name/messages', function(req, res) {
 					}
 					res.send(res_string)
 				})
-				// res.send("done sending message")
 			})
 		} else {
-	    	console.log("Channel with uniqueName of " + req.body.channel_name + " could not be found :(")
 	    	res.err("No channel with specified name")
 	    }
 	});
-	// res.json(req.params)
 });
 
 function createChannel(newChannel) {
@@ -194,14 +186,6 @@ function getChannel(client, channel_name, callback) {
 		    }
 		};
 	})
-}
-
-function addMessage(channel, body) {
-	channel.sendMessage(req.body.messageBody)
-}
-
-function getMessages(channel) {
-	return channel.getMessages(30)
 }
 
 module.exports = router;
