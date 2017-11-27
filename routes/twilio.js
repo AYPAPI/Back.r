@@ -24,6 +24,7 @@ router.get('/getToken', function(req, res) {
 	res.send(token);
 });
 
+/* GET the list of available channels */
 router.get('/channels', function(req, res) {
 
 	var identity = req.query && req.query.identity;
@@ -61,11 +62,13 @@ router.get('/channels', function(req, res) {
     })
 });
 
+/* POST to /channels will create a new channel using req.body */
 router.post('/channels', function(req,res) {
 	createChannel(req.body)
 	res.send("we made it back")
 });
 
+/* GET a specific channel's messages */
 router.get('/channels/:channel_name/messages', function(req, res) {
 
 	console.log("channel_name is " + req.params.channel_name)
@@ -85,13 +88,53 @@ router.get('/channels/:channel_name/messages', function(req, res) {
 		console.log("in getChannel's callback")
 		if (channel !== null) {
 			console.log(channel.uniqueName + " was FOUND!\nHere are the messages:")
-			channel.getMessages(30).then(function(messages) {
+			channel.getMessages(0).then(function(messages) {
 				message_bodies = []
 				messages.items.forEach(function(msg) {
 					console.log(msg.state.body)
 					message_bodies.push(msg.state.body)
 				});
 				res.json(message_bodies)
+			})
+		} else {
+	    	console.log("Channel with uniqueName of " + req.body.channel_name + " could not be found :(")
+	    	res.err("No channel with specified name")
+	    }
+	});
+	// res.json(req.params)
+});
+
+/* POST a message to a specific channel */
+router.post('/channels/:channel_name/messages', function(req, res) {
+
+	console.log("channel_name is " + req.params.channel_name)
+
+	var body = req.body.messageBody
+
+	var identity = req.query && req.query.identity;
+	var endpointId = req.query && req.query.endpointId;
+	if (!identity || !endpointId) {
+		res.status(400).send('getToken requires both an Identity and an Endpoint ID');
+	}
+
+	var token = tokenProvider.getToken(identity, endpointId);
+	var client = new Chat.Client(token)
+
+	getChannel(client, req.params.channel_name, function(channel) {
+		console.log("in getChannel's callback")
+		if (channel !== null) {
+			channel.sendMessage(body).then(function(messages) {
+				channel.getMessages(0).then(function(msgs) {
+											console.log("\nTHE LAST MESSAGE: " + msgs.items[msgs.items.length - 1].state.body)
+
+					if (msgs.items[msgs.items.length - 1].state.body === body) {
+						res_string = "message added successfully"
+					} else {
+						res_string = "error, message not added"
+					}
+					res.send(res_string)
+				})
+				// res.send("done sending message")
 			})
 		} else {
 	    	console.log("Channel with uniqueName of " + req.body.channel_name + " could not be found :(")
