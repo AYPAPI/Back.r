@@ -13,6 +13,14 @@ import { onSignIn } from '../auth.js';
 
 class SignUpScreen extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      user: "test_user"
+    };
+  }
+
   render() {
 
     const { navigate } = this.props.navigation;
@@ -34,7 +42,7 @@ class SignUpScreen extends Component {
                 backgroundColor="#03A9F4"
                 title="SIGN UP"
                 onPress={() => {
-                  onSignIn().then(() => navigate("SignedIn", {user: "gimmeaname"}));
+                  onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));
                 }}
               />
 

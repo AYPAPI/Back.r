@@ -5,6 +5,14 @@ import { onSignIn } from '../auth.js'
 
 class LoginScreen extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      user: "test_user"
+    };
+  }
+
   render() {
 
     const { navigate } = this.props.navigation;
@@ -27,7 +35,7 @@ class LoginScreen extends Component {
               backgroundColor="#03A9F4"
               title="LOGIN"
               onPress={() => {
-                onSignIn().then(() => navigate("SignedIn", {user: "USER"}));
+                onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));
               }}
             />
             <Text>"Don't have an account?"</Text>
