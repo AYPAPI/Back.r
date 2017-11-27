@@ -34,6 +34,12 @@ class UserProfileScreen extends Component {
         justifyContent: 'center',
         alignItems: 'center'}}
         >
+      
+        <Button
+          onPress={() => navigate("Explore", {user: "hiimauser"})}
+          title="Explore Page"
+          buttonStyle={{ marginTop: 20 }}
+        />
         <Avatar
         padding={10}
         width={225}
