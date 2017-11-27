@@ -105,7 +105,7 @@ router.delete('/channels/:channel_name/delete', function(req, res) {
 	console.log("deleting channel_name: " + req.params.channel_name)
 	var body = req.body.messageBody
 
-	var channel = req.params.channel_name
+	var channel_name = req.params.channel_name
 
 	var identity = req.query && req.query.identity;
 	var endpointId = req.query && req.query.endpointId;
@@ -113,11 +113,17 @@ router.delete('/channels/:channel_name/delete', function(req, res) {
 		res.status(400).send('getToken requires both an Identity and an Endpoint ID');
 	}
 
-
 	var token = tokenProvider.getToken(identity, endpointId);
 	client = new Chat.Client(token)
 
-	deleteChannel(channel)
+	getChannel(client, req.params.channel_name, function(channel) {
+		if (channel != null) {
+			channel.delete().then(function(channel) {
+		  console.log('Deleted channel: ' + channel.sid);
+			});
+		}
+	});
+
 });
 
 function createChannel(newChannel) {
@@ -181,11 +187,5 @@ function addMessage(channel, body) {
 function getMessages(channel) {
 	return channel.getMessages(30)
 }
-
-function deleteChannel(channel) {
-	channel.delete().then(function(channel) {
-  console.log('Deleted channel: ' + channel.sid);
-	});
-};
 
 module.exports = router;
