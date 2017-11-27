@@ -88,6 +88,19 @@ class MyProfileScreen extends Component {
           icon={{name: 'autorenew'}}
           onPress={() => navigate("MyProfile")}
         />
+        <Button
+            onPress={() => navigate("Explore", {user: "insertuserhere"})}
+            title="Explore Page"
+            buttonStyle={{ marginTop: 20 }}
+        />
+        <Button
+          buttonStyle={{ marginTop: 20 }}
+          backgroundColor="#03A9F4"
+          title="Log Out"
+          onPress={() => {
+            onSignOut().then(() => navigate("SignedOut"));
+          }}
+        />
         </View>
 
       );
