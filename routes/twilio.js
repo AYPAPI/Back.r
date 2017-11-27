@@ -7,7 +7,6 @@ var TokenProvider = require('../twilio');
 
 var credentials = require('../credentials.json');
 var tokenProvider = new TokenProvider(credentials);
-var client
 
 /* GET twilio token */
 router.get('/getToken', function(req, res) {
@@ -35,8 +34,8 @@ router.get('/channels', function(req, res) {
 	}
 	var token = tokenProvider.getToken(identity, endpointId);
 
-	client = new Chat.Client(token)
-	console.log(tokenProvider.accountSid)
+	var client = new Chat.Client(token)
+	console.log(Chat)
 
 	var cache = []
     client_str = JSON.stringify(client, function(key, value) {
@@ -52,7 +51,7 @@ router.get('/channels', function(req, res) {
       });
     cache = null
 
-    getChannels(function(channels) {
+    getChannels(client, function(channels) {
     	result = {
 			"token":token,
 			"channels":channels
@@ -80,13 +79,13 @@ router.get('/channels/:channel_name/messages', function(req, res) {
 	}
 
 	var token = tokenProvider.getToken(identity, endpointId);
-	client = new Chat.Client(token)
+	var client = new Chat.Client(token)
 
 	getChannel(client, req.params.channel_name, function(channel) {
 		console.log("in getChannel's callback")
 		if (channel !== null) {
 			console.log(channel.uniqueName + " was FOUND!\nHere are the messages:")
-			channel.getMessages(0).then(function(messages) {
+			channel.getMessages(30).then(function(messages) {
 				message_bodies = []
 				messages.items.forEach(function(msg) {
 					console.log(msg.state.body)
@@ -125,7 +124,7 @@ function createChannel(newChannel) {
 
 	var token = tokenProvider.getToken(newChannel.identity, newChannel.endpointId);
 	console.log(token)
-	client = new Chat.Client(token)
+	var client = new Chat.Client(token)
 
 	var attributes = {
       description: newChannel.description
@@ -141,7 +140,7 @@ function createChannel(newChannel) {
     })
 }
 
-function getChannels(callback) {
+function getChannels(client, callback) {
 	channels = []
 	const service = client.getSubscribedChannels().then(page =>{
 		subscribedChannels = page.items.sort(function(a, b) {
