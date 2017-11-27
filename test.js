@@ -171,7 +171,7 @@ var test_message = {
 }
 
 request.post({
-    url: url + "twilio/channels/test_channel_fire/messages?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
+    url: url + "twilio/channels/channel1/messages?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
     // method: "POST",
     json: true,   // <--Very important!!!
     body: test_message

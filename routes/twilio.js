@@ -82,6 +82,8 @@ router.post('/channels/:channel_name/messages', function(req, res) {
 
 	console.log("channel_name is " + req.params.channel_name)
 
+	var body = req.body.messageBody
+
 	var identity = req.query && req.query.identity;
 	var endpointId = req.query && req.query.endpointId;
 	if (!identity || !endpointId) {
@@ -94,12 +96,15 @@ router.post('/channels/:channel_name/messages', function(req, res) {
 	getChannel(client, req.params.channel_name, function(channel) {
 		console.log("in getChannel's callback")
 		if (channel !== null) {
-			console.log(channel.uniqueName + " was FOUND!")
+			console.log(channel.uniqueName + " was FOUND!\nHere are the messages:")
+			channel.getMessages(0).then(function(messages) {
+				messages.items.forEach(function(msg) {
+					console.log(msg.state.body)
+				});
+				// console.log(JSON.stringify(messages, null, 4))
+			})
 
-			channel.getMessages(30)
 			// addMessage(channel, body);	
-			// messages = getMessages(channel)
-			// console.log(messages)
 		} else {
 	    	console.log("Channel with uniqueName of " + req.body.channel_name + " could not be found :(")
 	    }
@@ -128,14 +133,11 @@ function createChannel(newChannel) {
 }
 
 function getChannels() {
-	// console.log("Calling getChannels() on client: \n" + client_str)
 	const service = client.getSubscribedChannels().then(page =>{
 		subscribedChannels = page.items.sort(function(a, b) {
           return a.friendlyName > b.friendlyName;
         });
-        // console.log("There are " + subscribedChannels.length + " many channels")
 		subscribedChannels.forEach(function(chan) {
-		    // console.log(chan);
 		    console.log(chan.uniqueName + " is a channel!")
 		});
 	})
@@ -147,25 +149,19 @@ function getChannel(client, channel_name, callback) {
 		subscribedChannels = page.items.sort(function(a, b) {
           return a.friendlyName > b.friendlyName;
         });
-        // console.log("There are " + subscribedChannels.length + " many channels")
-		subscribedChannels.forEach(function(chan) {
-		    // console.log(chan);
+		for(var chan of subscribedChannels) {
 		    console.log(chan.uniqueName + " is a channel!")
 		    if (chan.uniqueName.trim() === channel_name.trim()) {
 		    	console.log("FOUND " + channel_name + "\n\t calling callback")
 		    	callback(chan)
+		    	break
 		    }
-		});
+		};
 	})
-	// callback(null)
 }
 
 function addMessage(channel, body) {
-	channel.sendMessage(body).then(function() {
-      $('#message-body-input').val('').focus();
-      $('#channel-messages').scrollTop($('#channel-messages ul').height());
-      $('#channel-messages li.last-read').removeClass('last-read');
-    });
+	channel.sendMessage(req.body.messageBody)
 }
 
 function getMessages(channel) {
