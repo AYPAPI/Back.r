@@ -140,11 +140,12 @@ var url = 'http://localhost:8080/'
 var test_channel = {
   "description": "This is a test channel",
   "friendlyName": "tester2017",
-  "uniqueName": "channel2",
+  "uniqueName": "vinnie_test",
   "identity" : "brandon",
   "endpointId": "61553df94c234a691130ab9d3438b074"
 }
 
+/* POST: Create a channel */
 // request.post({
 //     url: url + "twilio/channels",
 //     // method: "POST",
@@ -156,6 +157,7 @@ var test_channel = {
 //   }
 // });
 
+/* GET: All channels */
 // request.get({
 //   url: url + "twilio/channels?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
 //   json: true   // <--Very important, otherwise it will be defaulted to HTML!!!
@@ -170,6 +172,7 @@ var test_message = {
   "messageBody": "Vinay u is a dumb dumb"
 }
 
+
 // request.post({
 //     url: url + "twilio/channels/channel1/messages?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
 //     // method: "POST",
@@ -181,6 +184,7 @@ var test_message = {
 //   }
 // });
 
+/* Get Channel's Messages */
 // request.get({
 //     url: url + "twilio/channels/channel1/messages?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
 //     json: true
@@ -194,14 +198,15 @@ var test_message = {
 //   }
 // });
 
-request.delete({
-  url: url + "twilio/channels/test_channel_fire/delete?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
-  json: true
-}, function (err, res) {
-  if (err) {
-    console.log(err)
-  } else {
-    console.log("Delete:")
-    console.log(res.body)
-  }
-});
+/* Delete Channel */
+// request.delete({
+//   url: url + "twilio/channels/vinnie_test/delete?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
+//   json: true
+// }, function (err, res) {
+//   if (err) {
+//     console.log(err)
+//   } else {
+//     console.log("Delete:")
+//     console.log(res.body.channel_name)
+//   }
+// });

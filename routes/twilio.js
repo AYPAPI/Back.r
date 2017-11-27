@@ -119,7 +119,9 @@ router.delete('/channels/:channel_name/delete', function(req, res) {
 	getChannel(client, req.params.channel_name, function(channel) {
 		if (channel != null) {
 			channel.delete().then(function(channel) {
-		  console.log('Deleted channel: ' + channel.sid);
+				var channel_obj = { "channel_name": channel.sid}
+			res.json(channel_obj)
+			// console.log('Deleted channel: ' + channel.sid);
 			});
 		}
 	});
@@ -129,7 +131,7 @@ router.delete('/channels/:channel_name/delete', function(req, res) {
 function createChannel(newChannel) {
 
 	var token = tokenProvider.getToken(newChannel.identity, newChannel.endpointId);
-	console.log(token)
+	// console.log(token)
 	var client = new Chat.Client(token)
 
 	var attributes = {
@@ -177,8 +179,6 @@ function getChannel(client, channel_name, callback) {
 		};
 	})
 }
-
-
 
 function addMessage(channel, body) {
 	channel.sendMessage(req.body.messageBody)
