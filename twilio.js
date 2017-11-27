@@ -89,6 +89,7 @@ TwilioLib.prototype.getChannel = function(client, channel_name, callback) {
 		    	break
 		    }
 		};
+		callback(null)
 	})
 }
 

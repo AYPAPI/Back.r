@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var twilio = require('twilio')
-var Twilio = require('twilio').Twilio
+//var Twilio = require('twilio').Twilio
 var Chat = require('twilio-chat')
 var TwilioLib = require('../twilio');
 
@@ -119,6 +119,7 @@ router.post('/channels/:channel_name/messages', function(req, res) {
 	}
 
 	var token = twilioLib.getToken(identity, endpointId);
+
 	var client = new Chat.Client(token)
 
 	twilioLib.getChannel(client, req.params.channel_name, function(channel) {
@@ -136,6 +137,35 @@ router.post('/channels/:channel_name/messages', function(req, res) {
 		} else {
 	    	res.err("No channel with specified name")
 	    }
+	});
+});
+
+router.delete('/channels/:channel_name/delete', function(req, res) {
+	console.log("deleting channel_name: " + req.params.channel_name)
+	var body = req.body.messageBody
+
+	var channel_name = req.params.channel_name
+
+	var identity = req.query && req.query.identity;
+	var endpointId = req.query && req.query.endpointId;
+	if (!identity || !endpointId) {
+		res.status(400).send('getToken requires both an Identity and an Endpoint ID');
+	}
+
+	var token = twilioLib.getToken(identity, endpointId);
+	client = new Chat.Client(token)
+
+	twilioLib.getChannel(client, req.params.channel_name, function(channel) {
+		if (channel != null) {
+			channel.delete().then(function(channel) {
+				var channel_obj = { "channel_name": channel.sid}
+			res.json(channel_obj)
+			// console.log('Deleted channel: ' + channel.sid);
+			});
+		} else {
+			// res.render('error', { error: "No channel with specified name to delete" })
+			res.status(404).send("No channel with specified name to delete")
+		}
 	});
 });
 

@@ -52,7 +52,7 @@ var url = 'http://localhost:8080/'
 //   }
 // });
 
-// // Get maker 
+// // Get maker
 // request.get({
 //   url: url + "user/maker",
 //   json: true,
@@ -137,14 +137,14 @@ var url = 'http://localhost:8080/'
 // 	console.log("POST response body  - " + res.body);
 // });
 
-request.get({
-  url: url + "twilio/getToken?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
-  json: true   // <--Very important, otherwise it will be defaulted to HTML!!!
-}, function(err, res) {
-  if (res != null && res.body != null){
-    console.log("The result is : " + JSON.stringify(res.body));
-  }
-});
+// request.get({
+//   url: url + "twilio/getToken?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
+//   json: true   // <--Very important, otherwise it will be defaulted to HTML!!!
+// }, function(err, res) {
+//   if (res != null && res.body != null){
+//     console.log("The result is : " + JSON.stringify(res.body));
+//   }
+// });
 
 // var test_channel = {
 //   "description": "This is a test channel",
@@ -154,6 +154,15 @@ request.get({
 //   "endpointId": "61553df94c234a691130ab9d3438b074"
 // }
 
+// var test_channel = {
+//   "description": "This is a test channel",
+//   "friendlyName": "tester2017",
+//   "uniqueName": "vinnie_test",
+//   "identity" : "brandon",
+//   "endpointId": "61553df94c234a691130ab9d3438b074"
+// }
+
+/* POST: Create a channel */
 // request.post({
 //     url: url + "twilio/channels",
 //     // method: "POST",
@@ -165,19 +174,21 @@ request.get({
 //   }
 // });
 
-request.get({
-  url: url + "twilio/channels?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
-  json: true   // <--Very important, otherwise it will be defaulted to HTML!!!
-}, function(err, res) {
-  if (res != null && res.body != null){
-    console.log("The result is : " + JSON.stringify(res.body));
-    token = res.body
-  }
-});
+/* GET: All channels */
+// request.get({
+//   url: url + "twilio/channels?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
+//   json: true   // <--Very important, otherwise it will be defaulted to HTML!!!
+// }, function(err, res) {
+//   if (res != null && res.body != null){
+//     console.log("The result is : " + JSON.stringify(res.body));
+//     token = res.body
+//   }
+// });
 
 // var test_message = {
 //   "messageBody": "Vinay u is a dumb dumb but u is a gud fren"
 // }
+
 
 // request.post({
 //     url: url + "twilio/channels/channel1/messages?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
@@ -188,19 +199,32 @@ request.get({
 //   if (err) {
 //     console.log(err)
 //   } else {
+//   }
+// });
+
+// /* Get Channel's Messages */
+// request.get({
+//     url: url + "twilio/channels/channel1/messages?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
+//     json: true
+// }, function(err, res) {
+//   if (err) {
+//     console.log(err)
+//   }
+//   else {
+//     console.log("The message bodies:\n")
 //     console.log(res.body)
 //   }
 // });
 
-request.get({
-    url: url + "twilio/channels/channel1/messages?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
-    json: true
-}, function(err, res) {
-  if (err) {
-    console.log(err)
-  }
-  else {
-    console.log("The message bodies:\n")
-    console.log(res.body)
-  }
-});
+/* Delete Channel */
+// request.delete({
+//   url: url + "twilio/channels/vinnie_test/delete?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
+//   json: true
+// }, function (err, res) {
+//   if (res.status != 200) {
+//     console.log(res.body)
+//   } else {
+//     console.log("Delete:")
+//     console.log(res.body.channel_name)
+//   }
+// });
