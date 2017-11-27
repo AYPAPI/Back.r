@@ -52,7 +52,7 @@ var url = 'http://localhost:8080/'
 //   }
 // });
 
-// // Get maker 
+// // Get maker
 // request.get({
 //   url: url + "user/maker",
 //   json: true,
@@ -181,15 +181,27 @@ var url = 'http://localhost:8080/'
 //   }
 // });
 
-request.get({
-    url: url + "twilio/channels/channel1/messages?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
-    json: true
-}, function(err, res) {
+// request.get({
+//     url: url + "twilio/channels/channel1/messages?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
+//     json: true
+// }, function(err, res) {
+//   if (err) {
+//     console.log(err)
+//   }
+//   else {
+//     console.log("The message bodies:\n")
+//     console.log(res.body)
+//   }
+// });
+
+request.delete({
+  url: url + "twilio/channels/test_channel_fire/delete?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
+  json: true
+}, function (err, res) {
   if (err) {
     console.log(err)
-  }
-  else {
-    console.log("The message bodies:\n")
+  } else {
+    console.log("Delete:")
     console.log(res.body)
   }
 });

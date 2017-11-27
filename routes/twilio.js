@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var twilio = require('twilio')
-var Twilio = require('twilio').Twilio
+//var Twilio = require('twilio').Twilio
 var Chat = require('twilio-chat')
 var TokenProvider = require('../twilio');
 
@@ -102,6 +102,25 @@ router.get('/channels/:channel_name/messages', function(req, res) {
 	// res.json(req.params)
 });
 
+router.delete('/channels/:channel_name/delete', function(req, res) {
+	console.log("deleting channel_name: " + req.params.channel_name)
+	var body = req.body.messageBody
+
+	var channel = req.params.channel_name
+
+	var identity = req.query && req.query.identity;
+	var endpointId = req.query && req.query.endpointId;
+	if (!identity || !endpointId) {
+		res.status(400).send('getToken requires both an Identity and an Endpoint ID');
+	}
+
+
+	var token = tokenProvider.getToken(identity, endpointId);
+	client = new Chat.Client(token)
+
+	deleteChannel(channel)
+});
+
 function createChannel(newChannel) {
 
 	var token = tokenProvider.getToken(newChannel.identity, newChannel.endpointId);
@@ -154,6 +173,8 @@ function getChannel(client, channel_name, callback) {
 	})
 }
 
+
+
 function addMessage(channel, body) {
 	channel.sendMessage(req.body.messageBody)
 }
@@ -161,5 +182,11 @@ function addMessage(channel, body) {
 function getMessages(channel) {
 	return channel.getMessages(30)
 }
+
+function deleteChannel(channel) {
+	channel.delete().then(function(channel) {
+  console.log('Deleted channel: ' + channel.sid);
+	});
+};
 
 module.exports = router;
