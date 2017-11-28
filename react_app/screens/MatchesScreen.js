@@ -9,18 +9,25 @@ import {
 import {
 	Card, ListItem, Icon
 } from 'react-native-elements'
-
+const url = "https://backr-test.herokuapp.com/"
 const getChannels = function() {
-  return fetch(url + 'twilo/channels?identity=vinnie&token=61553df94c234a691130ab9d', {
+  return fetch( url + 'twilio/channels?identity=vinnie&endpointId=9999', {
     method: 'GET',
+    headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    }
+  }).then(function(response) {
+    return response.json()
   })
-  .then((response) => response.json())
-  .then((res) => {
-  console.log(res);
-})
 }
 
-const users = []
+var users = [
+  {"other_user": "david"},
+  {"other_user": "david"},
+  {"other_user": "david"},
+  {"other_user": "david"}
+]
 // const users = [
 //  {
 //     name: 'brynn',
@@ -100,6 +107,23 @@ class MatchesScreen extends Component {
   };
 };
 
+constructor(props) {
+  super(props);
+  this.state = {
+    isLoading: true
+  }
+}
+  componentDidMount() {
+    const self = this
+    getChannels().then(function(res) {
+      if (res != null) {
+        self.setState({ "users": res.channels })
+        console.log(users)
+        console.log(this.state)
+      }
+    })
+  }
+
   render() {
 
     const { navigate } = this.props.navigation;
@@ -118,7 +142,7 @@ class MatchesScreen extends Component {
         <ListItem
           key={i}
           roundAvatar
-          title={u.name}
+          title={u.other_user}
           avatar={{uri:u.avatar}}
 		  subtitle={u.message}
 			onPress={() => navigate("Thread", {receiver: "insertuserhere"})}
