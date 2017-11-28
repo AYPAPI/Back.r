@@ -5,7 +5,6 @@ import {
   View,
   StyleSheet
 } from 'react-native';
-import { Icon } from 'react-native-elements';
 
 //Method for logging out.
 import { onSignOut } from '../auth.js'

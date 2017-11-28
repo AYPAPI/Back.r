@@ -32,9 +32,9 @@ router.post("/", function(req, res) {
   var backerMatches = req.body.profiles.backer.matches
   var backerSwipedOn = req.body.profiles.backer.swipedon
   db.createUser(name,age,email,isMaker,shortBio,"users",location, database);
-  db.createUserProfile(makerLongBio,makerPhotos,makerIcon,email,"maker", 
+  db.createUserProfile(makerLongBio,makerPhotos,makerIcon,email,"maker",
                        makerSwipedRight,makerMatches,makerSwipedOn, database)
-  db.createUserProfile(backerLongBio,backerPhotos,backerIcon,email,"backer", 
+  db.createUserProfile(backerLongBio,backerPhotos,backerIcon,email,"backer",
                        backerSwipedRight,backerMatches,backerSwipedOn,database)
   res.json(req.body);
 });
@@ -43,7 +43,11 @@ router.post("/", function(req, res) {
 router.get('/', function(req, res) {
   var email = req.body.email
   var user = db.readUser(email, 'users', database, function(user) {
-    if (user != null) console.log("GOT USER: " + user.email)
+    if (user != null) {
+      console.log("GOT USER: " + user.email)
+    } else {
+      console.log("NO USER " + email)
+    }
     res.json(user);
   })
 });
