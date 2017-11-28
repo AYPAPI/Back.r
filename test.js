@@ -137,22 +137,14 @@ var url = 'http://localhost:8080/'
 // 	console.log("POST response body  - " + res.body);
 // });
 
+/* Twilio Tests */
+
+/* Test Objects */
 var test_token = {
   "token" : null,
-  // "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTS2JjNTNkM2U1OTJkZjA2ZmIxZWRlYTgxNTc0MzIxMzBjLTE1MTE4MzYxOTQiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJicmFuZG9uIiwiY2hhdCI6eyJzZXJ2aWNlX3NpZCI6IklTNjA4ZGMxYTE4MzMxNGI2OGI1NTBhOTdkNmRiNjAwNmEiLCJlbmRwb2ludF9pZCI6IklTNjA4ZGMxYTE4MzMxNGI2OGI1NTBhOTdkNmRiNjAwNmFicmFuZG9uMSIsInB1c2hfY3JlZGVudGlhbF9zaWQiOiJDUmU5YzVlZmYyOWU3NDQ3MDlkN2RmODc1ZjhhNzk3YmYwIn19LCJpYXQiOjE1MTE4MzYxOTQsImV4cCI6MTUxMTg3NjE5NCwiaXNzIjoiU0tiYzUzZDNlNTkyZGYwNmZiMWVkZWE4MTU3NDMyMTMwYyIsInN1YiI6IkFDZGIxNjY3ODQwNzU3MTUwZGIzZjIwZDZjNzI0MzJkYjAifQ.2Fc7Pn9RmUlDjch-vYFlLMVzIcrSCTVmDOA5es9H4cs",
-  "identity":"vinnie",
+    "identity":"vinnie",
   "endpointId":"61553df94c234a691130ab9d3438b074"
 }
-/* Test getToken, need to change to handle invalid input better (dum dum) */
-// request.get({
-//   url: url + "twilio/getToken",
-//   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
-//   body: test_token
-// }, function(err, res) {
-//   if (res != null && res.body != null){
-//     console.log("The result is : " + JSON.stringify(res.body));
-//   }
-// });
 
 var test_channel = {
   "channel" : {
@@ -166,6 +158,26 @@ var test_channel = {
     "email": "vylana"
   }
 }
+
+var test_message = {
+  "token":null,
+  "identity":"brandon",
+  "endpointId":"0",
+  "messageBody": "Branday is so stylish because his socks match his sweater"
+}
+
+/* Twilio Calls */
+
+/* !!!! Test getToken, need to change to handle invalid input better (dum dum) */
+// request.get({
+//   url: url + "twilio/getToken",
+//   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
+//   body: test_token
+// }, function(err, res) {
+//   if (res != null && res.body != null){
+//     console.log("The result is : " + JSON.stringify(res.body));
+//   }
+// });
 
 /* POST: Create a channel */
 // request.post({
@@ -183,27 +195,17 @@ var test_channel = {
 // });
 
 /* GET: All channels */
-request.get({
-  url: url + "twilio/channels",
-  json: true,
-  body: test_token
-}, function(err, res) {
-  if (res != null && res.body != null){
-    console.log("The result is : " + JSON.stringify(res.body));
-  }
-});
+// request.get({
+//   url: url + "twilio/channels",
+//   json: true,
+//   body: test_token
+// }, function(err, res) {
+//   if (res != null && res.body != null){
+//     console.log("The result is : " + JSON.stringify(res.body));
+//   }
+// });
 
-
-
-var test_message = {
-  "token":null,
-  "identity":"brandon",
-  "endpointId":"0",
-  "messageBody": "Branday is so stylish because his socks match his sweater"
-}
-
-
-/* Post a message to a channel */
+/* POST: a message to a channel */
 // request.post({
 //     url: url + "twilio/channels/channel1/messages",
 //     json: true,
@@ -216,8 +218,7 @@ var test_message = {
 //   }
 // });
 
-
-/* Get Channel's Messages */
+/* GET: Channel's Messages */
 // request.get({
 //     url: url + "twilio/channels/channel1/messages",
 //     json: true,
@@ -232,7 +233,7 @@ var test_message = {
 //   }
 // });
 
-/* Delete Channel */
+/* DELETE: Delete Channel */
 // request.delete({
 //   url: url + "twilio/channels/test_channel/delete",
 //   json: true,
