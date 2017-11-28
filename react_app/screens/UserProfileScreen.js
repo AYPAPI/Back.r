@@ -6,7 +6,6 @@ import {
   View,
   StyleSheet
 } from 'react-native';
-import { Icon } from 'react-native-elements';
 
 const styles = {
   headerIcon: {
@@ -81,7 +80,7 @@ class UserProfileScreen extends Component {
         justifyContent: 'center',
         alignItems: 'center'}}
         >
-      
+
         <Button
           onPress={() => navigate("Explore", {user: "hiimauser"})}
           title="Explore Page"
