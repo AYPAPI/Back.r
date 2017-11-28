@@ -4,62 +4,85 @@ import {
   Button,
   Image,
   View,
+  ScrollView,
   StyleSheet
 } from 'react-native';
 
-const styles = {
+import {
+    Avatar,
+    Icon
+} from 'react-native-elements';
+
+var backerBlue = '#57C4DD';
+var makerPurple = '#75C9F9';
+var lightGrey = '#BFBFBF';
+
+var profilePhoto = require('../images/bread.jpg');
+
+const Dimensions = require('Dimensions');
+const window = Dimensions.get('window');
+
+const styles =  StyleSheet.create({
   headerIcon: {
     margin: 15,
     fontSize: 30
   },
   titleMaker: {
-    color: '#75C9F9',
+    color: makerPurple,
     margin: 15,
     fontSize: 40
   },
   titleBacker: {
-    color: '#C753E0',
+    color: backerBlue,
     margin: 15,
     fontSize: 40
-  }
-};
-
-import Svg, { Circle } from 'react-native-svg';
-import {Avatar} from 'react-native-elements';
-import {Icon} from 'react-native-elements';
-
-var profilePhoto = require('../images/bread.jpg');
+  },
+  containter: {
+      flex: 1,
+      flexDirection: 'column',
+      alignItems: 'center',
+      backgroundColor: 'white',
+  },
+  avatarContainer: {
+      alignItems: 'center',
+  },
+  titleContainer: {
+      flexDirection: 'row',
+      alignItems: 'flex-end',
+      justifyContent: 'space-between',
+      marginTop: 10,
+      marginLeft: 10,
+      marginRight: 10,
+  },
+  titleText: {
+      fontSize: 20,
+  },
+  iconsContainer: {
+      flexDirection: 'row',
+  },
+  descriptionContainer: {
+      marginTop: 10,
+      marginLeft: 10,
+      marginRight: 10,
+  },
+  bioText: {
+      fontSize: 16,
+      textAlign: 'justify',
+  },
+});
 
 class UserProfileScreen extends Component {
-  static navigationOptions = ({ navigation }) => {
-  const { user, mainUser } = navigation.state.params;
+    static navigationOptions = ({ navigation }) => {
+    const { user, mainUser } = navigation.state.params;
 
   return {
     headerTitle: (
       <Icon
-        name='lightbulb'
+        name='chevron-down'
         type='material-community'
         iconStyle={styles.titleMaker}
         onPress={ () => navigation.navigate("Explore", {user: mainUser}) }
       />
-    ),
-    headerRight: (
-      <Icon
-        name='message-text-outline'
-        type='material-community'
-        iconStyle={styles.headerIcon}
-        color='#999999'
-        onPress={ () => navigation.navigate("Matches", {user: mainUser}) }
-      />
-    ),
-    headerLeft: (
-        <Icon
-          name='user-o'
-          type='font-awesome'
-          color='#999999'
-          iconStyle={styles.headerIcon}
-          onPress={ () => navigation.navigate("MyProfile", {user: mainUser}) }
-        />
     ),
   };
 };
@@ -69,129 +92,54 @@ class UserProfileScreen extends Component {
     const { navigate } = this.props.navigation;
 
     return (
-      <View
-        style={{
-          flex:1,
-        flexDirection:'column' }}
-      >
-        <View
-        style={{flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'}}
-        >
+      <ScrollView style={styles.container}>
+            <View style={styles.avatarContainer}>
 
-        <Button
-          onPress={() => navigate("Explore", {user: "hiimauser"})}
-          title="Explore Page"
-          buttonStyle={{ marginTop: 20 }}
-        />
-        <Avatar
-        padding={10}
-        width={225}
-        height={225}
-        rounded
-        source={profilePhoto}
-        activeOpacity={0.7}
-        />
-        <Text>
-        IDEA TITLE/NAME
-        </Text>
+                <Avatar
+                width={window.width}
+                height={window.width}
+                source={profilePhoto}/>
+            </View>
 
-        <Text>
-        This is a bio. It describes either the backer or the idea to back.
-        </Text>
-        </View>
+            <View style={styles.titleContainer}>
+                <Text style={styles.titleText}>
+                    IDEA TITLE/NAME
+                </Text>
 
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            //alignItems: 'center'
-          }}
-        >
-          {/*
-          <Icon name="attach-money" size={30}/>
-          <Icon name="open-book" type="entypo" size={30}/>
-          <Icon name="md-people" type="ionicon" size={30}/>
-          <Icon name="tools" type="entypo" size={30}/>
-           <Icon name="cubes" type="font-awesome" size={30}/> */}
+                <View style={styles.iconsContainer}>
+                    <Icon
+                        size={20}
+                        name= 'school'
+                        type='MaterialCommunityIcons'/>
 
-          <Svg height="50"
-                width="50"
-                style={{
-                  //alignItems: "center",
-                  justifyContent: 'center'
-                }}>
-               <Icon name="attach-money" size={30}/>
-               <Circle
-              cx="25"
-              cy="25"
-              r="25"
-              fill="white"/>
-          </Svg>
+                    <Icon
+                        size={20}
+                        name= 'attach-money'
+                        type='MaterialCommunityIcons'/>
 
-          <Svg height="50"
-                width="50"
-                style={{
-                  //alignItems: "center",
-                  justifyContent: 'center'
-                }}>
-               <Icon name="open-book" type="entypo" size={30}/>
-               <Circle
-                            cx="25"
-                            cy="25"
-                            r="25"
-                            fill="white"/>
-          </Svg>
+                    <Icon
+                        size={20}
+                        name= 'group'
+                        type='MaterialCommunityIcons'/>
 
-          <Svg height="50"
-                width="50"
-                style={{
-                  //alignItems: "center",
-                  justifyContent: 'center'
-                }}>
-               <Icon name="md-people" type="ionicon" size={30}/>
-               <Circle
-                            cx="25"
-                            cy="25"
-                            r="25"
-                            fill='#3fd3df'/>
-          </Svg>
+                    <Icon
+                        size={20}
+                        name= 'work'
+                        type='MaterialCommunityIcons'/>
 
-          <Svg height="50"
-                width="50"
-                        style={{
-                          //alignItems: "center",
-                          justifyContent: 'center'
-                        }}>
-                       <Icon name="tools" type="entypo" size={30}/>
-                       <Circle
-                                    cx="25"
-                                    cy="25"
-                                    r="25"
-                                    fill="white"/>
-                  </Svg>
+                    <Icon
+                        size={20}
+                        name= 'gavel'
+                        type='MaterialCommunityIcons'/>
+                </View>
+            </View>
 
-                  <Svg height="50"
-                        width="50"
-                        style={{
-                          //alignItems: "center",
-                          justifyContent: 'center'
-                        }}>
-                       <Icon name="cubes" type="font-awesome" size={30}/>
-                       <Circle
-                                    cx="25"
-                                    cy="25"
-                                    r="25"
-                                    fill="#3fd3df"/>
-                      </Svg>
-
-
-
-        </View>
-      </View>
+            <View style={styles.descriptionContainer}>
+                <Text style={styles.bioText}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus egestas sapien nec lobortis tincidunt. Donec commodo, felis id convallis ultrices, velit arcu efficitur libero, at hendrerit dui felis eu massa. Donec tincidunt dolor quis erat dignissim, at vestibulum nisl placerat. Nunc pellentesque orci et convallis congue. Nam congue tortor urna, at consectetur nisl tincidunt id. å
+                </Text>
+            </View>
+        </ScrollView>
     );
   }
 }
