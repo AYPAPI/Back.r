@@ -46,7 +46,7 @@ router.get('/', function(req, res) {
     if (user != null) {
       console.log("GOT USER: " + user.email)
     } else {
-      console.log("NO USER " + user.email)
+      console.log("NO USER " + email)
     }
     res.json(user);
   })
