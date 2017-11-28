@@ -4,11 +4,11 @@ import {
   View,
   StyleSheet
 } from 'react-native';
-
 import {Avatar,
         Icon,
         Button
 } from 'react-native-elements';
+
 
 //Method for logging out.
 import { onSignOut } from '../auth.js';
