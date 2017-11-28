@@ -5,6 +5,14 @@ import { onSignIn } from '../auth.js'
 
 class LoginScreen extends Component {
 
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      user: "test_user"
+    };
+  }
+
   render() {
 
     const { navigate } = this.props.navigation;
@@ -25,20 +33,39 @@ class LoginScreen extends Component {
             <Button
               buttonStyle={{ marginTop: 20 }}
               backgroundColor="#03A9F4"
-              title="LOGIN"
+              title="Sign In"
+              onPress={() => {
+                onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));
+              }}
+            />
+	    <Button
+              buttonStyle={{ marginTop: 20 }}
+              backgroundColor="#03A9F4"
+              title="Sign In with Facebook"
               onPress={() => {
                 onSignIn().then(() => navigate("SignedIn", {user: "USER"}));
               }}
             />
-            <Text>"Don't have an account?"</Text>
-            <Button
-              buttonStyle={{ marginTop: 20 }}
-              backgroundColor="#03A9F4"
-              title="SIGN UP"
-              onPress={() => navigate("SignUp")}
-            />
+	  </Card>
 
-          </Card>
+	  <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
+          <Button
+            buttonStyle={{ marginTop: 20 }}
+            backgroundColor="#03A9F4"
+            title="Forgot Password?"
+            onPress={() => {
+                onSignIn().then(() => navigate("SignedIn", {user: "USER"}));
+	    }}
+          />
+
+  	  <Button
+            buttonStyle={{ marginTop: 20 }}
+            backgroundColor="#03A9F4"
+            title="Create Account"
+            onPress={() => navigate("SignUp")}
+          />
+	  </View>
+
         </View>
 
     );
