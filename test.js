@@ -206,11 +206,10 @@ request.get({
 });
 
 /* GET: All channels */
-ext = "twilio/channels"
+ext = "twilio/channels?identity=vinnie&endpointId=9999"
 request.get({
   url: url + ext,
   json: true,
-  body: test_null_token_2
 }, function(err, res) {
   output = constructOutputString(res, "test_null_token", ext)
   try {
@@ -221,7 +220,7 @@ request.get({
     output += "O"
   } catch (err) {
     output += "X"
-    output += "\n\t" + res.body 
+    output += "\n\t" + res.body
   }
   console.log(output)
 });
@@ -241,7 +240,7 @@ request.get({
     output += "O"
   } catch (err) {
     output += "X"
-    output += "\n\t" + res.body 
+    output += "\n\t" + res.body
   }
   console.log(output)
 });
@@ -258,7 +257,7 @@ var createChannelTest = function(ext) {
       assert.equal(res.statusCode, 200)
       assert.ok(JSON.stringify(res.body))
       output += "O"
-    } 
+    }
     catch (err) {
       output += "X"
       output += "\n\t" + res.body
@@ -281,7 +280,7 @@ request.delete({
     assert.equal(res.statusCode, 200)
     assert.ok(JSON.stringify(res.body))
     output += "O"
-  } 
+  }
   catch (err) {
     output += "X"
     output += "\n\t" + res.body
@@ -317,5 +316,3 @@ request.delete({
 //     console.log(res.body[0])
 //   }
 // });
-
-

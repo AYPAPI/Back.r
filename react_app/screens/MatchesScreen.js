@@ -10,26 +10,37 @@ import {
 	Card, ListItem, Icon
 } from 'react-native-elements'
 
-const users = [
- {
-    name: 'brynn',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
-	 message: "hey hot stuff"
- },{
-    name: 'brandon',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
- },{
-    name: 'andrew',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
-	 message: "hey hottie u down to be my thottie ;)"
- },{
-    name: 'sarah',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
- },{
-    name: 'brynn',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
- },
-]
+const getChannels = function() {
+  return fetch(url + 'twilo/channels?identity=vinnie&token=61553df94c234a691130ab9d', {
+    method: 'GET',
+  })
+  .then((response) => response.json())
+  .then((res) => {
+  console.log(res);
+})
+}
+
+const users = []
+// const users = [
+//  {
+//     name: 'brynn',
+//     avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
+// 	 message: "hey hot stuff"
+//  },{
+//     name: 'brandon',
+//     avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
+//  },{
+//     name: 'andrew',
+//     avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
+// 	 message: "hey hottie u down to be my thottie ;)"
+//  },{
+//     name: 'sarah',
+//     avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
+//  },{
+//     name: 'brynn',
+//     avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
+//  },
+// ]
 
 const styles = {
   headerIcon: {

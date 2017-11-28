@@ -20,18 +20,18 @@ router.get('/token', function(req, res) {
 
 		if (token == null) {
 			token = twilioLib.getToken(identity, endpointId);
-		}		
+		}
 		res.status(200).send(token);
 	}
 });
 
 /* GET the list of available channels */
 router.get('/channels', function(req, res) {
-	var identity = req.body && req.body.identity;
-	var endpointId = req.body && req.body.endpointId;
+	var identity = req.query && req.query.identity;
+	var endpointId = req.query && req.query.endpointId;
 	var token = req.body && req.body.token;
 
-	if (!twilioLib.validInput(req.body)) {
+	if (!twilioLib.validInput(req.query)) {
 		res.status(400).send('This route requires either an Access Token or both an Identity and an Endpoint ID');
 	} else {
 
@@ -82,13 +82,13 @@ router.post('/channels', function(req,res) {
 					res.status(200).send("Made it back")
 				}).catch(function(err) {
 				   res.status(500).send("Error: " + err.message)
-				});	
+				});
 			}).catch(function(err) {
 			   res.status(500).send("Error: Could not invite other_user.\n\t Error message: " + err.message)
-			});	
+			});
 		}).catch(e => {
 		   res.status(500).send("Error: Channel with this name already exists")
-		});	
+		});
 	}
 });
 
