@@ -110,7 +110,8 @@ class MatchesScreen extends Component {
 constructor(props) {
   super(props);
   this.state = {
-    isLoading: true
+    isLoading: true,
+    users: []
   }
 }
   componentDidMount() {
@@ -119,7 +120,6 @@ constructor(props) {
       if (res != null) {
         self.setState({ "users": res.channels })
         console.log(users)
-        console.log(this.state)
       }
     })
   }
@@ -137,7 +137,7 @@ constructor(props) {
       />
 		<Card containerStyle={{padding: 0}} >
   {
-    users.map((u, i) => {
+    this.state.users.map((u, i) => {
       return (
         <ListItem
           key={i}
