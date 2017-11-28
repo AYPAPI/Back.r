@@ -138,50 +138,36 @@ var url = 'http://localhost:8080/'
 // });
 
 var test_token = {
-  "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTS2JjNTNkM2U1OTJkZjA2ZmIxZWRlYTgxNTc0MzIxMzBjLTE1MTE4MzYxOTQiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJicmFuZG9uIiwiY2hhdCI6eyJzZXJ2aWNlX3NpZCI6IklTNjA4ZGMxYTE4MzMxNGI2OGI1NTBhOTdkNmRiNjAwNmEiLCJlbmRwb2ludF9pZCI6IklTNjA4ZGMxYTE4MzMxNGI2OGI1NTBhOTdkNmRiNjAwNmFicmFuZG9uMSIsInB1c2hfY3JlZGVudGlhbF9zaWQiOiJDUmU5YzVlZmYyOWU3NDQ3MDlkN2RmODc1ZjhhNzk3YmYwIn19LCJpYXQiOjE1MTE4MzYxOTQsImV4cCI6MTUxMTg3NjE5NCwiaXNzIjoiU0tiYzUzZDNlNTkyZGYwNmZiMWVkZWE4MTU3NDMyMTMwYyIsInN1YiI6IkFDZGIxNjY3ODQwNzU3MTUwZGIzZjIwZDZjNzI0MzJkYjAifQ.2Fc7Pn9RmUlDjch-vYFlLMVzIcrSCTVmDOA5es9H4cs",
-  "identity":"brandon",
+  "token" : null,
+  // "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTS2JjNTNkM2U1OTJkZjA2ZmIxZWRlYTgxNTc0MzIxMzBjLTE1MTE4MzYxOTQiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJicmFuZG9uIiwiY2hhdCI6eyJzZXJ2aWNlX3NpZCI6IklTNjA4ZGMxYTE4MzMxNGI2OGI1NTBhOTdkNmRiNjAwNmEiLCJlbmRwb2ludF9pZCI6IklTNjA4ZGMxYTE4MzMxNGI2OGI1NTBhOTdkNmRiNjAwNmFicmFuZG9uMSIsInB1c2hfY3JlZGVudGlhbF9zaWQiOiJDUmU5YzVlZmYyOWU3NDQ3MDlkN2RmODc1ZjhhNzk3YmYwIn19LCJpYXQiOjE1MTE4MzYxOTQsImV4cCI6MTUxMTg3NjE5NCwiaXNzIjoiU0tiYzUzZDNlNTkyZGYwNmZiMWVkZWE4MTU3NDMyMTMwYyIsInN1YiI6IkFDZGIxNjY3ODQwNzU3MTUwZGIzZjIwZDZjNzI0MzJkYjAifQ.2Fc7Pn9RmUlDjch-vYFlLMVzIcrSCTVmDOA5es9H4cs",
+  "identity":"vinnie",
   "endpointId":"61553df94c234a691130ab9d3438b074"
 }
-
+/* Test getToken, need to change to handle invalid input better (dum dum) */
 // request.get({
-//   url: url + "twilio/getToken?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
-//   json: true   // <--Very important, otherwise it will be defaulted to HTML!!!
+//   url: url + "twilio/getToken",
+//   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
+//   body: test_token
 // }, function(err, res) {
 //   if (res != null && res.body != null){
 //     console.log("The result is : " + JSON.stringify(res.body));
 //   }
 // });
 
-// var test_channel = {
-//   "description": "This is a test channel",
-//   "friendlyName": "andrew/vylana",
-//   "uniqueName": "testing_our_fingerprint",
-//   "identity" : "aypapi@gmail.com",
-//   "endpointId": "0"
-// }
-
-// var test_channel = {
-//   "description": "This is a test channel",
-//   "friendlyName": "tester2017",
-//   "uniqueName": "brandon_test",
-//   "identity" : "brandon",
-//   "endpointId": "61553df94c234a691130ab9d3438b074"
-// }
-
 var test_channel = {
   "channel" : {
     "description": "This is a test channel",
-    "friendlyName": "andrew/brandon",
-    "uniqueName": "returnother",
-    "identity" : "brandon",
+    "friendlyName": "vylana/vinnie",
+    "uniqueName": "test_channel",
+    "identity" : "vinnie",
     "endpointId": "61553df94c234a691130ab9d3438b074"
   },
   "other_user" : {
-    "email": "aypapi9@gmail.com"
+    "email": "vylana"
   }
 }
 
-// /* POST: Create a channel */
+/* POST: Create a channel */
 // request.post({
 //     url: url + "twilio/channels",
 //     // method: "POST",
@@ -191,41 +177,33 @@ var test_channel = {
 //   if (err) {
 //     console.log(err)
 //   }
+//   else {
+//     console.log(res.body)
+//   }
 // });
 
 /* GET: All channels */
-<<<<<<< HEAD
 request.get({
-  url: url + "twilio/channels?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
-  json: true
+  url: url + "twilio/channels",
+  json: true,
+  body: test_token
 }, function(err, res) {
   if (res != null && res.body != null){
     console.log("The result is : " + JSON.stringify(res.body));
   }
 });
 
+
+
 var test_message = {
-  "messageBody": "Vinay u is a dumb dumb but u is a gud fren"
+  "token":null,
+  "identity":"brandon",
+  "endpointId":"0",
+  "messageBody": "Branday is so stylish because his socks match his sweater"
 }
-=======
-// request.get({
-//   url: url + "twilio/channels?identity=brandon&endpointId=1",
-//   json: true,
-//   body: test_token
-// }, function(err, res) {
-//   if (res != null && res.body != null){
-//     console.log("The result is : " + JSON.stringify(res.body));
-//     // token = res.body
-//   }
-// });
-
-// var test_message = {
-//   "token":"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0.eyJqdGkiOiJTS2JjNTNkM2U1OTJkZjA2ZmIxZWRlYTgxNTc0MzIxMzBjLTE1MTE4MzYxOTQiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJicmFuZG9uIiwiY2hhdCI6eyJzZXJ2aWNlX3NpZCI6IklTNjA4ZGMxYTE4MzMxNGI2OGI1NTBhOTdkNmRiNjAwNmEiLCJlbmRwb2ludF9pZCI6IklTNjA4ZGMxYTE4MzMxNGI2OGI1NTBhOTdkNmRiNjAwNmFicmFuZG9uMSIsInB1c2hfY3JlZGVudGlhbF9zaWQiOiJDUmU5YzVlZmYyOWU3NDQ3MDlkN2RmODc1ZjhhNzk3YmYwIn19LCJpYXQiOjE1MTE4MzYxOTQsImV4cCI6MTUxMTg3NjE5NCwiaXNzIjoiU0tiYzUzZDNlNTkyZGYwNmZiMWVkZWE4MTU3NDMyMTMwYyIsInN1YiI6IkFDZGIxNjY3ODQwNzU3MTUwZGIzZjIwZDZjNzI0MzJkYjAifQ.2Fc7Pn9RmUlDjch-vYFlLMVzIcrSCTVmDOA5es9H4cs",
-//   "messageBody": "Vinay u is a dumb dumb but u is a gud fren"
-// }
->>>>>>> 435069896abaabfd5b0d2da4e2bead469727d514
 
 
+/* Post a message to a channel */
 // request.post({
 //     url: url + "twilio/channels/channel1/messages",
 //     json: true,
@@ -256,14 +234,9 @@ var test_message = {
 
 /* Delete Channel */
 // request.delete({
-<<<<<<< HEAD
-//   url: url + "twilio/channels/vinni/delete?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
-//   json: true
-=======
-//   url: url + "twilio/channels/brandon_test/delete",
+//   url: url + "twilio/channels/test_channel/delete",
 //   json: true,
 //   body: test_token
->>>>>>> 435069896abaabfd5b0d2da4e2bead469727d514
 // }, function (err, res) {
 //   if (res.status != 200) {
 //     console.log(res.body)

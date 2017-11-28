@@ -41,7 +41,6 @@ router.get('/channels', function(req, res) {
 
 	    twilioLib.getChannels(client, identity, function(channels) {
 	    	result = {
-				"token":token,
 				"channels":channels
 			}
 
@@ -57,12 +56,15 @@ router.post('/channels', function(req,res) {
 	var endpointId = req.body && req.body.channel.endpointId;
 	var token = req.body && req.body.token;
 
-	if (!twilioLib.validInput(req.body)) {
+	if (!twilioLib.validInput({
+			"identity":req.body.channel.identity,
+			"endpointId":req.body.channel.endpointId
+		})) {
 		res.status(400).send('This route requires either an Access Token or both an Identity and an Endpoint ID');
 	}
 	else {
 		if (token == null) {
-				token = twilioLib.getToken(identity, endpointId);
+				token = twilioLib.getToken(req.body.channel.identity, req.body.channel.endpointId);
 		}
 
 		var client = new Chat.Client(token)
