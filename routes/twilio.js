@@ -25,7 +25,6 @@ router.get('/getToken', function(req, res) {
 });
 
 router.get('/channels', function(req, res) {
-
 	var identity = req.query && req.query.identity;
 	var endpointId = req.query && req.query.endpointId;
 
@@ -35,7 +34,6 @@ router.get('/channels', function(req, res) {
 	var token = tokenProvider.getToken(identity, endpointId);
 
 	var client = new Chat.Client(token)
-	console.log(Chat)
 
 	var cache = []
     client_str = JSON.stringify(client, function(key, value) {
@@ -144,18 +142,20 @@ function createChannel(newChannel) {
       isPrivate: true,
       uniqueName: newChannel.uniqueName
     }).then(function(channel) {
-    	return channel
+    	return channel.join()
     })
 }
 
 function getChannels(client, callback) {
 	channels = []
+
 	const service = client.getSubscribedChannels().then(page =>{
 		subscribedChannels = page.items.sort(function(a, b) {
           return a.friendlyName > b.friendlyName;
         });
         channel_names = []
 		subscribedChannels.forEach(function(chan) {
+				console.log(chan)
 		    console.log(chan.uniqueName + " is a channel!")
 		    channel_names.push(chan.uniqueName)
 		});
@@ -186,6 +186,12 @@ function addMessage(channel, body) {
 
 function getMessages(channel) {
 	return channel.getMessages(30)
+}
+
+function parseFriendlyName(friendlyName) {
+	var names = friendlyName.split("/")
+	// var
+	// if (names[0] < names[1])
 }
 
 module.exports = router;

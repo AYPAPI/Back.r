@@ -90,22 +90,22 @@ var url = 'http://localhost:8080/'
 // 	"blockedUsers": ["dumdumbrandon@aol.com", "Abena.lol@gmail.com", "Vylana@me.com", "Gary@professionalism.com"]
 // }
 
-// //request.post({
-// //  url: url + "user/settings/create",
-// //  json: true,
-// //  body: test_settings
-// //}, function(err, res, body) {
-// //  console.log("POST response body  - " + res.body);
-// //})
+//request.post({
+//  url: url + "user/settings/create",
+//  json: true,
+//  body: test_settings
+//}, function(err, res, body) {
+//  console.log("POST response body  - " + res.body);
+//})
 
-// //request.post({
-// //    url: url + "user/settings",
-// //    // method: "POST",
-// //    json: true,   // <--Very important!!!
-// //    body: test_settings
-// //}, function(err, res, body) {
-// //	console.log("POST response body  - " + res.body);
-// //});
+//request.post({
+//    url: url + "user/settings",
+//    // method: "POST",
+//    json: true,   // <--Very important!!!
+//    body: test_settings
+//}, function(err, res, body) {
+//	console.log("POST response body  - " + res.body);
+//});
 
 // // Get user
 // request.get({
@@ -139,7 +139,7 @@ var url = 'http://localhost:8080/'
 
 var test_channel = {
   "description": "This is a test channel",
-  "friendlyName": "tester2017",
+  "friendlyName": "andrew/vylana",
   "uniqueName": "vinnie_test",
   "identity" : "brandon",
   "endpointId": "61553df94c234a691130ab9d3438b074"
@@ -158,15 +158,15 @@ var test_channel = {
 // });
 
 /* GET: All channels */
-// request.get({
-//   url: url + "twilio/channels?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
-//   json: true   // <--Very important, otherwise it will be defaulted to HTML!!!
-// }, function(err, res) {
-//   if (res != null && res.body != null){
-//     console.log("The result is : " + JSON.stringify(res.body));
-//     token = res.body
-//   }
-// });
+request.get({
+  url: url + "twilio/channels?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
+  json: true
+}, function(err, res) {
+  if (res != null && res.body != null){
+    console.log("The result is : " + JSON.stringify(res.body));
+    // token = res.body
+  }
+});
 
 var test_message = {
   "messageBody": "Vinay u is a dumb dumb"
