@@ -174,7 +174,7 @@ router.post('/channels/:channel_name/messages', function(req, res) {
 	}
 });
 
-router.delete('/channels/:channel_name/delete', function(req, res) {
+router.delete('/channels/:channel_name', function(req, res) {
 	var body = req.body.messageBody
 
 	var channel_name = req.params.channel_name

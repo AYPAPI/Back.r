@@ -153,6 +153,12 @@ var test_null_token = {
   "endpointId":"61553df94c234a691130ab9d3438b074"
 }
 
+var test_null_token_2 = {
+  "token" : null,
+  "identity":"sarah",
+  "endpointId":"61553df94c234a691130ab9d3438b074"
+}
+
 var test_token = {
   "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0eyJqdGkiOiJTS2JjNTNkM2U1OTJkZjA2ZmIxZWRlYTgxNTc0MzIxMzBjLTE1MTE4OTI4NjYiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ2aW5uaWUiLCJjaGF0Ijp7InNlcnZpY2Vfc2lkIjoiSVM2MDhkYzFhMTgzMzE0YjY4YjU1MGE5N2Q2ZGI2MDA2YSIsImVuZHBvaW50X2lkIjoiSVM2MDhkYzFhMTgzMzE0YjY4YjU1MGE5N2Q2ZGI2MDA2YXZpbm5pZTYxNTUzZGY5NGMyMzRhNjkxMTMwYWI5ZDM0MzhiMDc0IiwicHVzaF9jcmVkZW50aWFsX3NpZCI6IkNSZTljNWVmZjI5ZTc0NDcwOWQ3ZGY4NzVmOGE3OTdiZjAifX0sImlhdCI6MTUxMTg5Mjg2NiwiZXhwIjoxNTExOTMyODY2LCJpc3MiOiJTS2JjNTNkM2U1OTJkZjA2ZmIxZWRlYTgxNTc0MzIxMzBjIiwic3ViIjoiQUNkYjE2Njc4NDA3NTcxNTBkYjNmMjBkNmM3MjQzMmRiMCJ9.-BVxPyQjvgmHZHGVuD_eVMnUQQfGmVEeST51zWgTEXc"
 }
@@ -199,26 +205,27 @@ request.get({
   }
 });
 
-ext = "twilio/token"
+/* GET: All channels */
+ext = "twilio/channels"
 request.get({
-  url: url +  ext,
-  json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
-  body: test_null_token
+  url: url + ext,
+  json: true,
+  body: test_null_token_2
 }, function(err, res) {
-  if (res != null && res.body != null){
-    output = constructOutputString(res, "test_null_token", ext)
-    try {
-      assert.equal(res.statusCode, 200)
-      assert.ok(JSON.stringify(res.body))
-      output += "O"
-    } catch (err) {
-      output += "X"
-    }
-    console.log(output)
+  output = constructOutputString(res, "test_null_token", ext)
+  try {
+    assert.equal(res.statusCode, 200)
+    assert.ok(('channels' in res.body))
+    assert.ok((res.body.channels instanceof Array))
+    console.log(res.body.channels)
+    output += "O"
+  } catch (err) {
+    output += "X"
+    output += "\n\t" + res.body 
   }
+  console.log(output)
 });
 
-/* GET: All channels */
 ext = "twilio/channels"
 request.get({
   url: url + ext,
@@ -230,7 +237,7 @@ request.get({
     assert.equal(res.statusCode, 200)
     assert.ok(('channels' in res.body))
     assert.ok((res.body.channels instanceof Array))
-    // console.log(res.body.channels)
+    console.log(res.body.channels)
     output += "O"
   } catch (err) {
     output += "X"
@@ -263,7 +270,7 @@ var createChannelTest = function(ext) {
 
 
 /* DELETE: Delete Channel */
-ext = "twilio/channels/test_channel7/delete"
+ext = "twilio/channels/test_channel7"
 request.delete({
   url: url + ext,
   json: true,
