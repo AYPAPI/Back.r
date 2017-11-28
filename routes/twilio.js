@@ -10,17 +10,19 @@ var twilioLib = new TwilioLib(credentials);
 
 /* GET twilio token */
 router.get('/getToken', function(req, res) {
-	console.log(req.query.identity)
-	console.log(req.query.endpointId)
-	var identity = req.query && req.query.identity;
-	var endpointId = req.query && req.query.endpointId;
+	var identity = req.body && req.body.identity;
+	var endpointId = req.body && req.body.endpointId;
+	var token = req.body && req.body.token;
 
-	if (!identity || !endpointId) {
-		res.status(400).send('getToken requires both an Identity and an Endpoint ID');
+	if (!twilioLib.validInput(req.body)) {
+		res.status(400).send('This route requires either an Access Token or both an Identity and an Endpoint ID');
+	} else {
+
+		if (token == null) {
+			token = twilioLib.getToken(identity, endpointId);
+		}		
+		res.status(200).send(token);
 	}
-
-	var token = twilioLib.getToken(identity, endpointId)
-	res.send(token);
 });
 
 /* GET the list of available channels */
@@ -44,9 +46,9 @@ router.get('/channels', function(req, res) {
 				"channels":channels
 			}
 
-			res.json(result)
+			res.status(200).json(result)
 	    })
-		}
+	}
 });
 
 /* POST to /channels will create a new channel using req.body */

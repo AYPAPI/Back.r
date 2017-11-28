@@ -1,6 +1,7 @@
 const request = require('request');
+const assert = require('assert')
 var url = 'http://localhost:8080/'
-
+var delimiter = ": "
 // var test_user = {
 // 	"name":"vinay",
 // 	"age": 21,
@@ -140,10 +141,14 @@ var url = 'http://localhost:8080/'
 /* Twilio Tests */
 
 /* Test Objects */
-var test_token = {
+var test_null_token = {
   "token" : null,
-    "identity":"vinnie",
+  "identity":"vinnie",
   "endpointId":"61553df94c234a691130ab9d3438b074"
+}
+
+var test_token = {
+  "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0eyJqdGkiOiJTS2JjNTNkM2U1OTJkZjA2ZmIxZWRlYTgxNTc0MzIxMzBjLTE1MTE4OTI4NjYiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ2aW5uaWUiLCJjaGF0Ijp7InNlcnZpY2Vfc2lkIjoiSVM2MDhkYzFhMTgzMzE0YjY4YjU1MGE5N2Q2ZGI2MDA2YSIsImVuZHBvaW50X2lkIjoiSVM2MDhkYzFhMTgzMzE0YjY4YjU1MGE5N2Q2ZGI2MDA2YXZpbm5pZTYxNTUzZGY5NGMyMzRhNjkxMTMwYWI5ZDM0MzhiMDc0IiwicHVzaF9jcmVkZW50aWFsX3NpZCI6IkNSZTljNWVmZjI5ZTc0NDcwOWQ3ZGY4NzVmOGE3OTdiZjAifX0sImlhdCI6MTUxMTg5Mjg2NiwiZXhwIjoxNTExOTMyODY2LCJpc3MiOiJTS2JjNTNkM2U1OTJkZjA2ZmIxZWRlYTgxNTc0MzIxMzBjIiwic3ViIjoiQUNkYjE2Njc4NDA3NTcxNTBkYjNmMjBkNmM3MjQzMmRiMCJ9.-BVxPyQjvgmHZHGVuD_eVMnUQQfGmVEeST51zWgTEXc"
 }
 
 var test_channel = {
@@ -169,15 +174,40 @@ var test_message = {
 /* Twilio Calls */
 
 /* !!!! Test getToken, need to change to handle invalid input better (dum dum) */
-// request.get({
-//   url: url + "twilio/getToken",
-//   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
-//   body: test_token
-// }, function(err, res) {
-//   if (res != null && res.body != null){
-//     console.log("The result is : " + JSON.stringify(res.body));
-//   }
-// });
+ext = "twilio/getToken"
+request.get({
+  url: url + ext,
+  json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
+  body: test_token
+}, function(err, res) {
+  if (res != null && res.body != null){
+    output = ext + delimiter
+    try {
+      assert.equal(res.statusCode, 200)
+      assert.ok(JSON.stringify(res.body))
+      output += "O"
+    } catch (err) {
+      output += "X"
+    }
+    console.log(output)
+  }
+});
+
+request.get({
+  url: url + "twilio/getToken",
+  json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
+  body: test_null_token
+}, function(err, res) {
+  if (res != null && res.body != null){
+    try {
+      assert.equal(res.statusCode, 404)
+      assert.ok(JSON.stringify(res.body))
+      console.log('O')
+    } catch (err) {
+      console.log('X')
+    }
+  }
+});
 
 /* POST: Create a channel */
 // request.post({
