@@ -2,34 +2,7 @@ var twilio = require('twilio')
 var AccessToken = twilio.jwt.AccessToken;
 var ChatGrant = AccessToken.ChatGrant;
 
-// function TokenGenerator(identity, deviceId) {
-//   const appName = 'TwilioChat';
-
-//   // Create a unique ID for the client on their current device
-//   const endpointId = appName + ':' + identity + ':' + deviceId;
-
-//   // Create a "grant" which enables a client to use IPM as a given user,
-//   // on a given device
-//   const ipmGrant = new ChatGrant({
-//     serviceSid: process.env.TWILIO_IPM_SERVICE_SID,
-//     endpointId: endpointId,
-//   });
-
-//   // Create an access token which we will sign and return to the client,
-//   // containing the grant we just created
-//   const token = new AccessToken(
-//     process.env.TWILIO_ACCOUNT_SID,
-//     process.env.TWILIO_AUTH_TOKEN,
-//     process.env.TWILIO_API_SECRET
-//   );
-
-//   token.addGrant(ipmGrant);
-//   token.identity = identity;
-
-//   return token;
-// }
-
-function TokenProvider(credentials) {
+function TwilioLib(credentials) {
   Object.defineProperties(this, {
     accountSid: {
       enumerable: true,
@@ -54,7 +27,7 @@ function TokenProvider(credentials) {
   });
 }
 
-TokenProvider.prototype.getToken = function(identity, endpointId) {
+TwilioLib.prototype.getToken = function(identity, endpointId) {
   var token = new AccessToken(this.accountSid, this.signingKeySid, this.signingKeySecret, {
     identity: identity,
     ttl: 40000
@@ -70,4 +43,60 @@ TokenProvider.prototype.getToken = function(identity, endpointId) {
   return token.toJwt();
 };
 
-module.exports = TokenProvider;
+
+TwilioLib.prototype.createChannel = function(client, newChannel) {
+
+	var attributes = {
+      description: newChannel.description
+    };
+
+	return client.createChannel({
+      attributes: attributes,
+      friendlyName: newChannel.friendlyName,
+      isPrivate: true,
+      uniqueName: newChannel.uniqueName
+    }).then(function(channel) {
+    	return channel
+    })
+}
+
+TwilioLib.prototype.getChannels = function(client, callback) {
+	channels = []
+	const service = client.getSubscribedChannels().then(page =>{
+		subscribedChannels = page.items.sort(function(a, b) {
+          return a.friendlyName > b.friendlyName;
+        });
+        channel_names = []
+		subscribedChannels.forEach(function(chan) {
+		    console.log(chan.uniqueName + " is a channel!")
+		    channel_names.push(chan.uniqueName)
+		});
+		callback(channel_names)
+	})
+}
+
+TwilioLib.prototype.getChannel = function(client, channel_name, callback) {
+	console.log("getChannel is looking for a channel with the name: " + channel_name)
+	const service = client.getSubscribedChannels().then(page =>{
+		subscribedChannels = page.items.sort(function(a, b) {
+          return a.friendlyName > b.friendlyName;
+        });
+		for(var chan of subscribedChannels) {
+		    console.log(chan.uniqueName + " is a channel!")
+		    if (chan.uniqueName.trim() === channel_name.trim()) {
+		    	console.log("FOUND " + channel_name + "\n\t calling callback")
+		    	callback(chan)
+		    	break
+		    }
+		};
+		callback(null)
+	})
+}
+
+function parseFriendlyName(friendlyName) {
+	var names = friendlyName.split("/")
+	// var
+	// if (names[0] < names[1])
+}
+
+module.exports = TwilioLib;

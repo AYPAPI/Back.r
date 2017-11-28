@@ -3,10 +3,10 @@ var router = express.Router();
 var twilio = require('twilio')
 //var Twilio = require('twilio').Twilio
 var Chat = require('twilio-chat')
-var TokenProvider = require('../twilio');
+var TwilioLib = require('../twilio');
 
 var credentials = require('../credentials.json');
-var tokenProvider = new TokenProvider(credentials);
+var twilioLib = new TwilioLib(credentials);
 
 /* GET twilio token */
 router.get('/getToken', function(req, res) {
@@ -19,11 +19,11 @@ router.get('/getToken', function(req, res) {
 		res.status(400).send('getToken requires both an Identity and an Endpoint ID');
 	}
 
-	// var token = tokenProvider.getToken(identity, endpointId);
-	var token = TokenProvider.TokenGenerator(identity, endpointId)
+	var token = twilioLib.getToken(identity, endpointId)
 	res.send(token);
 });
 
+/* GET the list of available channels */
 router.get('/channels', function(req, res) {
 	var identity = req.query && req.query.identity;
 	var endpointId = req.query && req.query.endpointId;
@@ -31,7 +31,7 @@ router.get('/channels', function(req, res) {
 	if (!identity || !endpointId) {
 		res.status(400).send('getToken requires both an Identity and an Endpoint ID');
 	}
-	var token = tokenProvider.getToken(identity, endpointId);
+	var token = twilioLib.getToken(identity, endpointId);
 
 	var client = new Chat.Client(token)
 
@@ -49,7 +49,7 @@ router.get('/channels', function(req, res) {
       });
     cache = null
 
-    getChannels(client, function(channels) {
+    twilioLib.getChannels(client, function(channels) {
     	result = {
 			"token":token,
 			"channels":channels
@@ -59,11 +59,17 @@ router.get('/channels', function(req, res) {
     })
 });
 
+/* POST to /channels will create a new channel using req.body */
 router.post('/channels', function(req,res) {
-	createChannel(req.body)
+
+	var token = twilioLib.getToken(req.body.identity, req.body.endpointId);
+	var client = new Chat.Client(token)
+
+	twilioLib.createChannel(client, req.body)
 	res.send("we made it back")
 });
 
+/* GET a specific channel's messages */
 router.get('/channels/:channel_name/messages', function(req, res) {
 
 	console.log("channel_name is " + req.params.channel_name)
@@ -76,14 +82,14 @@ router.get('/channels/:channel_name/messages', function(req, res) {
 		res.status(400).send('getToken requires both an Identity and an Endpoint ID');
 	}
 
-	var token = tokenProvider.getToken(identity, endpointId);
+	var token = twilioLib.getToken(identity, endpointId);
 	var client = new Chat.Client(token)
 
-	getChannel(client, req.params.channel_name, function(channel) {
+	twilioLib.getChannel(client, req.params.channel_name, function(channel) {
 		console.log("in getChannel's callback")
 		if (channel !== null) {
 			console.log(channel.uniqueName + " was FOUND!\nHere are the messages:")
-			channel.getMessages(30).then(function(messages) {
+			channel.getMessages(0).then(function(messages) {
 				message_bodies = []
 				messages.items.forEach(function(msg) {
 					console.log(msg.state.body)
@@ -99,6 +105,39 @@ router.get('/channels/:channel_name/messages', function(req, res) {
 	// res.json(req.params)
 });
 
+/* POST a message to a specific channel */
+router.post('/channels/:channel_name/messages', function(req, res) {
+
+	var body = req.body.messageBody
+
+	var identity = req.query && req.query.identity;
+	var endpointId = req.query && req.query.endpointId;
+	if (!identity || !endpointId) {
+		res.status(400).send('getToken requires both an Identity and an Endpoint ID');
+	}
+
+	var token = twilioLib.getToken(identity, endpointId);
+
+	var client = new Chat.Client(token)
+
+	twilioLib.getChannel(client, req.params.channel_name, function(channel) {
+		if (channel !== null) {
+			channel.sendMessage(body).then(function(messages) {
+				channel.getMessages(0).then(function(msgs) {
+					if (msgs.items[msgs.items.length - 1].state.body === body) {
+						res_string = "message added successfully"
+					} else {
+						res_string = "error, message not added"
+					}
+					res.send(res_string)
+				})
+			})
+		} else {
+	    	res.err("No channel with specified name")
+	    }
+	});
+});
+
 router.delete('/channels/:channel_name/delete', function(req, res) {
 	console.log("deleting channel_name: " + req.params.channel_name)
 	var body = req.body.messageBody
@@ -111,87 +150,21 @@ router.delete('/channels/:channel_name/delete', function(req, res) {
 		res.status(400).send('getToken requires both an Identity and an Endpoint ID');
 	}
 
-	var token = tokenProvider.getToken(identity, endpointId);
+	var token = twilioLib.getToken(identity, endpointId);
 	client = new Chat.Client(token)
 
-	getChannel(client, req.params.channel_name, function(channel) {
+	twilioLib.getChannel(client, req.params.channel_name, function(channel) {
 		if (channel != null) {
 			channel.delete().then(function(channel) {
 				var channel_obj = { "channel_name": channel.sid}
 			res.json(channel_obj)
 			// console.log('Deleted channel: ' + channel.sid);
 			});
+		} else {
+			// res.render('error', { error: "No channel with specified name to delete" })
+			res.status(404).send("No channel with specified name to delete")
 		}
 	});
-
 });
-
-function createChannel(newChannel) {
-
-	var token = tokenProvider.getToken(newChannel.identity, newChannel.endpointId);
-	// console.log(token)
-	var client = new Chat.Client(token)
-
-	var attributes = {
-      description: newChannel.description
-    };
-
-	return client.createChannel({
-      attributes: attributes,
-      friendlyName: newChannel.friendlyName,
-      isPrivate: true,
-      uniqueName: newChannel.uniqueName
-    }).then(function(channel) {
-    	return channel.join()
-    })
-}
-
-function getChannels(client, callback) {
-	channels = []
-
-	const service = client.getSubscribedChannels().then(page =>{
-		subscribedChannels = page.items.sort(function(a, b) {
-          return a.friendlyName > b.friendlyName;
-        });
-        channel_names = []
-		subscribedChannels.forEach(function(chan) {
-				console.log(chan)
-		    console.log(chan.uniqueName + " is a channel!")
-		    channel_names.push(chan.uniqueName)
-		});
-		callback(channel_names)
-	})
-}
-
-function getChannel(client, channel_name, callback) {
-	console.log("getChannel is looking for a channel with the name: " + channel_name)
-	const service = client.getSubscribedChannels().then(page =>{
-		subscribedChannels = page.items.sort(function(a, b) {
-          return a.friendlyName > b.friendlyName;
-        });
-		for(var chan of subscribedChannels) {
-		    console.log(chan.uniqueName + " is a channel!")
-		    if (chan.uniqueName.trim() === channel_name.trim()) {
-		    	console.log("FOUND " + channel_name + "\n\t calling callback")
-		    	callback(chan)
-		    	break
-		    }
-		};
-	})
-}
-
-function addMessage(channel, body) {
-	channel.sendMessage(req.body.messageBody)
-}
-
-function getMessages(channel) {
-	return channel.getMessages(30)
-}
-
-function parseFriendlyName(friendlyName) {
-	var names = friendlyName.split("/")
-	// var
-	// if (names[0] < names[1])
-}
 
 module.exports = router;
