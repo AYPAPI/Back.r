@@ -92,8 +92,12 @@ router.get('/channels/:channel_name/messages', function(req, res) {
 			channel.getMessages(0).then(function(messages) {
 				message_bodies = []
 				messages.items.forEach(function(msg) {
-					console.log(msg.state.body)
-					message_bodies.push(msg.state.body)
+					var messageToClient = {
+						"author": msg.state.author,
+						"body": msg.state.body,
+						"timestamp": msg.state.timestamp									
+					}
+					message_bodies.push(messageToClient)
 				});
 				res.json(message_bodies)
 			})
