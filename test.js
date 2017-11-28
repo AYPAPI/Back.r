@@ -146,23 +146,28 @@ var url = 'http://localhost:8080/'
 //   }
 // });
 
-var test_channel = {
-  "description": "This is a test channel",
-  "friendlyName": "andrew/vylana",
-  "uniqueName": "vinnie_test",
-  "identity" : "brandon",
-  "endpointId": "61553df94c234a691130ab9d3438b074"
-}
-
 // var test_channel = {
 //   "description": "This is a test channel",
-//   "friendlyName": "tester2017",
+//   "friendlyName": "andrew/vylana",
 //   "uniqueName": "vinnie_test",
 //   "identity" : "brandon",
 //   "endpointId": "61553df94c234a691130ab9d3438b074"
 // }
 
-/* POST: Create a channel */
+var test_channel = {
+  "channel" : {
+    "description": "This is a test channel",
+    "friendlyName": "andrew/brandon",
+    "uniqueName": "returnother",
+    "identity" : "brandon",
+    "endpointId": "61553df94c234a691130ab9d3438b074"
+  },
+  "other_user" : {
+    "email": "aypapi9@gmail.com"
+  }
+}
+
+// /* POST: Create a channel */
 // request.post({
 //     url: url + "twilio/channels",
 //     // method: "POST",
@@ -181,13 +186,12 @@ request.get({
 }, function(err, res) {
   if (res != null && res.body != null){
     console.log("The result is : " + JSON.stringify(res.body));
-    // token = res.body
   }
 });
 
-// var test_message = {
-//   "messageBody": "Vinay u is a dumb dumb but u is a gud fren"
-// }
+var test_message = {
+  "messageBody": "Vinay u is a dumb dumb but u is a gud fren"
+}
 
 
 // request.post({
@@ -218,7 +222,7 @@ request.get({
 
 /* Delete Channel */
 // request.delete({
-//   url: url + "twilio/channels/vinnie_test/delete?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
+//   url: url + "twilio/channels/vinni/delete?identity=brandon&endpointId=61553df94c234a691130ab9d3438b074",
 //   json: true
 // }, function (err, res) {
 //   if (res.status != 200) {

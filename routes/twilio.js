@@ -49,7 +49,7 @@ router.get('/channels', function(req, res) {
       });
     cache = null
 
-    twilioLib.getChannels(client, function(channels) {
+    twilioLib.getChannels(client, identity, function(channels) {
     	result = {
 			"token":token,
 			"channels":channels
@@ -62,10 +62,19 @@ router.get('/channels', function(req, res) {
 /* POST to /channels will create a new channel using req.body */
 router.post('/channels', function(req,res) {
 
-	var token = twilioLib.getToken(req.body.identity, req.body.endpointId);
+	var token = twilioLib.getToken(req.body.channel.identity, req.body.channel.endpointId);
 	var client = new Chat.Client(token)
+	var other_user = req.body.other_user.email
 
-	twilioLib.createChannel(client, req.body)
+	twilioLib.createChannel(client, req.body, function(channel) {
+		channel.invite(other_user).then(function() {
+			var token = twilioLib.getToken(other_user, 5555);
+			var client = new Chat.Client(token)
+			channel.join()
+		})
+
+
+	})
 	res.send("we made it back")
 });
 
@@ -157,13 +166,15 @@ router.delete('/channels/:channel_name/delete', function(req, res) {
 		if (channel != null) {
 			channel.delete().then(function(channel) {
 				var channel_obj = { "channel_name": channel.sid}
-			res.json(channel_obj)
+
 			// console.log('Deleted channel: ' + channel.sid);
 			});
 		} else {
+			var channel_obj = { "channel_name": "none"}
 			// res.render('error', { error: "No channel with specified name to delete" })
-			res.status(404).send("No channel with specified name to delete")
+			// res.status(404).send("No channel with specified name to delete")
 		}
+		res.json(channel_obj)
 	});
 });
 

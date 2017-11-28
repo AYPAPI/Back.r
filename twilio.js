@@ -44,8 +44,9 @@ TwilioLib.prototype.getToken = function(identity, endpointId) {
 };
 
 
-TwilioLib.prototype.createChannel = function(client, newChannel) {
-
+TwilioLib.prototype.createChannel = function(client, channel_obj, callback) {
+  var newChannel = channel_obj.channel
+  var otherUser = channel_obj.other_user.email
 	var attributes = {
       description: newChannel.description
     };
@@ -56,11 +57,11 @@ TwilioLib.prototype.createChannel = function(client, newChannel) {
       isPrivate: true,
       uniqueName: newChannel.uniqueName
     }).then(function(channel) {
-    	return channel
+      callback(channel)
     })
 }
 
-TwilioLib.prototype.getChannels = function(client, callback) {
+TwilioLib.prototype.getChannels = function(client, identity, callback) {
 	channels = []
 	const service = client.getSubscribedChannels().then(page =>{
 		subscribedChannels = page.items.sort(function(a, b) {
@@ -68,8 +69,14 @@ TwilioLib.prototype.getChannels = function(client, callback) {
         });
         channel_names = []
 		subscribedChannels.forEach(function(chan) {
+        console.log("---------------------------------")
+        console.log(chan.state)
 		    console.log(chan.uniqueName + " is a channel!")
-		    channel_names.push(chan.uniqueName)
+        var other_user = getOtherUser(chan.state.friendlyName, identity)
+		    channel_names.push({
+          "unique_name" : chan.uniqueName,
+          "other_user" : other_user
+        });
 		});
 		callback(channel_names)
 	})
@@ -93,10 +100,11 @@ TwilioLib.prototype.getChannel = function(client, channel_name, callback) {
 	})
 }
 
-function parseFriendlyName(friendlyName) {
+function getOtherUser(friendlyName, identity) {
 	var names = friendlyName.split("/")
-	// var
-	// if (names[0] < names[1])
+	if (names[0] === identity) {
+    return names[1]
+  } else { return names[0] }
 }
 
 module.exports = TwilioLib;
