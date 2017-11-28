@@ -27,6 +27,10 @@ function TwilioLib(credentials) {
   });
 }
 
+TwilioLib.prototype.validInput = function(req_body) {
+  return req_body.token || (req_body.identity && req_body.endpointId)
+}
+
 TwilioLib.prototype.getToken = function(identity, endpointId) {
   var token = new AccessToken(this.accountSid, this.signingKeySid, this.signingKeySecret, {
     identity: identity,
@@ -92,11 +96,10 @@ TwilioLib.prototype.getChannel = function(client, channel_name, callback) {
 		    console.log(chan.uniqueName + " is a channel!")
 		    if (chan.uniqueName.trim() === channel_name.trim()) {
 		    	console.log("FOUND " + channel_name + "\n\t calling callback")
-		    	callback(chan)
-		    	break
+		    	return callback(chan)
 		    }
 		};
-		callback(null)
+    callback(null)
 	})
 }
 
