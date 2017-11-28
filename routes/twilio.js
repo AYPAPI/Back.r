@@ -9,7 +9,7 @@ var credentials = require('../credentials.json');
 var twilioLib = new TwilioLib(credentials);
 
 /* GET twilio token */
-router.get('/getToken', function(req, res) {
+router.get('/token', function(req, res) {
 	var identity = req.body && req.body.identity;
 	var endpointId = req.body && req.body.endpointId;
 	var token = req.body && req.body.token;
@@ -72,15 +72,23 @@ router.post('/channels', function(req,res) {
 		var client = new Chat.Client(token)
 
 		var other_user = req.body.other_user.email
+		console.log("The other user is " + other_user)
 
 		twilioLib.createChannel(client, req.body, function(channel) {
 			channel.invite(other_user).then(function() {
 				var token = twilioLib.getToken(other_user, 5555);
 				var client = new Chat.Client(token)
-				channel.join()
-			})
-		})
-		res.send("we made it back")
+				channel.join().then(e => {
+					res.status(200).send("Made it back")
+				}).catch(function(err) {
+				   res.status(500).send("Error: " + err.message)
+				});	
+			}).catch(function(err) {
+			   res.status(500).send("Error: Could not invite other_user.\n\t Error message: " + err.message)
+			});	
+		}).catch(e => {
+		   res.status(500).send("Error: Channel with this name already exists")
+		});	
 	}
 });
 
@@ -106,9 +114,7 @@ router.get('/channels/:channel_name/messages', function(req, res) {
 		var client = new Chat.Client(token)
 
 		twilioLib.getChannel(client, req.params.channel_name, function(channel) {
-			console.log("in getChannel's callback")
 			if (channel !== null) {
-				console.log(channel.uniqueName + " was FOUND!\nHere are the messages:")
 				channel.getMessages(0).then(function(messages) {
 					message_bodies = []
 					messages.items.forEach(function(msg) {
@@ -120,8 +126,7 @@ router.get('/channels/:channel_name/messages', function(req, res) {
 						}
 						message_bodies.push(messageToClient)
 					});
-					console.log(message_bodies)
-					res.json(message_bodies)
+					res.status(200).json(message_bodies)
 				})
 			} else {
 		    	console.log("Channel with uniqueName of " + req.body.channel_name + " could not be found :(")
@@ -159,7 +164,7 @@ router.post('/channels/:channel_name/messages', function(req, res) {
 						} else {
 							res_string = "error, message not added"
 						}
-						res.send(res_string)
+						res.status(200).send(res_string)
 					})
 				})
 			} else {
@@ -170,7 +175,6 @@ router.post('/channels/:channel_name/messages', function(req, res) {
 });
 
 router.delete('/channels/:channel_name/delete', function(req, res) {
-	console.log("deleting channel_name: " + req.params.channel_name)
 	var body = req.body.messageBody
 
 	var channel_name = req.params.channel_name
@@ -189,14 +193,15 @@ router.delete('/channels/:channel_name/delete', function(req, res) {
 		client = new Chat.Client(token)
 
 		twilioLib.getChannel(client, req.params.channel_name, function(channel) {
-			if (channel != null) {
-				console.log("channel exists")
+			if (channel == null) {
+				res.status(404).send("Error: Channel with specified name could not be found")
+			} else {
 				channel.delete().then(function(channel) {
 					var channel_obj = { "channel_name": channel.sid}
-				res.json(channel_obj)
+					res.status(200).json(channel_obj)
+				}).catch(e => {
+					res.status(500).send("Error: Deletion failed.")
 				});
-			} else {
-				res.status(404).send("No channel with specified name to delete")
 			}
 		});
 	}

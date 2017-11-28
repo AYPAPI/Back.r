@@ -73,9 +73,6 @@ TwilioLib.prototype.getChannels = function(client, identity, callback) {
         });
         channel_names = []
 		subscribedChannels.forEach(function(chan) {
-        console.log("---------------------------------")
-        console.log(chan.state)
-		    console.log(chan.uniqueName + " is a channel!")
         var other_user = getOtherUser(chan.state.friendlyName, identity)
 		    channel_names.push({
           "unique_name" : chan.uniqueName,
@@ -87,7 +84,6 @@ TwilioLib.prototype.getChannels = function(client, identity, callback) {
 }
 
 TwilioLib.prototype.getChannel = function(client, channel_name, callback) {
-	console.log("getChannel is looking for a channel with the name: " + channel_name)
 	const service = client.getSubscribedChannels().then(page =>{
 		subscribedChannels = page.items.sort(function(a, b) {
           return a.friendlyName > b.friendlyName;
