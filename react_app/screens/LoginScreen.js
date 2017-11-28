@@ -1,7 +1,40 @@
 import React, { Component } from 'react';
-import { Text, Button, View } from 'react-native';
-import { Card, FormLabel, FormInput } from 'react-native-elements';
+import { Text, View, Image, StyleSheet } from 'react-native';
+import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
 import { onSignIn } from '../auth.js'
+
+var background = require('../img/splash_screen-01.png');
+
+const styles = StyleSheet.create({
+    imageContainer: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        width: null,
+        height: null,
+    },
+    formsContainer: {
+        marginTop: 40,
+        width: 300,
+    },
+    formInputContainer: {
+        marginBottom: 10,
+    },
+    optionsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    buttonsContainer: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    buttonStyle: {
+        width: 250,
+        marginBottom: 20,
+    },
+});
 
 class LoginScreen extends Component {
 
@@ -18,56 +51,60 @@ class LoginScreen extends Component {
     const { navigate } = this.props.navigation;
 
     return (
+        <Image
+            source={background}
+            style={styles.imageContainer}>
+            <View style={styles.formsContainer}>
 
-      //TODO if user successfully logins with credentials, pass in user from database.
+                <FormInput containerStyle={styles.formInputContainer}
+                    placeholder="Email address..."
+                />
 
-      <View style={{ paddingVertical: 20, paddingHorizontal: 20 }}>
-      <Text>"BACK.R"</Text>
+                <FormInput containerStyle={styles.formInputContainer}
+                    secureTextEntry
+                    placeholder="Password..."
+                />
+            </View>
 
-          <Card>
-            <FormLabel>Email</FormLabel>
-            <FormInput placeholder="Email address..." />
-            <FormLabel>Password</FormLabel>
-            <FormInput secureTextEntry placeholder="Password..." />
+            <View style={styles.optionsContainer}>
+                <Button
+                    backgroundColor="white"
+                    color="black"
+                    title="Forgot Password?"
+                    fontSize={12}
+                    onPress={() => {
+                    onSignIn().then(() => navigate("SignedIn", {user: "USER"}));}}
+                   />
 
-            <Button
-              buttonStyle={{ marginTop: 20 }}
-              backgroundColor="#03A9F4"
-              title="Sign In"
-              onPress={() => {
-                onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));
-              }}
-            />
-	    <Button
-              buttonStyle={{ marginTop: 20 }}
-              backgroundColor="#03A9F4"
-              title="Sign In with Facebook"
-              onPress={() => {
-                onSignIn().then(() => navigate("SignedIn", {user: "USER"}));
-              }}
-            />
-	  </Card>
+    	        <Button
+                    backgroundColor="white"
+                    color="black"
+                    title="Create Account"
+                    fontSize={12}
+                    onPress={() => navigate("SignUp")}
+                    />
+            </View>
 
-	  <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between'}}>
-          <Button
-            buttonStyle={{ marginTop: 20 }}
-            backgroundColor="#03A9F4"
-            title="Forgot Password?"
-            onPress={() => {
-                onSignIn().then(() => navigate("SignedIn", {user: "USER"}));
-	    }}
-          />
+            <View style={styles.buttonsContainer}>
+              <Button style={styles.buttonStyle}
+                borderRadius={10}
+                backgroundColor='#C753E0'
+                title="Sign in with email"
+                icon={{name: 'email', type: 'material-community'}}
+                onPress={() => {
+                onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));}}
+              />
 
-  	  <Button
-            buttonStyle={{ marginTop: 20 }}
-            backgroundColor="#03A9F4"
-            title="Create Account"
-            onPress={() => navigate("SignUp")}
-          />
-	  </View>
-
-        </View>
-
+	          <Button style={styles.buttonStyle}
+                borderRadius={10}
+                icon={{name: 'facebook-box', type: 'material-community'}}
+                backgroundColor='#03A9F4'
+                title="Sign in with Facebook"
+                onPress={() => {
+                onSignIn().then(() => navigate("SignedIn", {user: "USER"}));}}
+              />
+            </View>
+	    </Image>
     );
   }
 }
