@@ -74,6 +74,8 @@ const styles =  StyleSheet.create({
 class UserProfileScreen extends Component {
     static navigationOptions = ({ navigation }) => {
     const { user, mainUser } = navigation.state.params;
+    const { goBack } = navigation.goBack;
+
 
   return {
     headerTitle: (
@@ -81,7 +83,8 @@ class UserProfileScreen extends Component {
         name='chevron-down'
         type='material-community'
         iconStyle={styles.titleMaker}
-        onPress={ () => navigation.navigate("Explore", {user: mainUser}) }
+      //  onPress={ () => navigation.navigate() }
+        onPress={ () => goBack() }
       />
     ),
   };

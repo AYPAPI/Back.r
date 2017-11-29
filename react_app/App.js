@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import { Font } from 'expo';
 
 //Import router containing all screens for navigation.
 import { createRootNav } from './router/router.js';
@@ -19,8 +20,16 @@ export default class App extends React.Component {
     };
   }
 
+  componentDidMount() {
+  Font.loadAsync({
+    'gotham-rounded': require('./assets/fonts/Gotham-Rounded-Bold.otf'),
+  });
+  }
+
   componentWillMount() {
     console.log(this.state);
+
+
 
     //Uncomment once we have authentication all set up.
   /*  isSignedIn()

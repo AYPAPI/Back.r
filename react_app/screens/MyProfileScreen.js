@@ -169,7 +169,7 @@ class MyProfileScreen extends Component {
               <Text style={styles.nameContainer}>
                   Computer Science Lecturer
               </Text>
-              <Text style={styles.descriptionContainer}>
+              <Text style={{fontFamily: 'gotham-rounded'}}>
                   Gary Gillespie
               </Text>
             </View>
