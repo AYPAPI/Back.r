@@ -75,7 +75,7 @@ router.post('/channels', function(req,res) {
 		console.log("The other user is " + other_user)
 
 		twilioLib.createChannel(client, req.body, function(channel) {
-			channel.invite(other_user).then(function() {
+			channel.add(other_user).then(function() {
 				var token = twilioLib.getToken(other_user, 5555);
 				var client = new Chat.Client(token)
 				channel.join().then(e => {
@@ -115,6 +115,7 @@ router.get('/channels/:channel_name/messages', function(req, res) {
 
 		twilioLib.getChannel(client, req.params.channel_name, function(channel) {
 			if (channel !== null) {
+				console.log(channel.status)
 				channel.getMessages(0).then(function(messages) {
 					message_bodies = []
 					messages.items.forEach(function(msg) {
@@ -127,6 +128,8 @@ router.get('/channels/:channel_name/messages', function(req, res) {
 						message_bodies.push(messageToClient)
 					});
 					res.status(200).json(message_bodies)
+				}).catch(function(err) {
+					res.status(500).send("BOY U A DUM DUM - ")
 				})
 			} else {
 		    	console.log("Channel with uniqueName of " + req.body.channel_name + " could not be found :(")
