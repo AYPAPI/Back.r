@@ -269,25 +269,25 @@ var createChannelTest = function(ext) {
 
 
 /* DELETE: Delete Channel */
-ext = "twilio/channels/test_channel7"
-request.delete({
-  url: url + ext,
-  json: true,
-  body: test_null_token
-}, function (err, res) {
-  output = constructOutputString(res, "test_null_token", ext)
-  try {
-    assert.equal(res.statusCode, 200)
-    assert.ok(JSON.stringify(res.body))
-    output += "O"
-  }
-  catch (err) {
-    output += "X"
-    output += "\n\t" + res.body
-  }
-  console.log(output)
-  createChannelTest("twilio/channels")
-});
+// ext = "twilio/channels/test_channel7"
+// request.delete({
+//   url: url + ext,
+//   json: true,
+//   body: test_null_token
+// }, function (err, res) {
+//   output = constructOutputString(res, "test_null_token", ext)
+//   try {
+//     assert.equal(res.statusCode, 200)
+//     assert.ok(JSON.stringify(res.body))
+//     output += "O"
+//   }
+//   catch (err) {
+//     output += "X"
+//     output += "\n\t" + res.body
+//   }
+//   console.log(output)
+//   // createChannelTest("twilio/channels")
+// });
 
 /* POST: a message to a channel */
 // request.post({
@@ -304,9 +304,8 @@ request.delete({
 
 /* GET: Channel's Messages */
 // request.get({
-//     url: url + "twilio/channels/channel1/messages",
+//     url: url + "twilio/channels/channel1/messages?identity=brandon&endpointId=9999",
 //     json: true,
-//     body: test_token
 // }, function(err, res) {
 //   if (err) {
 //     console.log(err)
