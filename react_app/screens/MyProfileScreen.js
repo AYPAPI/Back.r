@@ -1,13 +1,6 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  View,
-  StyleSheet
-} from 'react-native';
-import {Avatar,
-        Icon,
-        Button
-} from 'react-native-elements';
+import {Text, View, StyleSheet} from 'react-native';
+import {Avatar, Icon, Button} from 'react-native-elements';
 
 
 //Method for logging out.
