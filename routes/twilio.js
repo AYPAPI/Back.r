@@ -99,11 +99,11 @@ router.get('/channels/:channel_name/messages', function(req, res) {
 
 	var body = req.body.messageBody
 
-	var identity = req.body && req.body.identity;
-	var endpointId = req.body && req.body.endpointId;
+	var identity = req.query && req.query.identity;
+	var endpointId = req.query && req.query.endpointId;
 	var token = req.body && req.body.token;
 
-	if (!twilioLib.validInput(req.body)) {
+	if (!twilioLib.validInput(req.query)) {
 		res.status(400).send('This route requires either an Access Token or both an Identity and an Endpoint ID');
 	} else {
 
