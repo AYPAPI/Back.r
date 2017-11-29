@@ -114,9 +114,61 @@ const styles = {
 
 class ExploreScreen extends Component {
 
-    onUserPress(user) {
-        this.props.navigation.navigate("UserProfile", {user: user, mainUser: this.props.navigation.state.params.user});
-    }
+  onUserPress(user) {
+    this.props.navigation.navigate("UserProfile", {user: user, mainUser: this.props.navigation.state.params.user});
+  }
+
+  static navigationOptions = ({ navigation }) => {
+    const { user } = navigation.state.params;
+    return {
+      headerTitle: (
+        <Icon
+          name='lightbulb'
+          type='material-community'
+          iconStyle={styles.titleMaker}
+        />
+      ),
+      headerRight: (
+        <Icon
+          name='message-text-outline'
+          type='material-community'
+          iconStyle={styles.headerIcon}
+          onPress={ () => navigation.navigate("Matches", {user: user}) }
+        />
+      ),
+      headerLeft: (
+          <Icon
+            name='user-o'
+            type='font-awesome'
+            iconStyle={styles.headerIcon}
+            onPress={ () => navigation.navigate("MyProfile", {user: user, type: ""}) }
+          />
+
+      ),
+    };
+  };
+
+  render() {
+
+    const { navigate } = this.props.navigation;
+    return (
+      <View>
+      <Button
+          onPress={() => navigate("Edit")}
+          title="Edit"
+          buttonStyle={{ marginTop: 20 }}
+      />
+
+      <Swiper
+      style={styles.wrapper}
+      paginationStyle={{ container: { backgroundColor: 'transparent' } }}
+      paginationLeft={''}
+      paginationRight={''}
+      smoothTransition
+      stack
+      dragDownToBack
+      dragY
+      >
 
     static navigationOptions = ({ navigation }) => {
         const { user } = navigation.state.params;

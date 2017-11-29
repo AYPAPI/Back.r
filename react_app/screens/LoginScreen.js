@@ -72,8 +72,7 @@ class LoginScreen extends Component {
                     color="black"
                     title="Forgot Password?"
                     fontSize={12}
-                    onPress={() => {
-                    onSignIn().then(() => navigate("SignedIn", {user: "USER"}));}}
+                    onPress={() => navigate("ForgotPassword")}
                    />
 
     	        <Button

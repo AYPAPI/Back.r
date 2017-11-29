@@ -20,18 +20,18 @@ router.get('/token', function(req, res) {
 
 		if (token == null) {
 			token = twilioLib.getToken(identity, endpointId);
-		}		
+		}
 		res.status(200).send(token);
 	}
 });
 
 /* GET the list of available channels */
 router.get('/channels', function(req, res) {
-	var identity = req.body && req.body.identity;
-	var endpointId = req.body && req.body.endpointId;
+	var identity = req.query && req.query.identity;
+	var endpointId = req.query && req.query.endpointId;
 	var token = req.body && req.body.token;
 
-	if (!twilioLib.validInput(req.body)) {
+	if (!twilioLib.validInput(req.query)) {
 		res.status(400).send('This route requires either an Access Token or both an Identity and an Endpoint ID');
 	} else {
 
@@ -75,20 +75,20 @@ router.post('/channels', function(req,res) {
 		console.log("The other user is " + other_user)
 
 		twilioLib.createChannel(client, req.body, function(channel) {
-			channel.invite(other_user).then(function() {
+			channel.add(other_user).then(function() {
 				var token = twilioLib.getToken(other_user, 5555);
 				var client = new Chat.Client(token)
 				channel.join().then(e => {
 					res.status(200).send("Made it back")
 				}).catch(function(err) {
 				   res.status(500).send("Error: " + err.message)
-				});	
+				});
 			}).catch(function(err) {
 			   res.status(500).send("Error: Could not invite other_user.\n\t Error message: " + err.message)
-			});	
+			});
 		}).catch(e => {
 		   res.status(500).send("Error: Channel with this name already exists")
-		});	
+		});
 	}
 });
 
@@ -99,11 +99,11 @@ router.get('/channels/:channel_name/messages', function(req, res) {
 
 	var body = req.body.messageBody
 
-	var identity = req.body && req.body.identity;
-	var endpointId = req.body && req.body.endpointId;
+	var identity = req.query && req.query.identity;
+	var endpointId = req.query && req.query.endpointId;
 	var token = req.body && req.body.token;
 
-	if (!twilioLib.validInput(req.body)) {
+	if (!twilioLib.validInput(req.query)) {
 		res.status(400).send('This route requires either an Access Token or both an Identity and an Endpoint ID');
 	} else {
 
@@ -115,6 +115,7 @@ router.get('/channels/:channel_name/messages', function(req, res) {
 
 		twilioLib.getChannel(client, req.params.channel_name, function(channel) {
 			if (channel !== null) {
+				console.log(channel.status)
 				channel.getMessages(0).then(function(messages) {
 					message_bodies = []
 					messages.items.forEach(function(msg) {
@@ -127,6 +128,8 @@ router.get('/channels/:channel_name/messages', function(req, res) {
 						message_bodies.push(messageToClient)
 					});
 					res.status(200).json(message_bodies)
+				}).catch(function(err) {
+					res.status(500).send("BOY U A DUM DUM - ")
 				})
 			} else {
 		    	console.log("Channel with uniqueName of " + req.body.channel_name + " could not be found :(")

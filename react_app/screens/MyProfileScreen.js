@@ -174,7 +174,7 @@ class MyProfileScreen extends Component {
                   backgroundColor={backerBlue}
                   icon={{name: 'settings', type: 'MaterialIcons'}}
                   title= 'Edit Account Settings'
-                  onPress={()=> navigate('Settings')}
+                  onPress={()=> navigate('Settings', {user: this.props.navigation.state.params.user})}
                   containerViewStyle={styles.buttonContainerStyle}
                 />
 

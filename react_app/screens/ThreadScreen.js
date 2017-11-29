@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {
   Text, Button, View, StyleSheet, ScrollView, KeyboardAvoidingView, TextInput, TouchableHighlight, Keyboard
 } from 'react-native';
+import { Icon } from 'react-native-elements'
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import AutogrowInput from 'react-native-autogrow-input';
 
@@ -9,41 +10,123 @@ import AutogrowInput from 'react-native-autogrow-input';
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
 }
+const url = "https://backr.herokuapp.com/"
+const getMessages = function(channel_name) {
+  console.log("calling getMessages")
+  var req_url = url + 'twilio/channels/' + channel_name + "/messages?identity=vylana&endpointId=9998"
+  return fetch( req_url, {
+    method: 'GET',
+    headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    }
+  }).then(function(response) {
+    console.log("getMessages returned: \n\t" + JSON.stringify(response))
+    return response.json()
+  }).catch(function(err) {
+    console.log("error: " + err)
+  })
+}
+
+const send_msg_to_twilio = function(channel_name, bod) {
+  json_body = JSON.stringify({
+    'identity':'vylana',
+    'endpointId':9999,
+    'messageBody':bod
+  })
+  console.log(json_body)
+  var req_url = url + 'twilio/channels/' + channel_name + "/messages"
+  return fetch( req_url, {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: json_body
+  }).then(function(response) {
+    console.log("in the then of send_msg_to_twilio")
+    return response
+  }).catch(function(err) {
+    console.log("error: " + err)
+  })
+}
+
+const convertMessages = function(res) {
+  var messages = []
+  console.log("called convertMessages on " + res)
+  res.forEach(function(msg) {
+    console.log("yo")
+    var text = msg.body
+    var direction = msg.author === "vylana" ? "right" : "left"
+    messages.push({
+      direction: direction,
+      text: text
+    })
+  })
+  console.log(messages)
+  return messages
+}
+
+var other_user
+var unique_name
 
 // The actual chat view itself- a ScrollView of BubbleMessages, with an InputBar at the bottom, which moves with the keyboard
 export default class ThreadScreen extends Component {
 
+  // const { other_user } = navigation.state.params;
   constructor(props) {
     super(props);
+    other_user = this.props.navigation.state.params.other_user;
+    unique_name = this.props.navigation.state.params.unique_name;
+    // var loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ac orci augue. Sed fringilla nec magna id hendrerit. Proin posuere, tortor ut dignissim consequat, ante nibh ultrices tellus, in facilisis nunc nibh rutrum nibh.';
+    //
+    // //create a set number of texts with random lengths. Also randomly put them on the right (user) or left (other person).
+    // var numberOfMessages = 20;
+    //
+    // var messages = [];
+    //
+    // for(var i = 0; i < numberOfMessages; i++) {
+    //   var messageLength = getRandomInt(10, 120);
+    //
+    //   var direction = getRandomInt(1, 2) === 1 ? 'right' : 'left';
+    //
+    //   message = loremIpsum.substring(0, messageLength);
 
-    var loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ac orci augue. Sed fringilla nec magna id hendrerit. Proin posuere, tortor ut dignissim consequat, ante nibh ultrices tellus, in facilisis nunc nibh rutrum nibh.';
+      // messages.push({
+      //   direction: direction,
+      //   text: message
+      // })
 
-    //create a set number of texts with random lengths. Also randomly put them on the right (user) or left (other person).
-    var numberOfMessages = 20;
-
-    var messages = [];
-
-    for(var i = 0; i < numberOfMessages; i++) {
-      var messageLength = getRandomInt(10, 120);
-
-      var direction = getRandomInt(1, 2) === 1 ? 'right' : 'left';
-
-      message = loremIpsum.substring(0, messageLength);
-
-      messages.push({
-        direction: direction,
-        text: message
-      })
-    }
 
     this.state = {
-      messages: messages,
+      messages: [],
       inputBarText: ''
     }
   }
 
-  static navigationOptions = {
-    title: 'Chat',
+  static navigationOptions = ({ navigation }) => {
+    const { user } = navigation.state.params.user;
+    var other_user  = navigation.state.params.other_user;
+    return {
+      title: other_user,
+      headerRight: (
+        <Icon
+          name='message-text-outline'
+          type='material-community'
+          iconStyle={styles.headerIcon}
+          onPress={ () => navigation.navigate("Matches", {user: user}) }
+        />
+      ),
+      headerLeft: (
+          <Icon
+            name='user-o'
+            type='font-awesome'
+            iconStyle={styles.headerIcon}
+            onPress={ () => navigation.navigate("MyProfile", {user: user, type: ""}) }
+          />
+
+      ),
+    };
   };
 
   //fun keyboard stuff- we use these to get the end of the ScrollView to "follow" the top of the InputBar as the keyboard rises and falls
@@ -70,12 +153,21 @@ export default class ThreadScreen extends Component {
 
   //scroll to bottom when first showing the view
   componentDidMount() {
+    const self = this;
     setTimeout(function() {
       this.scrollView.scrollToEnd();
     }.bind(this))
+    console.log(unique_name)
+    getMessages(unique_name).then(function(res) {
+      if (res != null) {
+        console.log("in the then of getMessages:\n" + JSON.stringify(res))
+        messages = convertMessages(res)
+        self.setState({ "messages": messages })
+      }
+    })
   }
 
-  //this is a bit sloppy: this is to make sure it scrolls to the bottom when a message is added, but 
+  //this is a bit sloppy: this is to make sure it scrolls to the bottom when a message is added, but
   //the component could update for other reasons, for which we wouldn't want it to scroll to the bottom.
   componentDidUpdate() {
     setTimeout(function() {
@@ -90,6 +182,8 @@ export default class ThreadScreen extends Component {
       messages: this.state.messages,
       inputBarText: ''
     });
+
+    send_msg_to_twilio(unique_name, this.state.inputBarText);
   }
 
   _onChangeInputBarText(text) {
@@ -123,11 +217,11 @@ export default class ThreadScreen extends Component {
                   <ScrollView ref={(ref) => { this.scrollView = ref }} style={styles.messages}>
                     {messages}
                   </ScrollView>
-                  <InputBar onSendPressed={() => this._sendMessage()} 
+                  <InputBar onSendPressed={() => this._sendMessage()}
                             onSizeChange={() => this._onInputSizeChange()}
                             onChangeText={(text) => this._onChangeInputBarText(text)}
                             text={this.state.inputBarText}/>
-                  <KeyboardSpacer/>             
+                  <KeyboardSpacer/>
               </View>
             );
   }
@@ -177,7 +271,7 @@ class InputBar extends Component {
     return (
           <View style={styles.inputBar}>
             <AutogrowInput style={styles.textBox}
-                        ref={(ref) => { this.autogrowInput = ref }} 
+                        ref={(ref) => { this.autogrowInput = ref }}
                         multiline={true}
                         defaultHeight={30}
                         onChangeText={(text) => this.props.onChangeText(text)}
@@ -186,7 +280,7 @@ class InputBar extends Component {
             <TouchableHighlight style={styles.sendButton} onPress={() => this.props.onSendPressed()}>
                 <Text style={{color: 'white'}}>Send</Text>
             </TouchableHighlight>
-          </View> 
+          </View>
           );
   }
 }

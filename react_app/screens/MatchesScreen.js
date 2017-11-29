@@ -9,27 +9,45 @@ import {
 import {
 	Card, ListItem, Icon
 } from 'react-native-elements'
-
-const users = [
- {
-    name: 'brynn',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
-	 message: "hey hot stuff"
- },{
-    name: 'brandon',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
- },{
-    name: 'andrew',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
-	 message: "hey hottie u down to be my thottie ;)"
- },{
-    name: 'sarah',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
- },{
-    name: 'brynn',
-    avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
- },
+const url = "https://backr-test.herokuapp.com/"
+const getChannels = function() {
+  return fetch( url + 'twilio/channels?identity=vylana&endpointId=9998', {
+    method: 'GET',
+    headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    }
+  }).then(function(response) {
+    return response.json()
+  })
+}
+var user
+var users = [
+  {"other_user": "david"},
+  {"other_user": "david"},
+  {"other_user": "david"},
+  {"other_user": "david"}
 ]
+// const users = [
+//  {
+//     name: 'brynn',
+//     avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
+// 	 message: "hey hot stuff"
+//  },{
+//     name: 'brandon',
+//     avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
+//  },{
+//     name: 'andrew',
+//     avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
+// 	 message: "hey hottie u down to be my thottie ;)"
+//  },{
+//     name: 'sarah',
+//     avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
+//  },{
+//     name: 'brynn',
+//     avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
+//  },
+// ]
 
 const styles = {
   headerIcon: {
@@ -58,7 +76,7 @@ const styles = {
 class MatchesScreen extends Component {
 
   static navigationOptions = ({ navigation }) => {
-  const { user } = navigation.state.params;
+  user = navigation.state.params;
 
   return {
     headerTitle: (
@@ -66,7 +84,8 @@ class MatchesScreen extends Component {
         name='lightbulb'
         type='material-community'
         iconStyle={styles.titleMaker}
-        onPress={ () => navigation.navigate("Explore", {user: user}) }
+        //onPress={ () => navigation.navigate("Explore", {user: user}) }
+        onPress={() => navigation.goBack()}
       />
     ),
     headerRight: (
@@ -89,6 +108,23 @@ class MatchesScreen extends Component {
   };
 };
 
+constructor(props) {
+  super(props);
+  this.state = {
+    isLoading: true,
+    users: []
+  }
+}
+  componentDidMount() {
+    const self = this
+    getChannels().then(function(res) {
+      if (res != null) {
+        self.setState({ "users": res.channels })
+        console.log(users)
+      }
+    })
+  }
+
   render() {
 
     const { navigate } = this.props.navigation;
@@ -96,21 +132,21 @@ class MatchesScreen extends Component {
     return (
       <ScrollView>
       <Button
-          onPress={() => navigate("Thread", {receiver: "insertuserhere"})}
+          onPress={() => navigate("Thread", {user: user, other_user: ""})}
           title="Message Thread"
           buttonStyle={{ marginTop: 20 }}
       />
 		<Card containerStyle={{padding: 0}} >
   {
-    users.map((u, i) => {
+    this.state.users.map((u, i) => {
       return (
         <ListItem
           key={i}
           roundAvatar
-          title={u.name}
+          title={u.other_user}
           avatar={{uri:u.avatar}}
 		  subtitle={u.message}
-			onPress={() => navigate("Thread", {receiver: "insertuserhere"})}
+			onPress={() => navigate("Thread", {user: user, other_user: u.other_user, unique_name:u.unique_name})}
         />
       );
     })
