@@ -22,7 +22,7 @@ const getMessages = function(channel_name) {
     }
   }).then(function(response) {
     console.log("getMessages returned: \n\t" + JSON.stringify(response))
-    return response
+    return response.json()
   }).catch(function(err) {
     console.log("error: " + err)
   })
@@ -57,7 +57,7 @@ const convertMessages = function(res) {
   res.forEach(function(msg) {
     console.log("yo")
     var text = msg.body
-    var direction = msg.author === "vinnie" ? "right" : "left"
+    var direction = msg.author === "vylana" ? "right" : "left"
     messages.push({
       direction: direction,
       text: text
