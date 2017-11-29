@@ -10,6 +10,7 @@ import ThreadScreen from "../screens/ThreadScreen.js";
 import UserProfileScreen from "../screens/UserProfileScreen.js";
 import LoginScreen from "../screens/LoginScreen.js";
 import MatchesScreen from "../screens/MatchesScreen.js";
+import ForgotPasswordScreen from "../screens/ForgotPasswordScreen.js";
 
 export const MainStack = StackNavigator({
   Explore: { screen: ExploreScreen },
@@ -24,6 +25,7 @@ export const MainStack = StackNavigator({
 export const LoginStack = StackNavigator({
   Login: { screen: LoginScreen },
   SignUp: { screen: SignUpScreen },
+  ForgotPassword: { screen: ForgotPasswordScreen }
 }, {
   headerMode: 'none',
   mode: 'modal'

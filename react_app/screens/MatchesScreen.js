@@ -84,7 +84,8 @@ class MatchesScreen extends Component {
         name='lightbulb'
         type='material-community'
         iconStyle={styles.titleMaker}
-        onPress={ () => navigation.navigate("Explore", {user: user}) }
+        //onPress={ () => navigation.navigate("Explore", {user: user}) }
+        onPress={() => navigation.goBack()}
       />
     ),
     headerRight: (
