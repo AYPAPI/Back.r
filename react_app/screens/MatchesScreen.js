@@ -21,13 +21,7 @@ const getChannels = function() {
     return response.json()
   })
 }
-var user
-var users = [
-  {"other_user": "david"},
-  {"other_user": "david"},
-  {"other_user": "david"},
-  {"other_user": "david"}
-]
+
 // const users = [
 //  {
 //     name: 'brynn',
