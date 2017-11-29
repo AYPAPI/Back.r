@@ -68,34 +68,34 @@ class ExploreScreen extends Component {
   }
 
   static navigationOptions = ({ navigation }) => {
-  const { user } = navigation.state.params;
-  return {
-    headerTitle: (
-      <Icon
-        name='lightbulb'
-        type='material-community'
-        iconStyle={styles.titleMaker}
-      />
-    ),
-    headerRight: (
-      <Icon
-        name='message-text-outline'
-        type='material-community'
-        iconStyle={styles.headerIcon}
-        onPress={ () => navigation.navigate("Matches", {user: user}) }
-      />
-    ),
-    headerLeft: (
+    const { user } = navigation.state.params;
+    return {
+      headerTitle: (
         <Icon
-          name='user-o'
-          type='font-awesome'
-          iconStyle={styles.headerIcon}
-          onPress={ () => navigation.navigate("MyProfile", {user: user, type: ""}) }
+          name='lightbulb'
+          type='material-community'
+          iconStyle={styles.titleMaker}
         />
+      ),
+      headerRight: (
+        <Icon
+          name='message-text-outline'
+          type='material-community'
+          iconStyle={styles.headerIcon}
+          onPress={ () => navigation.navigate("Matches", {user: user}) }
+        />
+      ),
+      headerLeft: (
+          <Icon
+            name='user-o'
+            type='font-awesome'
+            iconStyle={styles.headerIcon}
+            onPress={ () => navigation.navigate("MyProfile", {user: user, type: ""}) }
+          />
 
-    ),
+      ),
+    };
   };
-};
 
   render() {
 

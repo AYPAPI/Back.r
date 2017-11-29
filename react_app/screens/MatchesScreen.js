@@ -11,7 +11,7 @@ import {
 } from 'react-native-elements'
 const url = "https://backr-test.herokuapp.com/"
 const getChannels = function() {
-  return fetch( url + 'twilio/channels?identity=vinnie&endpointId=9999', {
+  return fetch( url + 'twilio/channels?identity=vylana&endpointId=9998', {
     method: 'GET',
     headers: {
     'Accept': 'application/json',
@@ -21,7 +21,7 @@ const getChannels = function() {
     return response.json()
   })
 }
-
+var user
 var users = [
   {"other_user": "david"},
   {"other_user": "david"},
@@ -76,7 +76,7 @@ const styles = {
 class MatchesScreen extends Component {
 
   static navigationOptions = ({ navigation }) => {
-  const { user } = navigation.state.params;
+  user = navigation.state.params;
 
   return {
     headerTitle: (
@@ -131,7 +131,7 @@ constructor(props) {
     return (
       <ScrollView>
       <Button
-          onPress={() => navigate("Thread", {receiver: "insertuserhere"})}
+          onPress={() => navigate("Thread", {user: user, other_user: ""})}
           title="Message Thread"
           buttonStyle={{ marginTop: 20 }}
       />
@@ -145,7 +145,7 @@ constructor(props) {
           title={u.other_user}
           avatar={{uri:u.avatar}}
 		  subtitle={u.message}
-			onPress={() => navigate("Thread", {receiver: "insertuserhere"})}
+			onPress={() => navigate("Thread", {user: user, other_user: u.other_user, unique_name:u.unique_name})}
         />
       );
     })
