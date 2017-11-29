@@ -149,13 +149,13 @@ function constructOutputString(res, body, ext) {
 /* Test Objects */
 var test_null_token = {
   "token" : null,
-  "identity":"brandon",
+  "identity":"vinnie",
   "endpointId":"61553df94c234a691130ab9d3438b074"
 }
 
 var test_null_token_2 = {
   "token" : null,
-  "identity":"sarah",
+  "identity":"vylana",
   "endpointId":"61553df94c234a691130ab9d3438b074"
 }
 
@@ -166,47 +166,54 @@ var test_token = {
 var test_channel = {
   "channel" : {
     "description": "This is a test channel",
-    "friendlyName": "brandon/sarah",
-    "uniqueName": "test_channel7",
-    "identity" : "brandon",
+    "friendlyName": "vinnie/vylana",
+    "uniqueName": "test_channel2",
+    "identity" : "vinnie",
     "endpointId": "61553df94c234a691130ab9d3438b074"
   },
   "other_user" : {
-    "email": "sarah"
+    "email": "vylana"
   }
 }
 
 var test_message = {
   "token":null,
-  "identity":"brandon",
+  "identity":"vinnie",
   "endpointId":"0",
-  "messageBody": "Branday is so stylish because his socks match his sweater"
+  "messageBody": "god so today this fucking weirdo tried to hand me a theta tau flyer"
+}
+
+var test_message2 = {
+  "token":null,
+  "identity":"vylana",
+  "endpointId":"0",
+  "messageBody": "sorry bud. at least you didn't have to carry groceries up sun god"
 }
 
 /* Twilio Calls */
 
 /* GET: a twilio access token */
-ext = "twilio/token"
-request.get({
-  url: url + ext,
-  json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
-  body: test_null_token
-}, function(err, res) {
-  if (res != null && res.body != null){
-    output = constructOutputString(res, "test_token", ext)
-    try {
-      assert.equal(res.statusCode, 200)
-      assert.ok(JSON.stringify(res.body))
-      output += "O"
-    } catch (err) {
-      output += "X"
-    }
-    console.log(output)
-  }
-});
+// ext = "twilio/token"
+// request.get({
+//   url: url + ext,
+//   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
+//   body: test_null_token
+// }, function(err, res) {
+//   if (res != null && res.body != null){
+//     output = constructOutputString(res, "test_token", ext)
+//     try {
+//       assert.equal(res.statusCode, 200)
+//       assert.ok(JSON.stringify(res.body))
+//       output += "O"
+//     } catch (err) {
+//       output += "X"
+//     }
+//     console.log(output)
+//   }
+// });
 
 /* GET: All channels */
-ext = "twilio/channels?identity=vinnie&endpointId=9999"
+ext = "twilio/channels?identity=vylana&endpointId=9998"
 request.get({
   url: url + ext,
   json: true,
@@ -225,25 +232,25 @@ request.get({
   console.log(output)
 });
 
-ext = "twilio/channels"
-request.get({
-  url: url + ext,
-  json: true,
-  body: test_null_token
-}, function(err, res) {
-  output = constructOutputString(res, "test_null_token", ext)
-  try {
-    assert.equal(res.statusCode, 200)
-    assert.ok(('channels' in res.body))
-    assert.ok((res.body.channels instanceof Array))
-    console.log(res.body.channels)
-    output += "O"
-  } catch (err) {
-    output += "X"
-    output += "\n\t" + res.body
-  }
-  console.log(output)
-});
+// ext = "twilio/channels"
+// request.get({
+//   url: url + ext,
+//   json: true,
+//   body: test_null_token
+// }, function(err, res) {
+//   output = constructOutputString(res, "test_null_token", ext)
+//   try {
+//     assert.equal(res.statusCode, 200)
+//     assert.ok(('channels' in res.body))
+//     assert.ok((res.body.channels instanceof Array))
+//     console.log(res.body.channels)
+//     output += "O"
+//   } catch (err) {
+//     output += "X"
+//     output += "\n\t" + res.body
+//   }
+//   console.log(output)
+// });
 
 /* POST: Create a channel */
 var createChannelTest = function(ext) {
@@ -269,50 +276,74 @@ var createChannelTest = function(ext) {
 
 
 /* DELETE: Delete Channel */
-ext = "twilio/channels/test_channel7"
-request.delete({
-  url: url + ext,
-  json: true,
-  body: test_null_token
-}, function (err, res) {
-  output = constructOutputString(res, "test_null_token", ext)
-  try {
-    assert.equal(res.statusCode, 200)
-    assert.ok(JSON.stringify(res.body))
-    output += "O"
-  }
-  catch (err) {
-    output += "X"
-    output += "\n\t" + res.body
-  }
-  console.log(output)
-  createChannelTest("twilio/channels")
-});
+// ext = "twilio/channels/test_channel2"
+// request.delete({
+//   url: url + ext,
+//   json: true,
+//   body: test_null_token
+// }, function (err, res) {
+//   output = constructOutputString(res, "test_null_token", ext)
+//   try {
+//     assert.equal(res.statusCode, 200)
+//     assert.ok(JSON.stringify(res.body))
+//     output += "O"
+//   }
+//   catch (err) {
+//     output += "X"
+//     output += "\n\t" + res.body
+//   }
+//   console.log(output)
+//   // createChannelTest("twilio/channels")
+// });
 
 /* POST: a message to a channel */
-// request.post({
-//     url: url + "twilio/channels/channel1/messages",
-//     json: true,
-//     body: test_message
-// }, function(err, res) {
-//   if (err) {
-//     console.log(err)
-//   } else {
-//     console.log(res.body)
-//   }
-// });
+request.post({
+    url: url + "twilio/channels/test_channel2/messages",
+    json: true,
+    body: test_message
+}, function(err, res) {
+  if (err) {
+    console.log(err)
+  } else {
+    console.log(res.body)
+  }
+});
+
+request.post({
+    url: url + "twilio/channels/test_channel2/messages",
+    json: true,
+    body: test_message2
+}, function(err, res) {
+  if (err) {
+    console.log(err)
+  } else {
+    console.log(res.body)
+  }
+});
 
 /* GET: Channel's Messages */
-// request.get({
-//     url: url + "twilio/channels/channel1/messages",
-//     json: true,
-//     body: test_token
-// }, function(err, res) {
-//   if (err) {
-//     console.log(err)
-//   }
-//   else {
-//     console.log("The message bodies:\n")
-//     console.log(res.body[0])
-//   }
-// });
+request.get({
+    url: url + "twilio/channels/test_channel2/messages?identity=vinnie&endpointId=9999",
+    json: true,
+}, function(err, res) {
+  if (err) {
+    console.log(err)
+  }
+  else {
+    console.log("The message bodies:\n")
+    console.log(res.body)
+  }
+});
+
+request.get({
+    url: url + "twilio/channels/test_channel2/messages?identity=vylana&endpointId=9998",
+    json: true,
+}, function(err, res) {
+  if (err) {
+    console.log(err)
+  }
+  else {
+    console.log("The message bodies:\n")
+    console.log(res.body)
+  }
+});

@@ -1,15 +1,42 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  Button,
-  View,
-  StyleSheet
-} from 'react-native';
-import { Card, FormLabel, FormInput } from 'react-native-elements';
+import {Text, View, Image, StyleSheet} from 'react-native';
+import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
 
 //Import function for signing in.
 import { onSignIn } from '../auth.js';
 
+var background = require('../img/create_account_screen-01.png');
+
+const styles = StyleSheet.create({
+    imageContainer: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        width: null,
+        height: null,
+    },
+    formsContainer: {
+        marginTop: 40,
+        width: 300,
+    },
+    formInputContainer: {
+        marginBottom: 10,
+    },
+    optionsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    buttonsContainer: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    buttonStyle: {
+        width: 250,
+        marginBottom: 20,
+    },
+});
 
 class SignUpScreen extends Component {
 
@@ -27,43 +54,44 @@ class SignUpScreen extends Component {
 
     return (
 
-        <View style={{ paddingVertical: 20, paddingHorizontal: 20 }}>
-        <Text style={{ fontSize: 28 }}>BACKR</Text>
-            <Card>
-              <FormLabel>Email</FormLabel>
-              <FormInput placeholder="Email address..." />
+        <Image
+            source={background}
+            style={styles.imageContainer}>
+            <View style={styles.formsContainer}>
+                <FormInput containerStyle={styles.formInputContainer}
+                    placeholder="Email address"
+                />
+                <FormInput containerStyle={styles.formInputContainer}
+                    secureTextEntry
+                    placeholder="Password"
+                />
+                <FormInput containerStyle={styles.formInputContainer}
+                    secureTextEntry
+                    placeholder="Confirm Password"
+                />
+            </View>
 
-              <FormLabel>Password</FormLabel>
-              <FormInput secureTextEntry placeholder="Password..." />
+            <View style={styles.optionsContainer}>
+    	        <Button
+                    color="black"
+                    title="< Back to login"
+                    backgroundColor='transparent'
+                    fontSize={12}
+                    onPress={() => navigate("Login")}
+                    />
+            </View>
 
-              <FormLabel>Confirm Password</FormLabel>
-              <FormInput placeholder="Password..." />
-
-              <Button
-                buttonStyle={{ marginTop: 20 }}
-                backgroundColor="#03A9F4"
-                title="Create Account"
+            <View style={styles.buttonsContainer}>
+              <Button style={styles.buttonStyle}
+                borderRadius={10}
+                backgroundColor='#C753E0'
+                title="Create Account!"
+                icon={{name: 'check', type: 'material-community'}}
                 onPress={() => {
-                  onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));
-                }}
+                onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));}}
               />
-
-            </Card>
-
-	    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
-	    	<Text h1>Already have an account?</Text>
-
-		<Button
-			buttonStyle={{ marginTop: 20 }}
-	      		backgroundColor="#03A9F4"
-			title="Sign In"
-			onPress={() => {
-				onSignOut().then(() => navigate("SignedOut"));
-			}}
-		/>
-	    </View>
-          </View>
-
+            </View>
+	    </Image>
     );
   }
 }

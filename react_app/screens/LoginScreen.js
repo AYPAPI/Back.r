@@ -68,7 +68,7 @@ class LoginScreen extends Component {
 
             <View style={styles.optionsContainer}>
                 <Button
-                    backgroundColor="white"
+                    backgroundColor="transparent"
                     color="black"
                     title="Forgot Password?"
                     fontSize={12}
@@ -76,7 +76,7 @@ class LoginScreen extends Component {
                    />
 
     	        <Button
-                    backgroundColor="white"
+                    backgroundColor="transparent"
                     color="black"
                     title="Create Account"
                     fontSize={12}

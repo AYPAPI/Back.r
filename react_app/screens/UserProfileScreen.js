@@ -1,23 +1,12 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  Button,
-  Image,
-  View,
-  ScrollView,
-  StyleSheet
-} from 'react-native';
-
-import {
-    Avatar,
-    Icon
-} from 'react-native-elements';
+import {Text, Button, Image, View, ScrollView, StyleSheet} from 'react-native';
+import {Avatar, Icon} from 'react-native-elements';
 
 var backerBlue = '#57C4DD';
 var makerPurple = '#75C9F9';
 var lightGrey = '#BFBFBF';
 
-var profilePhoto = require('../images/bread.jpg');
+var profilePhoto = require('../img/gary_mouse.png');
 
 const Dimensions = require('Dimensions');
 const window = Dimensions.get('window');
@@ -38,29 +27,41 @@ const styles =  StyleSheet.create({
     fontSize: 40
   },
   containter: {
-      flex: 1,
       flexDirection: 'column',
       alignItems: 'center',
       backgroundColor: 'white',
+      color: 'white',
   },
   avatarContainer: {
       alignItems: 'center',
   },
-  titleContainer: {
-      flexDirection: 'row',
-      alignItems: 'flex-end',
+  descriptionContainer: {
+      flexDirection: 'column',
+      alignItems: 'flex-start',
       justifyContent: 'space-between',
       marginTop: 10,
       marginLeft: 10,
       marginRight: 10,
   },
+  subTitleContainer: {
+      flexDirection: 'row',
+  },
   titleText: {
-      fontSize: 20,
+      fontSize: 16,
+      color: backerBlue,
+  },
+  subtitleText: {
+      fontSize: 12,
+      fontStyle: 'italic',
   },
   iconsContainer: {
       flexDirection: 'row',
+      marginLeft: 10,
   },
-  descriptionContainer: {
+  iconStyle: {
+    marginRight: 3,
+  },
+  bioContainer: {
       marginTop: 10,
       marginLeft: 10,
       marginRight: 10,
@@ -97,49 +98,52 @@ class UserProfileScreen extends Component {
     return (
       <ScrollView style={styles.container}>
             <View style={styles.avatarContainer}>
-
                 <Avatar
                 width={window.width}
                 height={window.width}
                 source={profilePhoto}/>
             </View>
 
-            <View style={styles.titleContainer}>
+            <View style={styles.descriptionContainer}>
                 <Text style={styles.titleText}>
-                    IDEA TITLE/NAME
+                    Computer Science Lecturer
                 </Text>
-
-                <View style={styles.iconsContainer}>
-                    <Icon
-                        size={20}
-                        name= 'school'
-                        type='MaterialCommunityIcons'/>
-
-                    <Icon
-                        size={20}
-                        name= 'attach-money'
-                        type='MaterialCommunityIcons'/>
-
-                    <Icon
-                        size={20}
-                        name= 'group'
-                        type='MaterialCommunityIcons'/>
-
-                    <Icon
-                        size={20}
-                        name= 'work'
-                        type='MaterialCommunityIcons'/>
-
-                    <Icon
-                        size={20}
-                        name= 'gavel'
-                        type='MaterialCommunityIcons'/>
+                <View style={styles.subTitleContainer}>
+                    <Text style={styles.subtitleText}>
+                        Gary Gillespie
+                    </Text>
+                    <View style={styles.iconsContainer}>
+                        <Icon iconStyle={styles.iconStyle}
+                            name='circle-o'
+                            type='font-awesome'
+                            color='#59C129'
+                            size={15}
+                            onPress={() => alert("Money")} />
+                            <Icon iconStyle={styles.iconStyle}
+                            name='circle-o'
+                            type='font-awesome'
+                            color='#EF2074'
+                            size={15}
+                            onPress={() => alert("Money")} />
+                            <Icon iconStyle={styles.iconStyle}
+                            name='circle-o'
+                            type='font-awesome'
+                            color='#FC8A2D'
+                            size={15}
+                            onPress={() => alert("Money")} />
+                            <Icon iconStyle={styles.iconStyle}
+                            name='circle-o'
+                            type='font-awesome'
+                            color='#57C4DD'
+                            size={15}
+                            onPress={() => alert("Money")} />
+                    </View>
                 </View>
             </View>
 
-            <View style={styles.descriptionContainer}>
+            <View style={styles.bioContainer}>
                 <Text style={styles.bioText}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus egestas sapien nec lobortis tincidunt. Donec commodo, felis id convallis ultrices, velit arcu efficitur libero, at hendrerit dui felis eu massa. Donec tincidunt dolor quis erat dignissim, at vestibulum nisl placerat. Nunc pellentesque orci et convallis congue. Nam congue tortor urna, at consectetur nisl tincidunt id. å
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus egestas sapien nec lobortis tincidunt. Donec commodo, felis id convallis ultrices, velit arcu efficitur libero, at hendrerit dui felis eu massa. Donec tincidunt dolor quis erat dignissim, at vestibulum nisl placerat. Nunc pellentesque orci et convallis congue. Nam congue tortor urna, at consectetur nisl tincidunt id.
                 </Text>
             </View>
         </ScrollView>
