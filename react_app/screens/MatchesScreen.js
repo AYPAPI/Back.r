@@ -9,7 +9,7 @@ import {
 import {
 	Card, ListItem, Icon
 } from 'react-native-elements'
-const url = "https://backr-test.herokuapp.com/"
+const url = "https://backr.herokuapp.com/"
 const getChannels = function() {
   return fetch( url + 'twilio/channels?identity=vylana&endpointId=9998', {
     method: 'GET',
