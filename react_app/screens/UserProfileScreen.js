@@ -26,11 +26,9 @@ const styles =  StyleSheet.create({
     margin: 15,
     fontSize: 40
   },
-  containter: {
+  container: {
       flexDirection: 'column',
-      alignItems: 'center',
       backgroundColor: 'white',
-      color: 'white',
   },
   avatarContainer: {
       alignItems: 'center',
@@ -47,7 +45,8 @@ const styles =  StyleSheet.create({
       flexDirection: 'row',
   },
   titleText: {
-      fontSize: 16,
+      fontSize: 18,
+      fontFamily: 'gotham-rounded',
       color: backerBlue,
   },
   subtitleText: {

@@ -1,9 +1,23 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet } from 'react-native';
+import { Text, View, Image, StyleSheet,NativeModules } from 'react-native';
 import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
+<<<<<<< HEAD
 import { onSignIn } from '../auth.js'
 import { Font } from 'expo';
 
+=======
+import { onSignIn } from '../auth.js';
+
+var firebase = require('firebase')
+
+var config = {
+  apiKey:'AIzaSyC1gcj_eqTWR0paom50ebVzTL6u_V9jrcI',
+  authDomain:'backr-firebase.firebaseapp.com',
+  databaseURL:'backr-firebase.firebaseio.com',
+  storageBucket:'backr-firebase.appspot.com'
+};
+var app = firebase.initializeApp(config)
+>>>>>>> 7cc7724948b7e481a0abed14f2364503d6bdd1c0
 
 var background = require('../img/splash_screen-01.png');
 
@@ -42,11 +56,41 @@ class LoginScreen extends Component {
 
   constructor(props) {
     super(props);
-
+    this.load = false
     this.state = {
       user: "test_user",
       fontLaoded: false,
+      email:'',
+      password:'',
     };
+    this.login = this.login.bind(this)
+    this.success = this.success.bind(this)
+  }
+
+ 	login(navigate){
+    firebase.auth().signInWithEmailAndPassword(this.state.email,this.state.password).then(function(user) {
+      console.log('successfully logged in ' + JSON.stringify(user))
+      //onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));
+      navigate("SignedIn", {user: user});
+      this.load = true
+      return true
+    }).catch(function(error) {
+      var errorCode = error.code
+      var errorMessage = error.message
+			if (errorCode === 'auth/wrong-password') {
+        alert('Wrong password.');
+    	} else {
+        alert(errorMessage);
+    	}
+    	console.log(error);
+      this.load = false
+      return false
+    });
+	}
+
+  success(navigate){
+    //var promise = new Promise(this.login).then(function(value){console.log(value)})
+    this.login(navigate)
   }
 
   async componentDidMount() {
@@ -60,8 +104,11 @@ class LoginScreen extends Component {
   render() {
 
     const { navigate } = this.props.navigation;
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 7cc7724948b7e481a0abed14f2364503d6bdd1c0
     return (
         <Image
             source={background}
@@ -70,11 +117,13 @@ class LoginScreen extends Component {
 
                 <FormInput containerStyle={styles.formInputContainer}
                     placeholder="Email address..."
+                    onChangeText={(email) => this.setState({email})}
                 />
 
                 <FormInput containerStyle={styles.formInputContainer}
                     secureTextEntry
                     placeholder="Password..."
+                    onChangeText={(password) => this.setState({password})}
                 />
             </View>
 
@@ -103,8 +152,9 @@ class LoginScreen extends Component {
                 backgroundColor='#C753E0'
                 title="Sign in with email"
                 icon={{name: 'email', type: 'material-community'}}
-                onPress={() => {
-                onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));}}
+                //onPress={() => {
+                //onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));}}
+                onPress={() => this.success(navigate)}
               />
 
 	          <Button style={styles.buttonStyle}
@@ -120,5 +170,7 @@ class LoginScreen extends Component {
     );
   }
 }
+
+
 
 export default LoginScreen;
