@@ -6,7 +6,7 @@ import {Avatar, Icon, Button} from 'react-native-elements';
 //Method for logging out.
 import { onSignOut } from '../auth.js';
 
-var profilePhoto = require('../img/gary_mouse.png');
+var profilePhoto = require('../img/cannon_beach-01.jpg');
 var backerBlue = '#57C4DD';
 var darkBlue = '#58A6DB';
 var makerPurple = '#C753E0';
@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     margin: 15,
     fontSize: 40,
     color: lightGrey,
-},
+  },
   container: {
     flex: 1,
     flexDirection: 'column',
@@ -34,42 +34,53 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   avatarContainer: {
-    flex: 4,
     alignItems: 'center',
     marginTop: 10,
   },
-  iconContainer: {
+  avatarOverlay: {
+      height: 205,
+      width: 205,
+    borderRadius: 200/2,
+    borderWidth: 3,
+    borderColor: lightGrey
+  },
+  iconsContainer: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
-    marginTop: 25,
-  },
+    marginTop: 10,
+    },
+    iconStyle: {
+        marginLeft: 2,
+        marginRight: 2,
+    },
   textContainer:{
       flexDirection: 'column',
       alignItems: 'center',
   },
   nameContainer: {
-    fontSize: 24,
+    fontSize: 18,
     marginTop: 10,
+    fontFamily: 'gotham-rounded',
   },
   descriptionContainer: {
-    fontSize: 16,
+    fontSize: 14,
     fontStyle: 'italic',
     marginBottom: 15,
   },
   buttonContainer: {
-    flex: 3,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    marginTop: 5,
-    marginBottom: 15,
   },
   buttonContainerStyle: {
-      height: 45,
-      backgroundColor: darkBlue,
+      marginBottom: 20,
   },
   buttonStyle: {
       width: 250,
+  },
+  buttonText: {
+      fontFamily: 'gotham-rounded',
+      fontSize: 16,
   },
 });
 
@@ -116,53 +127,48 @@ class MyProfileScreen extends Component {
               <View style={styles.avatarContainer}>
                   <Avatar
                       rounded
-                      width={220}
-                      height={220}
+                      width={200}
+                      height={200}
                       activeOpacity={0.7}
                       source={profilePhoto}
                       onPress={()=>navigate('UserProfile',
                                             {user:'yourOwnProfile'})}
-                      overlayContainerStyle={{height: 225,
-                                              width: 225,
-                                              borderRadius: 110,
-                                              borderWidth: 3,
-                                              borderColor: lightGrey}}
+                      overlayContainerStyle={styles.avatarOverlay}
                       />
               </View>
 
-            <View style={styles.iconContainer}>
-
-                <Icon
-                    size={20}
-                    name= 'school'
-                    type='MaterialCommunityIcons'/>
-
-                <Icon
-                    size={20}
-                    name= 'attach-money'
-                    type='MaterialCommunityIcons'/>
-
-                <Icon
-                    size={20}
-                    name= 'group'
-                    type='MaterialCommunityIcons'/>
-
-                <Icon
-                    size={20}
-                    name= 'work'
-                    type='MaterialCommunityIcons'/>
-
-                <Icon
-                    size={20}
-                    name= 'gavel'
-                    type='MaterialCommunityIcons'/>
-            </View>
+              <View style={styles.iconsContainer}>
+                  <Icon iconStyle={styles.iconStyle}
+                  name='circle-o'
+                  type='font-awesome'
+                  color='#59C129'
+                  size={15}
+                  onPress={() => alert("Money")} />
+                  <Icon iconStyle={styles.iconStyle}
+                  name='circle-o'
+                  type='font-awesome'
+                  color='#EF2074'
+                  size={15}
+                  onPress={() => alert("Money")} />
+                  <Icon iconStyle={styles.iconStyle}
+                  name='circle-o'
+                  type='font-awesome'
+                  color='#FC8A2D'
+                  size={15}
+                  onPress={() => alert("Money")} />
+                  <Icon iconStyle={styles.iconStyle}
+                  name='circle-o'
+                  type='font-awesome'
+                  color='#57C4DD'
+                  size={15}
+                  onPress={() => alert("Money")} />
+              </View>
 
             <View style={styles.textContainer}>
               <Text style={styles.nameContainer}>
                   Computer Science Lecturer
               </Text>
-              <Text style={{fontFamily: 'gotham-rounded'}}>
+              <Text style={styles.descriptionContainer}>
                   Gary Gillespie
               </Text>
             </View>
@@ -170,31 +176,37 @@ class MyProfileScreen extends Component {
             <View style={styles.buttonContainer}>
                 <Button
                   style={styles.buttonStyle}
+                  containerViewStyle={styles.buttonContainerStyle}
+                  textStyle={styles.buttonText}
                   borderRadius={10}
+                  activeOpacity={0.5}
                   backgroundColor={backerBlue}
                   icon={{name: 'settings', type: 'MaterialIcons'}}
                   title= 'Edit Account Settings'
                   onPress={()=> navigate('Settings', {user: this.props.navigation.state.params.user})}
-                  containerViewStyle={styles.buttonContainerStyle}
                 />
 
                 <Button
                   style={styles.buttonStyle}
+                  containerViewStyle={styles.buttonContainerStyle}
+                  textStyle={styles.buttonText}
                   borderRadius={10}
+                  activeOpacity={0.5}
                   backgroundColor={backerBlue}
                   icon={{name: 'edit', type: 'MaterialCommunityIcons' }}
                   title= 'Edit Profile'
                   onPress={()=> navigate('Edit')}
-                  containerViewStyle={styles.buttonContainerStyle}
                 />
 
                 <Button
                   style={styles.buttonStyle}
+                  containerViewStyle={styles.buttonContainerStyle}
+                  textStyle={styles.buttonText}
                   borderRadius={10}
+                  activeOpacity={0.5}
                   backgroundColor={backerBlue}
                   icon={{name: 'replay', type: 'MaterialCommunityIcons'}}
                   title= 'Switch Profile'
-                  containerViewStyle={styles.buttonContainerStyle}
                 />
             </View>
           </View>

@@ -16,11 +16,15 @@ var lightGrey = '#BFBFBF';
 var checkGreen = '#1DDB2F'
 var noRed = '#E5456F'
 
+var firstCardPhoto = require('../img/shuttle-01.jpg');
+var secondCardPhoto = require('../img/ceo_photo.jpg');
+
+
 const styles = {
     headerIcon: {
         color: '#999999',
         margin: 15,
-        fontSize: 30
+        fontSize: 30,
     },
     titleMaker: {
         color: '#75C9F9',
@@ -48,14 +52,16 @@ const styles = {
         backgroundColor: 'white',
     },
     imagePropsStyle:{
-        borderRadius: 10,
+        borderRadius: 8,
     },
     imageWrapper:{
         height: 280,
     },
     cardContainer:{
         borderRadius: 10,
-        height: 425,
+        height: 430,
+        borderWidth: 2,
+        borderColor: lightGrey,
     },
     cardImageContainer : {
         justifyContent: 'center',
@@ -70,20 +76,22 @@ const styles = {
         alignItems: 'flex-start',
     },
     titleText: {
-        fontSize: 16,
+        fontSize: 18,
         color: backerBlue,
+        fontFamily: 'gotham-rounded',
     },
     subTitleContainer: {
         flexDirection: 'row',
         alignItems: 'flex-start',
     },
     subtitleText: {
-        fontSize: 12,
+        fontSize: 14,
         fontStyle: 'italic',
     },
     iconsContainer: {
         flexDirection: 'row',
         marginLeft: 10,
+        marginTop: 2,
     },
     iconStyle: {
         marginRight: 3,
@@ -98,7 +106,7 @@ const styles = {
         marginTop: 420,
         marginLeft: 50,
         marginRight: 50,
-        marginBottom: 10,
+        marginBottom: 8,
         zIndex: 0,
     },
     preferenceButtonsBorder: {
@@ -160,17 +168,17 @@ class ExploreScreen extends Component {
                 >
                     <Card style={styles.card}
                         containerStyle={styles.cardContainer}
-                        image={require('../img/gary_mouse.png')}
+                        image={firstCardPhoto}
                         imageProps={styles.imagePropsStyle}
                         imageWrapperStyle={styles.imageWrapper}
                         imageStyle={styles.imageWrapper}>
                         <View style={styles.descriptionContainer}>
                                 <Text style={styles.titleText}>
-                                    Computer Science Lecturer
+                                    Biology/Comp Sci Student
                                 </Text>
                             <View style={styles.subTitleContainer}>
                                 <Text style={styles.subtitleText}>
-                                    Gary Gillespie
+                                    David Owens
                                 </Text>
                                 <View style={styles.iconsContainer}>
                                     <Icon iconStyle={styles.iconStyle}
@@ -210,17 +218,17 @@ class ExploreScreen extends Component {
 
                     <Card style={styles.card}
                         containerStyle={styles.cardContainer}
-                        image={require('../img/gary_mouse.png')}
+                        image={secondCardPhoto}
                         imageProps={styles.imagePropsStyle}
                         imageWrapperStyle={styles.imageWrapper}
                         imageStyle={styles.imageWrapper}>
                         <View style={styles.descriptionContainer}>
                                 <Text style={styles.titleText}>
-                                    Disney Land Entertainer
+                                    Important CEO Guy
                                 </Text>
                             <View style={styles.subTitleContainer}>
                                 <Text style={styles.subtitleText}>
-                                    Micky Mouse
+                                    John Doe
                                 </Text>
                                 <View style={styles.iconsContainer}>
                                     <Icon iconStyle={styles.iconStyle}
@@ -241,7 +249,7 @@ class ExploreScreen extends Component {
 
                         <View style={styles.bioContainer}>
                             <Text style={styles.bioText}>
-                            Short bio goes here! This is where the maker or backer gives a quick description of their project or their skills. This should be just a few sentences. Heres one more sentence!
+                                Hi, Im important CEO guy, Im here because I have a lot of money and I want to spend it on you. Thats right, I said you. Pls swipe right on me so I can make you a millionare.
                             </Text>
                         </View>
                     </Card>
