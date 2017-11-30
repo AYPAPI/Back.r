@@ -80,6 +80,7 @@ const styles = {
     subtitleText: {
         fontSize: 12,
         fontStyle: 'italic',
+        fontFamily:'gotham-rounded'
     },
     iconsContainer: {
         flexDirection: 'row',

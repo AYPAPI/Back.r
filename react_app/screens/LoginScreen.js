@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet } from 'react-native';
 import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
 import { onSignIn } from '../auth.js'
+import { Font } from 'expo';
+
 
 var background = require('../img/splash_screen-01.png');
 
@@ -42,13 +44,23 @@ class LoginScreen extends Component {
     super(props);
 
     this.state = {
-      user: "test_user"
+      user: "test_user",
+      fontLaoded: false,
     };
+  }
+
+  async componentDidMount() {
+      await Font.loadAsync({
+        'gotham-rounded': require('../assets/fonts/Gotham-Rounded-Bold.otf'),
+      });
+
+      this.setState({ fontLoaded: true });
   }
 
   render() {
 
     const { navigate } = this.props.navigation;
+
 
     return (
         <Image
@@ -72,6 +84,7 @@ class LoginScreen extends Component {
                     color="black"
                     title="Forgot Password?"
                     fontSize={12}
+                    fontFamily='gotham-rounded'
                     onPress={() => navigate("ForgotPassword")}
                    />
 

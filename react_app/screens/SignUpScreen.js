@@ -86,6 +86,7 @@ class SignUpScreen extends Component {
                 borderRadius={10}
                 backgroundColor='#C753E0'
                 title="Create Account!"
+                fontFamily='gotham-rounded'
                 icon={{name: 'check', type: 'material-community'}}
                 onPress={() => {
                 onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));}}

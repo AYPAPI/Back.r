@@ -16,14 +16,17 @@ export default class App extends React.Component {
 
     this.state = {
       signedIn: false,
-      checkedState: false
+      checkedState: false,
+      fontLoaded: false,
     };
   }
 
-  componentDidMount() {
-  Font.loadAsync({
-    'gotham-rounded': require('./assets/fonts/Gotham-Rounded-Bold.otf'),
-  });
+  async componentDidMount() {
+      await Font.loadAsync({
+        'gotham-rounded': require('./assets/fonts/Gotham-Rounded-Bold.otf'),
+      });
+
+      this.setState({ fontLoaded: true });
   }
 
   componentWillMount() {
@@ -48,6 +51,9 @@ export default class App extends React.Component {
       return null;
     }*/
 
+    if (!this.state.fontLoaded) {
+      return <Expo.AppLoading />;
+    }
     const InitView = createRootNav(signedIn);
     return <InitView />;
 
