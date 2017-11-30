@@ -83,6 +83,7 @@ class SignUpScreen extends Component {
 
             <View style={styles.buttonsContainer}>
               <Button style={styles.buttonStyle}
+                textStyle={{fontFamily: 'gotham-rounded', fontSize: 16, marginTop: 3}}
                 borderRadius={10}
                 backgroundColor='#C753E0'
                 title="Create Account!"
