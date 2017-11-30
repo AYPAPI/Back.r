@@ -4,6 +4,7 @@ import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
 
 //Import function for signing in.
 import { onSignIn } from '../auth.js';
+var firebase = require('firebase')
 
 var background = require('../img/create_account_screen-01.png');
 
@@ -44,9 +45,28 @@ class SignUpScreen extends Component {
     super(props);
 
     this.state = {
-      user: "test_user"
+      user: "",
+      email: "",
+      password: "password"
     };
+
+    this.signUp = this.signUp.bind(this)
   }
+
+  signUp(){
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(function(user){
+      console.log('successfully created account')
+    }).catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+			if (errorCode === 'auth/wrong-password') {
+        alert('Wrong password.');
+    	} else {
+        alert(errorMessage);         
+    	}
+    	console.log(error);
+    });
+  };
 
   render() {
 
@@ -60,10 +80,12 @@ class SignUpScreen extends Component {
             <View style={styles.formsContainer}>
                 <FormInput containerStyle={styles.formInputContainer}
                     placeholder="Email address"
+                    onChangeText={(email) => this.setState({email})}
                 />
                 <FormInput containerStyle={styles.formInputContainer}
                     secureTextEntry
                     placeholder="Password"
+                    onChangeText={(password) => this.setState({password})}
                 />
                 <FormInput containerStyle={styles.formInputContainer}
                     secureTextEntry
@@ -87,8 +109,9 @@ class SignUpScreen extends Component {
                 backgroundColor='#C753E0'
                 title="Create Account!"
                 icon={{name: 'check', type: 'material-community'}}
-                onPress={() => {
-                onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));}}
+                //onPress={() => {
+                //onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));}}
+                onPress={this.signUp}
               />
             </View>
 	    </Image>
