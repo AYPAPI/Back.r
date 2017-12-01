@@ -105,6 +105,33 @@ module.exports.readUser = function (email,tablename,client, callback) {
     callback(obj);
 	})
 }
+//update isMaker in user profile
+module.exports.updateisMaker = function(email,client,isMaker,callback) {
+  let query = 'UPDATE users SET isMaker = $1 WHERE EMAIL = $2'
+  client.query(query, [isMaker, email], function(err,res) {
+    if (err) throw err;
+    console.log('Updated isMaker')
+    callback("Updated isMaker");
+  })
+}
+//update user profile
+module.exports.updateUser = function(email,shortbio,client,callback){
+  let query = 'UPDATE users SET shortbio = $1 WHERE email = $2'
+  client.query(query, [shortbio,email], function(err,res) {
+    if (err) throw err;
+    console.log('Updated user profile')
+    callback("Updated user profile");
+  })
+}
+//update maker and backer profile
+module.exports.updateProfile = function(email,longbio,photos,icons,client,tablename,callback){
+  let query = 'UPDATE ' + tablename + ' SET longbio = $1, photos = $2, icons = $3 WHERE email = $4'
+  client.query(query, [longbio,photos,icons,email], function(err,res) {
+    if (err) throw err;
+    console.log('Updated ' + tablename + ' profile');
+    callback("Updated " + tablename + ' profile');
+  })
+}
 
 //get maker/backer profile
 module.exports.readUserProfile = function (email,tablename,client, callback) {
