@@ -52,7 +52,7 @@ module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,
         return
       }
     }
-    let query = 'INSERT INTO ' + tablename + ' (name,age,email,ismaker,shortbio) values ($1,$2,$3,$4,$5,$6)';
+    let query = 'INSERT INTO ' + tablename + ' (name,age,email,ismaker,shortbio) values ($1,$2,$3,$4,$5)';
     client.query(query,[name,age,email,isMaker,shortbio], function(err,res) {
       if (err) throw err;
       else{
