@@ -1,13 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet,NativeModules } from 'react-native';
 import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
-<<<<<<< HEAD
+
 import { onSignIn } from '../auth.js'
 import { Font } from 'expo';
 
-=======
-import { onSignIn } from '../auth.js';
-
+/* Firebase */
 var firebase = require('firebase')
 
 var config = {
@@ -17,8 +15,8 @@ var config = {
   storageBucket:'backr-firebase.appspot.com'
 };
 var app = firebase.initializeApp(config)
->>>>>>> 7cc7724948b7e481a0abed14f2364503d6bdd1c0
 
+/* Style */
 var background = require('../img/splash_screen-01.png');
 
 const styles = StyleSheet.create({
@@ -51,6 +49,22 @@ const styles = StyleSheet.create({
         marginBottom: 20,
     },
 });
+
+async function fbLogIn() {
+  const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('187665428456187', {
+      permissions: ['public_profile', 'email']
+    });
+  if (type === 'success') {
+    // Get the user's name using Facebook's Graph API
+    const response = await fetch(
+      `https://graph.facebook.com/v2.2/me?fields=name,email&access_token=${token}`);
+    alert(
+      'Logged in!',
+    );
+    console.log(response)
+  }
+}
+
 
 class LoginScreen extends Component {
 
@@ -104,11 +118,7 @@ class LoginScreen extends Component {
   render() {
 
     const { navigate } = this.props.navigation;
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 7cc7724948b7e481a0abed14f2364503d6bdd1c0
     return (
         <Image
             source={background}
@@ -163,7 +173,9 @@ class LoginScreen extends Component {
                 backgroundColor='#03A9F4'
                 title="Sign in with Facebook"
                 onPress={() => {
-                onSignIn().then(() => navigate("SignedIn", {user: "USER"}));}}
+                  fbLogIn()
+                // fbLogIn().then(() => navigate("SignedIn", {user: "USER"}));
+              }}
               />
             </View>
 	    </Image>
