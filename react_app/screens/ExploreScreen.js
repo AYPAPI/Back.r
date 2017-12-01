@@ -9,20 +9,26 @@ import {
 import { Card, Icon, Text } from 'react-native-elements';
 import Swiper from 'react-native-swiper-animated'
 import {Dimensions} from 'react-native';
-const { width } = Dimensions.get('window')
 
-var backerBlue = '#57C4DD';
-var lightGrey = '#BFBFBF';
-var checkGreen = '#1DDB2F'
-var noRed = '#E5456F'
+import { lightGrey,
+    backerBlue,
+    makerPurple,
+    checkGreen,
+    noRed,
+    moneyGreen,
+    materialsOrange,
+    knowledgePurple,
+    manpowerRed } from '../assets/styles/colors.js';
 
-var firstCardPhoto = require('../img/shuttle-01.jpg');
-var secondCardPhoto = require('../img/ceo_photo.jpg');
+var firstCardPhoto = require('../assets/images/shuttle-01.jpg');
+var secondCardPhoto = require('../assets/images/ceo_photo.jpg');
 
+export const window = Dimensions.get('window');
+var cardHeight = window.height - 140;
 
 const styles = {
     headerIcon: {
-        color: '#999999',
+        color: lightGrey,
         margin: 15,
         fontSize: 30,
     },
@@ -55,11 +61,11 @@ const styles = {
         borderRadius: 8,
     },
     imageWrapper:{
-        height: 280,
+        height: cardHeight - 135,
     },
     cardContainer:{
         borderRadius: 10,
-        height: 430,
+        height: cardHeight,
         borderWidth: 2,
         borderColor: lightGrey,
     },
@@ -86,18 +92,17 @@ const styles = {
     },
     subtitleText: {
         fontSize: 14,
-        fontStyle: 'italic',
+        fontFamily:'gotham-rounded'
     },
     iconsContainer: {
         flexDirection: 'row',
         marginLeft: 10,
-        marginTop: 2,
     },
     iconStyle: {
         marginRight: 3,
     },
     bioContainer: {
-        marginTop: 5,
+        marginTop: 3,
     },
     preferenceButtonsContainer: {
         flexDirection: 'row',
@@ -156,6 +161,7 @@ class ExploreScreen extends Component {
     render() {
 
         const { navigate } = this.props.navigation;
+
         return (
             <View style={styles.container}>
                 <Swiper
@@ -173,9 +179,11 @@ class ExploreScreen extends Component {
                         imageWrapperStyle={styles.imageWrapper}
                         imageStyle={styles.imageWrapper}>
                         <View style={styles.descriptionContainer}>
-                                <Text style={styles.titleText}>
-                                    Biology/Comp Sci Student
-                                </Text>
+                            <Text style={styles.titleText}
+                                onPress={ () => alert('go to this user!')}
+                                activeOpacity={0.5}>
+                                Biology/Comp Sci Student
+                            </Text>
                             <View style={styles.subTitleContainer}>
                                 <Text style={styles.subtitleText}>
                                     David Owens
@@ -260,6 +268,7 @@ class ExploreScreen extends Component {
                     containerStyle={styles.preferenceButtonsBorder}
                     name='close'
                     type='material-community'
+                    activeOpacity={0.5}
                     color= {noRed}
                     size={25}
                     onPress={() => alert("No!")}
@@ -268,6 +277,7 @@ class ExploreScreen extends Component {
                     containerStyle={styles.preferenceButtonsBorder}
                     name='check'
                     type='material-community'
+                    activeOpacity={0.5}
                     color={checkGreen}
                     size={25}
                     onPress={() => alert("Yes!")} />

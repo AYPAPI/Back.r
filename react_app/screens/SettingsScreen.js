@@ -13,11 +13,14 @@ import {
 
 //Method for logging out.
 import { onSignOut } from '../auth.js';
-var buttonRed = '#EA2D2D';
-var darkButtonRed = '#C11E1E';
-var backerBlue = '#57C4DD';
-var lightGrey = '#BFBFBF';
 
+import { lightGrey,
+    backerBlue,
+    makerPurple,
+    checkGreen,
+    noRed,
+    buttonRed } from '../assets/styles/colors.js';
+    
 const styles = StyleSheet.create({
     container: {
         flex: 1,
