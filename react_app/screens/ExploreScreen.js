@@ -1,63 +1,127 @@
 import React, { Component } from 'react';
 import {
-  Button,
-  View,
-  StyleSheet,
-  TouchableHighlight,
-  Image,
+    Button,
+    View,
+    StyleSheet,
+    TouchableHighlight,
+    Image,
 } from 'react-native';
 import { Card, Icon, Text } from 'react-native-elements';
 import Swiper from 'react-native-swiper-animated'
 import {Dimensions} from 'react-native';
-const { width } = Dimensions.get('window')
+
+import { lightGrey,
+    backerBlue,
+    makerPurple,
+    checkGreen,
+    noRed,
+    moneyGreen,
+    materialsOrange,
+    knowledgePurple,
+    manpowerRed } from '../assets/styles/colors.js';
+
+var firstCardPhoto = require('../assets/images/shuttle-01.jpg');
+var secondCardPhoto = require('../assets/images/ceo_photo.jpg');
+
+export const window = Dimensions.get('window');
+var cardHeight = window.height - 140;
 
 const styles = {
-  wrapper: {
-    backgroundColor: '#ffffff',
-    flex: 1,
-  },
-  slide1: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    height: 300
-  },
-  slide2: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    height: 300
-  },
-  slide3: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'white',
-    height: 300
-  },
-  text: {
-    color: '#fff',
-    fontSize: 100,
-    fontWeight: 'bold',
-    height: 300
-  },
-  headerIcon: {
-    color: '#999999',
-    margin: 15,
-    fontSize: 30
-  },
-  titleMaker: {
-    color: '#75C9F9',
-    margin: 15,
-    fontSize: 40
-  },
-  titleBacker: {
-    color: '#C753E0',
-    margin: 15,
-    fontSize: 40
-  }
+    headerIcon: {
+        color: lightGrey,
+        margin: 15,
+        fontSize: 30,
+    },
+    titleMaker: {
+        color: '#75C9F9',
+        margin: 15,
+        fontSize: 40
+    },
+    titleBacker: {
+        color: '#C753E0',
+        margin: 15,
+        fontSize: 40
+    },
+    wrapper: {
+        backgroundColor: 'white',
+        flex: 1,
+        zIndex: 1,
+    },
+    container: {
+        backgroundColor: 'white',
+        flex: 1,
+    },
+    card: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: 'white',
+    },
+    imagePropsStyle:{
+        borderRadius: 8,
+    },
+    imageWrapper:{
+        height: cardHeight - 135,
+    },
+    cardContainer:{
+        borderRadius: 10,
+        height: cardHeight,
+        borderWidth: 2,
+        borderColor: lightGrey,
+    },
+    cardImageContainer : {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    titleContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    textContainer: {
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+    },
+    titleText: {
+        fontSize: 18,
+        color: backerBlue,
+        fontFamily: 'gotham-rounded',
+    },
+    subTitleContainer: {
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+    },
+    subtitleText: {
+        fontSize: 14,
+        fontFamily:'gotham-rounded'
+    },
+    iconsContainer: {
+        flexDirection: 'row',
+        marginLeft: 10,
+    },
+    iconStyle: {
+        marginRight: 3,
+    },
+    bioContainer: {
+        marginTop: 3,
+    },
+    preferenceButtonsContainer: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        marginTop: 420,
+        marginLeft: 50,
+        marginRight: 50,
+        marginBottom: 8,
+        zIndex: 0,
+    },
+    preferenceButtonsBorder: {
+        width: 40,
+        height: 40,
+        borderWidth: 2,
+        borderRadius: 40/2,
+        borderColor: lightGrey,
+        backgroundColor: 'white',
+    },
 };
 
 
@@ -66,171 +130,161 @@ class ExploreScreen extends Component {
   onUserPress(user) {
     this.props.navigation.navigate("UserProfile", {user: user, mainUser: this.props.navigation.state.params.user});
   }
+    static navigationOptions = ({ navigation }) => {
+        const { user } = navigation.state.params;
+        return {
+            headerTitle: (
+                <Icon
+                name='lightbulb-outline'
+                type='material-community'
+                iconStyle={styles.titleMaker}
+                />
+            ),
+            headerRight: (
+                <Icon
+                name='message-text-outline'
+                type='material-community'
+                iconStyle={styles.headerIcon}
+                onPress={ () => navigation.navigate("Matches", {user: user}) }
+                />
+            ),
+            headerLeft: (
+                <Icon
+                name='face'
+                type='material-community'
+                iconStyle={styles.headerIcon}
+                onPress={ () => navigation.navigate("MyProfile", {user: user, type: ""}) }
+                />
+            ),
+        };
+    };
+    render() {
 
-  static navigationOptions = ({ navigation }) => {
-  const { user } = navigation.state.params;
-  return {
-    headerTitle: (
-      <Icon
-        name='lightbulb'
-        type='material-community'
-        iconStyle={styles.titleMaker}
-      />
-    ),
-    headerRight: (
-      <Icon
-        name='message-text-outline'
-        type='material-community'
-        iconStyle={styles.headerIcon}
-        onPress={ () => navigation.navigate("Matches", {user: user}) }
-      />
-    ),
-    headerLeft: (
-        <Icon
-          name='user-o'
-          type='font-awesome'
-          iconStyle={styles.headerIcon}
-          onPress={ () => navigation.navigate("MyProfile", {user: user, type: ""}) }
-        />
+        const { navigate } = this.props.navigation;
 
-    ),
-  };
-};
+        return (
+            <View style={styles.container}>
+                <Swiper
+                style={styles.wrapper}
+                showPagination={false}
+                smoothTransition
+                stack
+                dragDownToBack
+                dragY
+                >
+                    <Card style={styles.card}
+                        containerStyle={styles.cardContainer}
+                        image={firstCardPhoto}
+                        imageProps={styles.imagePropsStyle}
+                        imageWrapperStyle={styles.imageWrapper}
+                        imageStyle={styles.imageWrapper}>
+                        <View style={styles.descriptionContainer}>
+                            <Text style={styles.titleText}
+                                onPress={ () => alert('go to this user!')}
+                                activeOpacity={0.5}>
+                                Biology/Comp Sci Student
+                            </Text>
+                            <View style={styles.subTitleContainer}>
+                                <Text style={styles.subtitleText}>
+                                    David Owens
+                                </Text>
+                                <View style={styles.iconsContainer}>
+                                    <Icon iconStyle={styles.iconStyle}
+                                    name='circle-o'
+                                    type='font-awesome'
+                                    color='#59C129'
+                                    size={15}
+                                    onPress={() => alert("Money")} />
+                                    <Icon iconStyle={styles.iconStyle}
+                                    name='circle-o'
+                                    type='font-awesome'
+                                    color='#EF2074'
+                                    size={15}
+                                    onPress={() => alert("Money")} />
+                                    <Icon iconStyle={styles.iconStyle}
+                                    name='circle-o'
+                                    type='font-awesome'
+                                    color='#FC8A2D'
+                                    size={15}
+                                    onPress={() => alert("Money")} />
+                                    <Icon iconStyle={styles.iconStyle}
+                                    name='circle-o'
+                                    type='font-awesome'
+                                    color='#57C4DD'
+                                    size={15}
+                                    onPress={() => alert("Money")} />
+                                </View>
+                            </View>
+                        </View>
 
-  render() {
+                        <View style={styles.bioContainer}>
+                            <Text style={styles.bioText}>
+                            Short bio goes here! This is where the maker or backer gives a quick description of their project or their skills. This should be just a few sentences. Heres one more sentence!
+                            </Text>
+                        </View>
+                    </Card>
 
-    const { navigate } = this.props.navigation;
-    return (
-      <View>
-      <Button
-          onPress={() => navigate("Edit")}
-          title="Edit"
-          buttonStyle={{ marginTop: 20 }}
-      />
+                    <Card style={styles.card}
+                        containerStyle={styles.cardContainer}
+                        image={secondCardPhoto}
+                        imageProps={styles.imagePropsStyle}
+                        imageWrapperStyle={styles.imageWrapper}
+                        imageStyle={styles.imageWrapper}>
+                        <View style={styles.descriptionContainer}>
+                                <Text style={styles.titleText}>
+                                    Important CEO Guy
+                                </Text>
+                            <View style={styles.subTitleContainer}>
+                                <Text style={styles.subtitleText}>
+                                    John Doe
+                                </Text>
+                                <View style={styles.iconsContainer}>
+                                    <Icon iconStyle={styles.iconStyle}
+                                    name='circle-o'
+                                    type='font-awesome'
+                                    color='#59C129'
+                                    size={15}
+                                    onPress={() => alert("Money")} />
+                                    <Icon iconStyle={styles.iconStyle}
+                                    name='circle-o'
+                                    type='font-awesome'
+                                    color='#EF2074'
+                                    size={15}
+                                    onPress={() => alert("Money")} />
+                                </View>
+                            </View>
+                        </View>
 
-      <Swiper
-      style={styles.wrapper}
-      paginationStyle={{ container: { backgroundColor: 'transparent' } }}
-      paginationLeft={''}
-      paginationRight={''}
-      smoothTransition
-      stack
-      dragDownToBack
-      dragY
-      >
+                        <View style={styles.bioContainer}>
+                            <Text style={styles.bioText}>
+                                Hi, Im important CEO guy, Im here because I have a lot of money and I want to spend it on you. Thats right, I said you. Pls swipe right on me so I can make you a millionare.
+                            </Text>
+                        </View>
+                    </Card>
+                </Swiper>
 
-      <Card style={styles.slide1}
-      title="Computer Science Enthusiast">
-      <TouchableHighlight onPress={ () => this.onUserPress("Random_User") }>
-        <Image
-          source={require('../img/gary_mouse.png')}
-        />
-      </TouchableHighlight>
-      <Text style={{marginBottom: 10}}>
-      Gary is a computer Science Enthusiast!!!
-      </Text>
-      <Icon
-      raised
-      name='money'
-      type='font-awesome'
-      color='#f50'
-      onPress={() => alert("Money")} />
-      </Card>
-
-      <Card style={styles.slide1}
-      title="Computer Science Enthusiast">
-      <TouchableHighlight onPress={ () => this.onUserPress("Random_User") }>
-        <Image
-          source={require('../img/gary_mouse.png')}
-        />
-      </TouchableHighlight>
-      <Text style={{marginBottom: 10}}>
-      Gary is a computer Science Enthusiast!!!
-      </Text>
-      <Icon
-      raised
-      name='money'
-      type='font-awesome'
-      color='#f50'
-      onPress={() => alert("Money")} />
-      </Card>
-
-      <Card style={styles.slide1}
-      title="Computer Science Enthusiast">
-      <TouchableHighlight onPress={ () => this.onUserPress("Random_User") }>
-        <Image
-          source={require('../img/gary_mouse.png')}
-        />
-      </TouchableHighlight>
-      <Text style={{marginBottom: 10}}>
-      Gary is a computer Science Enthusiast!!!
-      </Text>
-      <Icon
-      raised
-      name='money'
-      type='font-awesome'
-      color='#f50'
-      onPress={() => alert("Money")} />
-      </Card>
-
-      <Card style={styles.slide1}
-      title="Computer Science Enthusiast">
-      <TouchableHighlight onPress={ () => this.onUserPress("Random_User") }>
-        <Image
-          source={require('../img/gary_mouse.png')}
-        />
-      </TouchableHighlight>
-      <Text style={{marginBottom: 10}}>
-      Gary is a computer Science Enthusiast!!!
-      </Text>
-      <Icon
-      raised
-      name='money'
-      type='font-awesome'
-      color='#f50'
-      onPress={() => alert("Money")} />
-      </Card>
-
-      <Card style={styles.slide1}
-      title="Computer Science Enthusiast">
-      <TouchableHighlight onPress={ () => this.onUserPress("Random_User") }>
-        <Image
-          source={require('../img/gary_mouse.png')}
-        />
-      </TouchableHighlight>
-      <Text style={{marginBottom: 10}}>
-      Gary is a computer Science Enthusiast!!!
-      </Text>
-      <Icon
-      raised
-      name='money'
-      type='font-awesome'
-      color='#f50'
-      onPress={() => alert("Money")} />
-      </Card>
-
-      <Card style={styles.slide1}
-      title="Computer Science Enthusiast">
-      <TouchableHighlight onPress={ () => this.onUserPress("Random_User") }>
-        <Image
-          source={require('../img/gary_mouse.png')}
-        />
-      </TouchableHighlight>
-      <Text style={{marginBottom: 10}}>
-      Gary is a computer Science Enthusiast!!!
-      </Text>
-      <Icon
-      raised
-      name='money'
-      type='font-awesome'
-      color='#f50'
-      onPress={() => alert("Money")} />
-      </Card>
-      </Swiper>
-
-      </View>
-    );
-  }
+                <View style={styles.preferenceButtonsContainer}>
+                    <Icon
+                    containerStyle={styles.preferenceButtonsBorder}
+                    name='close'
+                    type='material-community'
+                    activeOpacity={0.5}
+                    color= {noRed}
+                    size={25}
+                    onPress={() => alert("No!")}
+                    />
+                    <Icon
+                    containerStyle={styles.preferenceButtonsBorder}
+                    name='check'
+                    type='material-community'
+                    activeOpacity={0.5}
+                    color={checkGreen}
+                    size={25}
+                    onPress={() => alert("Yes!")} />
+                </View>
+            </View>
+        );
+    }
 }
 
 export default ExploreScreen;

@@ -1,66 +1,99 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  Button,
-  Image,
-  View,
-  StyleSheet
-} from 'react-native';
-import { Icon } from 'react-native-elements';
+import {Text,
+    Button,
+    Image,
+    View,
+    ScrollView,
+    StyleSheet,
+    Card} from 'react-native';
+import {Avatar, Icon} from 'react-native-elements';
 
-const styles = {
+import { lightGrey,
+    backerBlue,
+    makerPurple,
+    checkGreen,
+    noRed } from '../assets/styles/colors.js';
+
+var profilePhoto = require('../assets/images/shuttle-01.jpg');
+
+const Dimensions = require('Dimensions');
+const window = Dimensions.get('window');
+
+const styles =  StyleSheet.create({
   headerIcon: {
     margin: 15,
     fontSize: 30
   },
   titleMaker: {
-    color: '#75C9F9',
+    color: makerPurple,
     margin: 15,
     fontSize: 40
   },
   titleBacker: {
-    color: '#C753E0',
+    color: backerBlue,
     margin: 15,
     fontSize: 40
-  }
-};
-
-import Svg, { Circle } from 'react-native-svg';
-import {Avatar} from 'react-native-elements';
-import {Icon} from 'react-native-elements';
-
-var profilePhoto = require('../images/bread.jpg');
+  },
+  container: {
+      flexDirection: 'column',
+      backgroundColor: 'white',
+  },
+  avatarContainer: {
+      alignItems: 'center',
+      zIndex: 0,
+  },
+  descriptionContainer: {
+      flexDirection: 'column',
+      alignItems: 'flex-start',
+      justifyContent: 'space-between',
+      marginTop: 10,
+      marginLeft: 10,
+      marginRight: 10,
+  },
+  subTitleContainer: {
+      flexDirection: 'row',
+  },
+  titleText: {
+      fontSize: 18,
+      fontFamily: 'gotham-rounded',
+      color: backerBlue,
+  },
+  subtitleText: {
+      fontSize: 12,
+      fontStyle: 'italic',
+  },
+  iconsContainer: {
+      flexDirection: 'row',
+      marginLeft: 10,
+  },
+  iconStyle: {
+    marginRight: 3,
+  },
+  bioContainer: {
+      marginTop: 10,
+      marginLeft: 10,
+      marginRight: 10,
+  },
+  bioText: {
+      fontSize: 16,
+      textAlign: 'justify',
+  },
+});
 
 class UserProfileScreen extends Component {
-  static navigationOptions = ({ navigation }) => {
-  const { user, mainUser } = navigation.state.params;
+    static navigationOptions = ({ navigation }) => {
+    //const { user, mainUser } = navigation.state.params;
+    const { goBack } = navigation.goBack;
+
 
   return {
     headerTitle: (
       <Icon
-        name='lightbulb'
+        name='chevron-down'
         type='material-community'
         iconStyle={styles.titleMaker}
-        onPress={ () => navigation.navigate("Explore", {user: mainUser}) }
+        onPress={ () => goBack() }
       />
-    ),
-    headerRight: (
-      <Icon
-        name='message-text-outline'
-        type='material-community'
-        iconStyle={styles.headerIcon}
-        color='#999999'
-        onPress={ () => navigation.navigate("Matches", {user: mainUser}) }
-      />
-    ),
-    headerLeft: (
-        <Icon
-          name='user-o'
-          type='font-awesome'
-          color='#999999'
-          iconStyle={styles.headerIcon}
-          onPress={ () => navigation.navigate("MyProfile", {user: mainUser}) }
-        />
     ),
   };
 };
@@ -70,129 +103,57 @@ class UserProfileScreen extends Component {
     const { navigate } = this.props.navigation;
 
     return (
-      <View
-        style={{
-          flex:1,
-        flexDirection:'column' }}
-      >
-        <View
-        style={{flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center'}}
-        >
-      
-        <Button
-          onPress={() => navigate("Explore", {user: "hiimauser"})}
-          title="Explore Page"
-          buttonStyle={{ marginTop: 20 }}
-        />
-        <Avatar
-        padding={10}
-        width={225}
-        height={225}
-        rounded
-        source={profilePhoto}
-        activeOpacity={0.7}
-        />
-        <Text>
-        IDEA TITLE/NAME
-        </Text>
+      <ScrollView style={styles.container}>
+            <View style={styles.avatarContainer}>
+                <Avatar
+                width={window.width}
+                height={window.width}
+                source={profilePhoto}/>
+            </View>
 
-        <Text>
-        This is a bio. It describes either the backer or the idea to back.
-        </Text>
-        </View>
+            <View style={styles.descriptionContainer}>
+                <Text style={styles.titleText}>
+                    Computer Science Lecturer
+                </Text>
+                <View style={styles.subTitleContainer}>
+                    <Text style={styles.subtitleText}>
+                        Gary Gillespie
+                    </Text>
+                    <View style={styles.iconsContainer}>
+                        <Icon iconStyle={styles.iconStyle}
+                            name='circle-o'
+                            type='font-awesome'
+                            color='#59C129'
+                            size={15}
+                            onPress={() => alert("Money")} />
+                            <Icon iconStyle={styles.iconStyle}
+                            name='circle-o'
+                            type='font-awesome'
+                            color='#EF2074'
+                            size={15}
+                            onPress={() => alert("Money")} />
+                            <Icon iconStyle={styles.iconStyle}
+                            name='circle-o'
+                            type='font-awesome'
+                            color='#FC8A2D'
+                            size={15}
+                            onPress={() => alert("Money")} />
+                            <Icon iconStyle={styles.iconStyle}
+                            name='circle-o'
+                            type='font-awesome'
+                            color='#57C4DD'
+                            size={15}
+                            onPress={() => alert("Money")} />
+                    </View>
+                </View>
+            </View>
 
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            justifyContent: 'space-between',
-            //alignItems: 'center'
-          }}
-        >
-          {/*
-          <Icon name="attach-money" size={30}/>
-          <Icon name="open-book" type="entypo" size={30}/>
-          <Icon name="md-people" type="ionicon" size={30}/>
-          <Icon name="tools" type="entypo" size={30}/>
-           <Icon name="cubes" type="font-awesome" size={30}/> */}
-
-          <Svg height="50"
-                width="50"
-                style={{
-                  //alignItems: "center",
-                  justifyContent: 'center'
-                }}>
-               <Icon name="attach-money" size={30}/>
-               <Circle
-              cx="25"
-              cy="25"
-              r="25"
-              fill="white"/>
-          </Svg>
-
-          <Svg height="50"
-                width="50"
-                style={{
-                  //alignItems: "center",
-                  justifyContent: 'center'
-                }}>
-               <Icon name="open-book" type="entypo" size={30}/>
-               <Circle
-                            cx="25"
-                            cy="25"
-                            r="25"
-                            fill="white"/>
-          </Svg>
-
-          <Svg height="50"
-                width="50"
-                style={{
-                  //alignItems: "center",
-                  justifyContent: 'center'
-                }}>
-               <Icon name="md-people" type="ionicon" size={30}/>
-               <Circle
-                            cx="25"
-                            cy="25"
-                            r="25"
-                            fill='#3fd3df'/>
-          </Svg>
-
-          <Svg height="50"
-                width="50"
-                        style={{
-                          //alignItems: "center",
-                          justifyContent: 'center'
-                        }}>
-                       <Icon name="tools" type="entypo" size={30}/>
-                       <Circle
-                                    cx="25"
-                                    cy="25"
-                                    r="25"
-                                    fill="white"/>
-                  </Svg>
-
-                  <Svg height="50"
-                        width="50"
-                        style={{
-                          //alignItems: "center",
-                          justifyContent: 'center'
-                        }}>
-                       <Icon name="cubes" type="font-awesome" size={30}/>
-                       <Circle
-                                    cx="25"
-                                    cy="25"
-                                    r="25"
-                                    fill="#3fd3df"/>
-                      </Svg>
-
-
-
-        </View>
-      </View>
+            <View style={styles.bioContainer}>
+                <Text style={styles.bioText}>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus egestas sapien nec lobortis tincidunt. Donec commodo, felis id convallis ultrices, velit arcu efficitur libero, at hendrerit dui felis eu massa. Donec tincidunt dolor quis erat dignissim, at vestibulum nisl placerat. Nunc pellentesque orci et convallis congue. Nam congue tortor urna, at consectetur nisl tincidunt id.
+                </Text>
+            </View>
+        </ScrollView>
     );
   }
 }

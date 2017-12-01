@@ -1,15 +1,54 @@
 import React, { Component } from 'react';
-import {
-  Text,
-  Button,
-  View,
-  StyleSheet
-} from 'react-native';
-import { Card, FormLabel, FormInput } from 'react-native-elements';
+import {Text, View, Image, StyleSheet} from 'react-native';
+import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
 
 //Import function for signing in.
 import { onSignIn } from '../auth.js';
+var firebase = require('firebase')
 
+import { lightGrey,
+    backerBlue,
+    makerPurple,
+    checkGreen,
+    noRed } from '../assets/styles/colors.js';
+
+var background = require('../assets/images/create_account_screen-01.png');
+
+const styles = StyleSheet.create({
+    imageContainer: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        width: null,
+        height: null,
+    },
+    formsContainer: {
+        marginTop: 40,
+        width: 300,
+    },
+    formInputContainer: {
+        marginBottom: 10,
+    },
+    optionsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    buttonsContainer: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    buttonStyle: {
+        width: 250,
+        marginBottom: 20,
+    },
+    buttonText: {
+        fontFamily: 'gotham-rounded',
+        fontSize: 16,
+        marginTop: 3,
+    },
+});
 
 class SignUpScreen extends Component {
 
@@ -17,9 +56,29 @@ class SignUpScreen extends Component {
     super(props);
 
     this.state = {
-      user: "test_user"
+      user: "",
+      email: "",
+      password: "password"
     };
+
+    this.signUp = this.signUp.bind(this)
   }
+
+  signUp(){
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(function(user){
+      console.log('successfully created account')
+      console.log(user)
+    }).catch(function(error) {
+      var errorCode = error.code;
+      var errorMessage = error.message;
+			if (errorCode === 'auth/wrong-password') {
+        alert('Wrong password.');
+    	} else {
+        alert(errorMessage);
+    	}
+    	console.log(error);
+    });
+  };
 
   render() {
 
@@ -27,43 +86,52 @@ class SignUpScreen extends Component {
 
     return (
 
-        <View style={{ paddingVertical: 20, paddingHorizontal: 20 }}>
-        <Text style={{ fontSize: 28 }}>BACKR</Text>
-            <Card>
-              <FormLabel>Email</FormLabel>
-              <FormInput placeholder="Email address..." />
+        <Image
+            source={background}
+            style={styles.imageContainer}>
+            <View style={styles.formsContainer}>
+                <FormInput containerStyle={styles.formInputContainer}
+                    placeholder="Name"
+                    onChangeText={(name) => this.setState({name})}
+                />
+                <FormInput containerStyle={styles.formInputContainer}
+                    placeholder="Email address"
+                    onChangeText={(email) => this.setState({email})}
+                />
+                <FormInput containerStyle={styles.formInputContainer}
+                    secureTextEntry
+                    placeholder="Password"
+                    onChangeText={(password) => this.setState({password})}
+                />
+                <FormInput containerStyle={styles.formInputContainer}
+                    secureTextEntry
+                    placeholder="Confirm Password"
+                />
+            </View>
 
-              <FormLabel>Password</FormLabel>
-              <FormInput secureTextEntry placeholder="Password..." />
+            <View style={styles.optionsContainer}>
+    	        <Button
+                    color="black"
+                    title="< Back to login"
+                    backgroundColor='transparent'
+                    fontSize={12}
+                    onPress={() => navigate("Login")}
+                    />
+            </View>
 
-              <FormLabel>Confirm Password</FormLabel>
-              <FormInput placeholder="Password..." />
-
-              <Button
-                buttonStyle={{ marginTop: 20 }}
-                backgroundColor="#03A9F4"
-                title="Create Account"
-                onPress={() => {
-                  onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));
-                }}
+            <View style={styles.buttonsContainer}>
+              <Button style={styles.buttonStyle}
+                textStyle={styles.buttonText}
+                borderRadius={10}
+                backgroundColor='#C753E0'
+                title="Create Account!"
+                icon={{name: 'check', type: 'material-community'}}
+                //onPress={() => {
+                //onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));}}
+                onPress={this.signUp}
               />
-
-            </Card>
-
-	    <View style={{flexDirection: 'row', alignItems: 'center', justifyContent: 'space-around'}}>
-	    	<Text h1>Already have an account?</Text>
-
-		<Button
-			buttonStyle={{ marginTop: 20 }}
-	      		backgroundColor="#03A9F4"
-			title="Sign In"
-			onPress={() => {
-				onSignOut().then(() => navigate("SignedOut"));
-			}}
-		/>
-	    </View>
-          </View>
-
+            </View>
+	    </Image>
     );
   }
 }

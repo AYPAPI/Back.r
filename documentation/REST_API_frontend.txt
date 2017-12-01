@@ -1,0 +1,45 @@
+﻿Accessing the REST API
+
+The REST API for our backend is hosted on Heroku at 'https://backr.herokuapp.com/'. 
+Previously, we used test.js to access our endpoints locally, but we've moved on to bigger and better things! 
+Our frontend will communicate with our backend using the endpoints we've implemented in our /routes directory. 
+This data that's passed from the backend to the the asynchronous 'fetch' call in our react-native code 
+will be used to populate our back.r
+
+Files:
+back.r/routes (Server)
+- Contains endpoints. Hosted on Heroku
+back.r/react_app/screens (Client)
+- Frontend files
+
+Example in MatchesScreen
+
+Take a look at MatchesScreen.js in the react_app. We define a function 'getChannels' (ln 13) which makes 
+a call to an endpoint in twilio.js. It uses the react-native function 'fetch' to make a GET HTTP request 
+to our API and returns the response in a promise after the channels are fetched.
+
+const getChannels = function() {
+  return fetch( url + 'twilio/channels?identity=vylana&endpointId=9998', {
+    method: 'GET',
+    headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+    }
+  }).then(function(response) {
+    return response.json()
+  })
+}
+
+We can refer to routes/twilio.js to get the appropriate url and required body (only in POST requests). 
+For the request, we'll refer to '/channels' (ln 29). There's no need to change anything in this file, 
+but it's good to use as reference and to get an idea of what's going to be returned to you. We see that 
+the response object is defined around line 45. This is the object you can expect to receive in a successful 
+call to the API.
+
+
+This response is returned to the call to getChannels() (ln 114) which assigns the appropriate object within 
+the response to this.state.users (created on ln 107). This allows the object to be updated after it is initialized.
+
+In render() we see that this.state.users is called in order to display on the matches screen. 
+This is reflected onto the screen :)
+

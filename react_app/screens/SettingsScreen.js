@@ -1,17 +1,102 @@
 import React, { Component } from 'react';
-import { Slider } from 'react-native-elements'
+import {Button, List, ListItem, Divider } from 'react-native-elements'
 import {
   Text,
-  Button,
   View,
+  ScrollView,
   StyleSheet,
   Switch,
   TouchableHighlight,
   Image,
+  Slider,
 } from 'react-native';
 
 //Method for logging out.
 import { onSignOut } from '../auth.js';
+
+import { lightGrey,
+    backerBlue,
+    makerPurple,
+    checkGreen,
+    noRed,
+    buttonRed } from '../assets/styles/colors.js';
+    
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        flexDirection: 'column',
+        backgroundColor: 'white',
+
+    },
+    settingsSection: {
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: 'space-between',
+        marginTop: 15,
+        marginLeft: 10,
+        marginRight: 10,
+    },
+    headerText: {
+        fontSize: 20,
+        fontFamily: 'gotham-rounded',
+        alignItems: 'flex-start',
+        color: backerBlue,
+        marginTop: 20,
+        marginLeft: 10,
+        marginRight: 10,
+    },
+    dividerStyle: {
+        backgroundColor: lightGrey,
+        marginTop: 10,
+        marginBottom: 10,
+    },
+    switchSetting: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginLeft: 10,
+        marginRight: 10,
+    },
+    switchText: {
+        marginTop: 5,
+        fontSize: 16,
+    },
+    locationContainer: {
+        marginLeft: 10,
+        marginRight: 10,
+        marginBottom: 40,
+    },
+    locationTextContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+
+    },
+    locationText: {
+            fontSize: 16,
+    },
+    sliderStyle: {
+        marginLeft: 10,
+        marginRight: 10,
+        flex: 1,
+        flexDirection: 'row',
+    },
+    radiusText: {
+            alignItems: 'center',
+            fontSize: 16,
+    },
+    buttonContainer: {
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      alignItems: 'center',
+      marginTop: 5,
+      marginBottom: 15,
+    },
+    buttonContainerStyle: {
+        marginBottom: 15,
+    },
+    buttonStyle: {
+        width: 250,
+    },
+});
 
 class SettingsScreen extends Component {
   constructor(props) {
@@ -26,66 +111,88 @@ class SettingsScreen extends Component {
 
     const { navigate } = this.props.navigation;
     return (
-    <View style={{flex: 1}}>
-      <Button
-          onPress={() => navigate("Explore", {user: "name"})}
-          title="Explore Page"
-          buttonStyle={{ marginTop: 20 }}
-      />
-      <Text h3>Discovery Settings</Text>
-      <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'space-between'}}>
-        <Text h4>Location</Text>
-        <Text h4>My Location</Text>
-      </View>
-      <Text h4>Maximum Distance</Text>
-      <Slider
-        step={10}
-        minimumValue={10}
-        maximumValue={100}
-        value={this.state.distance}
-        onValueChange={(value) => this.setState({distance:value})} />
-        <Text>Value: {this.state.distance}</Text>
-      <Text>Value: {"What are you looking for?"}</Text>
-      <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'space-between', borderTopWidth: 10, borderColor:'white'}}>
-        <View style={{borderRadius: 20 , borderWidth: 5}}>
-        <TouchableHighlight
-          underlayColor={"#00ffff"}>
-          <Text>test</Text>
-        </TouchableHighlight>
-        </View>
-        <TouchableHighlight
-          underlayColor={"#00ffff"}>
-          <Text>test2</Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          underlayColor={"#03A9F4"}>
-          <Text>test3</Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          underlayColor={"#03A9F4"}>
-          <Text>test4</Text>
-        </TouchableHighlight>
-        <TouchableHighlight
-          underlayColor={"#03A9F4"}>
-          <Text>test5</Text>
-        </TouchableHighlight>
-      </View>
-      <View style={{flexDirection: 'row', alignItems: 'center', justifyContent:'space-between'}}>
-        <Text h4>Messages</Text>
-        <Switch
-          onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
-          value={this.state.trueSwitchIsOn} />
-      </View>
-      <Button
-        buttonStyle={{ marginTop: 20 }}
-        backgroundColor="#03A9F4"
-        title="Log Out"
-        onPress={() => {
-          onSignOut().then(() => navigate("SignedOut"));
-        }}
-      />
-    </View>
+    <ScrollView style={styles.container}>
 
+        <Text style={styles.headerText}>
+            General Settings
+        </Text>
+
+        <Divider style={styles.dividerStyle}/>
+
+        <View style={styles.switchSetting}>
+              <Text style={styles.switchText}>
+                Message Notifications
+              </Text>
+              <Switch
+                onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
+                value={this.state.trueSwitchIsOn} />
+        </View>
+
+        <Divider style={styles.dividerStyle}/>
+
+        <View style={styles.switchSetting}>
+           <Text style={styles.switchText}>
+            Visible to other users
+          </Text>
+          <Switch
+            onValueChange={(value) => this.setState({trueSwitchIsOn: value})}
+            value={this.state.trueSwitchIsOn} />
+        </View>
+
+        <Divider style={styles.dividerStyle}/>
+
+        <Text style={styles.headerText}>
+            Location Settings
+        </Text>
+
+        <Divider style={styles.dividerStyle}/>
+
+        <View style={styles.locationContainer}>
+          <View style={styles.locationTextContainer}>
+              <Text style={styles.locationText}>
+                  Current location:
+              </Text>
+              <Text style={styles.locationText}>
+                  San Diego, CA
+              </Text>
+          </View>
+
+            <Slider
+              step={5}
+              minimumValue={10}
+              maximumValue={100}
+              value={this.state.distance}
+              onValueChange={(value) => this.setState({distance:value})} />
+
+              <Text style={styles.radiusText}>
+                  Current radius: {this.state.distance}
+              </Text>
+          </View>
+          <View style={styles.buttonContainer}>
+              <Button
+                style={styles.buttonStyle}
+                textStyle={{fontFamily: 'gotham-rounded', fontSize: 16}}
+                borderRadius={10}
+                activeOpacity={0.5}
+                backgroundColor={buttonRed}
+                icon={{name: 'logout-variant', type: 'material-community' }}
+                title= 'Log Out'
+                onPress={()=> navigate('Edit')}
+                containerViewStyle={styles.buttonContainerStyle}
+              />
+
+              <Button
+                style={styles.buttonStyle}
+                textStyle={{fontFamily: 'gotham-rounded', fontSize: 16}}
+                borderRadius={10}
+                activeOpacity={0.5}
+                backgroundColor={buttonRed}
+                icon={{name: 'delete', type: 'material-community'}}
+                title= 'Delete Account'
+                containerViewStyle={styles.buttonContainerStyle}
+              />
+          </View>
+      </ScrollView>
     );
   }
 }

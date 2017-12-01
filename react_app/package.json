@@ -20,13 +20,16 @@
   },
   "dependencies": {
     "expo": "^22.0.2",
+    "firebase": "^4.6.2",
     "metro-bundler": "^0.21.1",
     "react": "16.0.0-beta.5",
     "react-native": "^0.49.5",
     "react-native-autogrow-input": "^0.2.1",
-    "react-native-elements": "^0.18.2",
-    "react-native-keyboard-spacer": "^0.4.1",
+    "react-native-elements": "^0.18.4",
+    "react-native-facebook-login": "^1.6.0",
     "react-native-flip-card": "^3.5.2",
+    "react-native-google-signin": "^0.12.0",
+    "react-native-keyboard-spacer": "^0.4.1",
     "react-native-swiper-animated": "^1.2.6",
     "react-navigation": "^1.0.0-beta.19",
     "react-transform-hmr": "^1.0.4"
