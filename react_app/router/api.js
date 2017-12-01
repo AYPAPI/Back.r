@@ -39,7 +39,7 @@ exports.createUser = (name, email) => {
       })
     }).then(function(response) {
       console.log("inside api");
-      return response;
+      return response.json();
     })
     .catch((error) => {
         console.error(error);

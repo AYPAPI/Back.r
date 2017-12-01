@@ -20,7 +20,7 @@ import { lightGrey,
     checkGreen,
     noRed,
     buttonRed } from '../assets/styles/colors.js';
-    
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
@@ -177,7 +177,7 @@ class SettingsScreen extends Component {
                 backgroundColor={buttonRed}
                 icon={{name: 'logout-variant', type: 'material-community' }}
                 title= 'Log Out'
-                onPress={()=> navigate('LoginScreen')}
+                onPress={()=> navigate('SignedOut')}
                 containerViewStyle={styles.buttonContainerStyle}
               />
 

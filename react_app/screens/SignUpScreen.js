@@ -58,6 +58,7 @@ class SignUpScreen extends Component {
 
     this.state = {
       user: "",
+      name: "",
       email: "",
       password: "password"
     };
@@ -65,14 +66,15 @@ class SignUpScreen extends Component {
     this.signUp = this.signUp.bind(this)
   }
 
-  signUp(){
-      //firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(function(user){
-      //firebase.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).then(function(user){
+  signUp(navigate) {
 
-      console.log('successfully created account');
-      let response = createUser("Eric", "eric@eric.com");
-      console.log(response);
-  /*  }).catch(function(error) {
+    //Probably will be different function, pass in name as well. then call navigate and
+    //create user within firebase callback.
+    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .then(function(user){
+        console.log('successfully created account');
+        navigate("SignedIn", {name:this.state.name, email: response.email, isMaker: false})
+    }).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
 			if (errorCode === 'auth/wrong-password') {
@@ -81,7 +83,11 @@ class SignUpScreen extends Component {
         alert(errorMessage);
     	}
     	console.log(error);
-    });*/
+      return;
+    });
+
+    createUser(this.state.name, this.state.email).then(function(response);
+    console.log("Successfully created account in our database ")
   };
 
   render() {
@@ -96,16 +102,16 @@ class SignUpScreen extends Component {
             <View style={styles.formsContainer}>
                 <FormInput containerStyle={styles.formInputContainer}
                     placeholder="Name"
-                    onChangeText={(name) => this.setState({name})}
+                    onChangeText={(name) => this.setState({name: name})}
                 />
                 <FormInput containerStyle={styles.formInputContainer}
                     placeholder="Email address"
-                    onChangeText={(email) => this.setState({email})}
+                    onChangeText={(email) => this.setState({email: email})}
                 />
                 <FormInput containerStyle={styles.formInputContainer}
                     secureTextEntry
                     placeholder="Password"
-                    onChangeText={(password) => this.setState({password})}
+                    onChangeText={(password) => this.setState({password: password})}
                 />
                 <FormInput containerStyle={styles.formInputContainer}
                     secureTextEntry
@@ -132,7 +138,7 @@ class SignUpScreen extends Component {
                 icon={{name: 'check', type: 'material-community'}}
                 //onPress={() => {
                 //onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));}}
-                onPress={this.signUp}
+                onPress={() => this.signUp(navigate)}
               />
             </View>
 	    </Image>
