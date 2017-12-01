@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet,NativeModules } from 'react-native';
 import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
-<<<<<<< HEAD
 import { onSignIn } from '../auth.js'
 import { Font } from 'expo';
-
-=======
-import { onSignIn } from '../auth.js';
 
 var firebase = require('firebase')
 
@@ -17,9 +13,14 @@ var config = {
   storageBucket:'backr-firebase.appspot.com'
 };
 var app = firebase.initializeApp(config)
->>>>>>> 7cc7724948b7e481a0abed14f2364503d6bdd1c0
 
-var background = require('../img/splash_screen-01.png');
+import { lightGrey,
+    backerBlue,
+    makerPurple,
+    checkGreen,
+    noRed } from '../assets/styles/colors.js';
+
+var background = require('../assets/images/splash_screen-01.png');
 
 const styles = StyleSheet.create({
     imageContainer: {
@@ -47,8 +48,13 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     buttonStyle: {
-        width: 250,
+        width: window.width - 100,
         marginBottom: 20,
+    },
+    buttonText: {
+        fontFamily: 'gotham-rounded',
+        fontSize: 16,
+        marginTop: 3,
     },
 });
 
@@ -104,11 +110,6 @@ class LoginScreen extends Component {
   render() {
 
     const { navigate } = this.props.navigation;
-<<<<<<< HEAD
-
-
-=======
->>>>>>> 7cc7724948b7e481a0abed14f2364503d6bdd1c0
     return (
         <Image
             source={background}
@@ -116,13 +117,13 @@ class LoginScreen extends Component {
             <View style={styles.formsContainer}>
 
                 <FormInput containerStyle={styles.formInputContainer}
-                    placeholder="Email address..."
+                    placeholder="Email address"
                     onChangeText={(email) => this.setState({email})}
                 />
 
                 <FormInput containerStyle={styles.formInputContainer}
                     secureTextEntry
-                    placeholder="Password..."
+                    placeholder="Password"
                     onChangeText={(password) => this.setState({password})}
                 />
             </View>
@@ -133,7 +134,6 @@ class LoginScreen extends Component {
                     color="black"
                     title="Forgot Password?"
                     fontSize={12}
-                    fontFamily='gotham-rounded'
                     onPress={() => navigate("ForgotPassword")}
                    />
 
@@ -148,6 +148,7 @@ class LoginScreen extends Component {
 
             <View style={styles.buttonsContainer}>
               <Button style={styles.buttonStyle}
+                textStyle={styles.buttonText}
                 borderRadius={10}
                 backgroundColor='#C753E0'
                 title="Sign in with email"
@@ -158,10 +159,11 @@ class LoginScreen extends Component {
               />
 
 	          <Button style={styles.buttonStyle}
+                textStyle={styles.buttonText}
                 borderRadius={10}
-                icon={{name: 'facebook-box', type: 'material-community'}}
                 backgroundColor='#03A9F4'
                 title="Sign in with Facebook"
+                icon={{name: 'facebook-box', type: 'material-community'}}
                 onPress={() => {
                 onSignIn().then(() => navigate("SignedIn", {user: "USER"}));}}
               />
@@ -170,7 +172,5 @@ class LoginScreen extends Component {
     );
   }
 }
-
-
 
 export default LoginScreen;

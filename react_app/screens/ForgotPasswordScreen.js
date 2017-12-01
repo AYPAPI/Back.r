@@ -3,7 +3,7 @@ import {
   Text,
   View,
   StyleSheet,
-
+  Image,
 } from 'react-native';
 import {Avatar,
         Icon,
@@ -15,58 +15,49 @@ import {Avatar,
 //Method for logging out.
 import { onSignOut } from '../auth.js';
 
-var backerBlue = '#57C4DD';
-var darkBlue = '#58A6DB';
-var makerPurple = '#C753E0';
-var lightGrey = '#BFBFBF';
+import { lightGrey,
+    backerBlue,
+    makerPurple,
+    checkGreen,
+    noRed } from '../assets/styles/colors.js';
+
+var background = require('../assets/images/reset_password-01.png');
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    flexDirection: 'column',
-    alignItems: 'center',
-    backgroundColor: 'white',
-  },
-  avatarContainer: {
-    flex: 4,
-    alignItems: 'center',
-    marginTop: 10,
-  },
-  formContainer: {
-      marginTop: 40,
-      width: 300,
-  },
-  iconContainer: {
-    flex: 1,
-    color: backerBlue,
-    flexDirection: 'column',
-    alignItems: 'center',
-    marginTop: 75,
-    fontSize: 150,
-    backgroundColor: 'white',
-  },
-  textContainer:{
-      flexDirection: 'column',
-      alignItems: 'center',
-  },
-  nameContainer: {
-    fontSize: 18,
-    marginTop: 10,
-  },
-  buttonContainer: {
-    flex: 3,
-    flexDirection: 'column',
-    justifyContent: 'space-between',
-    marginTop: 30,
-    marginBottom: 15,
-  },
-  buttonContainerStyle: {
-      height: 45,
-      backgroundColor: darkBlue,
-  },
-  buttonStyle: {
-      width: 250,
-  },
+    imageContainer: {
+        flex: 1,
+        justifyContent: 'flex-start',
+        alignItems: 'center',
+        width: null,
+        height: null,
+    },
+    formsContainer: {
+        marginTop: 75,
+        width: 300,
+    },
+    formInputContainer: {
+        marginBottom: 10,
+    },
+    optionsContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        marginBottom: 20,
+    },
+    buttonsContainer: {
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        marginTop: 20,
+    },
+    buttonStyle: {
+        width: window.width - 100,
+        marginBottom: 20,
+    },
+    buttonText: {
+        fontFamily: 'gotham-rounded',
+        fontSize: 16,
+        marginTop: 3,
+    },
 });
 
 class ForgotPasswordScreen extends Component {
@@ -77,38 +68,37 @@ class ForgotPasswordScreen extends Component {
     const { goBack } = this.props.navigation;
 
       return (
-          <View style={styles.container}>
-              <View style={styles.avatarContainer}>
-              <Icon
-                name='lightbulb'
-                type='material-community'
-                iconStyle={styles.iconContainer}
-              />
+          <Image
+              source={background}
+              style={styles.imageContainer}>
+              <View style={styles.formsContainer}>
+                  <FormInput containerStyle={styles.formInputContainer}
+                      placeholder="Email address"
+                      onChangeText={(name) => this.setState({name})}
+                  />
               </View>
 
-            <View style={styles.textContainer}>
-              <Text style={styles.nameContainer}>
-                Forgot Password?
-              </Text>
-            </View>
-
-            <FormInput containerStyle={styles.formContainer}
-                placeholder="Email address..."
-            />
+              <View style={styles.optionsContainer}>
+                  <Button
+                      color="black"
+                      title="Back to login >"
+                      backgroundColor='transparent'
+                      fontSize={12}
+                      onPress={() => navigate("Login")}
+                      />
+              </View>
 
             <View style={styles.buttonContainer}>
                 <Button
                   style={styles.buttonStyle}
+                  textStyle={styles.buttonText}
                   borderRadius={10}
                   backgroundColor={backerBlue}
                   title= 'Recover Account Password'
                   onPress={()=> goBack()}
-                  containerViewStyle={styles.buttonContainerStyle}
                 />
-
             </View>
-          </View>
-
+          </Image>
       );
   }
 }
