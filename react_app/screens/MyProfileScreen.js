@@ -2,15 +2,23 @@ import React, { Component } from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {Avatar, Icon, Button} from 'react-native-elements';
 
-
 //Method for logging out.
 import { onSignOut } from '../auth.js';
 
-var profilePhoto = require('../img/cannon_beach-01.jpg');
-var backerBlue = '#57C4DD';
-var darkBlue = '#58A6DB';
-var makerPurple = '#C753E0';
-var lightGrey = '#BFBFBF';
+import { lightGrey,
+    backerBlue,
+    makerPurple,
+    checkGreen,
+    noRed,
+    moneyGreen,
+    materialsOrange,
+    knowledgePurple,
+    manpowerRed } from '../assets/styles/colors.js';
+
+var profilePhoto = require('../assets/images/shuttle-01.jpg');
+
+const Dimensions = require('Dimensions');
+const window = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   headerIcon: {
@@ -38,9 +46,9 @@ const styles = StyleSheet.create({
     marginTop: 10,
   },
   avatarOverlay: {
-      height: 205,
-      width: 205,
-    borderRadius: 200/2,
+      height: window.width-50,
+      width: window.width-50,
+    borderRadius: (window.width-50)/2,
     borderWidth: 3,
     borderColor: lightGrey
   },
@@ -76,7 +84,7 @@ const styles = StyleSheet.create({
       marginBottom: 20,
   },
   buttonStyle: {
-      width: 250,
+      width: window.width - 100,
   },
   buttonText: {
       fontFamily: 'gotham-rounded',
@@ -127,8 +135,8 @@ class MyProfileScreen extends Component {
               <View style={styles.avatarContainer}>
                   <Avatar
                       rounded
-                      width={200}
-                      height={200}
+                      width={window.width - 55}
+                      height={window.width - 55}
                       activeOpacity={0.7}
                       source={profilePhoto}
                       onPress={()=>navigate('UserProfile',
@@ -166,10 +174,10 @@ class MyProfileScreen extends Component {
 
             <View style={styles.textContainer}>
               <Text style={styles.nameContainer}>
-                  Computer Science Lecturer
+                  Biology/Comp Sci Student
               </Text>
               <Text style={styles.descriptionContainer}>
-                  Gary Gillespie
+                  David Owens
               </Text>
             </View>
 

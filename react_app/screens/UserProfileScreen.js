@@ -1,12 +1,20 @@
 import React, { Component } from 'react';
-import {Text, Button, Image, View, ScrollView, StyleSheet} from 'react-native';
+import {Text,
+    Button,
+    Image,
+    View,
+    ScrollView,
+    StyleSheet,
+    Card} from 'react-native';
 import {Avatar, Icon} from 'react-native-elements';
 
-var backerBlue = '#57C4DD';
-var makerPurple = '#75C9F9';
-var lightGrey = '#BFBFBF';
+import { lightGrey,
+    backerBlue,
+    makerPurple,
+    checkGreen,
+    noRed } from '../assets/styles/colors.js';
 
-var profilePhoto = require('../img/gary_mouse.png');
+var profilePhoto = require('../assets/images/shuttle-01.jpg');
 
 const Dimensions = require('Dimensions');
 const window = Dimensions.get('window');
@@ -32,6 +40,7 @@ const styles =  StyleSheet.create({
   },
   avatarContainer: {
       alignItems: 'center',
+      zIndex: 0,
   },
   descriptionContainer: {
       flexDirection: 'column',
@@ -73,7 +82,7 @@ const styles =  StyleSheet.create({
 
 class UserProfileScreen extends Component {
     static navigationOptions = ({ navigation }) => {
-    const { user, mainUser } = navigation.state.params;
+    //const { user, mainUser } = navigation.state.params;
     const { goBack } = navigation.goBack;
 
 
@@ -83,7 +92,6 @@ class UserProfileScreen extends Component {
         name='chevron-down'
         type='material-community'
         iconStyle={styles.titleMaker}
-      //  onPress={ () => navigation.navigate() }
         onPress={ () => goBack() }
       />
     ),

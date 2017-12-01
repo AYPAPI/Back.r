@@ -1,0 +1,10 @@
+export const backerBlue = '#57C4DD';
+export const makerPurple = '#C753E0';
+export const lightGrey = '#BFBFBF';
+export const checkGreen = '#1DDB2F';
+export const noRed = '#E5456F';
+export const buttonRed = '#EA2D2D';
+export const moneyGreen = '#59C129';
+export const materialsOrange = '#FC8A2D';
+export const knowledgePurple = '#bb24f2';
+export const manpowerRed = '#EF2074';
