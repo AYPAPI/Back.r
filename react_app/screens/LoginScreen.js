@@ -16,17 +16,6 @@ var config = {
 };
 var app = firebase.initializeApp(config)
 
-// Listen for authentication state to change.
-// firebase.auth().onAuthStateChanged((user) => {
-//   if (user != null) {
-//     console.log("We are authenticated now!");
-//     console.log(user)
-//
-//     navigate("SignedIn", {user: user.email, name: user.displayName});
-//   }
-//
-//   // Do other things
-// });
 
 /* Style */
 var background = require('../img/splash_screen-01.png');
@@ -62,31 +51,6 @@ const styles = StyleSheet.create({
     },
 });
 
-// async function fbLogIn() {
-//   const { type, token } = await Expo.Facebook.logInWithReadPermissionsAsync('187665428456187', {
-//       permissions: ['public_profile', 'email']
-//     });
-//   if (type === 'success') {
-//     // Listen for authentication state to change.
-//     firebase.auth().onAuthStateChanged((user) => {
-//       if (user != null) {
-//         console.log("We are authenticated now!");
-//       }
-//
-//       // Do other things
-//     });
-
-    // // Get the user's name using Facebook's Graph API
-    // const response = await fetch(
-    //   `https://graph.facebook.com/v2.2/me?fields=name,email&access_token=${token}`);
-    // alert(
-    //   'Logged in!',
-    // );
-    // console.log(response)
-    // return response
-//
-//   }
-// }
 
 class LoginScreen extends Component {
 
@@ -109,14 +73,12 @@ class LoginScreen extends Component {
       }).then(function(res) {
         console.log(res)
         if (res.type === 'success') {
-          console.log("res")
           // Build Firebase credential with the Facebook access token.
         const credential = firebase.auth.FacebookAuthProvider.credential(res.token);
         console.log(credential)
         // Sign in with credential from the Facebook user.
         firebase.auth().signInWithCredential(credential).then((user) => {
-          console.log("login")
-          console.log(user)
+          console.log("User is" + user.displayName)
           navigate("SignedIn", {user: user.email});
         }).catch((error) => {
           // Handle Errors here.
@@ -233,7 +195,5 @@ class LoginScreen extends Component {
     );
   }
 }
-
-
 
 export default LoginScreen;
