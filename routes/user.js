@@ -8,9 +8,51 @@ router.post('/addNew', function(req, res) {
   db.addUser("NAME", database, "groupmembers")
 });
 
+//request to update isMaker
+router.patch("/isMaker", function(req, res){
+  var email = req.body.email
+  var isMaker = req.body.isMaker;
+  db.updateisMaker(email,database,isMaker,function(message) {
+    var status = message
+    res.json(status)
+  })
+});
+
+//request to update user profile
+router.patch("/", function(req,res){
+  var email = req.body.email;
+  var shortbio = req.body.shortbio;
+  db.updateUser(email,shortbio,database,function(message) {
+    var status = message
+    res.json(status)
+  })
+});
+
+//reqest to update maker profile
+router.patch('/maker', function(req,res) {
+  var email = req.body.email
+  var makerLongBio = req.body.profiles.maker.longBio
+  var makerPhotos = req.body.profiles.maker.photos
+  var makerIcon = req.body.profiles.maker.icons
+  db.updateProfile(email,makerLongBio,makerPhotos,makerIcon,database,'maker',function(message) {
+    var status = message
+    res.json(status)
+  })
+});
+
+router.patch('/backer', function(req,res) {
+  var email = req.body.email
+  var backerLongBio = req.body.profiles.backer.longBio
+  var backerPhotos = req.body.profiles.backer.photos
+  var backerIcon = req.body.profiles.backer.icons
+  db.updateProfile(email,backerLongBio,backerPhotos,backerIcon,database,'backer',function(message) {
+    var status = message
+    res.json(status)
+  })
+})
+
 // POST request to create user in database
 router.post("/", function(req, res) {
-
   var name = req.body.name;
   var age = req.body.age;
   var email = req.body.email;
@@ -38,6 +80,8 @@ router.post("/", function(req, res) {
                        backerSwipedRight,backerMatches,backerSwipedOn,database)
   res.json(req.body);
 });
+
+
 
 // GET request to read user from database
 router.get('/', function(req, res) {
@@ -115,5 +159,6 @@ router.get('/settings', function(req, res) {
     res.json(user_settings);
   })
 });
+
 
 module.exports = router;
