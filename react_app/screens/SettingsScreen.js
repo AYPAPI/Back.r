@@ -20,7 +20,7 @@ import { lightGrey,
     checkGreen,
     noRed,
     buttonRed } from '../assets/styles/colors.js';
-    
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,

@@ -21,6 +21,8 @@ import { lightGrey,
     checkGreen,
     noRed } from '../assets/styles/colors.js';
 
+import { headerIconSize } from '../assets/styles/size.js';
+
 //used to make random-sized messages
 function getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min + 1)) + min;
@@ -298,7 +300,7 @@ const styles = StyleSheet.create({
   headerIcon: {
     color: lightGrey,
     margin: 15,
-    fontSize: 30,
+    fontSize: headerIconSize,
   },
 
   outer: {

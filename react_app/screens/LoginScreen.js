@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Text, View, Image, StyleSheet,NativeModules } from 'react-native';
+import { Text, View, Image, StyleSheet, NativeModules } from 'react-native';
 import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
 import { onSignIn } from '../auth.js'
 import { Font } from 'expo';
@@ -20,7 +20,7 @@ import { lightGrey,
     checkGreen,
     noRed } from '../assets/styles/colors.js';
 
-var background = require('../assets/images/splash_screen-01.png');
+var background = require('../assets/images/splash_screen-02.png');
 
 const styles = StyleSheet.create({
     imageContainer: {
@@ -48,7 +48,6 @@ const styles = StyleSheet.create({
         marginTop: 20,
     },
     buttonStyle: {
-        width: window.width - 100,
         marginBottom: 20,
     },
     buttonText: {
@@ -134,6 +133,7 @@ class LoginScreen extends Component {
                     color="black"
                     title="Forgot Password?"
                     fontSize={12}
+                    activeOpacity={0.5}
                     onPress={() => navigate("ForgotPassword")}
                    />
 
@@ -142,6 +142,7 @@ class LoginScreen extends Component {
                     color="black"
                     title="Create Account"
                     fontSize={12}
+                    activeOpacity={0.5}
                     onPress={() => navigate("SignUp")}
                     />
             </View>
@@ -150,7 +151,7 @@ class LoginScreen extends Component {
               <Button style={styles.buttonStyle}
                 textStyle={styles.buttonText}
                 borderRadius={10}
-                backgroundColor='#C753E0'
+                backgroundColor={makerPurple}
                 title="Sign in with email"
                 icon={{name: 'email', type: 'material-community'}}
                 //onPress={() => {
@@ -161,7 +162,7 @@ class LoginScreen extends Component {
 	          <Button style={styles.buttonStyle}
                 textStyle={styles.buttonText}
                 borderRadius={10}
-                backgroundColor='#03A9F4'
+                backgroundColor={backerBlue}
                 title="Sign in with Facebook"
                 icon={{name: 'facebook-box', type: 'material-community'}}
                 onPress={() => {

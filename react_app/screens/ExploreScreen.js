@@ -20,6 +20,8 @@ import { lightGrey,
     knowledgePurple,
     manpowerRed } from '../assets/styles/colors.js';
 
+import { headerIconSize } from '../assets/styles/size.js';
+
 var firstCardPhoto = require('../assets/images/shuttle-01.jpg');
 var secondCardPhoto = require('../assets/images/ceo_photo.jpg');
 
@@ -30,17 +32,12 @@ const styles = {
     headerIcon: {
         color: lightGrey,
         margin: 15,
-        fontSize: 30,
+        fontSize: headerIconSize,
     },
-    titleMaker: {
-        color: '#75C9F9',
+    activeIcon: {
+        color: backerBlue,
         margin: 15,
-        fontSize: 40
-    },
-    titleBacker: {
-        color: '#C753E0',
-        margin: 15,
-        fontSize: 40
+        fontSize: headerIconSize,
     },
     wrapper: {
         backgroundColor: 'white',
@@ -133,11 +130,19 @@ class ExploreScreen extends Component {
     static navigationOptions = ({ navigation }) => {
         const { user } = navigation.state.params;
         return {
+            headerLeft: (
+                <Icon
+                name='face'
+                type='material-community'
+                iconStyle={styles.headerIcon}
+                onPress={ () => navigation.navigate("MyProfile", {user: user, type: ""}) }
+                />
+            ),
             headerTitle: (
                 <Icon
                 name='lightbulb-outline'
                 type='material-community'
-                iconStyle={styles.titleMaker}
+                iconStyle={styles.activeIcon}
                 />
             ),
             headerRight: (
@@ -146,14 +151,6 @@ class ExploreScreen extends Component {
                 type='material-community'
                 iconStyle={styles.headerIcon}
                 onPress={ () => navigation.navigate("Matches", {user: user}) }
-                />
-            ),
-            headerLeft: (
-                <Icon
-                name='face'
-                type='material-community'
-                iconStyle={styles.headerIcon}
-                onPress={ () => navigation.navigate("MyProfile", {user: user, type: ""}) }
                 />
             ),
         };

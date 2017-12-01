@@ -1,4 +1,4 @@
-export const backerBlue = '#57C4DD';
+export const backerBlue = '#03A9F4';
 export const makerPurple = '#C753E0';
 export const lightGrey = '#BFBFBF';
 export const checkGreen = '#1DDB2F';

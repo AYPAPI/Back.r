@@ -17,6 +17,8 @@ import { lightGrey,
     checkGreen,
     noRed } from '../assets/styles/colors.js';
 
+import { headerIconSize } from '../assets/styles/size.js';
+
 const url = "https://backr.herokuapp.com/"
 
 const getChannels = function() {
@@ -37,17 +39,12 @@ const styles = {
   headerIcon: {
     color: lightGrey,
     margin: 15,
-    fontSize: 30,
-  },
-  centerIcon: {
-      color: lightGrey,
-      margin: 15,
-      fontSize: 40
+    fontSize: headerIconSize,
   },
   activeIcon: {
       color: backerBlue,
       margin: 15,
-      fontSize: 30,
+      fontSize: headerIconSize,
   },
   maker: {
     color: '#75c9f9'
@@ -112,7 +109,7 @@ class MatchesScreen extends Component {
       <Icon
         name='lightbulb-outline'
         type='material-community'
-        iconStyle={styles.centerIcon}
+        iconStyle={styles.headerIcon}
         onPress={ () => navigation.navigate("Explore", {user: user}) }
       />
     ),

@@ -14,20 +14,13 @@ import { lightGrey,
     knowledgePurple,
     manpowerRed } from '../assets/styles/colors.js';
 
+import { headerIconSize } from '../assets/styles/size.js';
+
+
 const styles = StyleSheet.create({
   headerIcon: {
     margin: 15,
-    fontSize: 30,
-  },
-  titleMaker: {
-    margin: 15,
-    fontSize: 40,
-    color: lightGrey,
-  },
-  titleBacker: {
-    margin: 15,
-    fontSize: 40,
-    color: lightGrey,
+    fontSize: headerIconSize,
   },
   container: {
     flex: 1,

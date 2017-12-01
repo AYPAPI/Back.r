@@ -15,6 +15,8 @@ import { lightGrey,
     knowledgePurple,
     manpowerRed } from '../assets/styles/colors.js';
 
+import { headerIconSize } from '../assets/styles/size.js';
+
 var profilePhoto = require('../assets/images/shuttle-01.jpg');
 
 const Dimensions = require('Dimensions');
@@ -22,18 +24,14 @@ const window = Dimensions.get('window');
 
 const styles = StyleSheet.create({
   headerIcon: {
-    margin: 15,
-    fontSize: 30,
-  },
-  titleMaker: {
-    margin: 15,
-    fontSize: 40,
     color: lightGrey,
-  },
-  titleBacker: {
     margin: 15,
-    fontSize: 40,
-    color: lightGrey,
+    fontSize: headerIconSize,
+  },
+  activeIcon: {
+      color: backerBlue,
+      margin: 15,
+      fontSize: headerIconSize,
   },
   container: {
     flex: 1,
@@ -98,11 +96,18 @@ class MyProfileScreen extends Component {
   const { user } = navigation.state.params;
 
   return {
+      headerLeft: (
+          <Icon
+            name='face'
+            type='material-community'
+            iconStyle={styles.activeIcon}
+          />
+      ),
     headerTitle: (
       <Icon
         name='lightbulb-outline'
         type='material-community'
-        iconStyle={styles.titleMaker}
+        iconStyle={styles.headerIcon}
         onPress={ () => navigation.navigate("Explore", {user: user}) }
       />
     ),
@@ -111,18 +116,10 @@ class MyProfileScreen extends Component {
         name='message-text-outline'
         type='material-community'
         iconStyle={styles.headerIcon}
-        color='#BFBFBF'
         onPress={ () => navigation.navigate("Matches", {user: user}) }
       />
     ),
-    headerLeft: (
-        <Icon
-          name='face'
-          type='material-community'
-          color='#57C4DD'
-          iconStyle={styles.headerIcon}
-        />
-    ),
+
   };
 };
 

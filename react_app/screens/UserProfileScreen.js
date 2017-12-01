@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import {Text,
+import { Text,
     Button,
     Image,
     View,
     ScrollView,
     StyleSheet,
-    Card} from 'react-native';
-import {Avatar, Icon} from 'react-native-elements';
+    Card } from 'react-native';
+import { Avatar, Icon } from 'react-native-elements';
 
 import { lightGrey,
     backerBlue,
@@ -23,16 +23,6 @@ const styles =  StyleSheet.create({
   headerIcon: {
     margin: 15,
     fontSize: 30
-  },
-  titleMaker: {
-    color: makerPurple,
-    margin: 15,
-    fontSize: 40
-  },
-  titleBacker: {
-    color: backerBlue,
-    margin: 15,
-    fontSize: 40
   },
   container: {
       flexDirection: 'column',
