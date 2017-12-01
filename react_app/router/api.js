@@ -15,7 +15,6 @@ exports.createUser = (name, email) => {
         email: email,
         isMaker: false,
         shortBio: "",
-        location: null,
         //THIS DOESNT WORK YET
         profiles: {
           maker: {
