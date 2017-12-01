@@ -107,6 +107,21 @@ const styles = StyleSheet.create({
 });
 
 class EditScreen extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+
+      money: false,
+      materials: false,
+      knowledge: false,
+      manpower: false,
+      collaborators: false,
+    };
+
+  }
+
   static navigationOptions = {
     title: "Edit Settings or Profile"
   }

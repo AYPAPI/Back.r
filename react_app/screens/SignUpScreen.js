@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Text, View, Image, StyleSheet} from 'react-native';
 import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
+import { createUser } from '../router/api.js'
 
 //Import function for signing in.
 import { onSignIn } from '../auth.js';
@@ -56,13 +57,14 @@ class SignUpScreen extends Component {
   signUp(){
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(function(user){
       console.log('successfully created account')
+      createUser(this.state.email)
     }).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
 			if (errorCode === 'auth/wrong-password') {
         alert('Wrong password.');
     	} else {
-        alert(errorMessage);         
+        alert(errorMessage);
     	}
     	console.log(error);
     });

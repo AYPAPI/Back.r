@@ -174,7 +174,7 @@ class SettingsScreen extends Component {
                 backgroundColor={buttonRed}
                 icon={{name: 'logout-variant', type: 'material-community' }}
                 title= 'Log Out'
-                onPress={()=> navigate('Edit')}
+                onPress={()=> navigate('LoginScreen')}
                 containerViewStyle={styles.buttonContainerStyle}
               />
 

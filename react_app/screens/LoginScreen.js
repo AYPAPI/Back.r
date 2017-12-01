@@ -1,11 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet,NativeModules } from 'react-native';
 import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
-<<<<<<< HEAD
-import { onSignIn } from '../auth.js'
+
 import { Font } from 'expo';
 
-=======
 import { onSignIn } from '../auth.js';
 
 var firebase = require('firebase')
@@ -17,7 +15,6 @@ var config = {
   storageBucket:'backr-firebase.appspot.com'
 };
 var app = firebase.initializeApp(config)
->>>>>>> 7cc7724948b7e481a0abed14f2364503d6bdd1c0
 
 var background = require('../img/splash_screen-01.png');
 
@@ -104,11 +101,7 @@ class LoginScreen extends Component {
   render() {
 
     const { navigate } = this.props.navigation;
-<<<<<<< HEAD
 
-
-=======
->>>>>>> 7cc7724948b7e481a0abed14f2364503d6bdd1c0
     return (
         <Image
             source={background}
