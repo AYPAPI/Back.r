@@ -32,8 +32,6 @@ export default class App extends React.Component {
   componentWillMount() {
     console.log(this.state);
 
-
-
     //Uncomment once we have authentication all set up.
   /*  isSignedIn()
     .then(res => this.setState({ signedIn: res, checkedState: true}))
@@ -59,12 +57,3 @@ export default class App extends React.Component {
 
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});

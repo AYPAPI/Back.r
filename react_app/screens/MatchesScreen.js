@@ -1,15 +1,24 @@
 import React, { Component } from 'react';
+
 import {
   Text,
   Button,
   View,
   StyleSheet,
-	Image, ScrollView,
+  Image,
+  ScrollView,
 } from 'react-native';
-import {
-	Card, ListItem, Icon
-} from 'react-native-elements'
+
+import { Card, Divider, Icon, ListItem } from 'react-native-elements'
+
+import { lightGrey,
+    backerBlue,
+    makerPurple,
+    checkGreen,
+    noRed } from '../assets/styles/colors.js';
+
 const url = "https://backr.herokuapp.com/"
+
 const getChannels = function() {
   return fetch( url + 'twilio/channels?identity=vylana&endpointId=9998', {
     method: 'GET',
@@ -22,31 +31,23 @@ const getChannels = function() {
   })
 }
 
-// const users = [
-//  {
-//     name: 'brynn',
-//     avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
-// 	 message: "hey hot stuff"
-//  },{
-//     name: 'brandon',
-//     avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
-//  },{
-//     name: 'andrew',
-//     avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg',
-// 	 message: "hey hottie u down to be my thottie ;)"
-//  },{
-//     name: 'sarah',
-//     avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
-//  },{
-//     name: 'brynn',
-//     avatar: 'https://s3.amazonaws.com/uifaces/faces/twitter/brynn/128.jpg'
-//  },
-// ]
+var decoration = require('../assets/images/matches_decorations-01.png');
 
 const styles = {
   headerIcon: {
+    color: lightGrey,
     margin: 15,
-    fontSize: 30
+    fontSize: 30,
+  },
+  centerIcon: {
+      color: lightGrey,
+      margin: 15,
+      fontSize: 40
+  },
+  activeIcon: {
+      color: backerBlue,
+      margin: 15,
+      fontSize: 30,
   },
   maker: {
     color: '#75c9f9'
@@ -55,7 +56,7 @@ const styles = {
     color: '#c753e0'
   },
   titleMaker: {
-    color: '#75C9F9',
+    color: lightGrey,
     margin: 15,
     fontSize: 40
   },
@@ -63,7 +64,33 @@ const styles = {
     color: '#C753E0',
     margin: 15,
     fontSize: 40
-  }
+  },
+  container: {
+      backgroundColor: 'white',
+  },
+  header: {
+      flexDirection: 'row',
+      alignItems: 'flex-start',
+  },
+  headerText: {
+      fontSize: 20,
+      fontFamily: 'gotham-rounded',
+      alignItems: 'flex-start',
+      color: backerBlue,
+      marginTop: 20,
+      marginLeft: 10,
+      marginRight: 10,
+  },
+  decoratorImageStyle: {
+      width: 100,
+      height: 25,
+      marginTop: 17,
+      marginLeft: 5
+  },
+  dividerStyle: {
+      backgroundColor: lightGrey,
+      marginTop: 10,
+  },
 };
 
 
@@ -73,31 +100,28 @@ class MatchesScreen extends Component {
   user = navigation.state.params;
 
   return {
+     headerLeft: (
+      <Icon
+        name='face'
+        type='material-community'
+        iconStyle={styles.headerIcon}
+        onPress={ () => navigation.navigate("MyProfile", {user: user, type: ""}) }
+      />
+    ),
     headerTitle: (
       <Icon
-        name='lightbulb'
+        name='lightbulb-outline'
         type='material-community'
-        iconStyle={styles.titleMaker}
-        //onPress={ () => navigation.navigate("Explore", {user: user}) }
-        onPress={() => navigation.goBack()}
+        iconStyle={styles.centerIcon}
+        onPress={ () => navigation.navigate("Explore", {user: user}) }
       />
     ),
     headerRight: (
       <Icon
         name='message-text-outline'
         type='material-community'
-        iconStyle={styles.headerIcon}
-        color='#75C9F9'
+        iconStyle={styles.activeIcon}
       />
-    ),
-    headerLeft: (
-        <Icon
-          name='user-o'
-          type='font-awesome'
-          color='#999999'
-          iconStyle={styles.headerIcon}
-          onPress={ () => navigation.navigate("MyProfile", {user: user, type: ""}) }
-        />
     ),
   };
 };
@@ -124,29 +148,39 @@ constructor(props) {
     const { navigate } = this.props.navigation;
 
     return (
-      <ScrollView>
-      <Button
+      <ScrollView style={styles.container}>
+      {/*<Button
           onPress={() => navigate("Thread", {user: user, other_user: ""})}
           title="Message Thread"
           buttonStyle={{ marginTop: 20 }}
-      />
-		<Card containerStyle={{padding: 0}} >
-  {
-    this.state.users.map((u, i) => {
-      return (
-        <ListItem
-          key={i}
-          roundAvatar
-          title={u.other_user}
-          avatar={{uri:u.avatar}}
-		  subtitle={u.message}
-			onPress={() => navigate("Thread", {user: user, other_user: u.other_user, unique_name:u.unique_name})}
-        />
-      );
-    })
-  }
-</Card>
+      />*/}
 
+          <View style={styles.header}>
+              <Text style={styles.headerText}>
+                  Matches
+              </Text>
+              <Image
+                  source={decoration}
+                  style={styles.decoratorImageStyle}
+              />
+          </View>
+          <Divider style={styles.dividerStyle}/>
+
+          {
+            this.state.users.map((u, i) => {
+              return (
+                <ListItem
+                  key={i}
+                  roundAvatar
+                  title={u.other_user}
+                  fontFamily={'gotham-rounded'}
+                  avatar={{uri:u.avatar}}
+        		  subtitle={u.message}
+        		  onPress={() => navigate("Thread", {user: user, other_user: u.other_user, unique_name:u.unique_name})}
+                />
+              );
+            })
+          }
       </ScrollView>
     );
   }

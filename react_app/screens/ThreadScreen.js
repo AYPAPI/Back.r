@@ -1,10 +1,25 @@
 import React, { Component } from 'react';
 import {
-  Text, Button, View, StyleSheet, ScrollView, KeyboardAvoidingView, TextInput, TouchableHighlight, Keyboard
+  Text,
+  Button,
+  View,
+  StyleSheet,
+  ScrollView,
+  KeyboardAvoidingView,
+  TextInput,
+  TouchableHighlight,
+  Keyboard
 } from 'react-native';
+
 import { Icon } from 'react-native-elements'
 import KeyboardSpacer from 'react-native-keyboard-spacer';
 import AutogrowInput from 'react-native-autogrow-input';
+
+import { lightGrey,
+    backerBlue,
+    makerPurple,
+    checkGreen,
+    noRed } from '../assets/styles/colors.js';
 
 //used to make random-sized messages
 function getRandomInt(min, max) {
@@ -109,22 +124,13 @@ export default class ThreadScreen extends Component {
     var other_user  = navigation.state.params.other_user;
     return {
       title: other_user,
-      headerRight: (
-        <Icon
-          name='message-text-outline'
-          type='material-community'
-          iconStyle={styles.headerIcon}
-          onPress={ () => navigation.navigate("Matches", {user: user}) }
-        />
-      ),
       headerLeft: (
           <Icon
-            name='user-o'
-            type='font-awesome'
+            name='message-text-outline'
+            type='material-community'
             iconStyle={styles.headerIcon}
-            onPress={ () => navigation.navigate("MyProfile", {user: user, type: ""}) }
+            onPress={ () => navigation.navigate("Matches", {user: user}) }
           />
-
       ),
     };
   };
@@ -289,6 +295,11 @@ class InputBar extends Component {
 const styles = StyleSheet.create({
 
   //ChatView
+  headerIcon: {
+    color: lightGrey,
+    margin: 15,
+    fontSize: 30,
+  },
 
   outer: {
     flex: 1,
@@ -302,7 +313,6 @@ const styles = StyleSheet.create({
   },
 
   //InputBar
-
   inputBar: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -358,7 +368,6 @@ const styles = StyleSheet.create({
     color: 'white'
   },
 })
-
 
 //class ThreadScreen extends Component {
 //  static navigationOptions = ({ navigation }) => ({

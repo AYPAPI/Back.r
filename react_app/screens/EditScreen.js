@@ -2,11 +2,17 @@ import React, { Component } from 'react';
 import { Text, TextInput, Button, Switch, View, ScrollView, StyleSheet } from 'react-native';
 import { Avatar, Divider, Icon } from 'react-native-elements';
 
-var profilePhoto = require('../img/cannon_beach-01.jpg');
-var backerBlue = '#57C4DD';
-var darkBlue = '#58A6DB';
-var makerPurple = '#C753E0';
-var lightGrey = '#BFBFBF';
+var profilePhoto = require('../assets/images/cannon_beach-01.jpg');
+
+import { lightGrey,
+    backerBlue,
+    makerPurple,
+    checkGreen,
+    noRed,
+    moneyGreen,
+    materialsOrange,
+    knowledgePurple,
+    manpowerRed } from '../assets/styles/colors.js';
 
 const styles = StyleSheet.create({
   headerIcon: {
@@ -83,7 +89,7 @@ const styles = StyleSheet.create({
     borderColor: lightGrey
   },
   buttonStyle: {
-      width: 250,
+      width: window.width - 100,
   },
   buttonText: {
       fontFamily: 'gotham-rounded',
@@ -152,7 +158,7 @@ class EditScreen extends Component {
                   width={80}
                   height={80}
                   activeOpacity={0.7}
-                  source={require('../img/shuttle-01.jpg')}
+                  source={require('../assets/images/shuttle-01.jpg')}
                   onPress={()=>navigate()}
                   overlayContainerStyle={styles.subAvatarOverlay}
                   />
@@ -204,7 +210,7 @@ class EditScreen extends Component {
                 <Icon iconStyle={styles.iconStyle}
                 name='circle-o'
                 type='font-awesome'
-                color='#59C129'
+                color={moneyGreen}
                 size={15}
                 onPress={() => alert("Money")} />
             </View>
@@ -221,7 +227,7 @@ class EditScreen extends Component {
                 <Icon iconStyle={styles.iconStyle}
                 name='circle-o'
                 type='font-awesome'
-                color='#FC8A2D'
+                color={materialsOrange}
                 size={15}
                 onPress={() => alert("Money")} />
             </View>
@@ -238,7 +244,7 @@ class EditScreen extends Component {
                 <Icon iconStyle={styles.iconStyle}
                 name='circle-o'
                 type='font-awesome'
-                color='#bb24f2'
+                color={knowledgePurple}
                 size={15}
                 onPress={() => alert("Money")} />
             </View>
@@ -255,7 +261,7 @@ class EditScreen extends Component {
                 <Icon iconStyle={styles.iconStyle}
                 name='circle-o'
                 type='font-awesome'
-                color='#EF2074'
+                color={manpowerRed}
                 size={15}
                 onPress={() => alert("Money")} />
             </View>
@@ -272,7 +278,7 @@ class EditScreen extends Component {
                 <Icon iconStyle={styles.iconStyle}
                 name='circle-o'
                 type='font-awesome'
-                color='#57C4DD'
+                color={backerBlue}
                 size={15}
                 onPress={() => alert("Money")} />
             </View>
