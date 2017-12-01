@@ -1,9 +1,9 @@
 import React from 'react';
 
 exports.createUser = (name, email) => {
+  console.log("hi");
   const url = "https://backr.herokuapp.com/"
-  const getUser = function(email) {
-    return fetch( url + 'user', {
+  fetch( url + 'user', {
       method: 'POST',
       headers: {
       'Accept': 'application/json',
@@ -28,7 +28,6 @@ exports.createUser = (name, email) => {
           },
 
           backer: {
-
             backerLongBio: "",
             backerPhotos: [],
             backerIcon: [false, false, false, false, false],
@@ -40,19 +39,19 @@ exports.createUser = (name, email) => {
 
       })
     }).then(function(response) {
-      return response.json();
+      console.log("inside api");
+      return response;
     })
     .catch((error) => {
         console.error(error);
     });
-  }
 }
 
 exports.getUser = (email) => {
 
 }
 
-exports.getMaker(email) {
+exports.getMaker = (email) => {
 
 }
 
@@ -89,11 +88,11 @@ exports.updateProfile = () => {
 }
 
 //TODO
-export const updateSettings(email) {
+exports.updateSettings = (email) => {
 
 }
 
 
-export const getSettings(email) {
+exports.getSettings = (email) => {
 
 }

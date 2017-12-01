@@ -55,10 +55,13 @@ class SignUpScreen extends Component {
   }
 
   signUp(){
-    firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(function(user){
-      console.log('successfully created account')
-      createUser(this.state.email)
-    }).catch(function(error) {
+      //firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(function(user){
+      //firebase.auth().createUserWithEmailAndPassword(this.state.email,this.state.password).then(function(user){
+
+      console.log('successfully created account');
+      let response = createUser("Eric", "eric@eric.com");
+      console.log(response);
+  /*  }).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
 			if (errorCode === 'auth/wrong-password') {
@@ -67,7 +70,7 @@ class SignUpScreen extends Component {
         alert(errorMessage);
     	}
     	console.log(error);
-    });
+    });*/
   };
 
   render() {
