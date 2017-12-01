@@ -76,7 +76,6 @@ class LoginScreen extends Component {
  	login(navigate){
     firebase.auth().signInWithEmailAndPassword(this.state.email,this.state.password).then(function(user) {
       console.log('successfully logged in ' + JSON.stringify(user))
-      //onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));
       navigate("SignedIn", {user: user});
       this.load = true
       return true
