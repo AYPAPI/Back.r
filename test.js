@@ -7,34 +7,62 @@ var hot_bod = " with body = "
 function constructOutputString(res, body, ext) {
   return (res.request.method + " /" + ext + hot_bod + body + delimiter)
 }
-
-// var test_user = {
-// 	"name":"vinay",
-// 	"age": 21,
-// 	"email": "test@aypapi.com",
-// 	"isMaker":true,
-// 	"shortBio":"dumb dumb",
-//   "location":"123-123",
-// 	"profiles":{
-// 		"maker": {
-// 			"longBio":"I have a dumb idea for a project",
-// 			"photos":["url for pic"],
-// 			"icons":[true],
-//       "matches":[],
-//       "swipedright":[],
-//       "swipedon":[]
-// 		},
-// 		"backer": {
-// 			"longBio":"I am a dumb investor, let me fund you",
-// 			"photos":["url for pic"],
-// 			"icons":[true],
-//       "matches":[],
-//       "swipedright":[],
-//       "swipedon":[]
-// 		}
-// 	}
-// }
-
+/*
+ var test_user = {
+ 	"name":"vinay",
+ 	"age": 21,
+ 	"email": "test@aypapi.com",
+ 	"isMaker":true,
+ 	"shortBio":"dumb dumb",
+   "location":"123-123",
+ 	"profiles":{
+ 		"maker": {
+ 			"longBio":"I have a dumb idea for a project",
+ 			"photos":["url for pic"],
+ 			"icons":[true],
+       "matches":[],
+       "swipedright":[],
+       "swipedon":[]
+ 		},
+ 		"backer": {
+ 			"longBio":"I am a dumb investor, let me fund you",
+ 			"photos":["url for pic"],
+ 			"icons":[true],
+       "matches":[],
+       "swipedright":[],
+       "swipedon":[]
+ 		}
+ 	}
+ }
+request.patch({
+  url: url + "user/isMaker",
+  json: true,
+  body: test_user
+  }, function(err, res, body){
+    console.log("POST response body - " + res.body);
+  });
+request.patch({
+  url: url + "user",
+  json: true,
+  body: test_user
+  }, function(err, res, body){
+    console.log("POST response body - " + res.body);
+  });
+request.patch({
+  url: url + "user/maker",
+  json: true,
+  body: test_user
+  }, function(err, res, body){
+    console.log("POST response body - " + res.body);
+  });
+request.patch({
+  url: url + "user/backer",
+  json: true,
+  body: test_user
+  }, function(err, res, body){
+    console.log("POST response body - " + res.body);
+  });
+*/
 // var user_email = {
 //   email: "brandonisadumdum@msn.com"
 // }

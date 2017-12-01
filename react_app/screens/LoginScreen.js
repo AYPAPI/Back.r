@@ -1,9 +1,11 @@
 import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet, NativeModules } from 'react-native';
 import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
+
 import { onSignIn } from '../auth.js'
 import { Font } from 'expo';
 
+/* Firebase */
 var firebase = require('firebase')
 
 var config = {
@@ -14,6 +16,7 @@ var config = {
 };
 var app = firebase.initializeApp(config)
 
+/* Style */
 import { lightGrey,
     backerBlue,
     makerPurple,
@@ -57,6 +60,7 @@ const styles = StyleSheet.create({
     },
 });
 
+
 class LoginScreen extends Component {
 
   constructor(props) {
@@ -72,10 +76,32 @@ class LoginScreen extends Component {
     this.success = this.success.bind(this)
   }
 
+  fbLogIn(navigate) {
+    const { type, token } = Expo.Facebook.logInWithReadPermissionsAsync('187665428456187', {
+        permissions: ['public_profile', 'email']
+      }).then(function(res) {
+        console.log(res)
+        if (res.type === 'success') {
+          // Build Firebase credential with the Facebook access token.
+        const credential = firebase.auth.FacebookAuthProvider.credential(res.token);
+        console.log(credential)
+        // Sign in with credential from the Facebook user.
+        firebase.auth().signInWithCredential(credential).then((user) => {
+          console.log("User is" + user.displayName)
+          navigate("SignedIn", {user: user.email});
+        }).catch((error) => {
+          // Handle Errors here.
+          console.log(error)
+        });
+
+        }
+      })
+
+  }
+
  	login(navigate){
     firebase.auth().signInWithEmailAndPassword(this.state.email,this.state.password).then(function(user) {
       console.log('successfully logged in ' + JSON.stringify(user))
-      //onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));
       navigate("SignedIn", {user: user});
       this.load = true
       return true
@@ -98,6 +124,11 @@ class LoginScreen extends Component {
     this.login(navigate)
   }
 
+  fbsuccess(navigate) {
+    console.log("nav")
+    this.fbLogIn(navigate)
+  }
+
   async componentDidMount() {
       await Font.loadAsync({
         'gotham-rounded': require('../assets/fonts/Gotham-Rounded-Bold.otf'),
@@ -109,6 +140,7 @@ class LoginScreen extends Component {
   render() {
 
     const { navigate } = this.props.navigation;
+
     return (
         <Image
             source={background}
@@ -166,7 +198,8 @@ class LoginScreen extends Component {
                 title="Sign in with Facebook"
                 icon={{name: 'facebook-box', type: 'material-community'}}
                 onPress={() => {
-                onSignIn().then(() => navigate("SignedIn", {user: "USER"}));}}
+                  this.fbsuccess(navigate)
+              }}
               />
             </View>
 	    </Image>

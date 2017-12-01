@@ -54,6 +54,7 @@ class SignUpScreen extends Component {
     this.state = {
       user: "",
       email: "",
+      name:"",
       password: "password"
     };
 
@@ -61,8 +62,18 @@ class SignUpScreen extends Component {
   }
 
   signUp(){
+    const displayName = this.state.name
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(function(user){
       console.log('successfully created account')
+      var user = firebase.auth().currentUser;
+      user.updateProfile({
+        displayName:displayName
+      }).then(function () {
+        var displayName = user.displayName
+        console.log(displayName)
+      },function(error){
+        console.log(error)
+      });
     }).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
