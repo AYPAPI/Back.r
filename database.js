@@ -42,7 +42,7 @@ module.exports.addUser = function (username,client,tablename){
 }
 
 //create user profile
-module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,location,client){
+module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,client){
   let check = 'SELECT email FROM ' + tablename
   client.query(check, function(err,res) {
     rows = res.rows
@@ -52,8 +52,8 @@ module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,
         return
       }
     }
-    let query = 'INSERT INTO ' + tablename + ' (name,age,email,ismaker,shortbio,location) values ($1,$2,$3,$4,$5,$6)';
-    client.query(query,[name,age,email,isMaker,shortbio,location], function(err,res) {
+    let query = 'INSERT INTO ' + tablename + ' (name,age,email,ismaker,shortbio) values ($1,$2,$3,$4,$5)';
+    client.query(query,[name,age,email,isMaker,shortbio], function(err,res) {
       if (err) throw err;
       else{
         console.log('inserted ' + email + ' into database')
@@ -63,7 +63,7 @@ module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,
 }
 
 //create the maker and backer profiles
-module.exports.createUserProfile = function (longbio,photos,icons,email,tablename, 
+module.exports.createUserProfile = function (longbio,photos,icons,email,tablename,
                                              swipedRight,matches,swipedOn,client){
   let check = 'SELECT email FROM ' + tablename
   client.query(check, function(err,res) {
@@ -105,6 +105,33 @@ module.exports.readUser = function (email,tablename,client, callback) {
     callback(obj);
 	})
 }
+//update isMaker in user profile
+module.exports.updateisMaker = function(email,client,isMaker,callback) {
+  let query = 'UPDATE users SET isMaker = $1 WHERE EMAIL = $2'
+  client.query(query, [isMaker, email], function(err,res) {
+    if (err) throw err;
+    console.log('Updated isMaker')
+    callback("Updated isMaker");
+  })
+}
+//update user profile
+module.exports.updateUser = function(email,shortbio,client,callback){
+  let query = 'UPDATE users SET shortbio = $1 WHERE email = $2'
+  client.query(query, [shortbio,email], function(err,res) {
+    if (err) throw err;
+    console.log('Updated user profile')
+    callback("Updated user profile");
+  })
+}
+//update maker and backer profile
+module.exports.updateProfile = function(email,longbio,photos,icons,client,tablename,callback){
+  let query = 'UPDATE ' + tablename + ' SET longbio = $1, photos = $2, icons = $3 WHERE email = $4'
+  client.query(query, [longbio,photos,icons,email], function(err,res) {
+    if (err) throw err;
+    console.log('Updated ' + tablename + ' profile');
+    callback("Updated " + tablename + ' profile');
+  })
+}
 
 //get maker/backer profile
 module.exports.readUserProfile = function (email,tablename,client, callback) {
@@ -115,7 +142,7 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
       for (var i = 0; i < rows.length; i++){
         if (rows[i].email === email){
           var row = rows[i]
-          var obj = { 
+          var obj = {
             "longbio":row.longbio,
             "email":row.email,
             "photos":row.photos,

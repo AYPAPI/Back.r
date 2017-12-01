@@ -6,7 +6,13 @@ import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
 import { onSignIn } from '../auth.js';
 var firebase = require('firebase')
 
-var background = require('../img/create_account_screen-01.png');
+import { lightGrey,
+    backerBlue,
+    makerPurple,
+    checkGreen,
+    noRed } from '../assets/styles/colors.js';
+
+var background = require('../assets/images/create_account_screen-01.png');
 
 const styles = StyleSheet.create({
     imageContainer: {
@@ -37,6 +43,11 @@ const styles = StyleSheet.create({
         width: 250,
         marginBottom: 20,
     },
+    buttonText: {
+        fontFamily: 'gotham-rounded',
+        fontSize: 16,
+        marginTop: 3,
+    },
 });
 
 class SignUpScreen extends Component {
@@ -47,6 +58,7 @@ class SignUpScreen extends Component {
     this.state = {
       user: "",
       email: "",
+      name:"",
       password: "password"
     };
 
@@ -54,15 +66,25 @@ class SignUpScreen extends Component {
   }
 
   signUp(){
+    const displayName = this.state.name
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(function(user){
       console.log('successfully created account')
+      var user = firebase.auth().currentUser;
+      user.updateProfile({
+        displayName:displayName
+      }).then(function () {
+        var displayName = user.displayName
+        console.log(displayName)
+      },function(error){
+        console.log(error)
+      });
     }).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
 			if (errorCode === 'auth/wrong-password') {
         alert('Wrong password.');
     	} else {
-        alert(errorMessage);         
+        alert(errorMessage);
     	}
     	console.log(error);
     });
@@ -78,6 +100,10 @@ class SignUpScreen extends Component {
             source={background}
             style={styles.imageContainer}>
             <View style={styles.formsContainer}>
+                <FormInput containerStyle={styles.formInputContainer}
+                    placeholder="Name"
+                    onChangeText={(name) => this.setState({name})}
+                />
                 <FormInput containerStyle={styles.formInputContainer}
                     placeholder="Email address"
                     onChangeText={(email) => this.setState({email})}
@@ -105,11 +131,10 @@ class SignUpScreen extends Component {
 
             <View style={styles.buttonsContainer}>
               <Button style={styles.buttonStyle}
-                textStyle={{fontFamily: 'gotham-rounded', fontSize: 16, marginTop: 3}}
+                textStyle={styles.buttonText}
                 borderRadius={10}
                 backgroundColor='#C753E0'
                 title="Create Account!"
-                fontFamily='gotham-rounded'
                 icon={{name: 'check', type: 'material-community'}}
                 //onPress={() => {
                 //onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));}}
