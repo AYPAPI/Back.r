@@ -1,8 +1,8 @@
 import React from 'react';
+const url = "https://backr.herokuapp.com/"
 
 exports.createUser = (name, email) => {
   console.log("hi");
-  const url = "https://backr.herokuapp.com/"
   fetch( url + 'user', {
       method: 'POST',
       headers: {
@@ -47,6 +47,8 @@ exports.createUser = (name, email) => {
 }
 
 exports.getUser = (email) => {
+  console.log("GET user request");
+
 
 }
 

@@ -62,11 +62,17 @@ class SignUpScreen extends Component {
       user: "",
       name: "",
       email: "",
+      name:"",
       password: "password"
     };
 
     this.signUp = this.signUp.bind(this)
   }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> e83d606c07675bb3453c40be10dc3e5683a8a257
   signUp(navigate) {
 
     //Probably will be different function, pass in name as well. then call navigate and
