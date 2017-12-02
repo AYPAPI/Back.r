@@ -14,6 +14,8 @@ import { lightGrey,
     noRed } from '../assets/styles/colors.js';
 
 var background = require('../assets/images/create_account_screen-01.png');
+var user_name = "";
+var user_email = "";
 
 const styles = StyleSheet.create({
     imageContainer: {
@@ -65,15 +67,18 @@ class SignUpScreen extends Component {
 
     this.signUp = this.signUp.bind(this)
   }
-
   signUp(navigate) {
 
     //Probably will be different function, pass in name as well. then call navigate and
     //create user within firebase callback.
+    user_name = this.state.name;
+    user_email = this.state.email;
+
     firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password)
       .then(function(user){
         console.log('successfully created account');
-        navigate("SignedIn", {name:this.state.name, email: response.email, isMaker: false})
+        createUser(user_name, user_email);
+        navigate("SignedIn", {name: user_name, email: user.email, isMaker: false})
     }).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -85,8 +90,6 @@ class SignUpScreen extends Component {
     	console.log(error);
       return;
     });
-
-    createUser(this.state.name, this.state.email).then(function(response);
     console.log("Successfully created account in our database ")
   };
 
