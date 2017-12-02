@@ -48,35 +48,35 @@ exports.createUser = (name, email) => {
 
 exports.getUser = (email) => {
   console.log("GET user request");
-
+  //Sarah
 
 }
 
 exports.getMaker = (email) => {
-
+  //Eric
 }
 
 exports.getBacker = (email) => {
-
+  //Me
 }
 
 exports.getSettings = (email) => {
-
+  //eric
 }
 
 exports.postSwipe = (email, swipedEmail, isMaker, swipedRight) => {
-
+  //Eric
 }
 
 //ONLY CALL ONCE on initial signup of user. All other edit settings call updateSettings
 exports.createSettings = () => {
-
+  //eric
 }
 
 //TODO
 //Function called in EditScreen.
 exports.updateProfile = () => {
-
+  //Sarah
 
   //Fetch user first
   /* Order for icon booleans:
@@ -90,10 +90,10 @@ exports.updateProfile = () => {
 
 //TODO
 exports.updateSettings = (email) => {
-
+ //Eric
 }
 
 
 exports.getSettings = (email) => {
-
+  //Sarah
 }
