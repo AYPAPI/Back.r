@@ -60,11 +60,13 @@ class SignUpScreen extends Component {
       user: "",
       name: "",
       email: "",
+      name:"",
       password: "password"
     };
 
     this.signUp = this.signUp.bind(this)
   }
+
 
   signUp(navigate) {
 
