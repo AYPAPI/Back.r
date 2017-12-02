@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet,NativeModules } from 'react-native';
 import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
+import { createUser } from '../router/api.js';
 
 
 import { Font } from 'expo';
@@ -90,7 +91,10 @@ class LoginScreen extends Component {
         // Sign in with credential from the Facebook user.
         firebase.auth().signInWithCredential(credential).then((user) => {
           console.log("User is" + user.displayName)
-          navigate("SignedIn", {user: user.email});
+          user_name = user.displayName;
+          user_email= user.email;
+          createUser(user_name, user_email);
+          navigate("SignedIn", {name: user_name, email: user_email, isMaker: false});
         }).catch((error) => {
           // Handle Errors here.
           console.log(error)

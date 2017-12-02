@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {Avatar, Icon, Button} from 'react-native-elements';
+import { getMaker, getBacker } from '../router/api.js';
 
 //Method for logging out.
 import { onSignOut } from '../auth.js';
@@ -94,8 +95,15 @@ const styles = StyleSheet.create({
 
 class MyProfileScreen extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      makerBacker: {}
+    }
+  }
+
   static navigationOptions = ({ navigation }) => {
-  const { user } = navigation.state.params;
+    const { name, email, isMaker } = navigation.state.params
 
   return {
     headerTitle: (
@@ -103,7 +111,7 @@ class MyProfileScreen extends Component {
         name='lightbulb-outline'
         type='material-community'
         iconStyle={styles.titleMaker}
-        onPress={ () => navigation.navigate("Explore", {user: user}) }
+        onPress={ () => navigation.navigate("Explore", {name: name, email: email, isMaker: isMaker}) }
       />
     ),
     headerRight: (
@@ -112,7 +120,7 @@ class MyProfileScreen extends Component {
         type='material-community'
         iconStyle={styles.headerIcon}
         color='#BFBFBF'
-        onPress={ () => navigation.navigate("Matches", {user: user}) }
+        onPress={ () => navigation.navigate("Matches", {name: name, email: email, isMaker: isMaker}) }
       />
     ),
     headerLeft: (
@@ -126,9 +134,22 @@ class MyProfileScreen extends Component {
   };
 };
 
+  componentDidMount() {
+    const { name, email, isMaker } = this.props.navigation.state.params
+
+    if(isMaker) {
+      this.setState({"makerBacker": getMaker(email)})
+    } else {
+      this.setState({"makerBacker": getBacker(email)});
+    }
+    console.log("maker or backer" + isMaker);
+    console.log("maker or backer name: " + this.state.makerBacker.email)
+  }
+
   render() {
 
     const { navigate } = this.props.navigation;
+    const { name, email, isMaker } = this.props.navigation.state.params;
 
       return (
           <View style={styles.container}>
@@ -191,7 +212,7 @@ class MyProfileScreen extends Component {
                   backgroundColor={backerBlue}
                   icon={{name: 'settings', type: 'MaterialIcons'}}
                   title= 'Edit Account Settings'
-                  onPress={()=> navigate('Settings', {user: this.props.navigation.state.params.user})}
+                  onPress={()=> ('Settings', {user: this.props.navigation.state.params.user})}
                 />
 
                 <Button

@@ -129,7 +129,7 @@ class SignUpScreen extends Component {
                     title="< Back to login"
                     backgroundColor='transparent'
                     fontSize={12}
-                    onPress={() => navigate("Login")}
+                    onPress={() => this.props.navigation.goBack()}
                     />
             </View>
 

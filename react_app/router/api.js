@@ -49,15 +49,46 @@ exports.createUser = (name, email) => {
 exports.getUser = (email) => {
   console.log("GET user request");
   //Sarah
+  var urlParams = "user?email=" + email;
+  fetch( url + urlParams)
+  .then(response => {
+    return response;
+  })
+  .catch(error => {
+    console.error(error);
+    });
 
 }
 
 exports.getMaker = (email) => {
-  //Eric
+  console.log("GET user request");
+  //Sarah
+  var urlParams = "user/maker?email=" + email;
+  fetch( url + urlParams)
+  .then(response => {
+    return response.json();
+  })
+  .catch(error => {
+    console.error(error);
+  });
 }
 
 exports.getBacker = (email) => {
   //Me
+  console.log("GET user request");
+  //Sarah
+  var urlParams = "user/backer?email=" + email;
+  fetch( url + urlParams, {
+    method: 'GET',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    }
+  }).then(function(response) {
+    console.log(response)
+    return response
+  })
+
 }
 
 exports.getSettings = (email) => {

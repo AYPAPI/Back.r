@@ -9,6 +9,9 @@ import {
 import { Card, Icon, Text } from 'react-native-elements';
 import Swiper from 'react-native-swiper-animated'
 import {Dimensions} from 'react-native';
+import { getUser } from '../router/api.js';
+
+
 
 import { lightGrey,
     backerBlue,
@@ -127,11 +130,17 @@ const styles = {
 
 class ExploreScreen extends Component {
 
+
   onUserPress(user) {
-    this.props.navigation.navigate("UserProfile", {user: user, mainUser: this.props.navigation.state.params.user});
+    const { name, email, isMaker } = this.props.navigation.state.params
+
+
+    this.props.navigation.navigate("UserProfile", {user: user, name: name, email: email, isMaker: isMaker});
   }
+
+
     static navigationOptions = ({ navigation }) => {
-        const { user } = navigation.state.params;
+        const { name, email, isMaker } = navigation.state.params;
         return {
             headerTitle: (
                 <Icon
@@ -145,7 +154,7 @@ class ExploreScreen extends Component {
                 name='message-text-outline'
                 type='material-community'
                 iconStyle={styles.headerIcon}
-                onPress={ () => navigation.navigate("Matches", {user: user}) }
+                onPress={ () => navigation.navigate("Matches", {name: name, email: email, isMaker: isMaker}) }
                 />
             ),
             headerLeft: (
@@ -153,14 +162,16 @@ class ExploreScreen extends Component {
                 name='face'
                 type='material-community'
                 iconStyle={styles.headerIcon}
-                onPress={ () => navigation.navigate("MyProfile", {user: user, type: ""}) }
+                onPress={ () => navigation.navigate("MyProfile", {name: name, email: email, isMaker: isMaker}) }
                 />
             ),
         };
     };
+
     render() {
 
         const { navigate } = this.props.navigation;
+        const { name, email, isMaker } = this.props.navigation.state.params;
 
         return (
             <View style={styles.container}>
