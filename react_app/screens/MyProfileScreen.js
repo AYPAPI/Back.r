@@ -140,6 +140,7 @@ class MyProfileScreen extends Component {
     if(isMaker) {
       this.setState({"makerBacker": getMaker(email)})
     } else {
+      console.log(getBacker(email));
       this.setState({"makerBacker": getBacker(email)});
     }
     console.log("maker or backer" + isMaker);
