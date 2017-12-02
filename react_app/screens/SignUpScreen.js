@@ -12,9 +12,9 @@ import { lightGrey,
     checkGreen,
     noRed } from '../assets/styles/colors.js';
 
-var background = require('../assets/images/create_account_screen-01.png');
+var background = require('../assets/images/create_account_screen-02.png');
 
-const styles = StyleSheet.create({
+const styles = {
     imageContainer: {
         flex: 1,
         justifyContent: 'flex-start',
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginTop: 3,
     },
-});
+};
 
 class SignUpScreen extends Component {
 

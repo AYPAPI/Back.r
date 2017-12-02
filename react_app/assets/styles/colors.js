@@ -8,3 +8,4 @@ export const moneyGreen = '#59C129';
 export const materialsOrange = '#FC8A2D';
 export const knowledgePurple = '#bb24f2';
 export const manpowerRed = '#EF2074';
+export const backGroundWhite = '#FFFFFF';

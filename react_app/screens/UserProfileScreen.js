@@ -12,21 +12,25 @@ import { lightGrey,
     backerBlue,
     makerPurple,
     checkGreen,
-    noRed } from '../assets/styles/colors.js';
+    noRed,
+    backGroundWhite } from '../assets/styles/colors.js';
+
+import { headerIconSize } from '../assets/styles/size.js';
 
 var profilePhoto = require('../assets/images/shuttle-01.jpg');
 
 const Dimensions = require('Dimensions');
 const window = Dimensions.get('window');
 
-const styles =  StyleSheet.create({
-  headerIcon: {
-    margin: 15,
-    fontSize: 30
-  },
+const styles = {
+    headerIcon: {
+      color: lightGrey,
+      margin: 15,
+      fontSize: headerIconSize,
+    },
   container: {
       flexDirection: 'column',
-      backgroundColor: 'white',
+      backgroundColor: backGroundWhite,
   },
   avatarContainer: {
       alignItems: 'center',
@@ -49,8 +53,8 @@ const styles =  StyleSheet.create({
       color: backerBlue,
   },
   subtitleText: {
-      fontSize: 12,
-      fontStyle: 'italic',
+      fontSize: 14,
+      fontFamily: 'gotham-rounded',
   },
   iconsContainer: {
       flexDirection: 'row',
@@ -68,24 +72,23 @@ const styles =  StyleSheet.create({
       fontSize: 16,
       textAlign: 'justify',
   },
-});
+};
 
 class UserProfileScreen extends Component {
     static navigationOptions = ({ navigation }) => {
-    //const { user, mainUser } = navigation.state.params;
+    const { user, mainUser } = navigation.state.params;
     const { goBack } = navigation.goBack;
 
-
-  return {
-    headerTitle: (
-      <Icon
-        name='chevron-down'
-        type='material-community'
-        iconStyle={styles.titleMaker}
-        onPress={ () => goBack() }
-      />
-    ),
-  };
+    return {
+        headerTitle: (
+            <Icon
+            name='chevron-down'
+            type='material-community'
+            iconStyle={styles.headerIcon}
+            onPress={ () => navigation.goBack }
+            />
+        ),
+    };
 };
 
   render() {

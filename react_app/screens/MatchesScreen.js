@@ -15,7 +15,8 @@ import { lightGrey,
     backerBlue,
     makerPurple,
     checkGreen,
-    noRed } from '../assets/styles/colors.js';
+    noRed,
+    backGroundWhite } from '../assets/styles/colors.js';
 
 import { headerIconSize } from '../assets/styles/size.js';
 
@@ -33,7 +34,7 @@ const getChannels = function() {
   })
 }
 
-var decoration = require('../assets/images/matches_decorations-01.png');
+var decoration = require('../assets/images/matches_decorations-02.png');
 
 const styles = {
   headerIcon: {
@@ -63,7 +64,7 @@ const styles = {
     fontSize: 40
   },
   container: {
-      backgroundColor: 'white',
+      backgroundColor: backGroundWhite,
   },
   header: {
       flexDirection: 'row',

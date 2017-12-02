@@ -19,9 +19,12 @@ import { lightGrey,
     backerBlue,
     makerPurple,
     checkGreen,
-    noRed } from '../assets/styles/colors.js';
+    noRed,
+    backGroundWhite } from '../assets/styles/colors.js';
 
 import { headerIconSize } from '../assets/styles/size.js';
+
+var activeColor = backerBlue;
 
 //used to make random-sized messages
 function getRandomInt(min, max) {
@@ -95,6 +98,12 @@ export default class ThreadScreen extends Component {
     super(props);
     other_user = this.props.navigation.state.params.other_user;
     unique_name = this.props.navigation.state.params.unique_name;
+    isMaker = this.props.navigation.state.params.isMaker;
+
+    if(isMaker){
+        activeColor = makerPurple;
+        console.log(activeColor);
+    }
     // var loremIpsum = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ac orci augue. Sed fringilla nec magna id hendrerit. Proin posuere, tortor ut dignissim consequat, ante nibh ultrices tellus, in facilisis nunc nibh rutrum nibh.';
     //
     // //create a set number of texts with random lengths. Also randomly put them on the right (user) or left (other person).
@@ -242,9 +251,7 @@ class MessageBubble extends Component {
     //These spacers make the message bubble stay to the left or the right, depending on who is speaking, even if the message is multiple lines.
     var leftSpacer = this.props.direction === 'left' ? null : <View style={{width: 70}}/>;
     var rightSpacer = this.props.direction === 'left' ? <View style={{width: 70}}/> : null;
-
     var bubbleStyles = this.props.direction === 'left' ? [styles.messageBubble, styles.messageBubbleLeft] : [styles.messageBubble, styles.messageBubbleRight];
-
     var bubbleTextStyle = this.props.direction === 'left' ? styles.messageBubbleTextLeft : styles.messageBubbleTextRight;
 
     return (
@@ -307,7 +314,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    backgroundColor: 'white'
+    backgroundColor: backGroundWhite,
   },
 
   messages: {
@@ -338,13 +345,12 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     paddingRight: 15,
     borderRadius: 5,
-    backgroundColor: '#66db30'
+    backgroundColor: activeColor,
   },
 
   //MessageBubble
-
   messageBubble: {
-      borderRadius: 5,
+      borderRadius: 10,
       marginTop: 8,
       marginRight: 10,
       marginLeft: 10,
@@ -359,15 +365,15 @@ const styles = StyleSheet.create({
   },
 
   messageBubbleTextLeft: {
-    color: 'black'
+    color: 'black',
   },
 
   messageBubbleRight: {
-    backgroundColor: '#66db30'
+    backgroundColor: activeColor,
   },
 
   messageBubbleTextRight: {
-    color: 'white'
+    color: 'white',
   },
 })
 

@@ -23,7 +23,7 @@ import { lightGrey,
 
 var background = require('../assets/images/reset_password-02.png');
 
-const styles = StyleSheet.create({
+const styles = {
     imageContainer: {
         flex: 1,
         justifyContent: 'flex-start',
@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginTop: 3,
     },
-});
+};
 
 class ForgotPasswordScreen extends Component {
 
@@ -87,10 +87,9 @@ class ForgotPasswordScreen extends Component {
 
             <View style={styles.buttonContainer}>
                 <Button
-                  style={styles.buttonStyle}
                   textStyle={styles.buttonText}
+                  backgroundColor={makerPurple}
                   borderRadius={10}
-                  backgroundColor={backerBlue}
                   activeOpacity={0.5}
                   icon={{name: 'lock', type: 'material-community'}}
                   title= 'Recover Account Password'

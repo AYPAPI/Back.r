@@ -25,7 +25,7 @@ import { lightGrey,
 
 var background = require('../assets/images/splash_screen-02.png');
 
-const styles = StyleSheet.create({
+const styles = {
     imageContainer: {
         flex: 1,
         justifyContent: 'flex-start',
@@ -58,7 +58,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         marginTop: 3,
     },
-});
+};
 
 
 class LoginScreen extends Component {
@@ -99,7 +99,7 @@ class LoginScreen extends Component {
 
   }
 
- 	login(navigate){
+ login(navigate){
     firebase.auth().signInWithEmailAndPassword(this.state.email,this.state.password).then(function(user) {
       console.log('successfully logged in ' + JSON.stringify(user))
       navigate("SignedIn", {user: user});
