@@ -142,7 +142,7 @@ class ExploreScreen extends Component {
     static navigationOptions = ({ navigation }) => {
         const { user } = navigation.state.params;
         isMaker = navigation.state.params.isMaker;
-        
+
         return {
             headerLeft: (
                 <Icon
@@ -275,6 +275,15 @@ class ExploreScreen extends Component {
                 </Swiper>
 
                 <View style={styles.preferenceButtonsContainer}>
+                <Button style={styles.buttonStyle}
+                    textStyle={styles.buttonText}
+                    borderRadius={10}
+                    backgroundColor={backerBlue}
+                    title="Payment"
+                    icon={{name: 'facebook-box', type: 'material-community'}}
+                    onPress={() => { navigate("Payment") }
+                  }
+                  />
                     <Icon
                     containerStyle={styles.preferenceButtonsBorder}
                     name='close'

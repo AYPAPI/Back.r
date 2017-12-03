@@ -11,6 +11,7 @@ import UserProfileScreen from "../screens/UserProfileScreen.js";
 import LoginScreen from "../screens/LoginScreen.js";
 import MatchesScreen from "../screens/MatchesScreen.js";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen.js";
+import PaymentScreen from "../screens/PaymentScreen.js"
 
 export const MainStack = StackNavigator({
   Explore: { screen: ExploreScreen },
@@ -19,7 +20,8 @@ export const MainStack = StackNavigator({
   Matches: { screen: MatchesScreen },
   Thread: { screen: ThreadScreen },
   Edit: { screen: EditScreen },
-  Settings: { screen: SettingsScreen }
+  Settings: { screen: SettingsScreen },
+  Payment: { screen: PaymentScreen}
 });
 
 export const LoginStack = StackNavigator({
