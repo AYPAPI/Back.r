@@ -15,7 +15,10 @@ import { lightGrey,
     backerBlue,
     makerPurple,
     checkGreen,
-    noRed } from '../assets/styles/colors.js';
+    noRed,
+    backGroundWhite } from '../assets/styles/colors.js';
+
+import { headerIconSize } from '../assets/styles/size.js';
 
 const url = "https://backr.herokuapp.com/"
 
@@ -31,48 +34,41 @@ const getChannels = function() {
   })
 }
 
-var decoration = require('../assets/images/matches_decorations-01.png');
+var decoration = require('../assets/images/matches_decorations-02.png');
 
 const styles = {
   headerIcon: {
     color: lightGrey,
     margin: 15,
-    fontSize: 30,
+    fontSize: headerIconSize,
   },
-  centerIcon: {
-      color: lightGrey,
+  makerIcon: {
+      color: makerPurple,
       margin: 15,
-      fontSize: 40
+      fontSize: headerIconSize,
   },
-  activeIcon: {
+  backerIcon: {
       color: backerBlue,
       margin: 15,
-      fontSize: 30,
-  },
-  maker: {
-    color: '#75c9f9'
-  },
-  backer: {
-    color: '#c753e0'
-  },
-  titleMaker: {
-    color: lightGrey,
-    margin: 15,
-    fontSize: 40
-  },
-  titleBacker: {
-    color: '#C753E0',
-    margin: 15,
-    fontSize: 40
+      fontSize: headerIconSize,
   },
   container: {
-      backgroundColor: 'white',
+      backgroundColor: backGroundWhite,
   },
   header: {
       flexDirection: 'row',
       alignItems: 'flex-start',
   },
-  headerText: {
+  makerText: {
+      fontSize: 20,
+      fontFamily: 'gotham-rounded',
+      alignItems: 'flex-start',
+      color: makerPurple,
+      marginTop: 20,
+      marginLeft: 10,
+      marginRight: 10,
+  },
+  backerText: {
       fontSize: 20,
       fontFamily: 'gotham-rounded',
       alignItems: 'flex-start',
@@ -98,6 +94,7 @@ class MatchesScreen extends Component {
 
   static navigationOptions = ({ navigation }) => {
   user = navigation.state.params;
+  isMaker = navigation.state.params.isMaker;
 
   return {
      headerLeft: (
@@ -112,7 +109,7 @@ class MatchesScreen extends Component {
       <Icon
         name='lightbulb-outline'
         type='material-community'
-        iconStyle={styles.centerIcon}
+        iconStyle={styles.headerIcon}
         onPress={ () => navigation.navigate("Explore", {user: user}) }
       />
     ),
@@ -120,7 +117,7 @@ class MatchesScreen extends Component {
       <Icon
         name='message-text-outline'
         type='material-community'
-        iconStyle={styles.activeIcon}
+        iconStyle = {[styles.backerIcon, isMaker && styles.makerIcon]}
       />
     ),
   };
@@ -149,14 +146,8 @@ constructor(props) {
 
     return (
       <ScrollView style={styles.container}>
-      {/*<Button
-          onPress={() => navigate("Thread", {user: user, other_user: ""})}
-          title="Message Thread"
-          buttonStyle={{ marginTop: 20 }}
-      />*/}
-
           <View style={styles.header}>
-              <Text style={styles.headerText}>
+              <Text style={[styles.backerText, isMaker && styles.makerText]}>
                   Matches
               </Text>
               <Image
@@ -176,6 +167,7 @@ constructor(props) {
                   fontFamily={'gotham-rounded'}
                   avatar={{uri:u.avatar}}
         		  subtitle={u.message}
+                  activeOpacity={0.5}
         		  onPress={() => navigate("Thread", {user: user, other_user: u.other_user, unique_name:u.unique_name})}
                 />
               );

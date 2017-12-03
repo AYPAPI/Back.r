@@ -1,8 +1,14 @@
 import React, { Component } from 'react';
-import { Text, TextInput, Button, Switch, View, ScrollView, StyleSheet } from 'react-native';
-import { Avatar, Divider, Icon } from 'react-native-elements';
+import { Text,
+    TextInput,
+    Button,
+    Switch,
+    View,
+    ScrollView,
+    StyleSheet,
+KeyboardAvoidingView } from 'react-native';
 
-var profilePhoto = require('../assets/images/cannon_beach-01.jpg');
+import { Avatar, Divider, Icon } from 'react-native-elements';
 
 import { lightGrey,
     backerBlue,
@@ -12,27 +18,22 @@ import { lightGrey,
     moneyGreen,
     materialsOrange,
     knowledgePurple,
-    manpowerRed } from '../assets/styles/colors.js';
+    manpowerRed,
+    backGroundWhite } from '../assets/styles/colors.js';
 
-const styles = StyleSheet.create({
+import { headerIconSize } from '../assets/styles/size.js';
+
+var profilePhoto = require('../assets/images/cannon_beach-01.jpg');
+
+const styles = {
   headerIcon: {
     margin: 15,
-    fontSize: 30,
-  },
-  titleMaker: {
-    margin: 15,
-    fontSize: 40,
-    color: lightGrey,
-  },
-  titleBacker: {
-    margin: 15,
-    fontSize: 40,
-    color: lightGrey,
+    fontSize: headerIconSize,
   },
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: 'white',
+    backgroundColor: backGroundWhite,
   },
   editPhotosContainer: {
       flexDirection: 'column',
@@ -41,12 +42,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     marginRight: 35,
-    marginLeft: 10,
+    marginLeft: 20,
   },
   subPhotosContainer: {
       flexDirection: 'column',
       alignItems: 'flex-end',
       justifyContent: 'space-between',
+      marginRight: 20,
   },
   headerText: {
       fontSize: 20,
@@ -61,13 +63,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 10,
   },
-  avatarOverlay: {
-      height: 175,
-      width: 175,
-    borderRadius: 175/2,
-    borderWidth: 3,
-    borderColor: lightGrey
-  },
   labelAndIcon: {
       flexDirection: 'row',
       alignItems: 'flex-start',
@@ -76,23 +71,19 @@ const styles = StyleSheet.create({
       marginTop: 8,
       marginLeft: 5,
   },
-  dividerStyle: {
-      backgroundColor: lightGrey,
-      marginTop: 10,
-      marginBottom: 10,
+  inputText: {
+      fontSize: 14,
+      fontStyle: 'italic',
+      marginLeft: 10,
+      marginBottom: 5,
   },
-  subAvatarOverlay: {
-      height: 85,
-      width: 85,
-    borderRadius: 85/2,
-    borderWidth: 3,
-    borderColor: lightGrey
-  },
-  buttonStyle: {
-      width: window.width - 100,
-  },
-  buttonText: {
-      fontFamily: 'gotham-rounded',
+  inputStyle: {
+      borderRadius: 5,
+      marginRight: 10,
+      marginLeft: 10,
+      height: 40,
+      borderColor: lightGrey,
+      borderWidth: 1,
       fontSize: 16,
   },
   dividerStyle: {
@@ -110,7 +101,7 @@ const styles = StyleSheet.create({
       marginTop: 5,
       fontSize: 16,
   },
-});
+};
 
 class EditScreen extends Component {
 
@@ -129,7 +120,7 @@ class EditScreen extends Component {
   }
 
   static navigationOptions = {
-    title: "Edit Settings or Profile"
+    title: "Edit Profile"
   }
 
   render() {
@@ -145,63 +136,75 @@ class EditScreen extends Component {
           <View style={styles.photosContainer}>
               <Avatar
                   rounded
-                  width={170}
-                  height={170}
-                  activeOpacity={0.7}
+                  width={175}
+                  height={175}
+                  activeOpacity={0.5}
                   source={profilePhoto}
                   onPress={()=>navigate()}
-                  overlayContainerStyle={styles.avatarOverlay}
                   />
                 <View style={styles.subPhotosContainer}>
-              <Avatar
-                  rounded
-                  width={80}
-                  height={80}
-                  activeOpacity={0.7}
-                  source={require('../assets/images/shuttle-01.jpg')}
-                  onPress={()=>navigate()}
-                  overlayContainerStyle={styles.subAvatarOverlay}
-                  />
-              <Avatar
-                  rounded
-                  width={80}
-                  height={80}
-                  activeOpacity={0.7}
-                  icon={{name:'camera', type:'material-community', size: 30}}
-                  onPress={()=>navigate()}
-                  overlayContainerStyle={styles.subAvatarOverlay}
-                  />
+                  <Avatar
+                      rounded
+                      width={85}
+                      height={85}
+                      activeOpacity={0.5}
+                      source={require('../assets/images/shuttle-01.jpg')}
+                      onPress={()=>navigate()}
+                      />
+                  <Avatar
+                      rounded
+                      width={85}
+                      height={85}
+                      activeOpacity={0.5}
+                      icon={{name:'camera', type:'material-community', size: 30}}
+                      onPress={()=>navigate()}
+                      />
                   </View>
           </View>
 
           <Text style={styles.headerText}>
               Tell us about yourself
           </Text>
-          <Text style={{ marginLeft: 10, fontSize: 14, fontStyle: 'italic'}}>
+
+          <Text style={styles.inputText}>
               Your title...
           </Text>
-          <TextInput
-            style={{borderRadius: 10, marginRight: 10, marginLeft: 10, height: 40, borderColor: lightGrey, borderWidth: 1}}
-          />
-          <Text style={{ marginLeft: 10, fontSize: 14, fontStyle: 'italic'}}>
+
+          <TextInput style={styles.inputStyle}
+          maxLength={30}/>
+
+          <Text style={styles.inputText}>
               Your name...
           </Text>
-          <TextInput
-            style={{borderRadius: 10, marginRight: 10, marginLeft: 10, height: 40, borderColor: lightGrey, borderWidth: 1}}
-          />
-          <Text style={{ marginLeft: 10, fontSize: 14, fontStyle: 'italic'}}>
-              Your experience...
+
+          <TextInput style={styles.inputStyle}
+          maxLength={30}/>
+
+          <Text style={styles.inputText}>
+              A quick description...
           </Text>
-          <TextInput
-            style={{borderRadius: 10, marginRight: 10, marginLeft: 10, height: 40, borderColor: lightGrey, borderWidth: 1}}
+
+          <TextInput style={styles.inputStyle}
             multiline={true}
-          />
+            autoCorrect={true}
+            height={100}
+            maxLength={160}/>
+
+            <Text style={styles.inputText}>
+                An in-depth description...
+            </Text>
+
+            <TextInput style={styles.inputStyle}
+              multiline={true}
+              autoCorrect={true}
+              height={200}/>
 
           <Text style={styles.headerText}>
               How can you help?
           </Text>
 
           <Divider style={styles.dividerStyle}/>
+
           <View style={styles.switchSetting}>
             <View style={styles.labelAndIcon}>
                  <Text style={styles.switchText}>
@@ -221,7 +224,7 @@ class EditScreen extends Component {
           <Divider style={styles.dividerStyle}/>
           <View style={styles.switchSetting}>
             <View style={styles.labelAndIcon}>
-                 <Text style={styles.switchText}>
+                <Text style={styles.switchText}>
                   Materials
                 </Text>
                 <Icon iconStyle={styles.iconStyle}
@@ -238,7 +241,7 @@ class EditScreen extends Component {
           <Divider style={styles.dividerStyle}/>
           <View style={styles.switchSetting}>
             <View style={styles.labelAndIcon}>
-                 <Text style={styles.switchText}>
+                <Text style={styles.switchText}>
                   Knowledge
                 </Text>
                 <Icon iconStyle={styles.iconStyle}
@@ -255,7 +258,7 @@ class EditScreen extends Component {
           <Divider style={styles.dividerStyle}/>
           <View style={styles.switchSetting}>
             <View style={styles.labelAndIcon}>
-                 <Text style={styles.switchText}>
+                <Text style={styles.switchText}>
                   Manpower
                 </Text>
                 <Icon iconStyle={styles.iconStyle}
@@ -272,7 +275,7 @@ class EditScreen extends Component {
           <Divider style={styles.dividerStyle}/>
           <View style={styles.switchSetting}>
             <View style={styles.labelAndIcon}>
-                 <Text style={styles.switchText}>
+                <Text style={styles.switchText}>
                   Collaborators
                 </Text>
                 <Icon iconStyle={styles.iconStyle}

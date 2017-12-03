@@ -13,11 +13,10 @@ import { lightGrey,
     checkGreen,
     noRed } from '../assets/styles/colors.js';
 
-var background = require('../assets/images/create_account_screen-01.png');
-var user_name = "";
-var user_email = "";
 
-const styles = StyleSheet.create({
+var background = require('../assets/images/create_account_screen-02.png');
+
+const styles = {
     imageContainer: {
         flex: 1,
         justifyContent: 'flex-start',
@@ -42,16 +41,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20,
     },
-    buttonStyle: {
-        width: 250,
-        marginBottom: 20,
-    },
     buttonText: {
         fontFamily: 'gotham-rounded',
         fontSize: 16,
         marginTop: 3,
     },
-});
+};
 
 class SignUpScreen extends Component {
 
@@ -129,6 +124,7 @@ class SignUpScreen extends Component {
                     title="< Back to login"
                     backgroundColor='transparent'
                     fontSize={12}
+                    activeOpacity={0.5}
                     onPress={() => navigate("Login")}
                     />
             </View>
@@ -137,7 +133,8 @@ class SignUpScreen extends Component {
               <Button style={styles.buttonStyle}
                 textStyle={styles.buttonText}
                 borderRadius={10}
-                backgroundColor='#C753E0'
+                activeOpacity={0.5}
+                backgroundColor={makerPurple}
                 title="Create Account!"
                 icon={{name: 'check', type: 'material-community'}}
                 //onPress={() => {

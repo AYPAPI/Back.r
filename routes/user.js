@@ -85,7 +85,7 @@ router.post("/", function(req, res) {
 
 // GET request to read user from database
 router.get('/', function(req, res) {
-  var email = req.body.email
+  var email = req.query && req.query.email
   var user = db.readUser(email, 'users', database, function(user) {
     if (user != null) {
       console.log("GOT USER: " + user.email)
@@ -98,7 +98,7 @@ router.get('/', function(req, res) {
 
 // GET request to read maker from database
 router.get('/maker', function(req, res) {
-  var email = req.body.email
+  var email = req.query && req.query.email
   var user = db.readUserProfile(email, 'maker', database, function(user) {
     if (user != null) console.log("GOT MAKER USER: " + user.email)
    res.json(user);
@@ -107,7 +107,7 @@ router.get('/maker', function(req, res) {
 
 // GET request to read backer profile from database
 router.get('/backer', function(req, res) {
-  var email = req.body.email
+  var email = req.query && req.query.email
   var user = db.readUserProfile(email, 'backer', database, function(user) {
     if (user != null) console.log("GOT USER in backer: " + user.email)
     res.json(user);
@@ -153,7 +153,7 @@ router.post("/settings", function(req, res) {
 });
 
 router.get('/settings', function(req, res) {
-  var email = req.body.email
+  var email = req.query && req.query.email
   var settings = db.readSettings(database, email, function(user_settings) {
     if (user_settings != null) console.log("GOT settings from: " + email)
     res.json(user_settings);

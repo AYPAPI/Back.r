@@ -1,4 +1,4 @@
-export const backerBlue = '#57C4DD';
+export const backerBlue = '#03A9F4';
 export const makerPurple = '#C753E0';
 export const lightGrey = '#BFBFBF';
 export const checkGreen = '#1DDB2F';
@@ -8,3 +8,4 @@ export const moneyGreen = '#59C129';
 export const materialsOrange = '#FC8A2D';
 export const knowledgePurple = '#bb24f2';
 export const manpowerRed = '#EF2074';
+export const backGroundWhite = '#FFFFFF';
