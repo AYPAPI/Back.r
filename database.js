@@ -43,14 +43,12 @@ module.exports.addUser = function (username,client,tablename){
 
 //create user profile
 module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,client){
-  let check = 'SELECT email FROM ' + tablename
+  let check = 'SELECT email FROM ' + tablename + ' WHERE email = \'' + email + '\''
   client.query(check, function(err,res) {
     rows = res.rows
-    for (var i = 0; i < rows.length; i++){
-      if (rows[i]['email'] === email){
-        console.log('user already in database')
-        return
-      }
+    if (rows.length > 0){
+      console.log('user already in database')
+      return
     }
     let query = 'INSERT INTO ' + tablename + ' (name,age,email,ismaker,shortbio) values ($1,$2,$3,$4,$5)';
     client.query(query,[name,age,email,isMaker,shortbio], function(err,res) {
@@ -65,14 +63,12 @@ module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,
 //create the maker and backer profiles
 module.exports.createUserProfile = function (longbio,photos,icons,email,tablename,
                                              swipedRight,matches,swipedOn,client){
-  let check = 'SELECT email FROM ' + tablename
+  let check = 'SELECT email FROM ' + tablename + ' WHERE email = \'' + email + '\''
   client.query(check, function(err,res) {
     rows = res.rows
-    for (var i = 0; i < rows.length; i++){
-      if (rows[i]['email'] === email){
-        console.log('user already in database')
-        return
-      }
+    if (rows.length > 0){
+      console.log('user already in database')
+      return
     }
     let query = 'INSERT INTO ' + tablename + ' (longbio,photos,icons,email,swipedright,matches,swipedon) values ($1,$2,$3,$4,$5,$6,$7)';
     client.query(query,[longbio,photos,icons,email,swipedRight,matches,swipedOn], function(err,res) {
@@ -86,22 +82,21 @@ module.exports.createUserProfile = function (longbio,photos,icons,email,tablenam
 
 //get user profile
 module.exports.readUser = function (email,tablename,client, callback) {
-	let query = 'SELECT * FROM ' + tablename
+	let query = 'SELECT * FROM ' + tablename + ' WHERE email = \'' + email + '\''
   client.query(query, function(err,res) {
     if (err) throw err;
     rows = res.rows;
-		for (var i = 0; i < rows.length; i++){
-			if (rows[i].email === email){
-				var row = rows[i]
-				var obj = {
-          "name":row.name,
-					"age":row.age,
-					"email":row.email,
-					"ismaker":row.ismaker,
-          "shortbio":row.shortbio
-				}
-			}
-		}
+    if (rows.length === 0){
+      console.log('user does not exist')
+      return
+    }
+    var obj = {
+      "name":rows[0].name,
+		  "age":rows[0].age,
+			"email":rows[0].email,
+			"ismaker":rows[0].ismaker,
+      "shortbio":rows[0].shortbio
+    }
     callback(obj);
 	})
 }
@@ -135,24 +130,23 @@ module.exports.updateProfile = function(email,longbio,photos,icons,client,tablen
 
 //get maker/backer profile
 module.exports.readUserProfile = function (email,tablename,client, callback) {
-  let query = 'SELECT * FROM ' + tablename
+  let query = 'SELECT * FROM ' + tablename + ' WHERE email = \'' + email + '\''
     client.query(query, function(err,res) {
       if (err) throw err;
       rows = res.rows
-      for (var i = 0; i < rows.length; i++){
-        if (rows[i].email === email){
-          var row = rows[i]
-          var obj = {
-            "longbio":row.longbio,
-            "email":row.email,
-            "photos":row.photos,
-            "icons":row.icons,
-            "swipedright":rows.swipedright,
-            "matches":rows.matches,
-            "swipedon":rows.swipedon
-          }
-        }
+      if (rows.length === 0){
+        console.log('user does not exist')
+        return
       }
+			var obj = {
+				"longbio":rows[0].longbio,
+        "email":rows[0].email,
+        "photos":rows[0].photos,
+        "icons":rows[0].icons,
+        "swipedright":rows[0].swipedright,
+        "matches":rows[0].matches,
+        "swipedon":rows[0].swipedon
+			}
       callback(obj);
     })
 }
@@ -168,58 +162,56 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
   var swipedright;
   var swipedon;
   var matches;
-  var query = 'SELECT * FROM ' + tablename
+  var swipedEmailMatches;
+  var query = 'SELECT * FROM ' + tablename + ' WHERE email = \'' + email + '\''
     client.query(query, function(err, res) {
       if (err) throw err;
       rows = res.rows
-    for(var i = 0; i <rows.length; i++) {
-      if(rows[i].email === email) {
-        console.log("found")
-        var row = rows[i]
-        swipedright = row.swipedright;
-        swipedon = row.swipedon;
-        matches = row.matches;
+      if (rows.length === 0){
+        console.log('user does not exist')
+        return
+      }
+        swipedright = rows[0].swipedright;
+        swipedon = rows[0].swipedon;
+        matches = rows[0].matches;
         if(swipedRight === true) {
-          swipedright.push(swipedEmail)
+          if (!swipedright.includes(swipedEmail)){
+            swipedright.push(swipedEmail)
+          }
         }
-        swipedon.push(swipedEmail)
+        if (!swipedon.includes(swipedEmail)){
+          swipedon.push(swipedEmail)
+        }
         let query2 = 'UPDATE ' + tablename + ' SET swipedright = $1, swipedon = $2 WHERE email = $3'
         client.query(query2,[swipedright, swipedon, email], function(err, res) {
           if (err) throw err;
           callback("Updated swipe")
+          query = 'SELECT * FROM ' + tablename + ' WHERE email = \'' + swipedEmail + '\''
           client.query(query,function(err, res){
             rows = res.rows
-            for (var i = 0; i < rows.length; i++){
-              var row = rows[i]
-              if (row.email === swipedEmail){
-                swipedright = row.swipedright
-                var swipedEmailMatches = row.matches
-                //check if email is in the swipedEmail's swipedright array
-                if (swipedright.includes(email)){
-                  //add each email to the matches list
-                  matches.push(swipedEmail)
-                  swipedEmailMatches.push(email)
-                  console.log(matches)
-                  console.log(swipedEmailMatches)
-                  console.log(email)
-                  console.log(swipedEmail)
-                  console.log(tablename)
-                  client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2',[matches,email],function(err,res){
-                    if (err) throw err;
-                  });
-                  client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2',[swipedEmailMatches,swipedEmail],function(err,res){
-                    if (err) throw err;
-                  });
-                }
+            if (rows.length === 0){
+              console.log('swipedEmail does not exist')
+              return
+            }
+            swipedright = rows[0].swipedright
+            swipedEmailMatches = rows[0].matches
+            if (swipedright.includes(email)){
+              if (!matches.includes(swipedEmail)){
+                matches.push(swipedEmail)
               }
+              if (!swipedEmailMatches.includes(email)){
+                swipedEmailMatches.push(email)
+              }
+              client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2',[matches,email],function(err,res){
+                if (err) throw err;
+              });
+              client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2',[swipedEmailMatches,swipedEmail],function(err,res){
+                if (err) throw err;
+              });
             }
           })
         })
-        break;
-      }
-    }
   })
-
 }
 module.exports.createSettings = function(location, isVisible, blockedUsers, email, client) {
   var tablename = 'settings'
@@ -246,21 +238,20 @@ module.exports.updateSettings = function(location, isVisible, blockedUsers, emai
 
 module.exports.readSettings = function (client, email, callback) {
     var tablename = 'settings'
-	let query = 'SELECT * FROM ' + tablename
+  let query = 'SELECT * FROM ' + tablename + ' WHERE email = \'' + email + '\''
   client.query(query, function(err,res) {
     if (err) throw err;
     rows = res.rows;
-		for (var i = 0; i < rows.length; i++){
-			if (rows[i].email === email){
-				var row = rows[i]
-				var obj = {
-          "latitude":row.latitude,
-          "longitude":row.longitude,
-          "isVisible" : row.isvisible,
-          "blockedUsers":row.blockedusers,
-				}
-			}
-		}
+    if (rows.length === 0){
+      console.log('user does not exist')
+      return
+    }
+    var obj = {
+      "latitude":rows[0].latitude,
+      "longitude":rows[0].longitude,
+      "isVisible" : rows[0].isvisible,
+      "blockedUsers":rows[0].blockedusers,
+    }
     callback(obj);
 	})
 }
