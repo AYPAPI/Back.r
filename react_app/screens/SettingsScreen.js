@@ -19,12 +19,9 @@ import { lightGrey,
     makerPurple,
     checkGreen,
     noRed,
-<<<<<<< HEAD
-    buttonRed } from '../assets/styles/colors.js';
-=======
     buttonRed,
-    backGroundWhite } from '../assets/styles/colors.js';
->>>>>>> 67263dea0e6677d289e02631fc94aa56d3a479d5
+    backGroundWhite
+ } from '../assets/styles/colors.js';
 
 const styles = StyleSheet.create({
     container: {

@@ -239,8 +239,7 @@ class MyProfileScreen extends Component {
                           title= 'Switch to Maker'
                         />
                     </View>
-              </View>
-<<<<<<< HEAD
+            </View>
 
             <View style={styles.textContainer}>
               <Text style={styles.nameContainer}>
