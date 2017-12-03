@@ -31,10 +31,15 @@ const styles = {
     margin: 15,
     fontSize: headerIconSize,
   },
-  activeIcon: {
-    color: backerBlue,
-    margin: 15,
-    fontSize: headerIconSize,
+  makerIcon: {
+      color: makerPurple,
+      margin: 15,
+      fontSize: headerIconSize,
+  },
+  backerIcon: {
+      color: backerBlue,
+      margin: 15,
+      fontSize: headerIconSize,
   },
   container: {
     flex: 1,
@@ -61,11 +66,17 @@ const styles = {
     flexDirection: 'column',
     alignItems: 'center',
   },
-  titleStyle: {
-    fontSize: 20,
-    marginTop: 5,
-    fontFamily: 'gotham-rounded',
-    color: backerBlue,
+  makerTitle: {
+      fontSize: 20,
+      marginTop: 5,
+      color: makerPurple,
+      fontFamily: 'gotham-rounded',
+  },
+  backerTitle: {
+      fontSize: 20,
+      marginTop: 5,
+      color: backerBlue,
+      fontFamily: 'gotham-rounded',
   },
   subTitleStyle: {
     fontSize: 16,
@@ -90,15 +101,32 @@ const styles = {
 
 class MyProfileScreen extends Component {
 
+    toggleIsMaker(){
+        if(this.props.navigation.state.params.isMaker){
+            this.setState({'isMaker': false});
+        }
+        else{
+            this.setState({'isMaker': true});
+        }
+    }
+
   static navigationOptions = ({ navigation }) => {
       const { user } = navigation.state.params;
+      var isMaker = navigation.state.params.isMaker;
+
+      if(isMaker){buttonColor = makerPurple;
+                  editText = 'Edit Maker Profile';
+                  switchText = 'Switch to Backer';}
+      else{buttonColor=backerBlue;
+           editText = 'Edit Backer Profile';
+           switchText = 'Switch to Maker';}
 
       return {
           headerLeft: (
                 <Icon
                     name='face'
                     type='material-community'
-                    iconStyle={styles.activeIcon}
+                    iconStyle={[styles.backerIcon, isMaker && styles.makerIcon]}
                     />
               ),
             headerTitle: (
@@ -172,7 +200,7 @@ class MyProfileScreen extends Component {
                       </View>
 
                     <View style={styles.textContainer}>
-                      <Text style={styles.titleStyle}>
+                      <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}>
                           Biology/Comp Sci Student
                       </Text>
                       <Text style={styles.subTitleStyle}>
@@ -187,7 +215,7 @@ class MyProfileScreen extends Component {
                           textStyle={styles.buttonText}
                           borderRadius={10}
                           activeOpacity={0.5}
-                          backgroundColor={backerBlue}
+                          backgroundColor={buttonColor}
                           icon={{name: 'settings', type: 'MaterialIcons'}}
                           title= 'Edit Account Settings'
                           onPress={()=> navigate('Settings', {user: this.props.navigation.state.params.user})}
@@ -199,9 +227,9 @@ class MyProfileScreen extends Component {
                           textStyle={styles.buttonText}
                           borderRadius={10}
                           activeOpacity={0.5}
-                          backgroundColor={backerBlue}
+                          backgroundColor={buttonColor}
                           icon={{name: 'edit', type: 'MaterialCommunityIcons' }}
-                          title= 'Edit Backer Profile'
+                          title={editText}
                           onPress={()=> navigate('Edit')}
                         />
 
@@ -211,9 +239,10 @@ class MyProfileScreen extends Component {
                           textStyle={styles.buttonText}
                           borderRadius={10}
                           activeOpacity={0.5}
-                          backgroundColor={backerBlue}
+                          backgroundColor={buttonColor}
                           icon={{name: 'replay', type: 'MaterialCommunityIcons'}}
-                          title= 'Switch to Maker'
+                          title={switchText}
+                          onPress={()=> this.toggleIsMaker()}
                         />
                     </View>
               </View>

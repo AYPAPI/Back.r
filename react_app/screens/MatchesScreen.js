@@ -42,26 +42,15 @@ const styles = {
     margin: 15,
     fontSize: headerIconSize,
   },
-  activeIcon: {
-      color: backerBlue,
+  makerIcon: {
+      color: makerPurple,
       margin: 15,
       fontSize: headerIconSize,
   },
-  maker: {
-    color: '#75c9f9'
-  },
-  backer: {
-    color: '#c753e0'
-  },
-  titleMaker: {
-    color: lightGrey,
-    margin: 15,
-    fontSize: 40
-  },
-  titleBacker: {
-    color: '#C753E0',
-    margin: 15,
-    fontSize: 40
+  backerIcon: {
+      color: backerBlue,
+      margin: 15,
+      fontSize: headerIconSize,
   },
   container: {
       backgroundColor: backGroundWhite,
@@ -70,7 +59,16 @@ const styles = {
       flexDirection: 'row',
       alignItems: 'flex-start',
   },
-  headerText: {
+  makerText: {
+      fontSize: 20,
+      fontFamily: 'gotham-rounded',
+      alignItems: 'flex-start',
+      color: makerPurple,
+      marginTop: 20,
+      marginLeft: 10,
+      marginRight: 10,
+  },
+  backerText: {
       fontSize: 20,
       fontFamily: 'gotham-rounded',
       alignItems: 'flex-start',
@@ -96,6 +94,7 @@ class MatchesScreen extends Component {
 
   static navigationOptions = ({ navigation }) => {
   user = navigation.state.params;
+  isMaker = navigation.state.params.isMaker;
 
   return {
      headerLeft: (
@@ -118,7 +117,7 @@ class MatchesScreen extends Component {
       <Icon
         name='message-text-outline'
         type='material-community'
-        iconStyle={styles.activeIcon}
+        iconStyle = {[styles.backerIcon, isMaker && styles.makerIcon]}
       />
     ),
   };
@@ -147,14 +146,8 @@ constructor(props) {
 
     return (
       <ScrollView style={styles.container}>
-      {/*<Button
-          onPress={() => navigate("Thread", {user: user, other_user: ""})}
-          title="Message Thread"
-          buttonStyle={{ marginTop: 20 }}
-      />*/}
-
           <View style={styles.header}>
-              <Text style={styles.headerText}>
+              <Text style={[styles.backerText, isMaker && styles.makerText]}>
                   Matches
               </Text>
               <Image
@@ -174,6 +167,7 @@ constructor(props) {
                   fontFamily={'gotham-rounded'}
                   avatar={{uri:u.avatar}}
         		  subtitle={u.message}
+                  activeOpacity={0.5}
         		  onPress={() => navigate("Thread", {user: user, other_user: u.other_user, unique_name:u.unique_name})}
                 />
               );
