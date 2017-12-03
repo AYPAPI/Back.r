@@ -20,7 +20,7 @@ import { lightGrey,
     checkGreen,
     noRed,
     buttonRed,
-    backGroundWhite
+    backGroundWhite,
  } from '../assets/styles/colors.js';
 
 const styles = StyleSheet.create({

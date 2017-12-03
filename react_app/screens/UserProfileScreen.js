@@ -47,10 +47,15 @@ const styles = {
   subTitleContainer: {
       flexDirection: 'row',
   },
-  titleText: {
+  makerTitle: {
       fontSize: 18,
+      color: makerPurple,
       fontFamily: 'gotham-rounded',
+  },
+  backerTitle: {
+      fontSize: 18,
       color: backerBlue,
+      fontFamily: 'gotham-rounded',
   },
   subtitleText: {
       fontSize: 14,
@@ -78,6 +83,7 @@ class UserProfileScreen extends Component {
     static navigationOptions = ({ navigation }) => {
     const { user, mainUser } = navigation.state.params;
     const { goBack } = navigation.goBack;
+    isMaker = navigation.state.params.isMaker;
 
     return {
         headerTitle: (
@@ -105,7 +111,7 @@ class UserProfileScreen extends Component {
             </View>
 
             <View style={styles.descriptionContainer}>
-                <Text style={styles.titleText}>
+                <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}>
                     Computer Science Lecturer
                 </Text>
                 <View style={styles.subTitleContainer}>

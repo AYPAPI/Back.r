@@ -13,13 +13,9 @@ import { lightGrey,
     checkGreen,
     noRed } from '../assets/styles/colors.js';
 
-<<<<<<< HEAD
 var background = require('../assets/images/create_account_screen-01.png');
 var user_name = "";
 var user_email = "";
-=======
-var background = require('../assets/images/create_account_screen-02.png');
->>>>>>> 67263dea0e6677d289e02631fc94aa56d3a479d5
 
 const styles = {
     imageContainer: {
@@ -129,12 +125,7 @@ class SignUpScreen extends Component {
                     title="< Back to login"
                     backgroundColor='transparent'
                     fontSize={12}
-<<<<<<< HEAD
                     onPress={() => this.props.navigation.goBack()}
-=======
-                    activeOpacity={0.5}
-                    onPress={() => navigate("Login")}
->>>>>>> 67263dea0e6677d289e02631fc94aa56d3a479d5
                     />
             </View>
 

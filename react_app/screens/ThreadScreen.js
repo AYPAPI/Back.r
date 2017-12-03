@@ -123,7 +123,6 @@ export default class ThreadScreen extends Component {
       //   text: message
       // })
 
-
     this.state = {
       messages: [],
       inputBarText: ''
@@ -251,7 +250,13 @@ class MessageBubble extends Component {
     //These spacers make the message bubble stay to the left or the right, depending on who is speaking, even if the message is multiple lines.
     var leftSpacer = this.props.direction === 'left' ? null : <View style={{width: 70}}/>;
     var rightSpacer = this.props.direction === 'left' ? <View style={{width: 70}}/> : null;
-    var bubbleStyles = this.props.direction === 'left' ? [styles.messageBubble, styles.messageBubbleLeft] : [styles.messageBubble, styles.messageBubbleRight];
+
+    if(isMaker){
+        var bubbleStyles = this.props.direction === 'left' ? [styles.messageBubble, styles.messageBubbleLeft] : [styles.messageBubble, styles.messageBubbleRightM];
+    }
+    else{
+        var bubbleStyles = this.props.direction === 'left' ? [styles.messageBubble, styles.messageBubbleLeft] : [styles.messageBubble, styles.messageBubbleRightB];
+    }
     var bubbleTextStyle = this.props.direction === 'left' ? styles.messageBubbleTextLeft : styles.messageBubbleTextRight;
 
     return (
@@ -368,8 +373,11 @@ const styles = StyleSheet.create({
     color: 'black',
   },
 
-  messageBubbleRight: {
-    backgroundColor: activeColor,
+  messageBubbleRightM: {
+    backgroundColor: makerPurple,
+  },
+  messageBubbleRightB: {
+    backgroundColor: backerBlue,
   },
 
   messageBubbleTextRight: {

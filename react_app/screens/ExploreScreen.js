@@ -35,11 +35,16 @@ var cardHeight = window.height - 140;
 
 const styles = {
     headerIcon: {
-        color: lightGrey,
+      color: lightGrey,
+      margin: 15,
+      fontSize: headerIconSize,
+    },
+    makerIcon: {
+        color: makerPurple,
         margin: 15,
         fontSize: headerIconSize,
     },
-    activeIcon: {
+    backerIcon: {
         color: backerBlue,
         margin: 15,
         fontSize: headerIconSize,
@@ -84,7 +89,12 @@ const styles = {
         flexDirection: 'column',
         alignItems: 'flex-start',
     },
-    titleText: {
+    makerTitle: {
+        fontSize: 18,
+        color: makerPurple,
+        fontFamily: 'gotham-rounded',
+    },
+    backerTitle: {
         fontSize: 18,
         color: backerBlue,
         fontFamily: 'gotham-rounded',
@@ -153,7 +163,7 @@ class ExploreScreen extends Component {
                 <Icon
                 name='lightbulb-outline'
                 type='material-community'
-                iconStyle={styles.activeIcon}
+                iconStyle = {[styles.backerIcon, isMaker && styles.makerIcon]}
                 />
             ),
             headerRight: (
@@ -189,7 +199,7 @@ class ExploreScreen extends Component {
                         imageWrapperStyle={styles.imageWrapper}
                         imageStyle={styles.imageWrapper}>
                         <View style={styles.descriptionContainer}>
-                            <Text style={styles.titleText}
+                            <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}
                                 onPress={ () => alert('go to this user!')}
                                 activeOpacity={0.5}>
                                 Human Biology/Comp Sci Student
@@ -241,7 +251,7 @@ class ExploreScreen extends Component {
                         imageWrapperStyle={styles.imageWrapper}
                         imageStyle={styles.imageWrapper}>
                         <View style={styles.descriptionContainer}>
-                                <Text style={styles.titleText}>
+                                <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}>
                                     Important CEO Guy
                                 </Text>
                             <View style={styles.subTitleContainer}>
