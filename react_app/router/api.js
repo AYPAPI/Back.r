@@ -85,7 +85,7 @@ exports.getBacker = (email) => {
       'Content-Type': 'application/json',
     }
   }).then(function(response) {
-    console.log("Inside getBacker" + response.json())
+    console.log("Inside getBacker" + response)
     return response
   })
 
