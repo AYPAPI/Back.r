@@ -18,7 +18,10 @@ import { lightGrey,
     moneyGreen,
     materialsOrange,
     knowledgePurple,
-    manpowerRed } from '../assets/styles/colors.js';
+    manpowerRed,
+    backGroundWhite } from '../assets/styles/colors.js';
+
+import { headerIconSize } from '../assets/styles/size.js';
 
 var firstCardPhoto = require('../assets/images/shuttle-01.jpg');
 var secondCardPhoto = require('../assets/images/ceo_photo.jpg');
@@ -26,52 +29,54 @@ var secondCardPhoto = require('../assets/images/ceo_photo.jpg');
 export const window = Dimensions.get('window');
 var cardHeight = window.height - 140;
 
+
 const styles = {
     headerIcon: {
-        color: lightGrey,
-        margin: 15,
-        fontSize: 30,
+      color: lightGrey,
+      margin: 15,
+      fontSize: headerIconSize,
     },
-    titleMaker: {
-        color: '#75C9F9',
+    makerIcon: {
+        color: makerPurple,
         margin: 15,
-        fontSize: 40
+        fontSize: headerIconSize,
     },
-    titleBacker: {
-        color: '#C753E0',
+    backerIcon: {
+        color: backerBlue,
         margin: 15,
-        fontSize: 40
+        fontSize: headerIconSize,
     },
     wrapper: {
-        backgroundColor: 'white',
+        backgroundColor: backGroundWhite,
         flex: 1,
         zIndex: 1,
     },
     container: {
-        backgroundColor: 'white',
+        backgroundColor: backGroundWhite,
         flex: 1,
     },
     card: {
-        flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
+        backgroundColor: backGroundWhite,
     },
     imagePropsStyle:{
         borderRadius: 8,
+        flexDirection: 'column',
     },
     imageWrapper:{
-        height: cardHeight - 135,
+        height: cardHeight - 140,
     },
     cardContainer:{
+        flex: 1,
         borderRadius: 10,
-        height: cardHeight,
         borderWidth: 2,
         borderColor: lightGrey,
     },
     cardImageContainer : {
         justifyContent: 'center',
         alignItems: 'center',
+        flexDirection: 'column',
     },
     titleContainer: {
         flexDirection: 'row',
@@ -81,7 +86,12 @@ const styles = {
         flexDirection: 'column',
         alignItems: 'flex-start',
     },
-    titleText: {
+    makerTitle: {
+        fontSize: 18,
+        color: makerPurple,
+        fontFamily: 'gotham-rounded',
+    },
+    backerTitle: {
         fontSize: 18,
         color: backerBlue,
         fontFamily: 'gotham-rounded',
@@ -108,7 +118,6 @@ const styles = {
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'space-between',
-        marginTop: 420,
         marginLeft: 50,
         marginRight: 50,
         marginBottom: 8,
@@ -120,7 +129,7 @@ const styles = {
         borderWidth: 2,
         borderRadius: 40/2,
         borderColor: lightGrey,
-        backgroundColor: 'white',
+        backgroundColor: backGroundWhite,
     },
 };
 
@@ -132,12 +141,22 @@ class ExploreScreen extends Component {
   }
     static navigationOptions = ({ navigation }) => {
         const { user } = navigation.state.params;
+        isMaker = navigation.state.params.isMaker;
+        
         return {
+            headerLeft: (
+                <Icon
+                name='face'
+                type='material-community'
+                iconStyle={styles.headerIcon}
+                onPress={ () => navigation.navigate("MyProfile", {user: user, type: ""}) }
+                />
+            ),
             headerTitle: (
                 <Icon
                 name='lightbulb-outline'
                 type='material-community'
-                iconStyle={styles.titleMaker}
+                iconStyle = {[styles.backerIcon, isMaker && styles.makerIcon]}
                 />
             ),
             headerRight: (
@@ -146,14 +165,6 @@ class ExploreScreen extends Component {
                 type='material-community'
                 iconStyle={styles.headerIcon}
                 onPress={ () => navigation.navigate("Matches", {user: user}) }
-                />
-            ),
-            headerLeft: (
-                <Icon
-                name='face'
-                type='material-community'
-                iconStyle={styles.headerIcon}
-                onPress={ () => navigation.navigate("MyProfile", {user: user, type: ""}) }
                 />
             ),
         };
@@ -179,10 +190,10 @@ class ExploreScreen extends Component {
                         imageWrapperStyle={styles.imageWrapper}
                         imageStyle={styles.imageWrapper}>
                         <View style={styles.descriptionContainer}>
-                            <Text style={styles.titleText}
+                            <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}
                                 onPress={ () => alert('go to this user!')}
                                 activeOpacity={0.5}>
-                                Biology/Comp Sci Student
+                                Human Biology/Comp Sci Student
                             </Text>
                             <View style={styles.subTitleContainer}>
                                 <Text style={styles.subtitleText}>
@@ -219,7 +230,7 @@ class ExploreScreen extends Component {
 
                         <View style={styles.bioContainer}>
                             <Text style={styles.bioText}>
-                            Short bio goes here! This is where the maker or backer gives a quick description of their project or their skills. This should be just a few sentences. Heres one more sentence!
+                            ShortbiogoeshereThisiswherethemakerorbackergiveaquickdescriptionoftheirprojectortheirskillsThisshouldbejustafewsentencesHeresonemoresentenceasdfasdfadssdfgjhsdfghsd
                             </Text>
                         </View>
                     </Card>
@@ -231,7 +242,7 @@ class ExploreScreen extends Component {
                         imageWrapperStyle={styles.imageWrapper}
                         imageStyle={styles.imageWrapper}>
                         <View style={styles.descriptionContainer}>
-                                <Text style={styles.titleText}>
+                                <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}>
                                     Important CEO Guy
                                 </Text>
                             <View style={styles.subTitleContainer}>

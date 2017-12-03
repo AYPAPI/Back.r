@@ -19,13 +19,14 @@ import { lightGrey,
     makerPurple,
     checkGreen,
     noRed,
-    buttonRed } from '../assets/styles/colors.js';
-    
+    buttonRed,
+    backGroundWhite } from '../assets/styles/colors.js';
+
 const styles = StyleSheet.create({
     container: {
         flex: 1,
         flexDirection: 'column',
-        backgroundColor: 'white',
+        backgroundColor: backGroundWhite,
 
     },
     settingsSection: {

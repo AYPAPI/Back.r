@@ -21,9 +21,9 @@ import { lightGrey,
     checkGreen,
     noRed } from '../assets/styles/colors.js';
 
-var background = require('../assets/images/reset_password-01.png');
+var background = require('../assets/images/reset_password-02.png');
 
-const styles = StyleSheet.create({
+const styles = {
     imageContainer: {
         flex: 1,
         justifyContent: 'flex-start',
@@ -49,16 +49,12 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         marginTop: 20,
     },
-    buttonStyle: {
-        width: window.width - 100,
-        marginBottom: 20,
-    },
     buttonText: {
         fontFamily: 'gotham-rounded',
         fontSize: 16,
         marginTop: 3,
     },
-});
+};
 
 class ForgotPasswordScreen extends Component {
 
@@ -83,6 +79,7 @@ class ForgotPasswordScreen extends Component {
                       color="black"
                       title="Back to login >"
                       backgroundColor='transparent'
+                      activeOpacity={0.5}
                       fontSize={12}
                       onPress={() => navigate("Login")}
                       />
@@ -90,10 +87,11 @@ class ForgotPasswordScreen extends Component {
 
             <View style={styles.buttonContainer}>
                 <Button
-                  style={styles.buttonStyle}
                   textStyle={styles.buttonText}
+                  backgroundColor={makerPurple}
                   borderRadius={10}
-                  backgroundColor={backerBlue}
+                  activeOpacity={0.5}
+                  icon={{name: 'lock', type: 'material-community'}}
                   title= 'Recover Account Password'
                   onPress={()=> goBack()}
                 />

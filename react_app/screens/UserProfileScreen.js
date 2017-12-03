@@ -1,42 +1,36 @@
 import React, { Component } from 'react';
-import {Text,
+import { Text,
     Button,
     Image,
     View,
     ScrollView,
     StyleSheet,
-    Card} from 'react-native';
-import {Avatar, Icon} from 'react-native-elements';
+    Card } from 'react-native';
+import { Avatar, Icon } from 'react-native-elements';
 
 import { lightGrey,
     backerBlue,
     makerPurple,
     checkGreen,
-    noRed } from '../assets/styles/colors.js';
+    noRed,
+    backGroundWhite } from '../assets/styles/colors.js';
+
+import { headerIconSize } from '../assets/styles/size.js';
 
 var profilePhoto = require('../assets/images/shuttle-01.jpg');
 
 const Dimensions = require('Dimensions');
 const window = Dimensions.get('window');
 
-const styles =  StyleSheet.create({
-  headerIcon: {
-    margin: 15,
-    fontSize: 30
-  },
-  titleMaker: {
-    color: makerPurple,
-    margin: 15,
-    fontSize: 40
-  },
-  titleBacker: {
-    color: backerBlue,
-    margin: 15,
-    fontSize: 40
-  },
+const styles = {
+    headerIcon: {
+      color: lightGrey,
+      margin: 15,
+      fontSize: headerIconSize,
+    },
   container: {
       flexDirection: 'column',
-      backgroundColor: 'white',
+      backgroundColor: backGroundWhite,
   },
   avatarContainer: {
       alignItems: 'center',
@@ -53,14 +47,19 @@ const styles =  StyleSheet.create({
   subTitleContainer: {
       flexDirection: 'row',
   },
-  titleText: {
+  makerTitle: {
       fontSize: 18,
+      color: makerPurple,
       fontFamily: 'gotham-rounded',
+  },
+  backerTitle: {
+      fontSize: 18,
       color: backerBlue,
+      fontFamily: 'gotham-rounded',
   },
   subtitleText: {
-      fontSize: 12,
-      fontStyle: 'italic',
+      fontSize: 14,
+      fontFamily: 'gotham-rounded',
   },
   iconsContainer: {
       flexDirection: 'row',
@@ -78,24 +77,24 @@ const styles =  StyleSheet.create({
       fontSize: 16,
       textAlign: 'justify',
   },
-});
+};
 
 class UserProfileScreen extends Component {
     static navigationOptions = ({ navigation }) => {
-    //const { user, mainUser } = navigation.state.params;
+    const { user, mainUser } = navigation.state.params;
     const { goBack } = navigation.goBack;
+    isMaker = navigation.state.params.isMaker;
 
-
-  return {
-    headerTitle: (
-      <Icon
-        name='chevron-down'
-        type='material-community'
-        iconStyle={styles.titleMaker}
-        onPress={ () => goBack() }
-      />
-    ),
-  };
+    return {
+        headerTitle: (
+            <Icon
+            name='chevron-down'
+            type='material-community'
+            iconStyle={styles.headerIcon}
+            onPress={ () => navigation.goBack }
+            />
+        ),
+    };
 };
 
   render() {
@@ -112,7 +111,7 @@ class UserProfileScreen extends Component {
             </View>
 
             <View style={styles.descriptionContainer}>
-                <Text style={styles.titleText}>
+                <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}>
                     Computer Science Lecturer
                 </Text>
                 <View style={styles.subTitleContainer}>
