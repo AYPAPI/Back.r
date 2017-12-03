@@ -15,7 +15,10 @@ import { lightGrey,
     backerBlue,
     makerPurple,
     checkGreen,
-    noRed } from '../assets/styles/colors.js';
+    noRed,
+    backGroundWhite } from '../assets/styles/colors.js';
+
+import { headerIconSize } from '../assets/styles/size.js';
 
 const url = "https://backr.herokuapp.com/"
 
@@ -31,23 +34,18 @@ const getChannels = function() {
   })
 }
 
-var decoration = require('../assets/images/matches_decorations-01.png');
+var decoration = require('../assets/images/matches_decorations-02.png');
 
 const styles = {
   headerIcon: {
     color: lightGrey,
     margin: 15,
-    fontSize: 30,
-  },
-  centerIcon: {
-      color: lightGrey,
-      margin: 15,
-      fontSize: 40
+    fontSize: headerIconSize,
   },
   activeIcon: {
       color: backerBlue,
       margin: 15,
-      fontSize: 30,
+      fontSize: headerIconSize,
   },
   maker: {
     color: '#75c9f9'
@@ -66,7 +64,7 @@ const styles = {
     fontSize: 40
   },
   container: {
-      backgroundColor: 'white',
+      backgroundColor: backGroundWhite,
   },
   header: {
       flexDirection: 'row',
@@ -112,7 +110,7 @@ class MatchesScreen extends Component {
       <Icon
         name='lightbulb-outline'
         type='material-community'
-        iconStyle={styles.centerIcon}
+        iconStyle={styles.headerIcon}
         onPress={ () => navigation.navigate("Explore", {user: user}) }
       />
     ),

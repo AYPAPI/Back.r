@@ -167,6 +167,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
   }
   var swipedright;
   var swipedon;
+  var matches;
   var query = 'SELECT * FROM ' + tablename
     client.query(query, function(err, res) {
       if (err) throw err;
@@ -177,7 +178,8 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
         var row = rows[i]
         swipedright = row.swipedright;
         swipedon = row.swipedon;
-        if(swipedRight == true) {
+        matches = row.matches;
+        if(swipedRight === true) {
           swipedright.push(swipedEmail)
         }
         swipedon.push(swipedEmail)
@@ -185,6 +187,33 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
         client.query(query2,[swipedright, swipedon, email], function(err, res) {
           if (err) throw err;
           callback("Updated swipe")
+          client.query(query,function(err, res){
+            rows = res.rows
+            for (var i = 0; i < rows.length; i++){
+              var row = rows[i]
+              if (row.email === swipedEmail){
+                swipedright = row.swipedright
+                var swipedEmailMatches = row.matches
+                //check if email is in the swipedEmail's swipedright array
+                if (swipedright.includes(email)){
+                  //add each email to the matches list
+                  matches.push(swipedEmail)
+                  swipedEmailMatches.push(email)
+                  console.log(matches)
+                  console.log(swipedEmailMatches)
+                  console.log(email)
+                  console.log(swipedEmail)
+                  console.log(tablename)
+                  client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2',[matches,email],function(err,res){
+                    if (err) throw err;
+                  });
+                  client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2',[swipedEmailMatches,swipedEmail],function(err,res){
+                    if (err) throw err;
+                  });
+                }
+              }
+            }
+          })
         })
         break;
       }
