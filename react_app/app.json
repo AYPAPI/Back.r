@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "back.r",
-    "sdkVersion": "22.0.0"
+    "sdkVersion": "22.0.0",
+    "icon": "./assets/images/backr-logo.png"
   }
 }
