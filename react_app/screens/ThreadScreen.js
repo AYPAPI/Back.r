@@ -139,7 +139,7 @@ export default class ThreadScreen extends Component {
             name='message-text-outline'
             type='material-community'
             iconStyle={styles.headerIcon}
-            onPress={ () => navigation.navigate("Matches", {user: user}) }
+            onPress={ () => navigation.goBack() }
           />
       ),
     };
