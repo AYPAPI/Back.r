@@ -29,7 +29,10 @@ var khosla = require('../assets/images/khosla.jpg');
 var eggers = require('../assets/images/eggers.png');
 var cao = require('../assets/images/cao.jpg');
 var bananaGary = require('../assets/images/bananaGary.jpg');
-var t = require('../assets/images/grace.jpg')
+var tejas = require('../assets/images/tejas.jpg');
+var ajeya = require('../assets/images/ajeya.jpg');
+var christine = require('../assets/images/christine.jpg');
+
 
 
 export const window = Dimensions.get('window');
@@ -362,6 +365,54 @@ class ExploreScreen extends Component {
                             </Text>
                         </View>
                     </Card>
+
+
+                       <Card style={styles.card}
+                        containerStyle={styles.cardContainer}
+                        image={firstCardPhoto}
+                        imageProps={styles.imagePropsStyle}
+                        imageWrapperStyle={styles.imageWrapper}
+                        imageStyle={styles.imageWrapper}>
+                        <View style={styles.descriptionContainer}>
+                                <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}>
+                                    Project Manager
+                                </Text>
+                            <View style={styles.subTitleContainer}>
+                                <Text style={styles.subtitleText}>
+                                    David Owens
+                                </Text>
+                                <View style={styles.iconsContainer}>
+                                    <Icon iconStyle={styles.iconStyle}
+                                        name='circle-o'
+                                        type='font-awesome'
+                                        color={knowledgePurple}
+                                        size={15}
+                                        onPress={() => alert("Knowledge")} />
+                                    <Icon iconStyle={styles.iconStyle}
+                                        name='circle-o'
+                                        type='font-awesome'
+                                        color={backerBlue}
+                                        size={15}
+                                        onPress={() => alert("Collaboration")} />
+                                    <Icon iconStyle={styles.iconStyle}
+                                      name='circle-o'
+                                      type='font-awesome'
+                                      color={manpowerRed}
+                                      size={15}
+                                      onPress={() => alert("Manpower")} />
+                                </View>
+                            </View>
+                        </View>
+
+
+                         <View style={styles.bioContainer}>
+                            <Text style={styles.bioText}>
+                                 I'm the best PM around.  Would love to collaborate and work on projects so long as I am in charge.
+                            </Text>
+                        </View>
+                        </Card>
+
+
                         
                 </Swiper>
 
@@ -385,6 +436,8 @@ class ExploreScreen extends Component {
                     onPress={() => forceRightSwipe()} />
                 </View>
             </View>
+
+           
         );
     }
 }
