@@ -177,13 +177,13 @@ request.patch({
 /* Test Objects */
 var test_null_token = {
   "token" : null,
-  "identity":"vinnie",
+  "identity":"Gary",
   "endpointId":"61553df94c234a691130ab9d3438b074"
 }
 
 var test_null_token_2 = {
   "token" : null,
-  "identity":"vylana",
+  "identity":"Rick",
   "endpointId":"61553df94c234a691130ab9d3438b074"
 }
 
@@ -194,21 +194,21 @@ var test_token = {
 var test_channel = {
   "channel" : {
     "description": "This is a test channel",
-    "friendlyName": "vinnie/vylana",
-    "uniqueName": "test_channel2",
-    "identity" : "vinnie",
+    "friendlyName": "Gary/Rick",
+    "uniqueName": "video_channel",
+    "identity" : "Rick",
     "endpointId": "61553df94c234a691130ab9d3438b074"
   },
   "other_user" : {
-    "email": "vylana"
+    "email": "Rick"
   }
 }
 
 var test_message = {
   "token":null,
-  "identity":"vinnie",
+  "identity":"Rick",
   "endpointId":"0",
-  "messageBody": "god so today this fucking weirdo tried to hand me a theta tau flyer"
+  "messageBody": ""
 }
 
 var test_message2 = {
@@ -241,7 +241,7 @@ var test_message2 = {
 // });
 
 /* GET: All channels */
-ext = "twilio/channels?identity=vylana&endpointId=9998"
+ext = "twilio/channels?identity=Rick&endpointId=9998"
 request.get({
   url: url + ext,
   json: true,
