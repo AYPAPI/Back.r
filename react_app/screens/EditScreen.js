@@ -23,7 +23,9 @@ import { lightGrey,
 
 import { headerIconSize } from '../assets/styles/size.js';
 
-var profilePhoto = require('../assets/images/cannon_beach-01.jpg');
+var profilePhoto = require('../assets/images/bakerRick.jpg');
+
+//isMaker = true;
 
 const styles = {
   headerIcon: {
@@ -54,7 +56,7 @@ const styles = {
       fontSize: 20,
       fontFamily: 'gotham-rounded',
       alignItems: 'flex-start',
-      color: backerBlue,
+      color: makerPurple,
       marginTop: 20,
       marginLeft: 10,
       marginRight: 10,
@@ -108,6 +110,7 @@ class EditScreen extends Component {
     title: "Edit Profile"
   }
 
+
   render() {
 
     const { navigate } = this.props.navigation;
@@ -133,7 +136,7 @@ class EditScreen extends Component {
                       width={85}
                       height={85}
                       activeOpacity={0.5}
-                      source={require('../assets/images/shuttle-01.jpg')}
+                      source={require('../assets/images/bananaPie.jpg')}
                       onPress={()=>navigate()}
                       />
                   <Avatar

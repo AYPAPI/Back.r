@@ -25,6 +25,12 @@ import { headerIconSize } from '../assets/styles/size.js';
 
 var firstCardPhoto = require('../assets/images/shuttle-01.jpg');
 var secondCardPhoto = require('../assets/images/ceo_photo.jpg');
+var khosla = require('../assets/images/khosla.jpg');
+var eggers = require('../assets/images/eggers.png');
+var cao = require('../assets/images/cao.jpg');
+var bananaGary = require('../assets/images/bananaGary.jpg');
+var t = require('../assets/images/grace.jpg')
+
 
 export const window = Dimensions.get('window');
 var cardHeight = window.height - 140;
@@ -143,6 +149,8 @@ class ExploreScreen extends Component {
         const { user } = navigation.state.params;
         isMaker = navigation.state.params.isMaker;
         
+        isMaker = true;
+
         return {
             headerLeft: (
                 <Icon
@@ -180,12 +188,16 @@ class ExploreScreen extends Component {
                 showPagination={false}
                 smoothTransition
                 stack
+                stackDepth={3}
                 dragDownToBack
                 dragY
                 >
+          
                     <Card style={styles.card}
                         containerStyle={styles.cardContainer}
-                        image={firstCardPhoto}
+                        
+                        image={khosla}
+                        
                         imageProps={styles.imagePropsStyle}
                         imageWrapperStyle={styles.imageWrapper}
                         imageStyle={styles.imageWrapper}>
@@ -193,85 +205,164 @@ class ExploreScreen extends Component {
                             <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}
                                 onPress={ () => alert('go to this user!')}
                                 activeOpacity={0.5}>
-                                Human Biology/Comp Sci Student
+                                UCSD Chancellor
                             </Text>
                             <View style={styles.subTitleContainer}>
                                 <Text style={styles.subtitleText}>
-                                    David Owens
+                                    Pradeep Khosla
                                 </Text>
                                 <View style={styles.iconsContainer}>
-                                    <Icon iconStyle={styles.iconStyle}
-                                    name='circle-o'
-                                    type='font-awesome'
-                                    color='#59C129'
-                                    size={15}
-                                    onPress={() => alert("Money")} />
-                                    <Icon iconStyle={styles.iconStyle}
-                                    name='circle-o'
-                                    type='font-awesome'
-                                    color='#EF2074'
-                                    size={15}
-                                    onPress={() => alert("Money")} />
-                                    <Icon iconStyle={styles.iconStyle}
-                                    name='circle-o'
-                                    type='font-awesome'
-                                    color='#FC8A2D'
-                                    size={15}
-                                    onPress={() => alert("Money")} />
-                                    <Icon iconStyle={styles.iconStyle}
-                                    name='circle-o'
-                                    type='font-awesome'
-                                    color='#57C4DD'
-                                    size={15}
-                                    onPress={() => alert("Money")} />
+                                  
+                                  <Icon iconStyle={styles.iconStyle}
+                                      name='circle-o'
+                                      type='font-awesome'
+                                      color={knowledgePurple}
+                                      size={15}
+                                      onPress={() => alert("Knowledge")} />
+                
                                 </View>
                             </View>
                         </View>
 
                         <View style={styles.bioContainer}>
                             <Text style={styles.bioText}>
-                            ShortbiogoeshereThisiswherethemakerorbackergiveaquickdescriptionoftheirprojectortheirskillsThisshouldbejustafewsentencesHeresonemoresentenceasdfasdfadssdfgjhsdfghsd
+                            Setting fire to coffee carts, taking money from millennials, inspiring SPICY memes, taming the 'stache
                             </Text>
                         </View>
                     </Card>
 
                     <Card style={styles.card}
                         containerStyle={styles.cardContainer}
-                        image={secondCardPhoto}
+                        image={eggers}
                         imageProps={styles.imagePropsStyle}
                         imageWrapperStyle={styles.imageWrapper}
                         imageStyle={styles.imageWrapper}>
                         <View style={styles.descriptionContainer}>
                                 <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}>
-                                    Important CEO Guy
+                                    Thiccest Math Professor Around
                                 </Text>
                             <View style={styles.subTitleContainer}>
                                 <Text style={styles.subtitleText}>
-                                    John Doe
+                                    John Eggers
                                 </Text>
                                 <View style={styles.iconsContainer}>
                                     <Icon iconStyle={styles.iconStyle}
-                                    name='circle-o'
-                                    type='font-awesome'
-                                    color='#59C129'
-                                    size={15}
-                                    onPress={() => alert("Money")} />
+                                        name='circle-o'
+                                        type='font-awesome'
+                                        color={knowledgePurple}
+                                        size={15}
+                                        onPress={() => alert("Knowledge")} />
                                     <Icon iconStyle={styles.iconStyle}
-                                    name='circle-o'
-                                    type='font-awesome'
-                                    color='#EF2074'
-                                    size={15}
-                                    onPress={() => alert("Money")} />
+                                        name='circle-o'
+                                        type='font-awesome'
+                                        color={backerBlue}
+                                        size={15}
+                                        onPress={() => alert("Collaboration")} />
+                                    <Icon iconStyle={styles.iconStyle}
+                                      name='circle-o'
+                                      type='font-awesome'
+                                      color={manpowerRed}
+                                      size={15}
+                                      onPress={() => alert("Manpower")} />
                                 </View>
                             </View>
                         </View>
 
                         <View style={styles.bioContainer}>
                             <Text style={styles.bioText}>
-                                Hi, Im important CEO guy, Im here because I have a lot of money and I want to spend it on you. Thats right, I said you. Pls swipe right on me so I can make you a millionare.
+                                 Basic Calculus, losing a lot of weight and talking about it, mom jeans, personal training (body and mind)
                             </Text>
                         </View>
                     </Card>
+
+                    <Card style={styles.card}
+                        containerStyle={styles.cardContainer}
+                        image={cao}
+                        imageProps={styles.imagePropsStyle}
+                        imageWrapperStyle={styles.imageWrapper}
+                        imageStyle={styles.imageWrapper}>
+                        <View style={styles.descriptionContainer}>
+                                <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}>
+                                    Tall, Sweet Computer Scientist
+                                </Text>
+                            <View style={styles.subTitleContainer}>
+                                <Text style={styles.subtitleText}>
+                                    Yingjun (Paul) Cao
+                                </Text>
+                                <View style={styles.iconsContainer}>
+                                    <Icon iconStyle={styles.iconStyle}
+                                        name='circle-o'
+                                        type='font-awesome'
+                                        color={knowledgePurple}
+                                        size={15}
+                                        onPress={() => alert("Knowledge")} />
+                                    <Icon iconStyle={styles.iconStyle}
+                                        name='circle-o'
+                                        type='font-awesome'
+                                        color={backerBlue}
+                                        size={15}
+                                        onPress={() => alert("Collaboration")} />
+                                    <Icon iconStyle={styles.iconStyle}
+                                        name='circle-o'
+                                        type='font-awesome'
+                                        color={moneyGreen}
+                                        size={15}
+                                        onPress={() => alert("Money")} />
+                                    <Icon iconStyle={styles.iconStyle}
+                                        name='circle-o'
+                                        type='font-awesome'
+                                        color={materialsOrange}
+                                        size={15}
+                                        onPress={() => alert("Materials")} />
+                                </View>
+                            </View>
+                        </View>
+
+                        <View style={styles.bioContainer}>
+                            <Text style={styles.bioText}>
+                                 Driving my kids around, Dr.Java, Null Pointer Exceptions, C/C++, HTML/CSS
+                            </Text>
+                        </View>
+                    </Card>
+
+                    <Card style={styles.card}
+                        containerStyle={styles.cardContainer}
+                        image={bananaGary}
+                        imageProps={styles.imagePropsStyle}
+                        imageWrapperStyle={styles.imageWrapper}
+                        imageStyle={styles.imageWrapper}>
+                        <View style={styles.descriptionContainer}>
+                                <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}>
+                                    Computer Science Professor and Banana Enthusiast
+                                </Text>
+                            <View style={styles.subTitleContainer}>
+                                <Text style={styles.subtitleText}>
+                                    Gary
+                                </Text>
+                                <View style={styles.iconsContainer}>
+                                    <Icon iconStyle={styles.iconStyle}
+                                        name='circle-o'
+                                        type='font-awesome'
+                                        color={backerBlue}
+                                        size={15}
+                                        onPress={() => alert("Collaboration")} />
+                                    <Icon iconStyle={styles.iconStyle}
+                                        name='circle-o'
+                                        type='font-awesome'
+                                        color={materialsOrange}
+                                        size={15}
+                                        onPress={() => alert("Materials")} />
+                                </View>
+                            </View>
+                        </View>
+
+                        <View style={styles.bioContainer}>
+                            <Text style={styles.bioText}>
+                                 Professionalism, growing banana trees, catching banana thieves, gradesource (h8ers gonna h8)
+                            </Text>
+                        </View>
+                    </Card>
+                        
                 </Swiper>
 
                 <View style={styles.preferenceButtonsContainer}>
@@ -282,7 +373,7 @@ class ExploreScreen extends Component {
                     activeOpacity={0.5}
                     color= {noRed}
                     size={25}
-                    onPress={() => alert("No!")}
+                    onPress={() => forceLeftSwipe()}
                     />
                     <Icon
                     containerStyle={styles.preferenceButtonsBorder}
@@ -291,7 +382,7 @@ class ExploreScreen extends Component {
                     activeOpacity={0.5}
                     color={checkGreen}
                     size={25}
-                    onPress={() => alert("Yes!")} />
+                    onPress={() => forceRightSwipe()} />
                 </View>
             </View>
         );

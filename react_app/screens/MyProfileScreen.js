@@ -20,7 +20,7 @@ import { headerIconSize } from '../assets/styles/size.js';
 
 import FlipCard from 'react-native-flip-card'
 
-var profilePhoto = require('../assets/images/shuttle-01.jpg');
+var profilePhoto = require('../assets/images/bakerRick.jpg');
 
 const Dimensions = require('Dimensions');
 const window = Dimensions.get('window');
@@ -114,6 +114,8 @@ class MyProfileScreen extends Component {
       const { user } = navigation.state.params;
       var isMaker = navigation.state.params.isMaker;
 
+	isMaker=true;
+
       if(isMaker){buttonColor = makerPurple;
                   editText = 'Edit Maker Profile';
                   switchText = 'Switch to Backer';}
@@ -201,10 +203,10 @@ class MyProfileScreen extends Component {
 
                     <View style={styles.textContainer}>
                       <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}>
-                          Biology/Comp Sci Student
+                          Rick's Banana Cream Pies
                       </Text>
                       <Text style={styles.subTitleStyle}>
-                          David Owens
+                          Rick Ord
                       </Text>
                     </View>
 
