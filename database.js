@@ -44,6 +44,7 @@ module.exports.addUser = function (username,client,tablename){
 //create user profile
 module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,client){
   let check = 'SELECT email FROM ' + tablename + ' WHERE email = \'' + email + '\''
+  console.log(check);
   client.query(check, function(err,res) {
     rows = res.rows
     if (rows.length > 0){
@@ -51,8 +52,12 @@ module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,
       return
     }
     let query = 'INSERT INTO ' + tablename + ' (name,age,email,ismaker,shortbio) values ($1,$2,$3,$4,$5)';
+    console.log(query);
     client.query(query,[name,age,email,isMaker,shortbio], function(err,res) {
-      if (err) throw err;
+      if (err) {
+        console.log("there's an error")
+        throw err;
+      }
       else{
         console.log('inserted ' + email + ' into database')
       }
