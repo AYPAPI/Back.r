@@ -132,11 +132,11 @@ router.post("/swipe", function(req, res){
 });
 
 router.post("/settings/create", function(req, res) {
-  var location = req.body.location;
+
   var isVisible = req.body.isVisible;
   var blockedUsers = req.body.blockedUsers;
   var email = req.body.email;
-  db.createSettings(location, isVisible, blockedUsers, email, database)
+  db.createSettings(isVisible, blockedUsers, email, database)
   res.json(req.body)
 });
 
