@@ -51,9 +51,9 @@ module.exports.createUser = function (name,age,email,ismaker,shortbio,tablename,
       console.log('user already in database')
       return
     }
-    let query = 'INSERT INTO ' + tablename + ' (name,age,email,ismaker,shortbio) values ($1,$2,$3,$4,$5)';
+    let query = 'INSERT INTO ' + tablename + ' (name,age,email,isMaker,shortbio) values ($1,$2,$3,$4,$5)';
     console.log(query);
-    client.query(query,[name,age,email,isMaker,shortbio], function(err,res) {
+    client.query(query,[name,age,email,ismaker,shortbio], function(err,res) {
       if (err) {
         console.log("there's an error")
         throw err;
@@ -245,7 +245,7 @@ module.exports.updateSettings = function(isVisible, blockedUsers, email, client,
         if (rows.length === 0){
           console.log('USER does not exist')
           return
-        } 
+        }
         var makerMatches = rows[0].matches
         console.log(makerMatches)
         for (var i = 0; i < blockedUsers.length; i++){
