@@ -159,7 +159,7 @@ exports.updateProfile = (isMaker, longbio, shortbio, ) => {
 }
 
 //TODO
-exports.updateSettings = (email) => {
+exports.updateSettings = (email, blockedUsers) => {
  //Eric
   console.log("post update settings");
   fetch( url + 'user/settings', {
@@ -170,7 +170,7 @@ exports.updateSettings = (email) => {
     },
     body: JSON.stringify({
       email: email,
-      blockedUsers: [],
+      blockedUsers: blockedUsers,
       isVisible: false
     })
   }).then(function(response) {
