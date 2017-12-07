@@ -7,11 +7,11 @@ var hot_bod = " with body = "
 function constructOutputString(res, body, ext) {
   return (res.request.method + " /" + ext + hot_bod + body + delimiter)
 }
-/*
+
  var test_user = {
  	"name":"vinay",
  	"age": 21,
- 	"email": "test@aypapi.com",
+ 	"email": "test20@aypapi.com",
  	"isMaker":true,
  	"shortBio":"dumb dumb",
    "location":"123-123",
@@ -34,6 +34,7 @@ function constructOutputString(res, body, ext) {
  		}
  	}
  }
+ /*
 request.patch({
   url: url + "user/isMaker",
   json: true,
@@ -67,14 +68,14 @@ request.patch({
 //   email: "brandonisadumdum@msn.com"
 // }
 
-// request.post({
-//     url: url + "user",
-//     // method: "POST",
-//     json: true,   // <--Very important!!!
-//     body: test_user
-// }, function(err, res, body) {
-// 	console.log("POST response body  - " + res.body);
-// });
+ request.post({
+     url: url + "user",
+      method: "POST",
+     json: true,   // <--Very important!!!
+     body: test_user
+ }, function(err, res, body) {
+ 	console.log("POST response body  - " + res);
+ });
 
 // // Get user
 // request.get({
@@ -153,6 +154,7 @@ request.patch({
 //     console.log("lat: "  + res.body.latitude)
 //   }
 // });
+<<<<<<< HEAD
 
 // var test_swipe = {
 //     "email":"test@aypapi.com",
@@ -172,9 +174,31 @@ request.patch({
 // 	console.log("POST response body  - " + res.body);
 // });
 
+=======
+/*
+ var test_swipe = {
+     "email":"test@aypapi.com",
+     "swipedEmail":"test4@aypapi.com",//need an email that currently exists in the database
+     "isMaker":true,
+     "swipedRight":true
+ }
+
+
+ request.post({
+     url: url + "user/swipe",
+     // method: "POST",
+     json: true,   // <--Very important!!!
+     body: test_swipe
+ }, function(err, res) {
+   console.log("testing swipedRight/swipedOn POST request");
+ 	console.log("POST response body  - " + res.body);
+ });
+*/
+>>>>>>> 69ee66f94a9e7febe4c1414ba746182bdc7980f2
 /* Twilio Tests */
 
 /* Test Objects */
+
 var test_null_token = {
   "token" : null,
   "identity":"vinnie",
@@ -241,6 +265,7 @@ var test_message2 = {
 // });
 
 /* GET: All channels */
+/*
 ext = "twilio/channels?identity=vylana&endpointId=9998"
 request.get({
   url: url + ext,
@@ -279,8 +304,10 @@ request.get({
 //   }
 //   console.log(output)
 // });
+*/
 
 /* POST: Create a channel */
+/*
 var createChannelTest = function(ext) {
   request.post({
       url: url + ext,
@@ -299,7 +326,7 @@ var createChannelTest = function(ext) {
     }
     console.log(output)
   });
-}
+}*/
 // createChannelTest(ext)
 
 
@@ -325,6 +352,7 @@ var createChannelTest = function(ext) {
 // });
 
 /* POST: a message to a channel */
+/*
 request.post({
     url: url + "twilio/channels/test_channel2/messages",
     json: true,
@@ -348,8 +376,9 @@ request.post({
     console.log(res.body)
   }
 });
-
+*/
 /* GET: Channel's Messages */
+/*
 request.get({
     url: url + "twilio/channels/test_channel2/messages?identity=vinnie&endpointId=9999",
     json: true,
@@ -375,3 +404,4 @@ request.get({
     console.log(res.body)
   }
 });
+*/
