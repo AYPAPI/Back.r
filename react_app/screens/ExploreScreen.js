@@ -161,6 +161,7 @@ class ExploreScreen extends Component {
 
     static navigationOptions = ({ navigation }) => {
         const { name, email, isMaker } = navigation.state.params;
+        console.log("inside explore " + email)
 
         return {
             headerLeft: (

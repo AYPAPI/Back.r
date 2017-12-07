@@ -123,12 +123,9 @@ router.post("/swipe", function(req, res){
     var isMaker = req.body.isMaker;
     var swipedRight = req.body.swipedRight;//boolean val, true if swiped right
 
-
     db.addSwipe(email, isMaker, swipedEmail, swipedRight, database, function(user){
       res.json(req.body);
     });
-
-
 });
 
 router.post("/settings/create", function(req, res) {
@@ -145,7 +142,6 @@ router.post("/settings", function(req, res) {
   var blockedUsers = req.body.blockedUsers;
   //var email = "brandonisadumdum@msn.com"
   var email = req.body.email
-
 
   db.updateSettings(isVisible, blockedUsers, email, database, function(message) {
     var status = message

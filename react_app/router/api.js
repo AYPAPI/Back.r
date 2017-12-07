@@ -1,6 +1,8 @@
 import React from 'react';
 const url = "https://backr.herokuapp.com/"
 
+//Called when user signing up. Creates default values for user and adds user to
+//Database.
 exports.createUser = (name, email) => {
 
   var body = {
@@ -45,6 +47,8 @@ exports.createUser = (name, email) => {
     });
 }
 
+
+//Retrieves user via email.
 exports.getUser = (email) => {
   console.log("GET user request");
   //Sarah
@@ -58,6 +62,7 @@ exports.getUser = (email) => {
 
 }
 
+//Get the maker profile of a specified user.
 exports.getMaker = (email) => {
   console.log("GET user request");
   //Sarah
@@ -70,6 +75,7 @@ exports.getMaker = (email) => {
   });
 }
 
+//Get the backer profile of a specified user.
 exports.getBacker = (email) => {
   //Me
   console.log("GET user request");
@@ -85,8 +91,9 @@ exports.getBacker = (email) => {
 
 }
 
+
+//Retrieve a user's settings. (really only their blockedUsers lol)
 exports.getSettings = (email) => {
-  //eric
   fetch(url + urlParams)
   .then(function(response) { return response.json(); })
   .then(function(data) {
@@ -95,6 +102,7 @@ exports.getSettings = (email) => {
   });
 }
 
+//Add to the swipe array for swiped right and swiped on.
 exports.postSwipe = (email, swipedEmail, isMaker, swipedRight) => {
   //Eric
   console.log("posting swipe");
@@ -182,13 +190,13 @@ exports.updateProfile = (email, shortbio) => {
   })
     .catch((error) => {
       console.error(error);
-    });
+  });
 }
 
 //Updates user's maker profile. Updates longbio, photos, and icons.
 exports.updateMakerProfile = (longbio, photos, icons, email) => {
-  console.log("post create settings");
-  fetch( url + 'user/settings/create', {
+  console.log("post update maker profile");
+  fetch( url + 'user/maker', {
     method: 'PATCH',
     headers: {
       'Accept': 'application/json',
@@ -202,15 +210,57 @@ exports.updateMakerProfile = (longbio, photos, icons, email) => {
     })
   }).then(function(response) {
     console.log("inside UPDATE MAKER PROFILE api util callback");
-    return response.json();
+    return response;
   })
     .catch((error) => {
       console.error(error);
     });
 }
 
+//Updates user's backer profile. Updates longbio, photos, and icons.
+exports.updateBackerProfile = (longbio, photos, icons, email) => {
+  console.log("post update maker profile");
+  fetch( url + 'user/backer', {
+    method: 'PATCH',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      longBio: longbio,
+      email: email,
+      photos: photos,
+      icons: icons
+    })
+  }).then(function(response) {
+    console.log("inside UPDATE BACKER PROFILE api util callback");
+    return response;
+  })
+    .catch((error) => {
+      console.error(error);
+    });
+}
 
 //TODO
-exports.updateSettings = (email) => {
+exports.updateSettings = (email, blockedUsers) => {
  //Eric
+  console.log("post update settings");
+  fetch( url + 'user/settings', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: email,
+      blockedUsers: blockedUsers,
+      isVisible: false
+    })
+  }).then(function(response) {
+    console.log("inside update settings api util callback");
+    return response;
+  })
+    .catch((error) => {
+      console.error(error);
+    });
 }
