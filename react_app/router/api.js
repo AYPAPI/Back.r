@@ -2,7 +2,6 @@ import React from 'react';
 const url = "https://backr.herokuapp.com/"
 
 exports.createUser = (name, email) => {
-  console.log("hi");
 
   var body = {
     name: name,

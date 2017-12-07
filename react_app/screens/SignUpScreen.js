@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Text, View, Image, StyleSheet} from 'react-native';
 import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
-import { createUser } from '../router/api.js'
+import { createUser, createSettings } from '../router/api.js'
 
 //Import function for signing in.
 import { onSignIn } from '../auth.js';
@@ -75,7 +75,7 @@ class SignUpScreen extends Component {
       .then(function(user){
         console.log('successfully created account');
         createUser(user_name, user_email);
-        createSettings(user_email);
+      //  createSettings(user_email);
 
         navigate("SignedIn", {name: user_name, email: user.email, isMaker: false})
     }).catch(function(error) {
