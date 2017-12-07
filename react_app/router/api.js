@@ -131,12 +131,12 @@ exports.createSettings = (email) => {
     },
     body: JSON.stringify({
       email: email,
-      blockedusers: [],
+      blockedUsers: [],
       isVisible: false
     })
   }).then(function(response) {
     console.log("inside create settings api util callback");
-    return response.json();
+    return response;
   })
     .catch((error) => {
       console.error(error);
