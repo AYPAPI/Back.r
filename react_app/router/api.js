@@ -39,7 +39,7 @@ exports.createUser = (name, email) => {
       })
     }).then(function(response) {
       console.log("inside api");
-      return response.json();
+      return response;
     })
     .catch((error) => {
         console.error(error);
@@ -112,7 +112,7 @@ exports.postSwipe = (email, swipedEmail, isMaker, swipedRight) => {
       })
   }).then(function(response) {
     console.log("inside postSwipe api util callback");
-    return response.json();
+    return response;
   })
     .catch((error) => {
       console.error(error);
