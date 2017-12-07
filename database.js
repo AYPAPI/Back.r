@@ -51,7 +51,7 @@ module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,
       console.log('user already in database')
       return
     }
-    let query = 'INSERT INTO ' + tablename + ' (name,age,email,ismaker,shortbio) values ($1,$2,$3,$4,$5)';
+    let query = 'INSERT INTO ' + tablename + ' (name,age,email,isMaker,shortbio) values ($1,$2,$3,$4,$5)';
     console.log(query);
     client.query(query,[name,age,email,isMaker,shortbio], function(err,res) {
       if (err) {
@@ -220,8 +220,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
 }
 module.exports.createSettings = function(isVisible, blockedUsers, email, client) {
   var tablename = 'settings'
-
-  let query = 'INSERT INTO ' + tablename + ' (email,isvisible, blockedusers) values ($1,$2,$3)';
+  let query = 'INSERT INTO ' + tablename + ' (email,isvisible,blockedusers) values ($1,$2,$3)';
     console.log(query)
     console.log("called1")
     client.query(query,[email,isVisible, blockedUsers], function(err,res) {
@@ -245,7 +244,7 @@ module.exports.updateSettings = function(isVisible, blockedUsers, email, client,
         if (rows.length === 0){
           console.log('USER does not exist')
           return
-        } 
+        }
         var makerMatches = rows[0].matches
         for (var i = 0; i < blockedUsers.length; i++){
           var index = makerMatches.indexOf(blockedUsers[i])
@@ -288,6 +287,7 @@ module.exports.readSettings = function (client, email, callback) {
   client.query(query, function(err,res) {
     if (err) throw err;
     rows = res.rows;
+
 		for (var i = 0; i < rows.length; i++){
 			if (rows[i].email === email){
 				var row = rows[i]

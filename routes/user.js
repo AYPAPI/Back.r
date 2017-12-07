@@ -22,6 +22,7 @@ router.patch("/isMaker", function(req, res){
 router.patch("/", function(req,res){
   var email = req.body.email;
   var shortbio = req.body.shortbio;
+  console.log("inside patch " + req.body.email + " " + req.body.shortbio)
   db.updateUser(email,shortbio,database,function(message) {
     var status = message
     res.json(status)
@@ -31,9 +32,9 @@ router.patch("/", function(req,res){
 //reqest to update maker profile
 router.patch('/maker', function(req,res) {
   var email = req.body.email
-  var makerLongBio = req.body.profiles.maker.longBio
-  var makerPhotos = req.body.profiles.maker.photos
-  var makerIcon = req.body.profiles.maker.icons
+  var makerLongBio = req.body.longBio
+  var makerPhotos = req.body.photos
+  var makerIcon = req.body.icons
   db.updateProfile(email,makerLongBio,makerPhotos,makerIcon,database,'maker',function(message) {
     var status = message
     res.json(status)
@@ -42,9 +43,9 @@ router.patch('/maker', function(req,res) {
 
 router.patch('/backer', function(req,res) {
   var email = req.body.email
-  var backerLongBio = req.body.profiles.backer.longBio
-  var backerPhotos = req.body.profiles.backer.photos
-  var backerIcon = req.body.profiles.backer.icons
+  var backerLongBio = req.body.longBio
+  var backerPhotos = req.body.photos
+  var backerIcon = req.body.icons
   db.updateProfile(email,backerLongBio,backerPhotos,backerIcon,database,'backer',function(message) {
     var status = message
     res.json(status)
@@ -122,32 +123,27 @@ router.post("/swipe", function(req, res){
     var isMaker = req.body.isMaker;
     var swipedRight = req.body.swipedRight;//boolean val, true if swiped right
 
-
     db.addSwipe(email, isMaker, swipedEmail, swipedRight, database, function(user){
       res.json(req.body);
     });
-
-
 });
 
 router.post("/settings/create", function(req, res) {
-  var location = req.body.location;
   var isVisible = req.body.isVisible;
   var blockedUsers = req.body.blockedUsers;
-  var email = "brandonisadumdum@msn.com"
-  db.createSettings(location, isVisible, blockedUsers, email, database)
+  var email = req.body.email;
+  db.createSettings(isVisible, blockedUsers, email, database)
   res.json(req.body)
 });
 
 router.post("/settings", function(req, res) {
 
-  var location = req.body.location;
   var isVisible = req.body.isVisible;
   var blockedUsers = req.body.blockedUsers;
   //var email = "brandonisadumdum@msn.com"
-  var email = "test@aypapi.com"
+  var email = req.body.email
 
-  db.updateSettings(location, isVisible, blockedUsers, email, database, function(message) {
+  db.updateSettings(isVisible, blockedUsers, email, database, function(message) {
     var status = message
     res.json(status);
   })
