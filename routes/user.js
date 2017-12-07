@@ -139,8 +139,7 @@ router.post("/settings/create", function(req, res) {
 });
 
 router.post("/settings", function(req, res) {
-
-  var location = req.body.location;
+  
   var isVisible = req.body.isVisible;
   var blockedUsers = req.body.blockedUsers;
   //var email = "brandonisadumdum@msn.com"

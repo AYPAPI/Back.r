@@ -161,4 +161,23 @@ exports.updateProfile = (isMaker, longbio, shortbio, ) => {
 //TODO
 exports.updateSettings = (email) => {
  //Eric
+  console.log("post update settings");
+  fetch( url + 'user/settings', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: email,
+      blockedUsers: [],
+      isVisible: false
+    })
+  }).then(function(response) {
+    console.log("inside update settings api util callback");
+    return response;
+  })
+    .catch((error) => {
+      console.error(error);
+    });
 }
