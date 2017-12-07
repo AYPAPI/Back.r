@@ -143,7 +143,8 @@ router.post("/settings", function(req, res) {
   var isVisible = req.body.isVisible;
   var blockedUsers = req.body.blockedUsers;
   //var email = "brandonisadumdum@msn.com"
-  var email = req.body.email;
+  var email = req.body.email
+
 
   db.updateSettings(isVisible, blockedUsers, email, database, function(message) {
     var status = message
