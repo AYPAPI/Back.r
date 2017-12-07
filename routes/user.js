@@ -22,6 +22,7 @@ router.patch("/isMaker", function(req, res){
 router.patch("/", function(req,res){
   var email = req.body.email;
   var shortbio = req.body.shortbio;
+  console.log("inside patch " + req.body.email + " " + req.body.shortbio)
   db.updateUser(email,shortbio,database,function(message) {
     var status = message
     res.json(status)
