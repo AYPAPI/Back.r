@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet, NativeModules } from 'react-native';
 import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
 import { createUser } from '../router/api.js';
+import { getUser } from '../router/api.js';
 
 
 import { Font } from 'expo';
@@ -104,10 +105,14 @@ class LoginScreen extends Component {
 
   }
 
+
+
  login(navigate){
     firebase.auth().signInWithEmailAndPassword(this.state.email,this.state.password).then(function(user) {
       console.log('successfully logged in ' + JSON.stringify(user))
-      navigate("SignedIn", {user: user});
+      console.log("User's email = " + user.email)
+      navigate("SignedIn", {name: "", email: user.email, isMaker: false});
+
       this.load = true
       return true
     }).catch(function(error) {
@@ -123,6 +128,7 @@ class LoginScreen extends Component {
       return false
     });
 	}
+
 
   success(navigate){
     //var promise = new Promise(this.login).then(function(value){console.log(value)})

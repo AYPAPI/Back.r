@@ -221,13 +221,13 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
   })
 
 }
-module.exports.createSettings = function(location, isVisible, blockedUsers, email, client) {
+module.exports.createSettings = function(isVisible, blockedUsers, email, client) {
   var tablename = 'settings'
 
-  let query = 'INSERT INTO ' + tablename + ' (email, latitude, longitude, isvisible, blockedusers) values ($1,$2,$3,$4, $5)';
+  let query = 'INSERT INTO ' + tablename + ' (email, isvisible, blockedusers) values ($1,$2,$3)';
     console.log(query)
     console.log("called1")
-    client.query(query,[email, location.lat, location.long, isVisible, blockedUsers], function(err,res) {
+    client.query(query,[email, isVisible, blockedUsers], function(err,res) {
         if (err) throw err;
         else{
           console.log('created settings for user' + email)
@@ -235,10 +235,10 @@ module.exports.createSettings = function(location, isVisible, blockedUsers, emai
       })
 }
 
-module.exports.updateSettings = function(location, isVisible, blockedUsers, email, client, callback) {
+module.exports.updateSettings = function(isVisible, blockedUsers, email, client, callback) {
   var tablename = 'settings'
-  let query = 'UPDATE ' + tablename + ' SET latitude = $1, longitude = $2, isvisible = $3, blockedusers = $4 WHERE email = $5'
-    client.query(query, [location.lat, location.long, isVisible, blockedUsers, email], function(err,res) {
+  let query = 'UPDATE ' + tablename + ' SET isvisible = $1, blockedusers = $2 WHERE email = $3'
+    client.query(query, [isVisible, blockedUsers, email], function(err,res) {
       if (err) throw err;
       callback("Updated settings");
     })
@@ -254,8 +254,6 @@ module.exports.readSettings = function (client, email, callback) {
 			if (rows[i].email === email){
 				var row = rows[i]
 				var obj = {
-          "latitude":row.latitude,
-          "longitude":row.longitude,
           "isVisible" : row.isvisible,
           "blockedUsers":row.blockedusers,
 				}

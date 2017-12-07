@@ -139,17 +139,29 @@ const styles = {
 
 class ExploreScreen extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      user: {}
+    }
+  }
 
   onUserPress(user) {
     const { name, email, isMaker } = this.props.navigation.state.params
-
-
-    this.props.navigation.navigate("UserProfile", {user: user, name: name, email: email, isMaker: isMaker});
+    this.props.navigation.navigate("UserProfile", {user: user, name: this.state.name, email: email, isMaker: isMaker});
   }
 
+  componentDidMount() {
+    if(this.props.navigation.state.params.name === "") {
+      this.setState({"user": getUser(this.props.navigation.state.params.email)})
+    } else {
+      this.setState({"user": this.props.navigation.state.params.name})
+    }
+  }
 
     static navigationOptions = ({ navigation }) => {
         const { name, email, isMaker } = navigation.state.params;
+
         return {
             headerLeft: (
                 <Icon

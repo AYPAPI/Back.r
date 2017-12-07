@@ -106,21 +106,25 @@ class MyProfileScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      makerBacker: {}
+      makerBacker: {},
+      isMaker: false,
     }
   }
     toggleIsMaker(){
         if(this.props.navigation.state.params.isMaker){
             this.setState({'isMaker': false});
+            this.navigation.setParams("isMaker": false)
         }
         else{
             this.setState({'isMaker': true});
+            console.log(this.state.makerBacker);
+
         }
     }
 
   static navigationOptions = ({ navigation }) => {
       const { user } = navigation.state.params;
-      var isMaker = navigation.state.params.isMaker;
+      const { name, email } = navigation.state.params;
 
       if(isMaker){
         buttonColor = makerPurple;
@@ -166,11 +170,8 @@ class MyProfileScreen extends Component {
     if(isMaker) {
       this.setState({"makerBacker": getMaker(email)})
     } else {
-      console.log(getBacker(email));
       this.setState({"makerBacker": getBacker(email)});
     }
-    console.log("maker or backer" + isMaker);
-    console.log("maker or backer name: " + this.state.makerBacker.email)
   }
 
   render() {

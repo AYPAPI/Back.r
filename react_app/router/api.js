@@ -3,40 +3,40 @@ const url = "https://backr.herokuapp.com/"
 
 exports.createUser = (name, email) => {
   console.log("hi");
+
+  var body = {
+    name: name,
+    age: 343829,
+    email: email,
+    isMaker: false,
+    shortBio: "",
+    profiles: {
+      maker: {
+        longBio: "",
+        photos: [],
+        icons: [false, false, false, false, false],
+        swipedright: [],
+        matches: [],
+        swipedon: []
+      },
+      backer: {
+        longBio: "",
+        photos: [],
+        icons: [false, false, false, false, false],
+        swipedright: [],
+        matches: [],
+        swipedon: []
+      }
+    },
+  }
+
   fetch( url + 'user', {
       method: 'POST',
       headers: {
       'Accept': 'application/json',
       'Content-Type': 'application/json',
     },
-      body: JSON.stringify({
-        name: name,
-        age: 343829,
-        email: email,
-        isMaker: false,
-        shortBio: "",
-        //THIS DOESNT WORK YET
-        profiles: {
-          maker: {
-            makerLongBio: "",
-            makerPhotos: [],
-            makerIcon: [false, false, false, false, false],
-            makerSwipedRight: [],
-            makerMatches: [],
-            makerSwipedOn: []
-          },
-
-          backer: {
-            backerLongBio: "",
-            backerPhotos: [],
-            backerIcon: [false, false, false, false, false],
-            backerSwipedRight: [],
-            backerMatchers: [],
-            backerSwipedOn: []
-          }
-        },
-
-      })
+      body: JSON.stringify(body)
     }).then(function(response) {
       console.log("inside api");
       return response.json();
@@ -50,13 +50,12 @@ exports.getUser = (email) => {
   console.log("GET user request");
   //Sarah
   var urlParams = "user?email=" + email;
-  fetch( url + urlParams)
-  .then(response => {
-    return response;
-  })
-  .catch(error => {
-    console.error(error);
-    });
+  fetch(url + urlParams)
+  .then(function(response) { return response.json(); })
+  .then(function(data) {
+    console.log(data);
+    return data;
+  });
 
 }
 
@@ -64,12 +63,11 @@ exports.getMaker = (email) => {
   console.log("GET user request");
   //Sarah
   var urlParams = "user/maker?email=" + email;
-  fetch( url + urlParams)
-  .then(response => {
-    return response.json();
-  })
-  .catch(error => {
-    console.error(error);
+  fetch(url + urlParams)
+  .then(function(response) { return response.json(); })
+  .then(function(data) {
+    console.log(data);
+    return data;
   });
 }
 
@@ -78,21 +76,24 @@ exports.getBacker = (email) => {
   console.log("GET user request");
   //Sarah
   var urlParams = "user/backer?email=" + email;
-  fetch( url + urlParams, {
-    method: 'GET',
-    headers: {
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-    }
-  }).then(function(response) {
-    console.log("Inside getBacker" + response)
-    return response
-  })
+
+  fetch(url + urlParams)
+  .then(function(response) { return response.json(); })
+  .then(function(data) {
+    console.log(data);
+    return data;
+  });
 
 }
 
 exports.getSettings = (email) => {
   //eric
+  fetch(url + urlParams)
+  .then(function(response) { return response.json(); })
+  .then(function(data) {
+    console.log(data);
+    return data;
+  });
 }
 
 exports.postSwipe = (email, swipedEmail, isMaker, swipedRight) => {
@@ -102,11 +103,12 @@ exports.postSwipe = (email, swipedEmail, isMaker, swipedRight) => {
 //ONLY CALL ONCE on initial signup of user. All other edit settings call updateSettings
 exports.createSettings = () => {
   //eric
+
 }
 
 //TODO
 //Function called in EditScreen.
-exports.updateProfile = () => {
+exports.updateProfile = (isMaker, longbio, shortbio, ) => {
   //Sarah
 
   //Fetch user first
@@ -122,9 +124,4 @@ exports.updateProfile = () => {
 //TODO
 exports.updateSettings = (email) => {
  //Eric
-}
-
-
-exports.getSettings = (email) => {
-  //Sarah
 }
