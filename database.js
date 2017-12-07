@@ -42,7 +42,7 @@ module.exports.addUser = function (username,client,tablename){
 }
 
 //create user profile
-module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,client){
+module.exports.createUser = function (name,age,email,ismaker,shortbio,tablename,client){
   let check = 'SELECT email FROM ' + tablename + ' WHERE email = \'' + email + '\''
   console.log(check);
   client.query(check, function(err,res) {
