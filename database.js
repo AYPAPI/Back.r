@@ -216,10 +216,10 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
 module.exports.createSettings = function(isVisible, blockedUsers, email, client) {
   var tablename = 'settings'
 
-  let query = 'INSERT INTO ' + tablename + ' (email, isvisible, blockedusers) values ($1,$2,$3)';
+  let query = 'INSERT INTO ' + tablename + ' (email,isvisible, blockedusers) values ($1,$2,$3)';
     console.log(query)
     console.log("called1")
-    client.query(query,[email, isVisible, blockedUsers], function(err,res) {
+    client.query(query,[email,isVisible, blockedUsers], function(err,res) {
         if (err) throw err;
         else{
           console.log('created settings for user' + email)

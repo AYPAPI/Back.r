@@ -93,7 +93,8 @@ class LoginScreen extends Component {
           user_name = user.displayName;
           user_email= user.email;
           createUser(user_name, user_email);
-          createSettings(user_email); //THIS IS A TEST TODO
+
+          //createSettings(user_email); //THIS IS A TEST TODO
           navigate("SignedIn", {name: user_name, email: user_email, isMaker: false});
         }).catch((error) => {
           // Handle Errors here.
