@@ -122,7 +122,7 @@ request.patch({
 //       long: 50
 //     },
 // 	"isVisible": false,
-// 	"blockedUsers": ["dumdumbrandon@aol.com", "Abena.lol@gmail.com", "Vylana@me.com", "Gary@professionalism.com"]
+// 	"blockedUsers": ["dumdumbrandon@aol.com", "Abena.lol@gmail.com", "Vylana@me.com", "test4@aypapi.com"]
 // }
 
 //request.post({
@@ -154,23 +154,23 @@ request.patch({
 //   }
 // });
 
- var test_swipe = {
-     "email":"test@aypapi.com",
-     "swipedEmail":"test4@aypapi.com",//need an email that currently exists in the database
-     "isMaker":true,
-     "swipedRight":true
- }
+// var test_swipe = {
+//     "email":"test@aypapi.com",
+//     "swipedEmail":"test4@aypapi.com",//need an email that currently exists in the database
+//     "isMaker":true,
+//     "swipedRight":true
+// }
 
 
- request.post({
-     url: url + "user/swipe",
-     // method: "POST",
-     json: true,   // <--Very important!!!
-     body: test_swipe
- }, function(err, res) {
-   console.log("testing swipedRight/swipedOn POST request");
- 	console.log("POST response body  - " + res.body);
- });
+// request.post({
+//     url: url + "user/swipe",
+//     // method: "POST",
+//     json: true,   // <--Very important!!!
+//     body: test_swipe
+// }, function(err, res) {
+//   console.log("testing swipedRight/swipedOn POST request");
+// 	console.log("POST response body  - " + res.body);
+// });
 
 /* Twilio Tests */
 

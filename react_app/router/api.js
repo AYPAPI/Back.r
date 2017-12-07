@@ -140,7 +140,6 @@ exports.createSettings = (email) => {
     .catch((error) => {
       console.error(error);
     });
-
 }
 
 //TODO
