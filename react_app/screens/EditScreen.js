@@ -7,6 +7,8 @@ import { Text,
     ScrollView,
     StyleSheet,
 KeyboardAvoidingView } from 'react-native';
+import { ImagePicker } from 'expo';
+import firebase from 'firebase';
 
 import { Avatar, Divider, Icon } from 'react-native-elements';
 
@@ -24,6 +26,14 @@ import { lightGrey,
 import { headerIconSize } from '../assets/styles/size.js';
 
 var profilePhoto = require('../assets/images/cannon_beach-01.jpg');
+async function UploadPhoto(){
+  let result = await ImagePicker.launchImageLibraryAsync({
+    base64: true
+  });
+  var imageString = result.base64;
+  //add imageString to database in picture array
+  //to display the image use:  source={{uri:"data:image/png;base64," + imageString}}
+}
 
 const styles = {
   headerIcon: {
