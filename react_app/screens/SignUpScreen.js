@@ -75,7 +75,7 @@ class SignUpScreen extends Component {
       .then(function(user){
         console.log('successfully created account');
         createUser(user_name, user_email);
-      //  createSettings(user_email);
+        createSettings(user_email);
 
         navigate("SignedIn", {name: user_name, email: user.email, isMaker: false})
     }).catch(function(error) {

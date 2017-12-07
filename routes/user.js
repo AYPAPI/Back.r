@@ -133,8 +133,8 @@ router.post("/swipe", function(req, res){
 router.post("/settings/create", function(req, res) {
   var isVisible = req.body.isVisible;
   var blockedUsers = req.body.blockedUsers;
-  var email = "brandonisadumdum@msn.com"
-  db.createSettings(isVisible, blockedUsers, email, database)
+  var email = req.body.email;
+  db.createSettings(location, isVisible, blockedUsers, email, database)
   res.json(req.body)
 });
 
@@ -144,7 +144,7 @@ router.post("/settings", function(req, res) {
   var isVisible = req.body.isVisible;
   var blockedUsers = req.body.blockedUsers;
   //var email = "brandonisadumdum@msn.com"
-  var email = "test@aypapi.com"
+  var email = req.body.email;
 
   db.updateSettings(location, isVisible, blockedUsers, email, database, function(message) {
     var status = message

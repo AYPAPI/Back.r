@@ -112,7 +112,7 @@ exports.postSwipe = (email, swipedEmail, isMaker, swipedRight) => {
       })
   }).then(function(response) {
     console.log("inside postSwipe api util callback");
-    return response;
+    return response.json();
   })
     .catch((error) => {
       console.error(error);
@@ -131,7 +131,8 @@ exports.createSettings = (email) => {
     },
     body: JSON.stringify({
       email: email,
-      blockedusers: []
+      blockedusers: [],
+      isVisible: false
     })
   }).then(function(response) {
     console.log("inside create settings api util callback");

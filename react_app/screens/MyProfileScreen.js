@@ -124,7 +124,8 @@ class MyProfileScreen extends Component {
 
   static navigationOptions = ({ navigation }) => {
       const { user } = navigation.state.params;
-      const { name, email } = navigation.state.params;
+      const { name, email, isMaker } = navigation.state.params;
+
 
       if(isMaker){
         buttonColor = makerPurple;
