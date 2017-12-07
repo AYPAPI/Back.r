@@ -97,11 +97,50 @@ exports.getSettings = (email) => {
 
 exports.postSwipe = (email, swipedEmail, isMaker, swipedRight) => {
   //Eric
+  console.log("posting swipe");
+  fetch( url + 'user', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: email,
+      swipedEmail: swipedEmail,
+      isMaker: false,
+      swipedRight: swipedRight
+      })
+  }).then(function(response) {
+    console.log("inside postSwipe api util callback");
+    return response.json();
+  })
+    .catch((error) => {
+      console.error(error);
+    });
 }
 
 //ONLY CALL ONCE on initial signup of user. All other edit settings call updateSettings
 exports.createSettings = () => {
   //eric
+  console.log("post create settings");
+  fetch( url + 'user/settings/create', {
+    method: 'POST',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: email,
+      blockedusers: blockedusers
+    })
+  }).then(function(response) {
+    console.log("inside create settings api util callback");
+    return response.json();
+  })
+    .catch((error) => {
+      console.error(error);
+    });
+
 }
 
 //TODO
