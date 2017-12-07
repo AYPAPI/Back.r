@@ -290,7 +290,7 @@ module.exports.readSettings = function (client, email, callback) {
   client.query(query, function(err,res) {
     if (err) throw err;
     rows = res.rows;
-<<<<<<< HEAD
+
 		for (var i = 0; i < rows.length; i++){
 			if (rows[i].email === email){
 				var row = rows[i]
@@ -300,18 +300,5 @@ module.exports.readSettings = function (client, email, callback) {
 				}
 			}
 		}
-=======
-    if (rows.length === 0){
-      console.log('user does not exist')
-      return
-    }
-    var obj = {
-      "latitude":rows[0].latitude,
-      "longitude":rows[0].longitude,
-      "isVisible" : rows[0].isvisible,
-      "blockedUsers":rows[0].blockedusers,
-    }
->>>>>>> 3b2c78c79763f79b3270ca284fac5fe59e90b3ba
-    callback(obj);
 	})
 }
