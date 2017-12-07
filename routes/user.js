@@ -32,9 +32,9 @@ router.patch("/", function(req,res){
 //reqest to update maker profile
 router.patch('/maker', function(req,res) {
   var email = req.body.email
-  var makerLongBio = req.body.profiles.maker.longBio
-  var makerPhotos = req.body.profiles.maker.photos
-  var makerIcon = req.body.profiles.maker.icons
+  var makerLongBio = req.body.longBio
+  var makerPhotos = req.body.photos
+  var makerIcon = req.body.icons
   db.updateProfile(email,makerLongBio,makerPhotos,makerIcon,database,'maker',function(message) {
     var status = message
     res.json(status)
@@ -43,9 +43,9 @@ router.patch('/maker', function(req,res) {
 
 router.patch('/backer', function(req,res) {
   var email = req.body.email
-  var backerLongBio = req.body.profiles.backer.longBio
-  var backerPhotos = req.body.profiles.backer.photos
-  var backerIcon = req.body.profiles.backer.icons
+  var backerLongBio = req.body.longBio
+  var backerPhotos = req.body.photos
+  var backerIcon = req.body.icons
   db.updateProfile(email,backerLongBio,backerPhotos,backerIcon,database,'backer',function(message) {
     var status = message
     res.json(status)
