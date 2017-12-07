@@ -161,5 +161,14 @@ router.get('/settings', function(req, res) {
   })
 });
 
+router.get('/getPotentialMatches', function(req, res){
+  var email = req.body.email
+  var isMaker = req.body.isMaker
+  db.getPotentialMatches(database,email,isMaker,function(user){
+    if (user !== null) console.log("got potential matches")
+      res.json(user)
+  })
+})
+
 
 module.exports = router;

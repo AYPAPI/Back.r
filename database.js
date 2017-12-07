@@ -247,14 +247,12 @@ module.exports.updateSettings = function(isVisible, blockedUsers, email, client,
           return
         } 
         var makerMatches = rows[0].matches
-        console.log(makerMatches)
         for (var i = 0; i < blockedUsers.length; i++){
           var index = makerMatches.indexOf(blockedUsers[i])
           if (index !== -1){
             makerMatches.splice(index,1)
           }
         }
-        console.log(makerMatches)
         //update matches array in maker
         query = 'UPDATE maker SET matches = $1 WHERE email = $2'
         client.query(query,[makerMatches,email],function(err,res){
@@ -285,12 +283,11 @@ module.exports.updateSettings = function(isVisible, blockedUsers, email, client,
 }
 
 module.exports.readSettings = function (client, email, callback) {
-    var tablename = 'settings'
+  var tablename = 'settings'
   let query = 'SELECT * FROM ' + tablename + ' WHERE email = \'' + email + '\''
   client.query(query, function(err,res) {
     if (err) throw err;
     rows = res.rows;
-<<<<<<< HEAD
 		for (var i = 0; i < rows.length; i++){
 			if (rows[i].email === email){
 				var row = rows[i]
@@ -300,7 +297,6 @@ module.exports.readSettings = function (client, email, callback) {
 				}
 			}
 		}
-=======
     if (rows.length === 0){
       console.log('user does not exist')
       return
@@ -311,7 +307,62 @@ module.exports.readSettings = function (client, email, callback) {
       "isVisible" : rows[0].isvisible,
       "blockedUsers":rows[0].blockedusers,
     }
->>>>>>> 3b2c78c79763f79b3270ca284fac5fe59e90b3ba
     callback(obj);
 	})
+}
+
+module.exports.getPotentialMatches = function(client,email,isMaker,callback){
+  let query = 'SELECT email from users'
+  //if user is a maker, get all users and delete swiped on in backer
+  // if user is backer, get all users and delete swiped on in maker
+  let tablename = (isMaker) ? 'backer' : 'maker'
+  userList = []
+  blockedUsers = []
+  swipedOn = []
+  client.query(query,function(err,res){
+    if (err) throw err;
+    rows = res.rows;
+    if (rows.length === 0){
+      console.log('user table is empty')
+      return
+    }
+    for (var i = 0; i < rows.length; i++){
+      userList.push(rows[i].email)
+    }
+    query = 'SELECT * from ' + tablename + ' WHERE email = \'' + email + '\''
+    client.query(query,function(err,res){
+      rows = res.rows;
+      if (rows.length === 0){
+        console.log('user does not exist')
+        return
+      }
+      swipedOn = rows[0].swipedon
+      query = 'SELECT * from settings WHERE email = \'' + email + '\''
+      client.query(query,function(err,res){
+        rows = res.rows;
+        if (rows.length === 0){
+          console.log('user does not exist')
+          return
+        }
+        blockedUsers = rows[0].blockedusers
+        //remove blockedUsers and matches from userList
+        userList = userList.filter(function(x) {return blockedUsers.indexOf(x) < 0});
+        userList = userList.filter(x => swipedOn.indexOf(x) < 0);
+        //remove nonvisible users
+        query = 'SELECT * from settings'
+        client.query(query,function(err,res){
+          rows = res.rows;
+          for (var i = 0; i < rows.length; i++){
+            //if email in user list and user isvisible is false, remove 
+            var index = userList.indexOf(rows[i].email)
+            if (index !== -1 && rows[i].isvisible === false){
+              userList.splice(index,1)     
+            }
+          }
+          console.log(userList)
+          callback(userList)
+        })
+      })
+    })
+  })
 }

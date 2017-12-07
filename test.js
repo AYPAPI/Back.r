@@ -7,7 +7,6 @@ var hot_bod = " with body = "
 function constructOutputString(res, body, ext) {
   return (res.request.method + " /" + ext + hot_bod + body + delimiter)
 }
-/*
  var test_user = {
  	"name":"vinay",
  	"age": 21,
@@ -34,6 +33,14 @@ function constructOutputString(res, body, ext) {
  		}
  	}
  }
+request.get({
+  url: url + "user/getPotentialMatches",
+  json: true,
+  body: test_user
+  }, function(err,res){
+    console.log(res.body)
+})
+/*
 request.patch({
   url: url + "user/isMaker",
   json: true,
