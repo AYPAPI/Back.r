@@ -238,6 +238,49 @@ module.exports.updateSettings = function(isVisible, blockedUsers, email, client,
     client.query(query, [isVisible, blockedUsers, email], function(err,res) {
       if (err) throw err;
       callback("Updated settings");
+      query = 'SELECT * from maker WHERE email = \'' + email + '\''
+      client.query(query,function(err,res){
+        if (err) throw err;
+        rows = res.rows;
+        if (rows.length === 0){
+          console.log('USER does not exist')
+          return
+        } 
+        var makerMatches = rows[0].matches
+        console.log(makerMatches)
+        for (var i = 0; i < blockedUsers.length; i++){
+          var index = makerMatches.indexOf(blockedUsers[i])
+          if (index !== -1){
+            makerMatches.splice(index,1)
+          }
+        }
+        console.log(makerMatches)
+        //update matches array in maker
+        query = 'UPDATE maker SET matches = $1 WHERE email = $2'
+        client.query(query,[makerMatches,email],function(err,res){
+          if (err) throw err;
+          query = 'SELECT * from backer WHERE email = \'' + email + '\''
+          client.query(query,function(err,res){
+            if (err) throw err;
+            rows = res.rows;
+            if (rows.length === 0){
+              console.log('USER does not exist')
+              return
+            }
+            var backerMatches = rows[0].matches
+            for (var i = 0; i < blockedUsers.length; i++){
+              var index = backerMatches.indexOf(blockedUsers[i])
+              if (index !== -1){
+                backerMatches.splice(index,1)
+              }
+            }
+            //update matches array in backer
+            client.query('UPDATE backer SET matches = $1 WHERE email = $2',[backerMatches,email],function(err,res){
+              if (err) throw err;
+            })
+          })
+        })
+      })
     })
 }
 
