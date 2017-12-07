@@ -9,6 +9,7 @@ import { Text,
 KeyboardAvoidingView } from 'react-native';
 import { ImagePicker } from 'expo';
 import firebase from 'firebase';
+import { updateProfile, udpateMakerProfile } from '../router/api.js'
 
 import { Avatar, Divider, Icon } from 'react-native-elements';
 
@@ -115,6 +116,10 @@ const styles = {
 
 class EditScreen extends Component {
 
+  editProfile(shortbio) {
+    console.log("inside edit profile")
+    updateProfile(this.props.navigation.state.params.email, shortbio)
+  }
   constructor(props) {
     super(props);
 
@@ -132,6 +137,12 @@ class EditScreen extends Component {
   static navigationOptions = {
     title: "Edit Profile"
   }
+
+  componentDidMount() {
+    this.editProfile("hi this is me")
+  }
+
+
 
   render() {
 

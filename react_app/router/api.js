@@ -145,8 +145,50 @@ exports.createSettings = (email) => {
 
 //TODO
 //Function called in EditScreen.
-exports.updateProfile = (isMaker, longbio, shortbio, ) => {
-  //Sarah
+exports.updateProfile = (email, shortbio) => {
+
+  console.log("post create settings");
+  fetch( url + 'user', {
+    method: 'PATCH',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: email,
+      shortbio: shortbio
+    })
+  }).then(function(response) {
+    console.log("update profile pi util callback");
+    return response.json();
+  })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+exports.updateMakerProfile = (longbio, photos, icons, email) => {
+  console.log("post create settings");
+  fetch( url + 'user/settings/create', {
+    method: 'PATCH',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: email,
+      shortbio: shortbio
+    })
+  }).then(function(response) {
+    console.log("inside UPDATEMAKERPROFILE api util callback");
+    return response.json();
+  })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+
 
   //Fetch user first
   /* Order for icon booleans:
@@ -156,7 +198,7 @@ exports.updateProfile = (isMaker, longbio, shortbio, ) => {
   manpower
   collaborators
   */
-}
+
 
 //TODO
 exports.updateSettings = (email) => {

@@ -95,6 +95,7 @@ class LoginScreen extends Component {
           createUser(user_name, user_email);
 
           createSettings(user_email);
+          console.log(user.email)
           navigate("SignedIn", {name: user_name, email: user_email, isMaker: false});
         }).catch((error) => {
           // Handle Errors here.

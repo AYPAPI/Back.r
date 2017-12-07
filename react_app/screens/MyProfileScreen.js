@@ -246,7 +246,7 @@ class MyProfileScreen extends Component {
                           backgroundColor={buttonColor}
                           icon={{name: 'settings', type: 'MaterialIcons'}}
                           title= 'Edit Account Settings'
-                          onPress={()=> navigate('Settings', {user: this.props.navigation.state.params.user})}
+                          onPress={()=> navigate('Settings', {name: name, email: email, isMaker: isMaker})}
                         />
 
                         <Button
@@ -258,7 +258,7 @@ class MyProfileScreen extends Component {
                           backgroundColor={buttonColor}
                           icon={{name: 'edit', type: 'MaterialCommunityIcons' }}
                           title={editText}
-                          onPress={()=> navigate('Edit')}
+                          onPress={()=> navigate('Edit', name: name, email: email, isMaker: isMaker)}
                         />
 
                         <Button
