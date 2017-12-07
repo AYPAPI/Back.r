@@ -10,7 +10,7 @@ KeyboardAvoidingView } from 'react-native';
 import { ImagePicker } from 'expo';
 import firebase from 'firebase';
 import { updateProfile,
-    udpateMakerProfile,
+    updateMakerProfile,
     updateBackerProfile,
     updateSettings,
 updateIsMaker } from '../router/api.js';
@@ -65,12 +65,21 @@ const styles = {
       justifyContent: 'space-between',
       marginRight: 20,
   },
-  headerText: {
+  backerText: {
       fontSize: 20,
       fontFamily: 'gotham-rounded',
       alignItems: 'flex-start',
       color: backerBlue,
       marginTop: 20,
+      marginLeft: 10,
+      marginRight: 10,
+  },
+  makerText: {
+      fontSize: 20,
+      fontFamily: 'gotham-rounded',
+      alignItems: 'flex-start',
+      marginTop: 20,
+      color: makerPurple,
       marginLeft: 10,
       marginRight: 10,
   },
@@ -164,23 +173,28 @@ class EditScreen extends Component {
       collaborators: false,
       longbio: "",
       shortbio: "",
-      photos: []
+      photos: [],
     };
 
   }
 
-  static navigationOptions = {
+  componentDidMount() {
+
+  }
+
+   static navigationOptions = {
     title: "Edit Profile"
   }
 
   render() {
 
     const { navigate } = this.props.navigation;
+    const { isMaker, name, email } = this.props.navigation.state.params;
 
     return (
       <ScrollView style={styles.container}>
         <View style={styles.editPhotosContainer}>
-          <Text style={styles.headerText}>
+          <Text style={[styles.backerText, isMaker && styles.makerText]}>
               Edit Profile Photos
           </Text>
           <View style={styles.photosContainer}>
@@ -200,7 +214,7 @@ class EditScreen extends Component {
                       activeOpacity={0.5}
                       source={require('../assets/images/shuttle-01.jpg')}
                       onPress={()=>navigate()}
-                      />
+                  />
                   <Avatar
                       rounded
                       width={85}
@@ -212,7 +226,7 @@ class EditScreen extends Component {
                   </View>
           </View>
 
-          <Text style={styles.headerText}>
+          <Text style={[styles.backerText, isMaker && styles.makerText]}>
               Tell us about yourself
           </Text>
 

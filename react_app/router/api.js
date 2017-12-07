@@ -152,7 +152,7 @@ exports.createSettings = (email) => {
 }
 
 //Updates the user's isMaker in our database.
-exports.updateIsMaker = (newIsMaker) => {
+exports.updateIsMaker = (newIsMaker, email) => {
   fetch( url + 'user/isMaker', {
     method: 'PATCH',
     headers: {
