@@ -13,7 +13,9 @@ import { updateProfile,
     updateMakerProfile,
     updateBackerProfile,
     updateSettings,
-updateIsMaker } from '../router/api.js';
+    updateIsMaker,
+    getMaker,
+    getBacker} from '../router/api.js';
 
 import { Avatar, Divider, Icon } from 'react-native-elements';
 
@@ -30,13 +32,18 @@ import { lightGrey,
 
 import { headerIconSize } from '../assets/styles/size.js';
 
+
+
+//this.setState({ myArray: [...this.state.myArray, ...[1,2,3] ] })
+var photosToAdd = []
+
 var profilePhoto = require('../assets/images/cannon_beach-01.jpg');
 async function UploadPhoto(){
   let result = await ImagePicker.launchImageLibraryAsync({
     base64: true
   });
   var imageString = result.base64;
-  //add imageString to database in picture array
+  photosToAdd.push(imageString)
   //to display the image use:  source={{uri:"data:image/png;base64," + imageString}}
 }
 
@@ -145,9 +152,14 @@ class EditScreen extends Component {
     console.log("these are my icons " + icons)
     console.log(email)
 
+
+  //  console.log( "Added photos: " + photosToAdd)
+  console.log(this.state.makerBacker)
+    console.log("current photos in makerBacker " + this.state.makerBacker.photos)
+    this.setState({ photos: [this.state.makerBacker.photos, photosToAdd] })
+
     //TODO add in photo array, currently passing in empty array to
     //updateMaker/Backer Profile.
-    var changeThisPhotosVar = []
 
     console.log("inside editMakerBacker in EditScreen editing profile with " + longbio)
     if(isMaker) {
@@ -174,12 +186,18 @@ class EditScreen extends Component {
       longbio: "",
       shortbio: "",
       photos: [],
+      makerBacker: {},
     };
-
   }
 
   componentDidMount() {
+    const {email, isMaker} = this.props.navigation.state.params
 
+    if(isMaker) {
+      this.setState({"makerBacker": getMaker(email)})
+    } else {
+      this.setState({"makerBacker": getBacker(email)});
+    }
   }
 
    static navigationOptions = {
@@ -221,7 +239,7 @@ class EditScreen extends Component {
                       height={85}
                       activeOpacity={0.5}
                       icon={{name:'camera', type:'material-community', size: 30}}
-                      onPress={()=>navigate()}
+                      onPress={()=>UploadPhoto()}
                       />
                   </View>
           </View>

@@ -32,7 +32,6 @@ var secondCardPhoto = require('../assets/images/ceo_photo.jpg');
 export const window = Dimensions.get('window');
 var cardHeight = window.height - 140;
 
-
 const styles = {
     headerIcon: {
       color: lightGrey,

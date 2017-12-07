@@ -56,10 +56,10 @@ exports.getUser = (email) => {
   fetch(url + urlParams)
   .then(function(response) { return response.json(); })
   .then(function(data) {
-    console.log(data);
-    return data;
-  });
+    console.log("Inside user get " + JSON.stringify(data));
 
+    return JSON.stringify(data);
+  });
 }
 
 //Get the maker profile of a specified user.
@@ -70,27 +70,25 @@ exports.getMaker = (email) => {
   fetch(url + urlParams)
   .then(function(response) { return response.json(); })
   .then(function(data) {
-    console.log(data);
+    console.log("Inside API");
+
     return data;
   });
 }
 
 //Get the backer profile of a specified user.
 exports.getBacker = (email) => {
-  //Me
   console.log("GET user request");
-  //Sarah
   var urlParams = "user/backer?email=" + email;
 
   fetch(url + urlParams)
   .then(function(response) { return response.json(); })
   .then(function(data) {
-    console.log(data);
+    console.log("Inside backer get " + data.email);
+    console.log("full data inside API " + data)
     return data;
   });
-
 }
-
 
 //Retrieve a user's settings. (really only their blockedUsers lol)
 exports.getSettings = (email) => {

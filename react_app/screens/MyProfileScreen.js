@@ -120,7 +120,6 @@ class MyProfileScreen extends Component {
             this.setState({'buttonColor': backerBlue}); //Update our screen state.
             this.setState({'editText': "Edit Backer Profile"}); //Update our screen state.
             this.setState({'switchText': "Switch to Maker"}); //Update our screen state.
-
             globalIsMaker = false //Update for nav options.
             updateIsMaker(false, this.state.email) //Update in our database
         }
@@ -130,7 +129,7 @@ class MyProfileScreen extends Component {
             this.setState({'buttonColor': makerPurple}); //Update our screen state.
             this.setState({'editText': "Edit Maker Profile"}); //Update our screen state.
             this.setState({'switchText': "Switch to Backer"}); //Update our screen state.
-
+            console.log(this.state.makerBacker)
             updateIsMaker(true, this.state.email)
         }
     }
