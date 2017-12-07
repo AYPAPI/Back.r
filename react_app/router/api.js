@@ -143,8 +143,27 @@ exports.createSettings = (email) => {
     });
 }
 
-//TODO
-//Function called in EditScreen.
+//Updates the user's isMaker in our database.
+exports.updateIsMaker = (newIsMaker) => {
+  fetch( url + 'user/isMaker', {
+    method: 'PATCH',
+    headers: {
+      'Accept': 'application/json',
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      email: email,
+      isMaker: newIsMaker
+    })
+  }).then(function(response) {
+    return response.json();
+  })
+    .catch((error) => {
+      console.error(error);
+    });
+}
+
+//Function called in EditScreen. Update's user profile - really only shortbio.
 exports.updateProfile = (email, shortbio) => {
 
   console.log("post create settings");
@@ -159,7 +178,6 @@ exports.updateProfile = (email, shortbio) => {
       shortbio: shortbio
     })
   }).then(function(response) {
-    console.log("update profile pi util callback");
     return response.json();
   })
     .catch((error) => {
@@ -167,6 +185,7 @@ exports.updateProfile = (email, shortbio) => {
     });
 }
 
+//Updates user's maker profile. Updates longbio, photos, and icons.
 exports.updateMakerProfile = (longbio, photos, icons, email) => {
   console.log("post create settings");
   fetch( url + 'user/settings/create', {
@@ -176,28 +195,19 @@ exports.updateMakerProfile = (longbio, photos, icons, email) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
+      longBio: longbio,
       email: email,
-      shortbio: shortbio
+      photos: photos,
+      icons: icons
     })
   }).then(function(response) {
-    console.log("inside UPDATEMAKERPROFILE api util callback");
+    console.log("inside UPDATE MAKER PROFILE api util callback");
     return response.json();
   })
     .catch((error) => {
       console.error(error);
     });
 }
-
-
-
-  //Fetch user first
-  /* Order for icon booleans:
-  money
-  materials
-  knowledge
-  manpower
-  collaborators
-  */
 
 
 //TODO

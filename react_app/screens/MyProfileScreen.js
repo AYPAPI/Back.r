@@ -179,6 +179,8 @@ class MyProfileScreen extends Component {
 
     const { navigate } = this.props.navigation;
     const { name, email, isMaker } = this.props.navigation.state.params;
+    console.log("inside my Profile " + email)
+
 
       return (
             <View style={styles.container}>
@@ -190,7 +192,7 @@ class MyProfileScreen extends Component {
                               activeOpacity={0.7}
                               source={profilePhoto}
                               onPress={()=>navigate('UserProfile',
-                                                    {user:'yourOwnProfile'})}
+                                                    {user:email})}
                               />
                       </View>
 
@@ -258,7 +260,7 @@ class MyProfileScreen extends Component {
                           backgroundColor={buttonColor}
                           icon={{name: 'edit', type: 'MaterialCommunityIcons' }}
                           title={editText}
-                          onPress={()=> navigate('Edit', name: name, email: email, isMaker: isMaker)}
+                          onPress={()=> navigate('Edit',{ name: name, email: email, isMaker: isMaker}) }
                         />
 
                         <Button
