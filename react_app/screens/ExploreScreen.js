@@ -9,9 +9,7 @@ import {
 import { Card, Icon, Text } from 'react-native-elements';
 import Swiper from 'react-native-swiper-animated'
 import {Dimensions} from 'react-native';
-import { getUser } from '../router/api.js';
-
-
+import { getUser, getCardStack } from '../router/api.js';
 
 import { lightGrey,
     backerBlue,
@@ -141,7 +139,8 @@ class ExploreScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {}
+      user: {},
+      cardList: []
     }
   }
 
@@ -151,11 +150,25 @@ class ExploreScreen extends Component {
   }
 
   componentDidMount() {
-    if(this.props.navigation.state.params.name === "") {
-      this.setState({"user": getUser(this.props.navigation.state.params.email)})
+    const {email, name, isMaker} = this.props.navigation.state.params
+
+    //If user logged in via email and password, retrieve the name.
+    if(name === "") {
+      getUser(email)
+      .then((data) => {
+        this.setState({
+          "user": data,
+        })
+      });
     } else {
-      this.setState({"user": this.props.navigation.state.params.name})
+      this.setState({"user": name})
     }
+
+    getCardStack(email, isMaker)
+    .then((data) => {
+      console.log(data)
+      this.setState({"cardList": data})
+    })
   }
 
     static navigationOptions = ({ navigation }) => {

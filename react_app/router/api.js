@@ -115,8 +115,8 @@ exports.getSettings = async (email) => {
 }
 
 //Retrieve a user's settings. (really only their blockedUsers lol)
-exports.getPotentialUsers = async (email) => {
-  var urlParams = "user/getPotentialMatches=" + email;
+exports.getCardStack = async (email, isMaker) => {
+  var urlParams = "user/getPotentialMatches?email=" + email + "&isMaker=" + isMaker
 
   const response = await fetch(url + urlParams, {
             method: 'GET',
