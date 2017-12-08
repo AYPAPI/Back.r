@@ -139,7 +139,6 @@ class ExploreScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      user: {},
       cardList: []
     }
   }
@@ -150,19 +149,8 @@ class ExploreScreen extends Component {
   }
 
   componentDidMount() {
-    const {email, name, isMaker} = this.props.navigation.state.params
-
+    const { email, name, isMaker } = this.props.navigation.state.params
     //If user logged in via email and password, retrieve the name.
-    if(name === "") {
-      getUser(email)
-      .then((data) => {
-        this.setState({
-          "user": data,
-        })
-      });
-    } else {
-      this.setState({"user": name})
-    }
 
     getCardStack(email, isMaker)
     .then((data) => {

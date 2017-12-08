@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet, NativeModules } from 'react-native';
 import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
-import { createUser, getuser, createSettings } from '../router/api.js';
+import { createUser, getUser, createSettings } from '../router/api.js';
 
 
 import { Font } from 'expo';
@@ -113,6 +113,7 @@ class LoginScreen extends Component {
     firebase.auth().signInWithEmailAndPassword(this.state.email,this.state.password).then(function(user) {
       console.log('successfully logged in ' + JSON.stringify(user))
       console.log("User's email = " + user.email)
+
       navigate("SignedIn", {name: "", email: user.email, isMaker: false});
 
       this.load = true

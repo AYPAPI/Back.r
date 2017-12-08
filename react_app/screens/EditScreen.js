@@ -144,8 +144,6 @@ class EditScreen extends Component {
   editProfile(shortbio) {
     const { email } = this.props.navigation.state.params.email
 
-    console.log("inside editProfile in EditScreen editing profile with " + shortbio)
-
     updateProfile(email, shortbio)
 
   }
@@ -155,18 +153,17 @@ class EditScreen extends Component {
 
     let icons = [this.state.money, this.state.materials, this.state.knowledge,
                   this.state.manpower, this.state.collaborators]
-    var newPhotosArr = this.state.makerBacker.photos
 
-    for(var i = 0; i < photosToAdd.length; i++) {
-      newPhotosArr.push(photosToAdd[i])
-    }
+    //TODO find some other way to display photos. string too large.
+    //var newPhotosArr = this.state.makerBacker.photos
+
+    //  for(var i = 0; i < photosToAdd.length; i++) {
+    //  newPhotosArr.push(photosToAdd[i])
 
     if(isMaker) {
-      updateMakerProfile(longbio, newPhotosArr, icons, email)
-
+      updateMakerProfile(longbio, [], icons, email)
     } else {
-      updateBackerProfile(longbio, newPhotosArr, icons, email)
-
+      updateBackerProfile(longbio, [], icons, email)
     }
   }
 
@@ -175,7 +172,7 @@ class EditScreen extends Component {
     this.editMakerBacker(this.state.longbio)
 
     const name = this.props.navigation.state.params.name
-
+    console.log("inside userDone " + this.state)
     if(isErr) {
       alert("failure for editing data for " + name + ":(")
     } else {
@@ -335,7 +332,7 @@ class EditScreen extends Component {
 
           <TextInput style={styles.inputStyle}
           maxLength={30}
-          onFocus = {() => this.setState("name": "")}
+          onChangeText = {(text) => this.setState({"name":text})}
           value={this.state.name}
           />
 
