@@ -27,6 +27,7 @@ router.get('/token', function(req, res) {
 
 /* GET the list of available channels */
 router.get('/channels', function(req, res) {
+	var name = req.query && req.query.name;//person's displayName
 	var identity = req.query && req.query.identity;
 	var endpointId = req.query && req.query.endpointId;
 	var token = req.body && req.body.token;
@@ -41,7 +42,7 @@ router.get('/channels', function(req, res) {
 
 		var client = new Chat.Client(token)
 
-	    twilioLib.getChannels(client, identity, function(channels) {
+	    twilioLib.getChannels(client, identity, name, function(channels) {
 	    	result = {
 				"channels":channels
 			}

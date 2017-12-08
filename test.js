@@ -7,7 +7,10 @@ var hot_bod = " with body = "
 function constructOutputString(res, body, ext) {
   return (res.request.method + " /" + ext + hot_bod + body + delimiter)
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9648b49ff703ae80d8b50921da766e35f3eb76ec
  var test_user = {
  	"name":"vinay",
  	"age": 21,
@@ -34,7 +37,14 @@ function constructOutputString(res, body, ext) {
  		}
  	}
  }
- /*
+request.get({
+  url: url + "user/getPotentialMatches",
+  json: true,
+  body: test_user
+  }, function(err,res){
+    console.log(res.body)
+})
+/*
 request.patch({
   url: url + "user/isMaker",
   json: true,
@@ -154,7 +164,6 @@ request.patch({
 //     console.log("lat: "  + res.body.latitude)
 //   }
 // });
-<<<<<<< HEAD
 
 // var test_swipe = {
 //     "email":"test@aypapi.com",
@@ -174,7 +183,6 @@ request.patch({
 // 	console.log("POST response body  - " + res.body);
 // });
 
-=======
 /*
  var test_swipe = {
      "email":"test@aypapi.com",
@@ -194,7 +202,6 @@ request.patch({
  	console.log("POST response body  - " + res.body);
  });
 */
->>>>>>> 69ee66f94a9e7febe4c1414ba746182bdc7980f2
 /* Twilio Tests */
 
 /* Test Objects */
@@ -224,7 +231,8 @@ var test_channel = {
     "endpointId": "61553df94c234a691130ab9d3438b074"
   },
   "other_user" : {
-    "email": "vylana"
+    "email": "vylana@gmail.com",
+    "name": "vylana"
   }
 }
 
