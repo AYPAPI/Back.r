@@ -323,7 +323,7 @@ module.exports.readSettings = function (client, email, callback) {
   client.query(query, function(err,res) {
     if (err) throw err;
     rows = res.rows;
-    console.log("get settings query result: " + res.json());
+    console.log("get settings query result: " + res);
 
 				var obj = {
           "isVisible" : rows[0].isvisible,
