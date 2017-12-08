@@ -289,16 +289,14 @@ module.exports.readSettings = function (client, email, callback) {
   client.query(query, function(err,res) {
     if (err) throw err;
     rows = res.rows;
-    console.log("get settings query result: " + res);
-		for (var i = 0; i < rows.length; i++){
-			if (rows[i].email === email){
-				var row = rows[i]
+    console.log("get settings query result: " + res.json());
+
 				var obj = {
-          "isVisible" : row.isvisible,
-          "blockedUsers":row.blockedusers,
+          "isVisible" : rows[0].isvisible,
+          "blockedUsers": rows[0].blockedusers,
 				}
-			}
-		}
+
+
     callback(obj);
 	})
 }
