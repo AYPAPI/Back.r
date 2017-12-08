@@ -284,12 +284,12 @@ module.exports.updateSettings = function(isVisible, blockedUsers, email, client,
 }
 
 module.exports.readSettings = function (client, email, callback) {
-    var tablename = 'settings'
+  var tablename = 'settings'
   let query = 'SELECT * FROM ' + tablename + ' WHERE email = \'' + email + '\''
   client.query(query, function(err,res) {
     if (err) throw err;
     rows = res.rows;
-
+    console.log("get settings query result: " + res);
 		for (var i = 0; i < rows.length; i++){
 			if (rows[i].email === email){
 				var row = rows[i]
