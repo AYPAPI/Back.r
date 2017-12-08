@@ -35,6 +35,8 @@ router.patch('/maker', function(req,res) {
   var makerLongBio = req.body.longBio
   var makerPhotos = req.body.photos
   var makerIcon = req.body.icons
+  console.log("Iside user.js update maker" + makerPhotos)
+
   db.updateProfile(email,makerLongBio,makerPhotos,makerIcon,database,'maker',function(message) {
     var status = message
     res.json(status)
@@ -46,7 +48,7 @@ router.patch('/backer', function(req,res) {
   var backerLongBio = req.body.longBio
   var backerPhotos = req.body.photos
   var backerIcon = req.body.icons
-  console.log("inside user.js " + backerPhotos)
+  console.log("inside user.js update backer" + backerPhotos)
   db.updateProfile(email,backerLongBio,backerPhotos,backerIcon,database,'backer',function(message) {
     var status = message
     res.json(status)
@@ -157,6 +159,15 @@ router.get('/settings', function(req, res) {
     res.json(user_settings);
   })
 });
+
+router.get('/getPotentialMatches', function(req, res){
+  var email = req.body.email
+  var isMaker = req.body.isMaker
+  db.getPotentialMatches(database,email,isMaker,function(user){
+    if (user !== null) console.log("got potential matches")
+      res.json(user)
+  })
+})
 
 
 module.exports = router;
