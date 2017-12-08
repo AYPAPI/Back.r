@@ -212,7 +212,6 @@ class ExploreScreen extends Component {
                         imageStyle={styles.imageWrapper}>
                         <View style={styles.descriptionContainer}>
                             <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}
-                                onPress={ () => alert('go to this user!')}
                                 activeOpacity={0.5}>
                                 Human Biology/Comp Sci Student
                             </Text>
@@ -263,7 +262,7 @@ class ExploreScreen extends Component {
                         imageWrapperStyle={styles.imageWrapper}
                         imageStyle={styles.imageWrapper}>
                         <View style={styles.descriptionContainer}>
-                                <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}>
+                                <Text style={[styles.makerTitle, isMaker && styles.backerTitle]}>
                                     Important CEO Guy
                                 </Text>
                             <View style={styles.subTitleContainer}>

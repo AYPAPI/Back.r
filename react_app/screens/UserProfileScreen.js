@@ -7,6 +7,7 @@ import { Text,
     StyleSheet,
     Card } from 'react-native';
 import { Avatar, Icon } from 'react-native-elements';
+import {getBacker, getMaker, getUser} from '../router/api.js';
 
 import { lightGrey,
     backerBlue,
@@ -97,9 +98,45 @@ class UserProfileScreen extends Component {
     };
 };
 
+constructor(props) {
+  super(props);
+  this.state = {
+    makerBacker: {},
+    userProfile: {}
+  }
+}
+
+setProfileState() {
+  const {email} = this.props.navigation.state.params.email
+
+  if(this.state.isMaker) {
+    getMaker(email)
+    .then((data) => {
+      this.setState({
+        "makerBacker": data,
+      })
+    });
+  } else {
+    getBacker(email)
+    .then((data) => {
+      this.setState({
+        "makerBacker": data,
+      })
+    });
+  }
+}
+
+componentDidMount() {
+  const { name, email, isMaker, shortbio } = this.props.navigation.state.params
+
+  //Set Maker/Backer profile using this.state.makerBacker as dependency.
+  this.setProfileState()
+}
+
   render() {
 
     const { navigate } = this.props.navigation;
+    const { name, email, isMaker, shortbio } = this.props.navigation.state.params
 
     return (
       <ScrollView style={styles.container}>
@@ -112,11 +149,11 @@ class UserProfileScreen extends Component {
 
             <View style={styles.descriptionContainer}>
                 <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}>
-                    Computer Science Lecturer
+                    {shortbio}
                 </Text>
                 <View style={styles.subTitleContainer}>
                     <Text style={styles.subtitleText}>
-                        Gary Gillespie
+                        {name}
                     </Text>
                     <View style={styles.iconsContainer}>
                         <Icon iconStyle={styles.iconStyle}
@@ -149,7 +186,7 @@ class UserProfileScreen extends Component {
 
             <View style={styles.bioContainer}>
                 <Text style={styles.bioText}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus egestas sapien nec lobortis tincidunt. Donec commodo, felis id convallis ultrices, velit arcu efficitur libero, at hendrerit dui felis eu massa. Donec tincidunt dolor quis erat dignissim, at vestibulum nisl placerat. Nunc pellentesque orci et convallis congue. Nam congue tortor urna, at consectetur nisl tincidunt id.
+                  {this.state.makerBacker.longbio}
                 </Text>
             </View>
         </ScrollView>

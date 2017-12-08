@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {Avatar, Icon, Button} from 'react-native-elements';
-import { getMaker, getBacker, updateIsMaker } from '../router/api.js';
+import { getMaker, getBacker, getUser, updateIsMaker } from '../router/api.js';
 
 //Method for logging out.
 import { onSignOut } from '../auth.js';
@@ -22,6 +22,7 @@ import { headerIconSize } from '../assets/styles/size.js';
 import FlipCard from 'react-native-flip-card'
 
 var profilePhoto = require('../assets/images/shuttle-01.jpg');
+var globalIsMaker = false
 
 const Dimensions = require('Dimensions');
 const window = Dimensions.get('window');
@@ -110,10 +111,11 @@ class MyProfileScreen extends Component {
       isMaker: false,
       editText: "Edit Backer Profile",
       buttonColor: backerBlue,
-      switchText: "Switch to Maker"
+      switchText: "Switch to Maker",
+      userProfile: {}
     }
   }
-    toggleIsMaker(){
+    toggleIsMaker() {
         if(this.state.isMaker){
             this.setState({'isMaker': false}); //Update our screen state.
             this.setState({'buttonColor': backerBlue}); //Update our screen state.
@@ -121,7 +123,6 @@ class MyProfileScreen extends Component {
             this.setState({'switchText': "Switch to Maker"}); //Update our screen state.
             globalIsMaker = false //Update for nav options.
             console.log(this.state.makerBacker)
-
             updateIsMaker(false, this.state.email) //Update in our database
         }
         else{
@@ -133,6 +134,25 @@ class MyProfileScreen extends Component {
             console.log(this.state.makerBacker)
             updateIsMaker(true, this.state.email)
         }
+    }
+    setProfileState() {
+      const {email} = this.props.navigation.state.params.email
+
+      if(this.state.isMaker) {
+        getMaker(email)
+        .then((data) => {
+          this.setState({
+            "makerBacker": data,
+          })
+        });
+      } else {
+        getBacker(email)
+        .then((data) => {
+          this.setState({
+            "makerBacker": data,
+          })
+        });
+      }
     }
 
   static navigationOptions = ({ navigation }) => {
@@ -172,28 +192,29 @@ class MyProfileScreen extends Component {
     this.setState({"isMaker": isMaker})
 
     if(isMaker) {
-      getMaker(email)
-      .then((data) => {
-        this.setState({
-          "makerBacker": data,
-        })
-      });
+      this.setState({"buttonColor": makerPurple})
     } else {
-      getBacker(email)
-      .then((data) => {
-        this.setState({
-          "makerBacker": data,
-        })
-      });
+      this.setState({"buttonColor": backerBlue})
     }
+
+    //Get user for shortbio and name.
+    getUser(email)
+    .then((data) => {
+      this.setState({
+        "userProfile": data,
+      })
+    });
+    //Set Maker/Backer profile using this.state.makerBacker as dependency.
+    this.setProfileState()
   }
 
   render() {
 
     const { navigate } = this.props.navigation;
     const { name, email } = this.props.navigation.state.params;
+    const isMaker = globalIsMaker
     console.log("inside my Profile " + email)
-
+    const currProfile = this.state.makerBacker;
 
       return (
             <View style={styles.container}>
@@ -205,7 +226,9 @@ class MyProfileScreen extends Component {
                               activeOpacity={0.7}
                               source={profilePhoto}
                               onPress={()=>navigate('UserProfile',
-                                                    {user:email})}
+                              {name:name, email: email, isMaker: isMaker, shortbio:
+                                this.state.userProfile.shortbio, longbio:
+                                this.state.makerBacker.longbio})}
                               />
                       </View>
 
@@ -244,10 +267,10 @@ class MyProfileScreen extends Component {
 
                     <View style={styles.textContainer}>
                       <Text style={[styles.backerTitle, this.state.isMaker && styles.makerTitle]}>
-                          Biology/Comp Sci Student
+                          {this.state.userProfile.shortbio}
                       </Text>
                       <Text style={styles.subTitleStyle}>
-                          David Owens
+                          {name}
                       </Text>
                     </View>
 

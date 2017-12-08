@@ -15,7 +15,8 @@ import { updateProfile,
     updateSettings,
     updateIsMaker,
     getMaker,
-    getBacker} from '../router/api.js';
+    getBacker,
+  getUser } from '../router/api.js';
 
 import { Avatar, Divider, Icon } from 'react-native-elements';
 
@@ -49,6 +50,7 @@ async function UploadPhoto(){
 
 const styles = {
   headerIcon: {
+    color: lightGrey,
     margin: 15,
     fontSize: headerIconSize,
   },
@@ -134,6 +136,9 @@ const styles = {
   },
 };
 
+var isErr = false
+var self = null; //Used to access props/state inside navigation.
+
 class EditScreen extends Component {
 
   editProfile(shortbio) {
@@ -142,6 +147,7 @@ class EditScreen extends Component {
     console.log("inside editProfile in EditScreen editing profile with " + shortbio)
 
     updateProfile(email, shortbio)
+
   }
 
   editMakerBacker(longbio) {
@@ -155,18 +161,32 @@ class EditScreen extends Component {
       newPhotosArr.push(photosToAdd[i])
     }
 
-    console.log(newPhotosArr);
-
     if(isMaker) {
       updateMakerProfile(longbio, newPhotosArr, icons, email)
+
     } else {
       updateBackerProfile(longbio, newPhotosArr, icons, email)
+
     }
   }
 
   userDoneEditing() {
     this.editProfile(this.state.shortbio)
     this.editMakerBacker(this.state.longbio)
+
+    const name = this.props.navigation.state.params.name
+
+    if(isErr) {
+      alert("failure for editing data for " + name + ":(")
+    } else {
+      alert(
+        'Edit Success',
+        'Saved changes for ' + name + '!',
+        [
+          {text: 'Back to Profile', onPress: () => this.props.navigation.goBack()}
+        ],
+        { cancelable: false }
+      )    }
   }
 
   constructor(props) {
@@ -177,21 +197,40 @@ class EditScreen extends Component {
       materials: false,
       knowledge: false,
       manpower: false,
+      name: "",
       collaborators: false,
       longbio: "",
       shortbio: "",
       photos: [],
       makerBacker: {},
+      userProfile: {}
     };
   }
 
   componentDidMount() {
-    const {email, isMaker} = this.props.navigation.state.params
+    const {email, isMaker, name} = this.props.navigation.state.params
+    this.setState({"name": name})
+    self = this //Set global self for rendering header props.
+
+    //Set userProfile in state to get current name and shortbio.
+    getUser(email)
+    .then((data) => {
+      this.setState({
+        "userProfile": data,
+      })
+      this.setState({
+        "shortbio": data.shortbio
+      })
+    });
+
     if(isMaker) {
       getMaker(email)
       .then((data) => {
         this.setState({
           "makerBacker": data,
+        })
+        this.setState({
+          "longbio": data.longbio
         })
       });
     } else {
@@ -200,18 +239,48 @@ class EditScreen extends Component {
         this.setState({
           "makerBacker": data,
         })
+        this.setState({
+          "longbio": data.longbio
+        })
       });
     }
   }
 
-   static navigationOptions = {
-    title: "Edit Profile"
+  static navigationOptions = ({ navigation }) => {
+  user = navigation.state.params;
+  isMaker = navigation.state.params.isMaker;
+  var profileText = ""
+  if(isMaker) {
+    profileText = "Maker"
+  } else {
+    profileText = "Backer"
   }
+
+  return {
+     headerLeft: (
+       <Button style={styles.headerIcon}
+        title="Cancel"
+        onPress={() => navigation.goBack()}
+      />
+    ),
+    headerTitle: "Edit " + profileText + " Profile",
+    headerRight: (
+      <Button style={styles.headerIcon}
+       title="Done"
+       onPress={() => self.userDoneEditing()}
+     />
+    ),
+  };
+};
+
 
   render() {
 
+    //Declare variables for easier calls
     const { navigate } = this.props.navigation;
     const { isMaker, name, email } = this.props.navigation.state.params;
+    var userProfile = this.state.userProfile
+    var makerBacker = this.state.makerBacker
 
     return (
       <ScrollView style={styles.container}>
@@ -266,6 +335,8 @@ class EditScreen extends Component {
 
           <TextInput style={styles.inputStyle}
           maxLength={30}
+          onFocus = {() => this.setState("name": "")}
+          value={this.state.name}
           />
 
           <Text style={styles.inputText}>
@@ -278,7 +349,7 @@ class EditScreen extends Component {
             height={100}
             maxLength={160}
             onChangeText = {(text) => this.setState({"shortbio":text})}
-            value = { this.state.shortbio }/>
+            value={ this.state.shortbio }/>
 
             <Text style={styles.inputText}>
                 An in-depth description...
@@ -289,7 +360,7 @@ class EditScreen extends Component {
               autoCorrect={true}
               height={200}
               onChangeText = {(text) => this.setState({"longbio":text})}
-              value = { this.state.longbio }/>
+              value={ this.state.longbio }/>
 
           <Text style={styles.headerText}>
               How can you help?

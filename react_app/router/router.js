@@ -12,15 +12,6 @@ import LoginScreen from "../screens/LoginScreen.js";
 import MatchesScreen from "../screens/MatchesScreen.js";
 import ForgotPasswordScreen from "../screens/ForgotPasswordScreen.js";
 
-export const MainStack = StackNavigator({
-  Explore: { screen: ExploreScreen },
-  MyProfile: { screen: MyProfileScreen },
-  UserProfile: { screen: UserProfileScreen },
-  Matches: { screen: MatchesScreen },
-  Thread: { screen: ThreadScreen },
-  Edit: { screen: EditScreen },
-  Settings: { screen: SettingsScreen }
-});
 
 export const LoginStack = StackNavigator({
   Login: { screen: LoginScreen },
@@ -29,6 +20,23 @@ export const LoginStack = StackNavigator({
 }, {
   headerMode: 'none',
   mode: 'modal'
+});
+
+export const EditProfileStack = StackNavigator({
+  MyProfile: { screen: MyProfileScreen },
+  Edit: { screen: EditScreen },
+}, {
+  headerMode: 'none',
+  mode: 'modal'
+});
+
+export const MainStack = StackNavigator({
+  Explore: { screen: ExploreScreen },
+  MyProfile: { screen: EditProfileStack },
+  UserProfile: { screen: UserProfileScreen },
+  Matches: { screen: MatchesScreen },
+  Thread: { screen: ThreadScreen },
+  Settings: { screen: SettingsScreen }
 });
 
 export const createRootNav = (signedIn = false) => {
