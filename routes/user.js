@@ -165,6 +165,9 @@ router.get('/settings', function(req, res) {
 router.get('/getPotentialMatches', function(req, res){
   var email = req.query && req.query.email
   var isMaker = req.query && req.query.isMaker
+
+  console.log("Inside getPotentialmatches " + email + " " + isMaker)
+
   db.getPotentialMatches(database,email,isMaker,function(user){
     if (user !== null) console.log("got potential matches")
       res.json(user)
