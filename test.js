@@ -7,10 +7,7 @@ var hot_bod = " with body = "
 function constructOutputString(res, body, ext) {
   return (res.request.method + " /" + ext + hot_bod + body + delimiter)
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> 9648b49ff703ae80d8b50921da766e35f3eb76ec
  var test_user = {
  	"name":"vinay",
  	"age": 21,
@@ -37,13 +34,14 @@ function constructOutputString(res, body, ext) {
  		}
  	}
  }
+ /*
 request.get({
   url: url + "user/getPotentialMatches",
   json: true,
   body: test_user
   }, function(err,res){
     console.log(res.body)
-})
+})*/
 /*
 request.patch({
   url: url + "user/isMaker",
@@ -77,7 +75,7 @@ request.patch({
 // var user_email = {
 //   email: "brandonisadumdum@msn.com"
 // }
-
+/*
  request.post({
      url: url + "user",
       method: "POST",
@@ -86,7 +84,7 @@ request.patch({
  }, function(err, res, body) {
  	console.log("POST response body  - " + res);
  });
-
+*/
 // // Get user
 // request.get({
 //   url: url + "user",
@@ -153,17 +151,16 @@ request.patch({
 //	console.log("POST response body  - " + res.body);
 //});
 
-// // Get user
-// request.get({
-//   url: url + "user/settings",
-//   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
-//   body: user_email
-// }, function(err, res) {
-//   if (res != null && res.body != null){
-//     console.log("User's settings are : " + res.body);
-//     console.log("lat: "  + res.body.latitude)
-//   }
-// });
+ // Get user settings
+ request.get({
+   url: url + "user/settings?email=pi2@pie.com",
+   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
+ }, function(err, res) {
+   if (res != null && res.body != null){
+     console.log("User's settings are : " + res.body);
+     console.log(JSON.stringify(res.body))
+   }
+ });
 
 // var test_swipe = {
 //     "email":"test@aypapi.com",
