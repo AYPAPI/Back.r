@@ -65,7 +65,7 @@ TwilioLib.prototype.createChannel = function(client, channel_obj, callback) {
     })
 }
 
-TwilioLib.prototype.getChannels = function(client, identity, callback) {
+TwilioLib.prototype.getChannels = function(client, identity, name, callback) {
 	channels = []
 	const service = client.getSubscribedChannels().then(page =>{
 		subscribedChannels = page.items.sort(function(a, b) {
@@ -73,7 +73,7 @@ TwilioLib.prototype.getChannels = function(client, identity, callback) {
         });
         channel_names = []
 		subscribedChannels.forEach(function(chan) {
-        var other_user = getOtherUser(chan.state.friendlyName, identity)
+        var other_user = getOtherUser(chan.state.friendlyName, name)
 		    channel_names.push({
           "unique_name" : chan.uniqueName,
           "other_user" : other_user

@@ -46,6 +46,7 @@ router.patch('/backer', function(req,res) {
   var backerLongBio = req.body.longBio
   var backerPhotos = req.body.photos
   var backerIcon = req.body.icons
+  console.log("inside user.js " + backerPhotos)
   db.updateProfile(email,backerLongBio,backerPhotos,backerIcon,database,'backer',function(message) {
     var status = message
     res.json(status)

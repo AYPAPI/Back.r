@@ -202,7 +202,42 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
             swipedEmailMatches = rows[0].matches
             if (swipedright.includes(email)){
               if (!matches.includes(swipedEmail)){
+                var test_channel = {
+                  "channel" : {
+                    "description": "This is a test channel",
+                    "friendlyName": "vinnie/vylana", //TODO - two names
+                    "uniqueName": "test_channel2", //MUST BE UNIQUE emails
+                    "identity" : "vinnie@gmail", //Swiper email
+                    "endpointId": "61553df94c234a691130ab9d3438b074"
+                  },
+                  "other_user" : {
+                    "email": "vylana@gmail.com",
+                    "name" : "vylana"
+                  }
+                }
+
+
                 matches.push(swipedEmail)
+
+
+                var createChannelTest = function(ext) {
+                  request.post({
+                      url: url + ext,
+                      json: true,
+                      body: test_channel
+                  }, function(err, res) {
+                    output = constructOutputString(res, "test_channel", ext)
+                    try {
+                      assert.equal(res.statusCode, 200)
+                      assert.ok(JSON.stringify(res.body))
+                      output += "O"
+                    }
+                    catch (err) {
+                      output += "X"
+                      output += "\n\t" + res.body
+                    }
+                    console.log(output)
+                  });
               }
               if (!swipedEmailMatches.includes(email)){
                 swipedEmailMatches.push(email)
