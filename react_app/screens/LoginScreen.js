@@ -92,9 +92,11 @@ class LoginScreen extends Component {
           console.log("User is" + user.displayName)
           user_name = user.displayName;
           user_email= user.email;
-          createUser(user_name, user_email);
+          createUser(user_name, user_email)
+          .then((data) => {
+            createSettings(user_email)
+          })
 
-          createSettings(user_email);
           console.log(user.email)
           navigate("SignedIn", {name: user_name, email: user_email, isMaker: false});
         }).catch((error) => {
