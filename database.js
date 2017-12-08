@@ -172,86 +172,87 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
     client.query(query, function(err, res) {
       if (err) throw err;
       rows = res.rows
-      if (rows.length === 0){
+      if (rows.length === 0) {
         console.log('user does not exist')
         return
       }
-        swipedright = rows[0].swipedright;
-        swipedon = rows[0].swipedon;
-        matches = rows[0].matches;
-        if(swipedRight === true) {
-          if (!swipedright.includes(swipedEmail)){
-            swipedright.push(swipedEmail)
+      swipedright = rows[0].swipedright;
+      swipedon = rows[0].swipedon;
+      matches = rows[0].matches;
+      if (swipedRight === true) {
+        if (!swipedright.includes(swipedEmail)) {
+          swipedright.push(swipedEmail)
+        }
+      }
+      if (!swipedon.includes(swipedEmail)) {
+        swipedon.push(swipedEmail)
+      }
+      let query2 = 'UPDATE ' + tablename + ' SET swipedright = $1, swipedon = $2 WHERE email = $3'
+      client.query(query2, [swipedright, swipedon, email], function (err, res) {
+        if (err) throw err;
+        callback("Updated swipe")
+        query = 'SELECT * FROM ' + tablename + ' WHERE email = \'' + swipedEmail + '\''
+        client.query(query, function (err, res) {
+          rows = res.rows
+          if (rows.length === 0) {
+            console.log('swipedEmail does not exist')
+            return
           }
-        }
-        if (!swipedon.includes(swipedEmail)){
-          swipedon.push(swipedEmail)
-        }
-        let query2 = 'UPDATE ' + tablename + ' SET swipedright = $1, swipedon = $2 WHERE email = $3'
-        client.query(query2,[swipedright, swipedon, email], function(err, res) {
-          if (err) throw err;
-          callback("Updated swipe")
-          query = 'SELECT * FROM ' + tablename + ' WHERE email = \'' + swipedEmail + '\''
-          client.query(query,function(err, res){
-            rows = res.rows
-            if (rows.length === 0){
-              console.log('swipedEmail does not exist')
-              return
-            }
-            swipedright = rows[0].swipedright
-            swipedEmailMatches = rows[0].matches
-            if (swipedright.includes(email)){
-              if (!matches.includes(swipedEmail)){
-                var test_channel = {
-                  "channel" : {
-                    "description": "This is a test channel",
-                    "friendlyName": "vinnie/vylana", //TODO - two names
-                    "uniqueName": "test_channel2", //MUST BE UNIQUE emails
-                    "identity" : "vinnie@gmail", //Swiper email
-                    "endpointId": "61553df94c234a691130ab9d3438b074"
-                  },
-                  "other_user" : {
-                    "email": "vylana@gmail.com",
-                    "name" : "vylana"
-                  }
+          swipedright = rows[0].swipedright
+          swipedEmailMatches = rows[0].matches
+          if (swipedright.includes(email)) {
+            if (!matches.includes(swipedEmail)) {
+              var test_channel = {
+                "channel": {
+                  "description": "This is a test channel",
+                  "friendlyName": "vinnie/vylana", //TODO - two names
+                  "uniqueName": "test_channel2", //MUST BE UNIQUE emails
+                  "identity": "vinnie@gmail", //Swiper email
+                  "endpointId": "61553df94c234a691130ab9d3438b074"
+                },
+                "other_user": {
+                  "email": "vylana@gmail.com",
+                  "name": "vylana"
                 }
-
-
-                matches.push(swipedEmail)
-
-
-                var createChannelTest = function(ext) {
-                  request.post({
-                      url: url + ext,
-                      json: true,
-                      body: test_channel
-                  }, function(err, res) {
-                    output = constructOutputString(res, "test_channel", ext)
-                    try {
-                      assert.equal(res.statusCode, 200)
-                      assert.ok(JSON.stringify(res.body))
-                      output += "O"
-                    }
-                    catch (err) {
-                      output += "X"
-                      output += "\n\t" + res.body
-                    }
-                    console.log(output)
-                  });
               }
-              if (!swipedEmailMatches.includes(email)){
+
+
+              matches.push(swipedEmail)
+
+
+              var createChannelTest = function (ext) {
+                request.post({
+                  url: url + ext,
+                  json: true,
+                  body: test_channel
+                }, function (err, res) {
+                  output = constructOutputString(res, "test_channel", ext)
+                  try {
+                    assert.equal(res.statusCode, 200)
+                    assert.ok(JSON.stringify(res.body))
+                    output += "O"
+                  }
+                  catch (err) {
+                    output += "X"
+                    output += "\n\t" + res.body
+                  }
+                  console.log(output)
+                });
+              }
+              if (!swipedEmailMatches.includes(email)) {
                 swipedEmailMatches.push(email)
               }
-              client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2',[matches,email],function(err,res){
+              client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2', [matches, email], function (err, res) {
                 if (err) throw err;
               });
-              client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2',[swipedEmailMatches,swipedEmail],function(err,res){
+              client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2', [swipedEmailMatches, swipedEmail], function (err, res) {
                 if (err) throw err;
               });
             }
-          })
+          }
         })
-  })
+      })
+    })
 }
 module.exports.createSettings = function(isVisible, blockedUsers, email, client) {
   var tablename = 'settings'

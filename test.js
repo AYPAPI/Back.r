@@ -7,10 +7,7 @@ var hot_bod = " with body = "
 function constructOutputString(res, body, ext) {
   return (res.request.method + " /" + ext + hot_bod + body + delimiter)
 }
-<<<<<<< HEAD
 
-=======
->>>>>>> 9648b49ff703ae80d8b50921da766e35f3eb76ec
  var test_user = {
  	"name":"vinay",
  	"age": 21,
