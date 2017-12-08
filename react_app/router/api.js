@@ -110,7 +110,23 @@ exports.getSettings = async (email) => {
             }
         });
   const json = await response.json();
-  console.log("113" + JSON.stringify(json));     // <-- (5) [Object, Object, Object, Object, Object]
+  console.log(json);     // <-- (5) [Object, Object, Object, Object, Object]
+  return json;
+}
+
+//Retrieve a user's settings. (really only their blockedUsers lol)
+exports.getPotentialUsers = async (email) => {
+  var urlParams = "user/getPotentialMatches=" + email;
+
+  const response = await fetch(url + urlParams, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        });
+  const json = await response.json();
+  console.log(json);     // <-- (5) [Object, Object, Object, Object, Object]
   return json;
 }
 
@@ -256,12 +272,8 @@ exports.updateBackerProfile =  (longbio, photos, icons, email) => {
 }
 
 //TODO
-
-exports.updateSettings = (email, blockedUsers, isVisible) => {
+exports.updateSettings =  (email, blockedUsers) => {
  //Eric
-  if(blockedUsers == null) {
-    blockedUsers = [];
-  }
   console.log("post update settings");
  fetch( url + 'user/settings', {
     method: 'POST',
@@ -272,7 +284,7 @@ exports.updateSettings = (email, blockedUsers, isVisible) => {
     body: JSON.stringify({
       email: email,
       blockedUsers: blockedUsers,
-      isVisible: isVisible
+      isVisible: false
     })
   }).then(function(response) {
     console.log("inside update settings api util callback");
