@@ -252,7 +252,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
 }
 module.exports.createSettings = function(isVisible, blockedUsers, email, client) {
   var tablename = 'settings'
-  let query = 'INSERT INTO ' + tablename + ' (email,isvisible,blockedusers) values ($1,$2,$3)';
+  let query = 'INSERT INTO   ' + tablename + ' (email,isvisible,blockedusers) values ($1,$2,$3)';
     console.log(query)
     console.log("called1")
     client.query(query,[email,isVisible, blockedUsers], function(err,res) {
@@ -347,9 +347,11 @@ module.exports.getPotentialMatches = function(client,email,isMaker,callback){
       return
     }
     for (var i = 0; i < rows.length; i++){
+      console.log(rows[i].email)
       userList.push(rows[i].email)
     }
     query = 'SELECT * from ' + tablename + ' WHERE email = \'' + email + '\''
+    console.log(query)
     client.query(query,function(err,res){
       rows = res.rows;
       if (rows.length === 0){
@@ -361,6 +363,7 @@ module.exports.getPotentialMatches = function(client,email,isMaker,callback){
 
       }
       query = 'SELECT * from settings WHERE email = \'' + email + '\''
+      console.log(query)
       client.query(query,function(err,res){
         rows = res.rows;
         if (rows.length === 0){
