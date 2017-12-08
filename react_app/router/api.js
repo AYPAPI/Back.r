@@ -164,8 +164,8 @@ exports.createSettings = (email) => {
 }
 
 //Updates the user's isMaker in our database.
-exports.updateIsMaker = async (newIsMaker, email) => {
-  await fetch( url + 'user/isMaker', {
+exports.updateIsMaker = (newIsMaker, email) => {
+  fetch( url + 'user/isMaker', {
     method: 'PATCH',
     headers: {
       'Accept': 'application/json',
@@ -184,10 +184,10 @@ exports.updateIsMaker = async (newIsMaker, email) => {
 }
 
 //Function called in EditScreen. Update's user profile - really only shortbio.
-exports.updateProfile = async (email, shortbio) => {
+exports.updateProfile = (email, shortbio) => {
 
   console.log("post create settings");
-  await fetch( url + 'user', {
+  fetch( url + 'user', {
     method: 'PATCH',
     headers: {
       'Accept': 'application/json',
@@ -206,9 +206,11 @@ exports.updateProfile = async (email, shortbio) => {
 }
 
 //Updates user's maker profile. Updates longbio, photos, and icons.
-exports.updateMakerProfile = async (longbio, photos, icons, email) => {
+exports.updateMakerProfile = (longbio, photos, icons, email) => {
   console.log("post update maker profile");
-  await fetch( url + 'user/maker', {
+  console.log("inside updateBackerProfile " + photos)
+
+  fetch( url + 'user/maker', {
     method: 'PATCH',
     headers: {
       'Accept': 'application/json',
@@ -230,9 +232,9 @@ exports.updateMakerProfile = async (longbio, photos, icons, email) => {
 }
 
 //Updates user's backer profile. Updates longbio, photos, and icons.
-exports.updateBackerProfile = async (longbio, photos, icons, email) => {
+exports.updateBackerProfile =  (longbio, photos, icons, email) => {
   console.log("post update maker profile");
-  await fetch( url + 'user/backer', {
+  fetch( url + 'user/backer', {
     method: 'PATCH',
     headers: {
       'Accept': 'application/json',
@@ -254,10 +256,10 @@ exports.updateBackerProfile = async (longbio, photos, icons, email) => {
 }
 
 //TODO
-exports.updateSettings = async (email, blockedUsers) => {
+exports.updateSettings =  (email, blockedUsers) => {
  //Eric
   console.log("post update settings");
-  await fetch( url + 'user/settings', {
+ fetch( url + 'user/settings', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',

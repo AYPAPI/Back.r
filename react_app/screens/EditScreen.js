@@ -149,23 +149,18 @@ class EditScreen extends Component {
 
     let icons = [this.state.money, this.state.materials, this.state.knowledge,
                   this.state.manpower, this.state.collaborators]
-    console.log("these are my icons " + icons)
-    console.log(email)
+    var newPhotosArr = this.state.makerBacker.photos
 
+    for(var i = 0; i < photosToAdd.length; i++) {
+      newPhotosArr.push(photosToAdd[i])
+    }
 
-  //  console.log( "Added photos: " + photosToAdd)
-    console.log(this.state.makerBacker)
-    console.log("current photos in makerBacker " + this.state.makerBacker)
-    this.setState({ photos: [this.state.makerBacker.photos, photosToAdd] })
+    console.log(newPhotosArr);
 
-    //TODO add in photo array, currently passing in empty array to
-    //updateMaker/Backer Profile.
-
-    console.log("inside editMakerBacker in EditScreen editing profile with " + longbio)
     if(isMaker) {
-      updateMakerProfile(longbio, changeThisPhotosVar, icons, email)
+      updateMakerProfile(longbio, newPhotosArr, icons, email)
     } else {
-      updateBackerProfile(longbio, changeThisPhotosVar, icons, email)
+      updateBackerProfile(longbio, newPhotosArr, icons, email)
     }
   }
 
@@ -192,13 +187,20 @@ class EditScreen extends Component {
 
   componentDidMount() {
     const {email, isMaker} = this.props.navigation.state.params
-
     if(isMaker) {
-      var obj = getMaker(email)
-      this.setState({"makerBacker": obj})
+      getMaker(email)
+      .then((data) => {
+        this.setState({
+          "makerBacker": data,
+        })
+      });
     } else {
-      var obj = getBacker(email)
-      this.setState({"makerBacker": obj});
+      getBacker(email)
+      .then((data) => {
+        this.setState({
+          "makerBacker": data,
+        })
+      });
     }
   }
 
