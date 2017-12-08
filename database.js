@@ -357,6 +357,9 @@ module.exports.getPotentialMatches = function(client,email,isMaker,callback){
         return
       }
       swipedOn = rows[0].swipedon
+      if(swipedOn === null) {
+
+      }
       query = 'SELECT * from settings WHERE email = \'' + email + '\''
       client.query(query,function(err,res){
         rows = res.rows;
