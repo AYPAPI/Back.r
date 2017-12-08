@@ -254,7 +254,7 @@ exports.updateBackerProfile = async (longbio, photos, icons, email) => {
 }
 
 //TODO
-exports.updateSettings = async (email, blockedUsers) => {
+exports.updateSettings = async (email, blockedUsers, isVisible) => {
  //Eric
   console.log("post update settings");
   await fetch( url + 'user/settings', {
@@ -266,7 +266,7 @@ exports.updateSettings = async (email, blockedUsers) => {
     body: JSON.stringify({
       email: email,
       blockedUsers: blockedUsers,
-      isVisible: false
+      isVisible: isVisible
     })
   }).then(function(response) {
     console.log("inside update settings api util callback");
