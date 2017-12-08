@@ -247,7 +247,8 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
           }
         })
       })
-    })
+    }
+  })
 }
 module.exports.createSettings = function(isVisible, blockedUsers, email, client) {
   var tablename = 'settings'
