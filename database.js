@@ -335,7 +335,7 @@ module.exports.getPotentialMatches = function(client,email,isMaker,callback){
     client.query(query,function(err,res){
       rows = res.rows;
       if (rows.length === 0){
-        console.log('user does not exist')
+        console.log('user does not exist checking user profile/maker/backer table.')
         return
       }
       swipedOn = rows[0].swipedon
@@ -344,7 +344,7 @@ module.exports.getPotentialMatches = function(client,email,isMaker,callback){
       client.query(query,function(err,res){
         rows = res.rows;
         if (rows.length === 0){
-          console.log('user does not exist')
+          console.log('user does not exist checking settings.')
           return
         }
         blockedUsers = rows[0].blockedusers
