@@ -110,7 +110,7 @@ exports.getSettings = async (email) => {
             }
         });
   const json = await response.json();
-  console.log(json);     // <-- (5) [Object, Object, Object, Object, Object]
+  console.log("113" + JSON.stringify(json));     // <-- (5) [Object, Object, Object, Object, Object]
   return json;
 }
 
@@ -259,6 +259,9 @@ exports.updateBackerProfile =  (longbio, photos, icons, email) => {
 
 exports.updateSettings = (email, blockedUsers, isVisible) => {
  //Eric
+  if(blockedUsers == null) {
+    blockedUsers = [];
+  }
   console.log("post update settings");
  fetch( url + 'user/settings', {
     method: 'POST',

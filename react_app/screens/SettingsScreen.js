@@ -113,19 +113,26 @@ class SettingsScreen extends Component {
 
   componentDidMount() {
     const {email} = this.props.navigation.state.params
-    var obj = getSettings(email)
-    console.log(obj.blockedUsers)
-    this.setState({visibleSwitch: obj.isVisible, blockedUsers: obj.blockedUsers})
+    getSettings(email)
+      .then((data) => {
+        //console.log("118" + data.isvisible == "true");
+        this.setState({visibleSwitch: data.isVisible})
+      })
   }
 
   userDoneEditing(value)  {
     const {email} = this.props.navigation.state.params
-    console.log(this.state.blockedUsers.length)
-    updateSettings(email, this.state.blockedUsers, this.state.visibleSwitch);
+    updateSettings(email, [], this.state.visibleSwitch);
+  }
+
+  getVisibleSwitch() {
+    //console.log("129" + this.state.visibleSwitch)
+    return this.state.visibleSwitch;
   }
 
   render() {
       return (
+
       <ScrollView style={styles.container}>
 
           <Text style={styles.headerText}>
@@ -149,9 +156,12 @@ class SettingsScreen extends Component {
              <Text style={styles.switchText}>
               Visible to other users
             </Text>
-            <Switch
-              onValueChange={ (value) => this.setState({visibleSwitch: value })}
-              value={this.state.visibleSwitch} />
+
+              <Switch
+                onValueChange={ (value) => this.setState({visibleSwitch: value })}
+                value={this.getVisibleSwitch()}
+              />
+
           </View>
 
           <Divider style={styles.dividerStyle}/>
@@ -215,6 +225,7 @@ class SettingsScreen extends Component {
           onPress={()=> this.userDoneEditing()}
         />
         </ScrollView>
+
     )
   }
 }
