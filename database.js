@@ -202,7 +202,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
             swipedEmailMatches = rows[0].matches
             if (swipedright.includes(email)){
               if (!matches.includes(swipedEmail)){
-                var test_channel = {
+              /*  var test_channel = {
                   "channel" : {
                     "description": "This is a test channel",
                     "friendlyName": "vinnie/vylana", //TODO - two names
@@ -214,11 +214,9 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
                     "email": "vylana@gmail.com",
                     "name" : "vylana"
                   }
-                }
-
+                }*/
 
                 matches.push(swipedEmail)
-
 
                 var createChannelTest = function(ext) {
                   request.post({
