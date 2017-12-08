@@ -154,8 +154,8 @@ class EditScreen extends Component {
 
 
   //  console.log( "Added photos: " + photosToAdd)
-  console.log(this.state.makerBacker)
-    console.log("current photos in makerBacker " + this.state.makerBacker.photos)
+    console.log(this.state.makerBacker)
+    console.log("current photos in makerBacker " + this.state.makerBacker)
     this.setState({ photos: [this.state.makerBacker.photos, photosToAdd] })
 
     //TODO add in photo array, currently passing in empty array to
@@ -194,9 +194,11 @@ class EditScreen extends Component {
     const {email, isMaker} = this.props.navigation.state.params
 
     if(isMaker) {
-      this.setState({"makerBacker": getMaker(email)})
+      var obj = getMaker(email)
+      this.setState({"makerBacker": obj})
     } else {
-      this.setState({"makerBacker": getBacker(email)});
+      var obj = getBacker(email)
+      this.setState({"makerBacker": obj});
     }
   }
 

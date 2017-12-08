@@ -3,7 +3,7 @@ const url = "https://backr.herokuapp.com/"
 
 //Called when user signing up. Creates default values for user and adds user to
 //Database.
-exports.createUser = (name, email) => {
+exports.createUser = async (name, email) => {
 
   var body = {
     name: name,
@@ -31,7 +31,7 @@ exports.createUser = (name, email) => {
     },
   }
 
-  fetch( url + 'user', {
+  await fetch( url + 'user', {
       method: 'POST',
       headers: {
       'Accept': 'application/json',
@@ -49,55 +49,69 @@ exports.createUser = (name, email) => {
 
 
 //Retrieves user via email.
-exports.getUser = (email) => {
+exports.getUser = async (email) => {
   console.log("GET user request");
   //Sarah
   var urlParams = "user?email=" + email;
-  fetch(url + urlParams)
-  .then(function(response) { return response.json(); })
-  .then(function(data) {
-    console.log("Inside user get " + JSON.stringify(data));
-
-    return JSON.stringify(data);
-  });
+  const response = await fetch(url + urlParams, {
+          method: 'GET',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+          }
+      });
+  const json = await response.json();
+  console.log(json);     // <-- (5) [Object, Object, Object, Object, Object]
+  return json;
 }
 
 //Get the maker profile of a specified user.
-exports.getMaker = (email) => {
+exports.getMaker = async (email) => {
   console.log("GET user request");
-  //Sarah
   var urlParams = "user/maker?email=" + email;
-  fetch(url + urlParams)
-  .then(function(response) { return response.json(); })
-  .then(function(data) {
-    console.log("Inside API");
-
-    return data;
-  });
+    const response = await fetch(url + urlParams, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        });
+    const json = await response.json();
+    console.log(json);     // <-- (5) [Object, Object, Object, Object, Object]
+    return json;
 }
 
 //Get the backer profile of a specified user.
-exports.getBacker = (email) => {
+exports.getBacker = async (email) => {
   console.log("GET user request");
   var urlParams = "user/backer?email=" + email;
 
-  fetch(url + urlParams)
-  .then(function(response) { return response.json(); })
-  .then(function(data) {
-    console.log("Inside backer get " + data.email);
-    console.log("full data inside API " + data)
-    return data;
-  });
+  const response = await fetch(url + urlParams, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        });
+  const json = await response.json();
+  console.log(json);     // <-- (5) [Object, Object, Object, Object, Object]
+  return json;
 }
 
 //Retrieve a user's settings. (really only their blockedUsers lol)
-exports.getSettings = (email) => {
-  fetch(url + urlParams)
-  .then(function(response) { return response.json(); })
-  .then(function(data) {
-    console.log(data);
-    return data;
-  });
+exports.getSettings = async (email) => {
+  var urlParams = "user/settings?email=" + email;
+
+  const response = await fetch(url + urlParams, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json',
+            }
+        });
+  const json = await response.json();
+  console.log(json);     // <-- (5) [Object, Object, Object, Object, Object]
+  return json;
 }
 
 //Add to the swipe array for swiped right and swiped on.
@@ -150,8 +164,8 @@ exports.createSettings = (email) => {
 }
 
 //Updates the user's isMaker in our database.
-exports.updateIsMaker = (newIsMaker, email) => {
-  fetch( url + 'user/isMaker', {
+exports.updateIsMaker = async (newIsMaker, email) => {
+  await fetch( url + 'user/isMaker', {
     method: 'PATCH',
     headers: {
       'Accept': 'application/json',
@@ -170,10 +184,10 @@ exports.updateIsMaker = (newIsMaker, email) => {
 }
 
 //Function called in EditScreen. Update's user profile - really only shortbio.
-exports.updateProfile = (email, shortbio) => {
+exports.updateProfile = async (email, shortbio) => {
 
   console.log("post create settings");
-  fetch( url + 'user', {
+  await fetch( url + 'user', {
     method: 'PATCH',
     headers: {
       'Accept': 'application/json',
@@ -192,9 +206,9 @@ exports.updateProfile = (email, shortbio) => {
 }
 
 //Updates user's maker profile. Updates longbio, photos, and icons.
-exports.updateMakerProfile = (longbio, photos, icons, email) => {
+exports.updateMakerProfile = async (longbio, photos, icons, email) => {
   console.log("post update maker profile");
-  fetch( url + 'user/maker', {
+  await fetch( url + 'user/maker', {
     method: 'PATCH',
     headers: {
       'Accept': 'application/json',
@@ -216,9 +230,9 @@ exports.updateMakerProfile = (longbio, photos, icons, email) => {
 }
 
 //Updates user's backer profile. Updates longbio, photos, and icons.
-exports.updateBackerProfile = (longbio, photos, icons, email) => {
+exports.updateBackerProfile = async (longbio, photos, icons, email) => {
   console.log("post update maker profile");
-  fetch( url + 'user/backer', {
+  await fetch( url + 'user/backer', {
     method: 'PATCH',
     headers: {
       'Accept': 'application/json',
@@ -240,10 +254,10 @@ exports.updateBackerProfile = (longbio, photos, icons, email) => {
 }
 
 //TODO
-exports.updateSettings = (email, blockedUsers) => {
+exports.updateSettings = async (email, blockedUsers) => {
  //Eric
   console.log("post update settings");
-  fetch( url + 'user/settings', {
+  await fetch( url + 'user/settings', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',

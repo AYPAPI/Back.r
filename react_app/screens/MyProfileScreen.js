@@ -103,7 +103,6 @@ const styles = {
 
 class MyProfileScreen extends Component {
 
-
   constructor(props) {
     super(props);
     this.state = {
@@ -121,6 +120,8 @@ class MyProfileScreen extends Component {
             this.setState({'editText': "Edit Backer Profile"}); //Update our screen state.
             this.setState({'switchText': "Switch to Maker"}); //Update our screen state.
             globalIsMaker = false //Update for nav options.
+            console.log(this.state.makerBacker)
+
             updateIsMaker(false, this.state.email) //Update in our database
         }
         else{
@@ -171,9 +172,19 @@ class MyProfileScreen extends Component {
     this.setState({"isMaker": isMaker})
 
     if(isMaker) {
-      this.setState({"makerBacker": getMaker(email)})
+      getMaker(email)
+      .then((data) => {
+        this.setState({
+          "makerBacker": data,
+        })
+      });
     } else {
-      this.setState({"makerBacker": getBacker(email)});
+      getBacker(email)
+      .then((data) => {
+        this.setState({
+          "makerBacker": data,
+        })
+      });
     }
   }
 
