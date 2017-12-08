@@ -35,6 +35,8 @@ router.patch('/maker', function(req,res) {
   var makerLongBio = req.body.longBio
   var makerPhotos = req.body.photos
   var makerIcon = req.body.icons
+
+  console.log("Inside updateMaker in user.js " + makerPhotos)
   db.updateProfile(email,makerLongBio,makerPhotos,makerIcon,database,'maker',function(message) {
     var status = message
     res.json(status)
@@ -46,6 +48,9 @@ router.patch('/backer', function(req,res) {
   var backerLongBio = req.body.longBio
   var backerPhotos = req.body.photos
   var backerIcon = req.body.icons
+
+  console.log("Inside updateBacker in user.js " + makerPhotos)
+
   db.updateProfile(email,backerLongBio,backerPhotos,backerIcon,database,'backer',function(message) {
     var status = message
     res.json(status)
