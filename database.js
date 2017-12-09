@@ -257,7 +257,8 @@ module.exports.createSettings = function(isVisible, blockedUsers, email, client)
   client.query(check, function(err,res) {
     rows = res.rows
     if (rows.length > 0){
-      console.log('settings already in database')
+
+      console.log('settings for user already in database')
       return
     }
   let query = 'INSERT INTO   ' + tablename + ' (email,isvisible,blockedusers) values ($1,$2,$3)';
@@ -269,6 +270,7 @@ module.exports.createSettings = function(isVisible, blockedUsers, email, client)
           console.log('created settings for user' + email)
         }
       })
+  })
 }
 
 module.exports.updateSettings = function(isVisible, blockedUsers, email, client, callback) {
