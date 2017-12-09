@@ -226,7 +226,7 @@ class MyProfileScreen extends Component {
                               activeOpacity={0.7}
                               source={profilePhoto}
                               onPress={()=>navigate('UserProfile',
-                              {name:name, email: email, isMaker: isMaker, shortbio:
+                              {userName: name, userEmail: email, userIsMaker: isMaker, name:name, email: email, isMaker: isMaker, shortbio:
                                 this.state.userProfile.shortbio, longbio:
                                 this.state.makerBacker.longbio})}
                               />

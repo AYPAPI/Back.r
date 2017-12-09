@@ -77,7 +77,7 @@ exports.getMaker = async (email) => {
             }
         });
     const json = await response.json();
-    console.log(json);     // <-- (5) [Object, Object, Object, Object, Object]
+         // <-- (5) [Object, Object, Object, Object, Object]
     return json;
 }
 
@@ -94,7 +94,7 @@ exports.getBacker = async (email) => {
             }
         });
   const json = await response.json();
-  console.log(json);     // <-- (5) [Object, Object, Object, Object, Object]
+      // <-- (5) [Object, Object, Object, Object, Object]
   return json;
 }
 
@@ -115,7 +115,7 @@ exports.getSettings = async (email) => {
 }
 
 //Retrieve a user's settings. (really only their blockedUsers lol)
-exports.getCardStack = async (email, isMaker) => {
+exports.getPotentialMatches = async (email, isMaker) => {
   var urlParams = "user/getPotentialMatches?email=" + email + "&isMaker=" + isMaker
 
   const response = await fetch(url + urlParams, {
@@ -126,7 +126,6 @@ exports.getCardStack = async (email, isMaker) => {
             }
         });
   const json = await response.json();
-  console.log(json);     // <-- (5) [Object, Object, Object, Object, Object]
   return json;
 }
 

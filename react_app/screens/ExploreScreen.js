@@ -6,10 +6,12 @@ import {
     TouchableHighlight,
     Image,
 } from 'react-native';
-import { Card, Icon, Text } from 'react-native-elements';
+import { Icon, Text } from 'react-native-elements';
 import Swiper from 'react-native-swiper-animated'
 import {Dimensions} from 'react-native';
-import { getUser, getCardStack } from '../router/api.js';
+import { getUser, getPotentialMatches, getBacker, getMaker } from '../router/api.js';
+import SwipeCards from 'react-native-swipe-cards';
+import { CustomCard, NoMoreCards } from '../Components/CardComponents.js'
 
 import { lightGrey,
     backerBlue,
@@ -29,6 +31,28 @@ var secondCardPhoto = require('../assets/images/ceo_photo.jpg');
 
 export const window = Dimensions.get('window');
 var cardHeight = window.height - 140;
+
+
+//Methods for getting data for each card in cardStack.
+const getUserForEmail = function(email) {
+  console.log("inside getUserForEmail " + email)
+
+
+};
+
+const getMakerBackerForEmail = function(email, isMaker) {
+  if(isMaker) {
+    getMaker(email)
+    .then((data) => {
+      return data
+    });
+  } else {
+    getBacker(email)
+    .then((data) => {
+      return data
+    });
+  }
+}
 
 const styles = {
     headerIcon: {
@@ -139,23 +163,82 @@ class ExploreScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      cardList: []
+      emailList: [],
+      name: "",
+      cardStack: [],
+      loadingCards: true
     }
   }
 
-  onUserPress(user) {
+  onUserPress(userEmail,userName, userShortBio, userLongBio) {
     const { name, email, isMaker } = this.props.navigation.state.params
-    this.props.navigation.navigate("UserProfile", {user: user, name: this.state.name, email: email, isMaker: isMaker});
+    var userIsMaker = !isMaker
+
+    this.props.navigation.navigate("UserProfile", {userEmail: userEmail, userName:this.state.name, userIsMaker: userIsMaker, name: name, email: email, isMaker: isMaker, shortbio: userShortBio, longbio: userLongBio});
   }
 
-  componentDidMount() {
+  async createCardStack() {
+    const { name, email, isMaker } = this.props.navigation.state.params
+
+    cardStack = []
+
+    var shortbio = ""
+    var longbio = ""
+    var userName = ""
+    var icons = []
+    var cardIsMaker = !isMaker
+
+    for(var i = 0; i < this.state.emailList.length; i++) {
+      //Get data for current card in stack.
+      getUser(this.state.emailList[i])
+      .then((data) => {
+        shortbio = data.shortbio
+        userName = data.name
+        if(isMaker) {
+          getBacker(data.email)
+          .then((data) => {
+            longbio = data.longbio
+            icons = data.icons
+            cardStack.push({name: userName, email: data.email, shortbio:
+                              shortbio, longbio: longbio, icons: icons, isMaker: cardIsMaker})
+            if(cardStack.length === this.state.emailList.length) {
+              this.setState({"loadingCards": false})
+              this.setState({"cardStack": cardStack})
+            }
+          });
+        } else {
+          getMaker(data.email)
+          .then((data) => {
+            longbio = data.longbio
+            icons = data.icons
+            cardStack.push({name: userName, email: data.email, shortbio:
+                              shortbio, longbio: longbio, icons: icons, isMaker: cardIsMaker})
+            if(cardStack.length === this.state.emailList.length) {
+              this.setState({"loadingCards": false})
+              this.setState({"cardStack": cardStack})
+
+            }
+          });
+        }
+      })
+    }
+  }
+
+  async componentDidMount() {
     const { email, name, isMaker } = this.props.navigation.state.params
     //If user logged in via email and password, retrieve the name.
 
-    getCardStack(email, isMaker)
+    if(name === "" ) {
+      this.setState({"name": "Edit your name in Edit Profile!"})
+    } else {
+      this.setState({"name": name})
+    }
+
+    await getPotentialMatches(email, isMaker)
     .then((data) => {
       console.log(data)
-      this.setState({"cardList": data})
+      this.setState({"emailList": data})
+      this.createCardStack()
     })
   }
 
@@ -190,110 +273,45 @@ class ExploreScreen extends Component {
         };
     };
 
+
+    //Methods for handling card swiping.
+    handleYup (card) {
+      //HANDLE MATCHING
+    }
+    handleNope (card) {
+      //Add to swiped on.
+      console.log(`Nope for ${card.text}`)
+    }
+    handleMaybe (card) {
+      //Show user profile.
+      this.onUserPress(card.email, card.name, card.shortbio, card.longbio)
+    }
+
+
     render() {
+
+      if (this.state.loadingCards) {
+        return <Expo.AppLoading />;
+      }
 
         const { navigate } = this.props.navigation;
         const { name, email, isMaker } = this.props.navigation.state.params;
 
         return (
+
             <View style={styles.container}>
-                <Swiper
-                style={styles.wrapper}
-                showPagination={false}
-                smoothTransition
-                stack
-                dragDownToBack
-                dragY
-                >
-                    <Card style={styles.card}
-                        containerStyle={styles.cardContainer}
-                        image={firstCardPhoto}
-                        imageProps={styles.imagePropsStyle}
-                        imageWrapperStyle={styles.imageWrapper}
-                        imageStyle={styles.imageWrapper}>
-                        <View style={styles.descriptionContainer}>
-                            <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}
-                                activeOpacity={0.5}>
-                                Human Biology/Comp Sci Student
-                            </Text>
-                            <View style={styles.subTitleContainer}>
-                                <Text style={styles.subtitleText}>
-                                    David Owens
-                                </Text>
-                                <View style={styles.iconsContainer}>
-                                    <Icon iconStyle={styles.iconStyle}
-                                    name='circle-o'
-                                    type='font-awesome'
-                                    color='#59C129'
-                                    size={15}
-                                    onPress={() => alert("Money")} />
-                                    <Icon iconStyle={styles.iconStyle}
-                                    name='circle-o'
-                                    type='font-awesome'
-                                    color='#EF2074'
-                                    size={15}
-                                    onPress={() => alert("Money")} />
-                                    <Icon iconStyle={styles.iconStyle}
-                                    name='circle-o'
-                                    type='font-awesome'
-                                    color='#FC8A2D'
-                                    size={15}
-                                    onPress={() => alert("Money")} />
-                                    <Icon iconStyle={styles.iconStyle}
-                                    name='circle-o'
-                                    type='font-awesome'
-                                    color='#57C4DD'
-                                    size={15}
-                                    onPress={() => alert("Money")} />
-                                </View>
-                            </View>
-                        </View>
 
-                        <View style={styles.bioContainer}>
-                            <Text style={styles.bioText}>
-                            ShortbiogoeshereThisiswherethemakerorbackergiveaquickdescriptionoftheirprojectortheirskillsThisshouldbejustafewsentencesHeresonemoresentenceasdfasdfadssdfgjhsdfghsd
-                            </Text>
-                        </View>
-                    </Card>
+            <SwipeCards
+              cards={this.state.cardStack}
+              loop={false}
 
-                    <Card style={styles.card}
-                        containerStyle={styles.cardContainer}
-                        image={secondCardPhoto}
-                        imageProps={styles.imagePropsStyle}
-                        imageWrapperStyle={styles.imageWrapper}
-                        imageStyle={styles.imageWrapper}>
-                        <View style={styles.descriptionContainer}>
-                                <Text style={[styles.makerTitle, isMaker && styles.backerTitle]}>
-                                    Important CEO Guy
-                                </Text>
-                            <View style={styles.subTitleContainer}>
-                                <Text style={styles.subtitleText}>
-                                    John Doe
-                                </Text>
-                                <View style={styles.iconsContainer}>
-                                    <Icon iconStyle={styles.iconStyle}
-                                    name='circle-o'
-                                    type='font-awesome'
-                                    color='#59C129'
-                                    size={15}
-                                    onPress={() => alert("Money")} />
-                                    <Icon iconStyle={styles.iconStyle}
-                                    name='circle-o'
-                                    type='font-awesome'
-                                    color='#EF2074'
-                                    size={15}
-                                    onPress={() => alert("Money")} />
-                                </View>
-                            </View>
-                        </View>
-
-                        <View style={styles.bioContainer}>
-                            <Text style={styles.bioText}>
-                                Hi, Im important CEO guy, Im here because I have a lot of money and I want to spend it on you. Thats right, I said you. Pls swipe right on me so I can make you a millionare.
-                            </Text>
-                        </View>
-                    </Card>
-                </Swiper>
+              renderCard={(cardData) => <CustomCard {...cardData} />}
+              renderNoMoreCards={() => <NoMoreCards />}
+              handleYup={this.handleYup}
+              handleNope={this.handleNope}
+              handleMaybe={this.handleMaybe}
+              hasMaybeAction
+              />
 
                 <View style={styles.preferenceButtonsContainer}>
                     <Icon
@@ -305,6 +323,7 @@ class ExploreScreen extends Component {
                     size={25}
                     onPress={() => alert("No!")}
                     />
+
                     <Icon
                     containerStyle={styles.preferenceButtonsBorder}
                     name='check'

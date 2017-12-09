@@ -82,61 +82,22 @@ const styles = {
 
 class UserProfileScreen extends Component {
     static navigationOptions = ({ navigation }) => {
-    const { user, mainUser } = navigation.state.params;
-    const { goBack } = navigation.goBack;
-    isMaker = navigation.state.params.isMaker;
-
     return {
         headerTitle: (
             <Icon
             name='chevron-down'
             type='material-community'
             iconStyle={styles.headerIcon}
-            onPress={ () => navigation.goBack }
+            onPress={ () => navigation.goBack() }
             />
         ),
     };
 };
 
-constructor(props) {
-  super(props);
-  this.state = {
-    makerBacker: {},
-    userProfile: {}
-  }
-}
-
-setProfileState() {
-  const {email} = this.props.navigation.state.params.email
-
-  if(this.state.isMaker) {
-    getMaker(email)
-    .then((data) => {
-      this.setState({
-        "makerBacker": data,
-      })
-    });
-  } else {
-    getBacker(email)
-    .then((data) => {
-      this.setState({
-        "makerBacker": data,
-      })
-    });
-  }
-}
-
-componentDidMount() {
-  const { name, email, isMaker, shortbio } = this.props.navigation.state.params
-
-  //Set Maker/Backer profile using this.state.makerBacker as dependency.
-  this.setProfileState()
-}
-
   render() {
 
     const { navigate } = this.props.navigation;
-    const { name, email, isMaker, shortbio } = this.props.navigation.state.params
+    const {userEmail, userName, userIsMaker, shortbio, longbio} = this.props.navigation.state.params
 
     return (
       <ScrollView style={styles.container}>
@@ -153,7 +114,7 @@ componentDidMount() {
                 </Text>
                 <View style={styles.subTitleContainer}>
                     <Text style={styles.subtitleText}>
-                        {name}
+                        {userName}
                     </Text>
                     <View style={styles.iconsContainer}>
                         <Icon iconStyle={styles.iconStyle}
@@ -186,7 +147,7 @@ componentDidMount() {
 
             <View style={styles.bioContainer}>
                 <Text style={styles.bioText}>
-                  {this.state.makerBacker.longbio}
+                  {longbio}
                 </Text>
             </View>
         </ScrollView>
