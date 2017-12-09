@@ -93,8 +93,7 @@ const styles = {
 class MatchesScreen extends Component {
 
   static navigationOptions = ({ navigation }) => {
-  user = navigation.state.params;
-  isMaker = navigation.state.params.isMaker;
+  const { name, email, isMaker } = navigation.state.params
 
   return {
      headerLeft: (
@@ -102,7 +101,7 @@ class MatchesScreen extends Component {
         name='face'
         type='material-community'
         iconStyle={styles.headerIcon}
-        onPress={ () => navigation.navigate("MyProfile", {user: user, type: ""}) }
+        onPress={ () => navigation.goBack() }
       />
     ),
     headerTitle: (
@@ -110,7 +109,7 @@ class MatchesScreen extends Component {
         name='lightbulb-outline'
         type='material-community'
         iconStyle={styles.headerIcon}
-        onPress={ () => navigation.navigate("Explore", {user: user}) }
+        onPress={ () => navigation.navigate("Explore", {name: name, email: email, isMaker:isMaker}) }
       />
     ),
     headerRight: (
@@ -143,6 +142,7 @@ constructor(props) {
   render() {
 
     const { navigate } = this.props.navigation;
+    const {name, email, isMaker} = this.props.navigation.state.params
 
     return (
       <ScrollView style={styles.container}>

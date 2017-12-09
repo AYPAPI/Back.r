@@ -6,6 +6,7 @@ import { Text,
     View,
     ScrollView,
     StyleSheet,
+    Alert,
 KeyboardAvoidingView } from 'react-native';
 import { ImagePicker } from 'expo';
 import firebase from 'firebase';
@@ -176,7 +177,7 @@ class EditScreen extends Component {
     if(isErr) {
       alert("failure for editing data for " + name + ":(")
     } else {
-      alert(
+      Alert.alert(
         'Edit Success',
         'Saved changes for ' + name + '!',
         [
