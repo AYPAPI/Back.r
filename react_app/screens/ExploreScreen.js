@@ -6,10 +6,14 @@ import {
     TouchableHighlight,
     Image,
 } from 'react-native';
-import { Icon, Text } from 'react-native-elements';
-import Swiper from 'react-native-swiper-animated'
+import { Icon, Text, Card } from 'react-native-elements';
+import Swiper from 'react-native-swiper-animated';
 import {Dimensions} from 'react-native';
-import { getUser, getPotentialMatches, getBacker, getMaker } from '../router/api.js';
+import { getUser,
+  getPotentialMatches,
+  getBacker,
+  getMaker,
+postSwipe } from '../router/api.js';
 import SwipeCards from 'react-native-swipe-cards';
 import { CustomCard, NoMoreCards } from '../Components/CardComponents.js'
 
@@ -36,8 +40,6 @@ var cardHeight = window.height - 140;
 //Methods for getting data for each card in cardStack.
 const getUserForEmail = function(email) {
   console.log("inside getUserForEmail " + email)
-
-
 };
 
 const getMakerBackerForEmail = function(email, isMaker) {
@@ -166,7 +168,8 @@ class ExploreScreen extends Component {
       emailList: [],
       name: "",
       cardStack: [],
-      loadingCards: true
+      loadingCards: true,
+      currentIndexInStack: 0
     }
   }
 
@@ -187,6 +190,7 @@ class ExploreScreen extends Component {
     var userName = ""
     var icons = []
     var cardIsMaker = !isMaker
+    var totalCount = this.state.emailList.length
 
     for(var i = 0; i < this.state.emailList.length; i++) {
       //Get data for current card in stack.
@@ -199,11 +203,17 @@ class ExploreScreen extends Component {
           .then((data) => {
             longbio = data.longbio
             icons = data.icons
+            if(icons === null) {
+              totalCount = totalCount - 1
+            } else {
             cardStack.push({name: userName, email: data.email, shortbio:
                               shortbio, longbio: longbio, icons: icons, isMaker: cardIsMaker})
-            if(cardStack.length === this.state.emailList.length) {
+            }
+            if(cardStack.length === totalCount) {
               this.setState({"loadingCards": false})
               this.setState({"cardStack": cardStack})
+              console.log(cardStack)
+
             }
           });
         } else {
@@ -211,11 +221,16 @@ class ExploreScreen extends Component {
           .then((data) => {
             longbio = data.longbio
             icons = data.icons
-            cardStack.push({name: userName, email: data.email, shortbio:
+            if(icons === null) {
+              totalCount = totalCount - 1
+            } else {
+              cardStack.push({name: userName, email: data.email, shortbio:
                               shortbio, longbio: longbio, icons: icons, isMaker: cardIsMaker})
-            if(cardStack.length === this.state.emailList.length) {
+            }
+            if(cardStack.length === totalCount) {
               this.setState({"loadingCards": false})
               this.setState({"cardStack": cardStack})
+              console.log(cardStack)
 
             }
           });
@@ -273,20 +288,24 @@ class ExploreScreen extends Component {
         };
     };
 
-
     //Methods for handling card swiping.
-    handleYup (card) {
-      //HANDLE MATCHING
-    }
-    handleNope (card) {
-      //Add to swiped on.
-      console.log(`Nope for ${card.text}`)
-    }
-    handleMaybe (card) {
-      //Show user profile.
-      this.onUserPress(card.email, card.name, card.shortbio, card.longbio)
+    handleSwipe (bool) {
+      const { name, email, isMaker } = this.props.navigation.state.params;
+      const card = this.state.cardStack[this.state.currentIndexInStack]
+
+      console.log(card)
+      const newIndex = this.state.currentIndexInStack + 1
+      this.setState({"currentIndexInStack": newIndex})
+
+      postSwipe(email, card.email, isMaker, bool)
     }
 
+    handleOnClick () {
+      const { name, email, isMaker } = this.props.navigation.state.params;
+      const card = this.state.cardStack[this.state.currentIndexInStack]
+
+      this.onUserPress("UserProfile", {userEmail: card.email, userName: card.name, shortbio: card.shortbio, longbio: card.longbio})
+    }
 
     render() {
 
@@ -300,18 +319,80 @@ class ExploreScreen extends Component {
         return (
 
             <View style={styles.container}>
+            <Swiper
+                  style={styles.wrapper}
+                  showPagination={false}
+                  smoothTransition
+                  stack
+                  dragDownToBack
+                  dragY
+                  onRightSwipe={() => this.handleSwipe(true)}
+                  onLeftSwipe={() => this.handleSwipe(false)}
+                  onClick={() => this.handleOnClick()}
+              >
+                            {this.state.cardStack.map((card, index) => (
+                              <Card style={styles.card}
+                                  containerStyle={styles.cardContainer}
+                                  image={firstCardPhoto}
+                                  imageProps={styles.imagePropsStyle}
+                                  imageWrapperStyle={styles.imageWrapper}
+                                  imageStyle={styles.imageWrapper}>
+                                  <View style={styles.descriptionContainer}>
+                                      <Text style={[styles.backerTitle, card.isMaker && styles.makerTitle]}
+                                          onPress={ () => alert('go to this user!')}
+                                          activeOpacity={0.5}>
+                                          {card.shortbio}
+                                      </Text>
+                                      <View style={styles.subTitleContainer}>
+                                          <Text style={styles.subtitleText}>
+                                              {card.name}
+                                          </Text>
+                                          <View style={styles.iconsContainer}>
+                                          { card.icons[0] && (
+                                              <Icon iconStyle={styles.iconStyle}
+                                              name='circle-o'
+                                              type='font-awesome'
+                                              color='#59C129'
+                                              size={15}
+                                              onPress={() => alert("Money")} />
+                                            )}
+                                          { card.icons[1] && (
+                                            <Icon iconStyle={styles.iconStyle}
+                                            name='circle-o'
+                                            type='font-awesome'
+                                            color='#EF2074'
+                                            size={15}
+                                            onPress={() => alert("Money")} />
+                                            )}
+                                            { card.icons[2] && (
+                                              <Icon iconStyle={styles.iconStyle}
+                                              name='circle-o'
+                                              type='font-awesome'
+                                              color='#FC8A2D'
+                                              size={15}
+                                              onPress={() => alert("Money")} />
+                                              )}
+                                            { card.icons[3] && (
+                                              <Icon iconStyle={styles.iconStyle}
+                                              name='circle-o'
+                                              type='font-awesome'
+                                              color='#57C4DD'
+                                              size={15}
+                                              onPress={() => alert("Money")} />
+                                              )}
+                                          </View>
+                                      </View>
+                                  </View>
 
-            <SwipeCards
-              cards={this.state.cardStack}
-              loop={false}
+                                  <View style={styles.bioContainer}>
+                                      <Text style={styles.bioText}>
+                                        {card.shortbio}
+                                      </Text>
+                                  </View>
+                              </Card>
+                            ))}
 
-              renderCard={(cardData) => <CustomCard {...cardData} />}
-              renderNoMoreCards={() => <NoMoreCards />}
-              handleYup={this.handleYup}
-              handleNope={this.handleNope}
-              handleMaybe={this.handleMaybe}
-              hasMaybeAction
-              />
+                      </Swiper>
 
                 <View style={styles.preferenceButtonsContainer}>
                     <Icon

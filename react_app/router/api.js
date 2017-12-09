@@ -133,7 +133,7 @@ exports.getPotentialMatches = async (email, isMaker) => {
 exports.postSwipe = (email, swipedEmail, isMaker, swipedRight) => {
   //Eric
   console.log("posting swipe");
-  fetch( url + 'user', {
+  fetch( url + 'user/swipe', {
     method: 'POST',
     headers: {
       'Accept': 'application/json',
@@ -142,7 +142,7 @@ exports.postSwipe = (email, swipedEmail, isMaker, swipedRight) => {
     body: JSON.stringify({
       email: email,
       swipedEmail: swipedEmail,
-      isMaker: false,
+      isMaker: isMaker,
       swipedRight: swipedRight
       })
   }).then(function(response) {

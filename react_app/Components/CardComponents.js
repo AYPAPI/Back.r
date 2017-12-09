@@ -61,7 +61,7 @@ export class CustomCard extends React.Component {
                           size={15}
                           onPress={() => alert("Money")} />
                         )}
-                      { this.props.icons[0] && (
+                      { this.props.icons[1] && (
                         <Icon iconStyle={styles.iconStyle}
                         name='circle-o'
                         type='font-awesome'
@@ -69,7 +69,7 @@ export class CustomCard extends React.Component {
                         size={15}
                         onPress={() => alert("Money")} />
                         )}
-                        { this.props.icons[0] && (
+                        { this.props.icons[2] && (
                           <Icon iconStyle={styles.iconStyle}
                           name='circle-o'
                           type='font-awesome'
@@ -77,7 +77,7 @@ export class CustomCard extends React.Component {
                           size={15}
                           onPress={() => alert("Money")} />
                           )}
-                        { this.props.icons[0] && (
+                        { this.props.icons[3] && (
                           <Icon iconStyle={styles.iconStyle}
                           name='circle-o'
                           type='font-awesome'
@@ -125,7 +125,7 @@ imagePropsStyle:{
     flexDirection: 'column',
 },
 imageWrapper:{
-    height: cardHeight - 140,
+    height: cardHeight - 10,
 },
 cardContainer:{
     flex: 1,
