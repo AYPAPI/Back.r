@@ -79,7 +79,7 @@ class SignUpScreen extends Component {
     })
     //Wait to navigate so Explore knows that user is inserted into database.
     .then((user)=> {
-      navigate("Explore", {name: user_name, email: user_email, isMaker: false})
+      navigate("SignedIn", {name: user_name, email: user_email, isMaker: false})
       return true
     })
     .catch(function(error) {
