@@ -77,7 +77,7 @@ class SignUpScreen extends Component {
         createUser(user_name, user_email);
         createSettings(user_email);
 
-        navigate("SignedIn", {name: user_name, email: user.email, isMaker: false})
+        navigate("Explore", {name: user_name, email: user.email, isMaker: false})
     }).catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
@@ -139,8 +139,6 @@ class SignUpScreen extends Component {
                 backgroundColor={makerPurple}
                 title="Create Account!"
                 icon={{name: 'check', type: 'material-community'}}
-                //onPress={() => {
-                //onSignIn().then(() => navigate("SignedIn", {user: this.state.user}));}}
                 onPress={() => this.signUp(navigate)}
               />
             </View>

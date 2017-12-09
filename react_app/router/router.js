@@ -25,33 +25,51 @@ export const LoginStack = StackNavigator({
 export const EditProfileStack = StackNavigator({
   MyProfile: { screen: MyProfileScreen },
   Edit: { screen: EditScreen },
+  Settings: {screen: SettingsScreen}
 }, {
   headerMode: 'none',
   mode: 'modal'
 });
 
-export const MainStack = StackNavigator({
+/*export const MainStack = StackNavigator({
   Explore: { screen: ExploreScreen },
-  MyProfile: { screen: EditProfileStack },
   UserProfile: { screen: UserProfileScreen },
   Matches: { screen: MatchesScreen },
   Thread: { screen: ThreadScreen },
-  Settings: { screen: SettingsScreen }
+});*/
+
+export const MatchesStack = StackNavigator({
+  Matches: { screen: MatchesScreen },
+  Thread: { screen: ThreadScreen },
+  UserProfile: { screen: UserProfileScreen },
+});
+
+export const ExploreStack = StackNavigator({
+  Explore: { screen: ExploreScreen },
+  UserProfile: { screen: UserProfileScreen }
+}, {
+  mode: 'modal'
 });
 
 export const createRootNav = (signedIn = false) => {
   return StackNavigator(
       {
-        SignedIn: {
-          screen: MainStack,
+        Explore: {
+          screen: ExploreStack,
         },
         SignedOut: {
           screen: LoginStack,
+        },
+        Matches: {
+          screen: MatchesStack,
+        },
+        MyProfile: {
+          screen: EditProfileStack,
         }
       },
       {
         headerMode: "none",
-        mode: "modal",
+        //mode: "modal",
         initialRouteName: signedIn ? "SignedIn" : "SignedOut"
       }
     );

@@ -98,7 +98,7 @@ class LoginScreen extends Component {
           })
 
           console.log(user.email)
-          navigate("SignedIn", {name: user_name, email: user_email, isMaker: false});
+          navigate("Explore", {name: user_name, email: user_email, isMaker: false});
         }).catch((error) => {
           // Handle Errors here.
           console.log(error)
@@ -116,7 +116,7 @@ class LoginScreen extends Component {
       console.log('successfully logged in ' + JSON.stringify(user))
       console.log("User's email = " + user.email)
 
-      navigate("SignedIn", {name: "", email: user.email, isMaker: false});
+      navigate("Explore", {name: "", email: user.email, isMaker: false});
 
       this.load = true
       return true

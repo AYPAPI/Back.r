@@ -269,7 +269,7 @@ module.exports.updateSettings = function(isVisible, blockedUsers, email, client,
     client.query(query, [isVisible, blockedUsers, email], function(err,res) {
       if (err) throw err;
       callback("Updated settings");
-      query = 'SELECT * from maker WHERE email = \'' + email + '\''
+      query = 'SELECT * FROM maker WHERE email = \'' + email + '\''
       client.query(query,function(err,res){
         if (err) throw err;
         rows = res.rows;
@@ -288,7 +288,7 @@ module.exports.updateSettings = function(isVisible, blockedUsers, email, client,
         query = 'UPDATE maker SET matches = $1 WHERE email = $2'
         client.query(query,[makerMatches,email],function(err,res){
           if (err) throw err;
-          query = 'SELECT * from backer WHERE email = \'' + email + '\''
+          let query = 'SELECT * FROM ' + tablename + ' WHERE email = \'' + email + '\''
           client.query(query,function(err,res){
             if (err) throw err;
             rows = res.rows;

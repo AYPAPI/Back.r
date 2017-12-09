@@ -303,8 +303,11 @@ class ExploreScreen extends Component {
     handleOnClick () {
       const { name, email, isMaker } = this.props.navigation.state.params;
       const card = this.state.cardStack[this.state.currentIndexInStack]
+      const userIsMaker = !isMaker
 
-      this.onUserPress("UserProfile", {userEmail: card.email, userName: card.name, shortbio: card.shortbio, longbio: card.longbio})
+      this.props.navigation.navigate("UserProfile", {userEmail: card.email, userName: card.name,
+        userIsMaker: userIsMaker, shortbio: card.shortbio, longbio: card.longbio,
+        name: name, email: email, isMaker: isMaker})
     }
 
     render() {
@@ -339,7 +342,7 @@ class ExploreScreen extends Component {
                                   imageStyle={styles.imageWrapper}>
                                   <View style={styles.descriptionContainer}>
                                       <Text style={[styles.backerTitle, card.isMaker && styles.makerTitle]}
-                                          onPress={ () => alert('go to this user!')}
+                                          onPress={ () => this.handleOnClick()}
                                           activeOpacity={0.5}>
                                           {card.shortbio}
                                       </Text>

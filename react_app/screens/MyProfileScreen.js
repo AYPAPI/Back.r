@@ -136,7 +136,7 @@ class MyProfileScreen extends Component {
         }
     }
     setProfileState() {
-      const {email} = this.props.navigation.state.params.email
+      const {email} = this.props.navigation.state.params
 
       if(this.state.isMaker) {
         getMaker(email)

@@ -97,7 +97,8 @@ class UserProfileScreen extends Component {
   render() {
 
     const { navigate } = this.props.navigation;
-    const {userEmail, userName, userIsMaker, shortbio, longbio} = this.props.navigation.state.params
+    const {userEmail, userName, userIsMaker, shortbio, longbio} =
+              this.props.navigation.state.params
 
     return (
       <ScrollView style={styles.container}>
@@ -109,7 +110,7 @@ class UserProfileScreen extends Component {
             </View>
 
             <View style={styles.descriptionContainer}>
-                <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}>
+                <Text style={[styles.backerTitle, userIsMaker && styles.makerTitle]}>
                     {shortbio}
                 </Text>
                 <View style={styles.subTitleContainer}>

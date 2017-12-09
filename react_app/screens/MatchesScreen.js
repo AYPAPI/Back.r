@@ -132,10 +132,10 @@ constructor(props) {
 }
   componentDidMount() {
     const self = this
-    getChannels().then(function(res) {
+    getChannels().then((res) => {
       if (res != null) {
         self.setState({ "users": res.channels })
-        console.log(users)
+        console.log(this.state.users)
       }
     })
   }
