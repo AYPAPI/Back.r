@@ -236,7 +236,7 @@ module.exports.createSettings = function(isVisible, blockedUsers, email, client)
           console.log('created settings for user' + email)
         }
       })
-  }
+  })
 }
 
 module.exports.updateSettings = function(isVisible, blockedUsers, email, client, callback) {
