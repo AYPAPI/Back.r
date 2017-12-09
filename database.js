@@ -123,6 +123,7 @@ module.exports.updateUser = function(email,shortbio,client,callback){
     callback("Updated user profile");
   })
 }
+
 //update maker and backer profile
 module.exports.updateProfile = function(email,longbio,photos,icons,client,tablename,callback){
   let query = 'UPDATE ' + tablename + ' SET longbio = $1, photos = $2, icons = $3 WHERE email = $4'
@@ -172,20 +173,16 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
     client.query(query, function(err, res) {
       if (err) throw err;
       rows = res.rows
-      if (rows.length === 0){
+      if (rows.length === 0) {
         console.log('user does not exist')
         return
       }
-        swipedright = rows[0].swipedright;
-        swipedon = rows[0].swipedon;
-        matches = rows[0].matches;
-        if(swipedRight === true) {
-          if (!swipedright.includes(swipedEmail)){
-            swipedright.push(swipedEmail)
-          }
-        }
-        if (!swipedon.includes(swipedEmail)){
-          swipedon.push(swipedEmail)
+      swipedright = rows[0].swipedright;
+      swipedon = rows[0].swipedon;
+      matches = rows[0].matches;
+      if (swipedRight === true) {
+        if (!swipedright.includes(swipedEmail)) {
+          swipedright.push(swipedEmail)
         }
         let query2 = 'UPDATE ' + tablename + ' SET swipedright = $1, swipedon = $2 WHERE email = $3'
         client.query(query2,[swipedright, swipedon, email], function(err, res) {
@@ -202,20 +199,56 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
             swipedEmailMatches = rows[0].matches
             if (swipedright.includes(email)){
               if (!matches.includes(swipedEmail)){
-                matches.push(swipedEmail)
+              /*  var test_channel = {
+                  "channel" : {
+                    "description": "This is a test channel",
+                    "friendlyName": "vinnie/vylana", //TODO - two names
+                    "uniqueName": "test_channel2", //MUST BE UNIQUE emails
+                    "identity" : "vinnie@gmail", //Swiper email
+                    "endpointId": "61553df94c234a691130ab9d3438b074"
+                  },
+                  "other_user" : {
+                    "email": "vylana@gmail.com",
+                    "name" : "vylana"
+                  }
+                }*/
+
+              matches.push(swipedEmail)
+
+
+              var createChannelTest = function (ext) {
+                request.post({
+                  url: url + ext,
+                  json: true,
+                  body: test_channel
+                }, function (err, res) {
+                  output = constructOutputString(res, "test_channel", ext)
+                  try {
+                    assert.equal(res.statusCode, 200)
+                    assert.ok(JSON.stringify(res.body))
+                    output += "O"
+                  }
+                  catch (err) {
+                    output += "X"
+                    output += "\n\t" + res.body
+                  }
+                  console.log(output)
+                });
               }
-              if (!swipedEmailMatches.includes(email)){
+              if (!swipedEmailMatches.includes(email)) {
                 swipedEmailMatches.push(email)
               }
-              client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2',[matches,email],function(err,res){
+              client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2', [matches, email], function (err, res) {
                 if (err) throw err;
               });
-              client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2',[swipedEmailMatches,swipedEmail],function(err,res){
+              client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2', [swipedEmailMatches, swipedEmail], function (err, res) {
                 if (err) throw err;
               });
             }
-          })
+          }
         })
+      })
+    }
   })
 }
 module.exports.createSettings = function(isVisible, blockedUsers, email, client) {
@@ -224,6 +257,7 @@ module.exports.createSettings = function(isVisible, blockedUsers, email, client)
   client.query(check, function(err,res) {
     rows = res.rows
     if (rows.length > 0){
+
       console.log('settings for user already in database')
       return
     }
@@ -245,7 +279,7 @@ module.exports.updateSettings = function(isVisible, blockedUsers, email, client,
     client.query(query, [isVisible, blockedUsers, email], function(err,res) {
       if (err) throw err;
       callback("Updated settings");
-      query = 'SELECT * from maker WHERE email = \'' + email + '\''
+      query = 'SELECT * FROM maker WHERE email = \'' + email + '\''
       client.query(query,function(err,res){
         if (err) throw err;
         rows = res.rows;
@@ -264,7 +298,7 @@ module.exports.updateSettings = function(isVisible, blockedUsers, email, client,
         query = 'UPDATE maker SET matches = $1 WHERE email = $2'
         client.query(query,[makerMatches,email],function(err,res){
           if (err) throw err;
-          query = 'SELECT * from backer WHERE email = \'' + email + '\''
+          let query = 'SELECT * FROM ' + tablename + ' WHERE email = \'' + email + '\''
           client.query(query,function(err,res){
             if (err) throw err;
             rows = res.rows;
@@ -295,26 +329,14 @@ module.exports.readSettings = function (client, email, callback) {
   client.query(query, function(err,res) {
     if (err) throw err;
     rows = res.rows;
+    console.log("get settings query result: " + res);
 
-		for (var i = 0; i < rows.length; i++){
-			if (rows[i].email === email){
-				var row = rows[i]
 				var obj = {
-          "isVisible" : row.isvisible,
-          "blockedUsers":row.blockedusers,
+          "isVisible" : rows[0].isvisible,
+          "blockedUsers": rows[0].blockedusers,
 				}
-			}
-		}
-    if (rows.length === 0){
-      console.log('user does not exist')
-      return
-    }
-    var obj = {
-      "latitude":rows[0].latitude,
-      "longitude":rows[0].longitude,
-      "isVisible" : rows[0].isvisible,
-      "blockedUsers":rows[0].blockedusers,
-    }
+
+
     callback(obj);
 	})
 }
@@ -347,6 +369,9 @@ module.exports.getPotentialMatches = function(client,email,isMaker,callback){
         return
       }
       swipedOn = rows[0].swipedon
+      if(swipedOn === null) {
+
+      }
       query = 'SELECT * from settings WHERE email = \'' + email + '\''
       console.log(query)
       client.query(query,function(err,res){

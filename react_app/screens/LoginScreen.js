@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { Text, View, Image, StyleSheet, NativeModules } from 'react-native';
 import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
+import { createUser, getUser, createSettings } from '../router/api.js';
 
-import { onSignIn } from '../auth.js'
+
 import { Font } from 'expo';
 
-/* Firebase */
+import { onSignIn } from '../auth.js';
+
 var firebase = require('firebase')
 
 var config = {
@@ -88,7 +90,14 @@ class LoginScreen extends Component {
         // Sign in with credential from the Facebook user.
         firebase.auth().signInWithCredential(credential).then((user) => {
           console.log("User is" + user.displayName)
-          navigate("SignedIn", {user: user.email});
+          user_name = user.displayName;
+          user_email= user.email;
+          createUser(user_name, user_email)
+          .then((data) => {
+            createSettings(user_email)
+            navigate("SignedIn", {name: user_name, email: user_email, isMaker: false});
+          })
+          console.log(user.email)
         }).catch((error) => {
           // Handle Errors here.
           console.log(error)
@@ -100,12 +109,25 @@ class LoginScreen extends Component {
   }
 
  login(navigate){
+    var email = this.state.email
+    var name = ""
+
     firebase.auth().signInWithEmailAndPassword(this.state.email,this.state.password).then(function(user) {
       console.log('successfully logged in ' + JSON.stringify(user))
-      navigate("SignedIn", {user: user});
+      console.log("User's email = " + user.email)
       this.load = true
+      email = user.email
+      getUser(email)
+      .then((user)=> {
+        name = user.name
+      })
+    })
+    //Wait to navigate so Explore knows that user is inserted into database.
+    .then((data) => {
+      navigate("SignedIn", {name: name, email: email, isMaker: false});
       return true
-    }).catch(function(error) {
+    })
+    .catch(function(error) {
       var errorCode = error.code
       var errorMessage = error.message
 			if (errorCode === 'auth/wrong-password') {

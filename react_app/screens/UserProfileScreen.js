@@ -7,6 +7,7 @@ import { Text,
     StyleSheet,
     Card } from 'react-native';
 import { Avatar, Icon } from 'react-native-elements';
+import {getBacker, getMaker, getUser} from '../router/api.js';
 
 import { lightGrey,
     backerBlue,
@@ -81,17 +82,13 @@ const styles = {
 
 class UserProfileScreen extends Component {
     static navigationOptions = ({ navigation }) => {
-    const { user, mainUser } = navigation.state.params;
-    const { goBack } = navigation.goBack;
-    isMaker = navigation.state.params.isMaker;
-
     return {
         headerTitle: (
             <Icon
             name='chevron-down'
             type='material-community'
             iconStyle={styles.headerIcon}
-            onPress={ () => navigation.goBack }
+            onPress={ () => navigation.goBack() }
             />
         ),
     };
@@ -100,6 +97,8 @@ class UserProfileScreen extends Component {
   render() {
 
     const { navigate } = this.props.navigation;
+    const {userEmail, userName, userIsMaker, shortbio, longbio} =
+              this.props.navigation.state.params
 
     return (
       <ScrollView style={styles.container}>
@@ -111,12 +110,12 @@ class UserProfileScreen extends Component {
             </View>
 
             <View style={styles.descriptionContainer}>
-                <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}>
-                    Computer Science Lecturer
+                <Text style={[styles.backerTitle, userIsMaker && styles.makerTitle]}>
+                    {shortbio}
                 </Text>
                 <View style={styles.subTitleContainer}>
                     <Text style={styles.subtitleText}>
-                        Gary Gillespie
+                        {userName}
                     </Text>
                     <View style={styles.iconsContainer}>
                         <Icon iconStyle={styles.iconStyle}
@@ -149,7 +148,7 @@ class UserProfileScreen extends Component {
 
             <View style={styles.bioContainer}>
                 <Text style={styles.bioText}>
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus egestas sapien nec lobortis tincidunt. Donec commodo, felis id convallis ultrices, velit arcu efficitur libero, at hendrerit dui felis eu massa. Donec tincidunt dolor quis erat dignissim, at vestibulum nisl placerat. Nunc pellentesque orci et convallis congue. Nam congue tortor urna, at consectetur nisl tincidunt id.
+                  {longbio}
                 </Text>
             </View>
         </ScrollView>

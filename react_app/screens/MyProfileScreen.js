@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {Avatar, Icon, Button} from 'react-native-elements';
+import { getMaker, getBacker, getUser, updateIsMaker } from '../router/api.js';
 
 //Method for logging out.
 import { onSignOut } from '../auth.js';
@@ -21,9 +22,11 @@ import { headerIconSize } from '../assets/styles/size.js';
 import FlipCard from 'react-native-flip-card'
 
 var profilePhoto = require('../assets/images/shuttle-01.jpg');
+var globalIsMaker = false
 
 const Dimensions = require('Dimensions');
 const window = Dimensions.get('window');
+const globalIsMaker = false
 
 const styles = {
   headerIcon: {
@@ -101,32 +104,67 @@ const styles = {
 
 class MyProfileScreen extends Component {
 
-    toggleIsMaker(){
-        if(this.props.navigation.state.params.isMaker){
-            this.setState({'isMaker': false});
+  constructor(props) {
+    super(props);
+    this.state = {
+      makerBacker: {},
+      isMaker: false,
+      editText: "Edit Backer Profile",
+      buttonColor: backerBlue,
+      switchText: "Switch to Maker",
+      userProfile: {}
+    }
+  }
+    toggleIsMaker() {
+        if(this.state.isMaker){
+            this.setState({'isMaker': false}); //Update our screen state.
+            this.setState({'buttonColor': backerBlue}); //Update our screen state.
+            this.setState({'editText': "Edit Backer Profile"}); //Update our screen state.
+            this.setState({'switchText': "Switch to Maker"}); //Update our screen state.
+            globalIsMaker = false //Update for nav options.
+            console.log(this.state.makerBacker)
+            updateIsMaker(false, this.state.email) //Update in our database
         }
         else{
             this.setState({'isMaker': true});
+            globalIsMaker = true //Update for nav options.
+            this.setState({'buttonColor': makerPurple}); //Update our screen state.
+            this.setState({'editText': "Edit Maker Profile"}); //Update our screen state.
+            this.setState({'switchText': "Switch to Backer"}); //Update our screen state.
+            console.log(this.state.makerBacker)
+            updateIsMaker(true, this.state.email)
         }
+    }
+    setProfileState() {
+      const {email} = this.props.navigation.state.params
+
+      if(this.state.isMaker) {
+        getMaker(email)
+        .then((data) => {
+          this.setState({
+            "makerBacker": data,
+          })
+        });
+      } else {
+        getBacker(email)
+        .then((data) => {
+          this.setState({
+            "makerBacker": data,
+          })
+        });
+      }
     }
 
   static navigationOptions = ({ navigation }) => {
       const { user } = navigation.state.params;
-      var isMaker = navigation.state.params.isMaker;
-
-      if(isMaker){buttonColor = makerPurple;
-                  editText = 'Edit Maker Profile';
-                  switchText = 'Switch to Backer';}
-      else{buttonColor=backerBlue;
-           editText = 'Edit Backer Profile';
-           switchText = 'Switch to Maker';}
+      const { name, email } = navigation.state.params;
 
       return {
           headerLeft: (
                 <Icon
                     name='face'
                     type='material-community'
-                    iconStyle={[styles.backerIcon, isMaker && styles.makerIcon]}
+                    iconStyle={[styles.backerIcon, globalIsMaker && styles.makerIcon]}
                     />
               ),
             headerTitle: (
@@ -134,7 +172,7 @@ class MyProfileScreen extends Component {
                     name='lightbulb-outline'
                     type='material-community'
                     iconStyle={styles.headerIcon}
-                    onPress={ () => navigation.navigate("Explore", {user: user}) }
+                    onPress={ () => navigation.navigate("Explore", {name: name, email: email, isMaker: globalIsMaker}) }
                     />
             ),
             headerRight: (
@@ -142,15 +180,41 @@ class MyProfileScreen extends Component {
                     name='message-text-outline'
                     type='material-community'
                     iconStyle={styles.headerIcon}
-                    onPress={ () => navigation.navigate("Matches", {user: user}) }
+                    onPress={ () => navigation.navigate("Matches", {name: name, email: email, isMaker: globalIsMaker}) }
                     />
             ),
       };
 };
 
+  componentDidMount() {
+    const { name, email, isMaker} = this.props.navigation.state.params
+    globalIsMaker = isMaker
+    this.setState({"isMaker": isMaker})
+
+    if(isMaker) {
+      this.setState({"buttonColor": makerPurple})
+    } else {
+      this.setState({"buttonColor": backerBlue})
+    }
+
+    //Get user for shortbio and name.
+    getUser(email)
+    .then((data) => {
+      this.setState({
+        "userProfile": data,
+      })
+    });
+    //Set Maker/Backer profile using this.state.makerBacker as dependency.
+    this.setProfileState()
+  }
+
   render() {
 
     const { navigate } = this.props.navigation;
+    const { name, email } = this.props.navigation.state.params;
+    const isMaker = globalIsMaker
+    console.log("inside my Profile " + email)
+    const currProfile = this.state.makerBacker;
 
       return (
             <View style={styles.container}>
@@ -162,7 +226,9 @@ class MyProfileScreen extends Component {
                               activeOpacity={0.7}
                               source={profilePhoto}
                               onPress={()=>navigate('UserProfile',
-                                                    {user:'yourOwnProfile'})}
+                              {userName: name, userEmail: email, userIsMaker: isMaker, name:name, email: email, isMaker: isMaker, shortbio:
+                                this.state.userProfile.shortbio, longbio:
+                                this.state.makerBacker.longbio})}
                               />
                       </View>
 
@@ -200,11 +266,11 @@ class MyProfileScreen extends Component {
                       </View>
 
                     <View style={styles.textContainer}>
-                      <Text style={[styles.backerTitle, isMaker && styles.makerTitle]}>
-                          Biology/Comp Sci Student
+                      <Text style={[styles.backerTitle, this.state.isMaker && styles.makerTitle]}>
+                          {this.state.userProfile.shortbio}
                       </Text>
                       <Text style={styles.subTitleStyle}>
-                          David Owens
+                          {name}
                       </Text>
                     </View>
 
@@ -215,10 +281,10 @@ class MyProfileScreen extends Component {
                           textStyle={styles.buttonText}
                           borderRadius={10}
                           activeOpacity={0.5}
-                          backgroundColor={buttonColor}
+                          backgroundColor={this.state.buttonColor}
                           icon={{name: 'settings', type: 'MaterialIcons'}}
                           title= 'Edit Account Settings'
-                          onPress={()=> navigate('Settings', {user: this.props.navigation.state.params.user})}
+                          onPress={()=> navigate('Settings', {name: name, email: email, isMaker: this.state.isMaker})}
                         />
 
                         <Button
@@ -227,10 +293,10 @@ class MyProfileScreen extends Component {
                           textStyle={styles.buttonText}
                           borderRadius={10}
                           activeOpacity={0.5}
-                          backgroundColor={buttonColor}
+                          backgroundColor={this.state.buttonColor}
                           icon={{name: 'edit', type: 'MaterialCommunityIcons' }}
-                          title={editText}
-                          onPress={()=> navigate('Edit')}
+                          title={this.state.editText}
+                          onPress={()=> navigate('Edit',{ name: name, email: email, isMaker: this.state.isMaker}) }
                         />
 
                         <Button
@@ -239,13 +305,14 @@ class MyProfileScreen extends Component {
                           textStyle={styles.buttonText}
                           borderRadius={10}
                           activeOpacity={0.5}
-                          backgroundColor={buttonColor}
+                          backgroundColor={this.state.buttonColor}
                           icon={{name: 'replay', type: 'MaterialCommunityIcons'}}
-                          title={switchText}
+                          title={this.state.switchText}
                           onPress={()=> this.toggleIsMaker()}
                         />
                     </View>
-              </View>
+            </View>
+
       );
   }
 }

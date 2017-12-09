@@ -7,10 +7,11 @@ var hot_bod = " with body = "
 function constructOutputString(res, body, ext) {
   return (res.request.method + " /" + ext + hot_bod + body + delimiter)
 }
+
  var test_user = {
  	"name":"vinay",
  	"age": 21,
- 	"email": "test@aypapi.com",
+ 	"email": "test20@aypapi.com",
  	"isMaker":true,
  	"shortBio":"dumb dumb",
    "location":"123-123",
@@ -33,13 +34,14 @@ function constructOutputString(res, body, ext) {
  		}
  	}
  }
+ /*
 request.get({
   url: url + "user/getPotentialMatches",
   json: true,
   body: test_user
   }, function(err,res){
     console.log(res.body)
-})
+})*/
 /*
 request.patch({
   url: url + "user/isMaker",
@@ -73,16 +75,16 @@ request.patch({
 // var user_email = {
 //   email: "brandonisadumdum@msn.com"
 // }
-
-// request.post({
-//     url: url + "user",
-//     // method: "POST",
-//     json: true,   // <--Very important!!!
-//     body: test_user
-// }, function(err, res, body) {
-// 	console.log("POST response body  - " + res.body);
-// });
-
+/*
+ request.post({
+     url: url + "user",
+      method: "POST",
+     json: true,   // <--Very important!!!
+     body: test_user
+ }, function(err, res, body) {
+ 	console.log("POST response body  - " + res);
+ });
+*/
 // // Get user
 // request.get({
 //   url: url + "user",
@@ -149,17 +151,16 @@ request.patch({
 //	console.log("POST response body  - " + res.body);
 //});
 
-// // Get user
-// request.get({
-//   url: url + "user/settings",
-//   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
-//   body: user_email
-// }, function(err, res) {
-//   if (res != null && res.body != null){
-//     console.log("User's settings are : " + res.body);
-//     console.log("lat: "  + res.body.latitude)
-//   }
-// });
+ // Get user settings
+ request.get({
+   url: url + "user/settings?email=pi2@pie.com",
+   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
+ }, function(err, res) {
+   if (res != null && res.body != null){
+     console.log("User's settings are : " + res.body);
+     console.log(JSON.stringify(res.body))
+   }
+ });
 
 // var test_swipe = {
 //     "email":"test@aypapi.com",
@@ -179,9 +180,29 @@ request.patch({
 // 	console.log("POST response body  - " + res.body);
 // });
 
+/*
+ var test_swipe = {
+     "email":"test@aypapi.com",
+     "swipedEmail":"test4@aypapi.com",//need an email that currently exists in the database
+     "isMaker":true,
+     "swipedRight":true
+ }
+
+
+ request.post({
+     url: url + "user/swipe",
+     // method: "POST",
+     json: true,   // <--Very important!!!
+     body: test_swipe
+ }, function(err, res) {
+   console.log("testing swipedRight/swipedOn POST request");
+ 	console.log("POST response body  - " + res.body);
+ });
+*/
 /* Twilio Tests */
 
 /* Test Objects */
+
 var test_null_token = {
   "token" : null,
   "identity":"vinnie",
@@ -207,7 +228,8 @@ var test_channel = {
     "endpointId": "61553df94c234a691130ab9d3438b074"
   },
   "other_user" : {
-    "email": "vylana"
+    "email": "vylana@gmail.com",
+    "name": "vylana"
   }
 }
 
@@ -248,6 +270,7 @@ var test_message2 = {
 // });
 
 /* GET: All channels */
+/*
 ext = "twilio/channels?identity=vylana&endpointId=9998"
 request.get({
   url: url + ext,
@@ -286,8 +309,10 @@ request.get({
 //   }
 //   console.log(output)
 // });
+*/
 
 /* POST: Create a channel */
+/*
 var createChannelTest = function(ext) {
   request.post({
       url: url + ext,
@@ -306,7 +331,7 @@ var createChannelTest = function(ext) {
     }
     console.log(output)
   });
-}
+}*/
 // createChannelTest(ext)
 
 
@@ -332,6 +357,7 @@ var createChannelTest = function(ext) {
 // });
 
 /* POST: a message to a channel */
+/*
 request.post({
     url: url + "twilio/channels/test_channel2/messages",
     json: true,
@@ -355,8 +381,9 @@ request.post({
     console.log(res.body)
   }
 });
-
+*/
 /* GET: Channel's Messages */
+/*
 request.get({
     url: url + "twilio/channels/test_channel2/messages?identity=vinnie&endpointId=9999",
     json: true,
@@ -382,3 +409,4 @@ request.get({
     console.log(res.body)
   }
 });
+*/
