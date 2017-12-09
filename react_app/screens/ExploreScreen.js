@@ -185,10 +185,6 @@ class ExploreScreen extends Component {
 
     cardStack = []
 
-    var shortbio = ""
-    var longbio = ""
-    var userName = ""
-    var icons = []
     var cardIsMaker = !isMaker
     var totalCount = this.state.emailList.length
 
@@ -196,16 +192,14 @@ class ExploreScreen extends Component {
       //Get data for current card in stack.
       getUser(this.state.emailList[i])
       .then((data) => {
-        shortbio = data.shortbio
-        userName = data.name
+        var shortbio = data.shortbio
+        var userName = data.name
         if(isMaker) {
           getBacker(data.email)
           .then((data) => {
-            longbio = data.longbio
-            icons = data.icons
             console.log("Inside getBacker for getPotential matches " + data)
             cardStack.push({name: userName, email: data.email, shortbio:
-                              shortbio, longbio: longbio, icons: icons, isMaker: cardIsMaker})
+                              shortbio, longbio: data.longbio, icons: data.icons, isMaker: cardIsMaker})
             if(cardStack.length === totalCount) {
               this.setState({"loadingCards": false})
               this.setState({"cardStack": cardStack})
@@ -215,12 +209,9 @@ class ExploreScreen extends Component {
         } else {
           getMaker(data.email)
           .then((data) => {
-            longbio = data.longbio
-            icons = data.icons
             console.log("inside getMaker " + data)
-
             cardStack.push({name: userName, email: data.email, shortbio:
-                              shortbio, longbio: longbio, icons: icons, isMaker: cardIsMaker})
+                              shortbio, longbio: data.longbio, icons: data.icons, isMaker: cardIsMaker})
             if(cardStack.length === totalCount) {
               this.setState({"loadingCards": false})
               this.setState({"cardStack": cardStack})

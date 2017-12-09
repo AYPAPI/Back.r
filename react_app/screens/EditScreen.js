@@ -142,7 +142,7 @@ var self = null; //Used to access props/state inside navigation.
 class EditScreen extends Component {
 
   editProfile(shortbio) {
-    const { email } = this.props.navigation.state.params.email
+    const { email } = this.props.navigation.state.params
 
     updateProfile(email, shortbio)
 
@@ -183,7 +183,8 @@ class EditScreen extends Component {
           {text: 'Back to Profile', onPress: () => this.props.navigation.goBack()}
         ],
         { cancelable: false }
-      )    }
+      )
+    }
   }
 
   constructor(props) {
@@ -456,14 +457,6 @@ class EditScreen extends Component {
 
           <Divider style={styles.dividerStyle}/>
 
-          <Avatar
-              rounded
-              width={85}
-              height={85}
-              activeOpacity={0.5}
-              title = 'Save'
-              onPress={()=> this.userDoneEditing()}
-            />
         </View>
       </ScrollView>
     );
