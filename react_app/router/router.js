@@ -27,7 +27,6 @@ export const EditProfileStack = StackNavigator({
   Edit: { screen: EditScreen },
   Settings: {screen: SettingsScreen}
 }, {
-  headerMode: 'none',
   mode: 'modal'
 });
 

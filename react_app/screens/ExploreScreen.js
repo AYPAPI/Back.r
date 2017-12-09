@@ -203,17 +203,13 @@ class ExploreScreen extends Component {
           .then((data) => {
             longbio = data.longbio
             icons = data.icons
-            if(icons === null) {
-              totalCount = totalCount - 1
-            } else {
+            console.log("Inside getBacker for getPotential matches " + data)
             cardStack.push({name: userName, email: data.email, shortbio:
                               shortbio, longbio: longbio, icons: icons, isMaker: cardIsMaker})
-            }
             if(cardStack.length === totalCount) {
               this.setState({"loadingCards": false})
               this.setState({"cardStack": cardStack})
               console.log(cardStack)
-
             }
           });
         } else {
@@ -221,17 +217,14 @@ class ExploreScreen extends Component {
           .then((data) => {
             longbio = data.longbio
             icons = data.icons
-            if(icons === null) {
-              totalCount = totalCount - 1
-            } else {
-              cardStack.push({name: userName, email: data.email, shortbio:
+            console.log("inside getMaker " + data)
+
+            cardStack.push({name: userName, email: data.email, shortbio:
                               shortbio, longbio: longbio, icons: icons, isMaker: cardIsMaker})
-            }
             if(cardStack.length === totalCount) {
               this.setState({"loadingCards": false})
               this.setState({"cardStack": cardStack})
               console.log(cardStack)
-
             }
           });
         }
@@ -243,11 +236,7 @@ class ExploreScreen extends Component {
     const { email, name, isMaker } = this.props.navigation.state.params
     //If user logged in via email and password, retrieve the name.
 
-    if(name === "" ) {
-      this.setState({"name": "Edit your name in Edit Profile!"})
-    } else {
-      this.setState({"name": name})
-    }
+    this.setState({"name": name})
 
     await getPotentialMatches(email, isMaker)
     .then((data) => {

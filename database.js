@@ -123,6 +123,7 @@ module.exports.updateUser = function(email,shortbio,client,callback){
     callback("Updated user profile");
   })
 }
+
 //update maker and backer profile
 module.exports.updateProfile = function(email,longbio,photos,icons,client,tablename,callback){
   let query = 'UPDATE ' + tablename + ' SET longbio = $1, photos = $2, icons = $3 WHERE email = $4'
@@ -252,6 +253,13 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
 }
 module.exports.createSettings = function(isVisible, blockedUsers, email, client) {
   var tablename = 'settings'
+  let check = 'SELECT email FROM ' + tablename + ' WHERE email = \'' + email + '\''
+  client.query(check, function(err,res) {
+    rows = res.rows
+    if (rows.length > 0){
+      console.log('settings already in database')
+      return
+    }
   let query = 'INSERT INTO   ' + tablename + ' (email,isvisible,blockedusers) values ($1,$2,$3)';
     console.log(query)
     console.log("called1")

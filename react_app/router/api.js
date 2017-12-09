@@ -47,7 +47,6 @@ exports.createUser = async (name, email) => {
     });
 }
 
-
 //Retrieves user via email.
 exports.getUser = async (email) => {
   console.log("GET user request");
@@ -167,7 +166,7 @@ exports.createSettings = (email) => {
     body: JSON.stringify({
       email: email,
       blockedUsers: [],
-      isVisible: false
+      isVisible: true
     })
   }).then(function(response) {
     console.log("inside create settings api util callback");

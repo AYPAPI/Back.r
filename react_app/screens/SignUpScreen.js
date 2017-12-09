@@ -76,9 +76,13 @@ class SignUpScreen extends Component {
         console.log('successfully created account');
         createUser(user_name, user_email);
         createSettings(user_email);
-
-        navigate("Explore", {name: user_name, email: user.email, isMaker: false})
-    }).catch(function(error) {
+    })
+    //Wait to navigate so Explore knows that user is inserted into database.
+    .then((user)=> {
+      navigate("Explore", {name: user_name, email: user_email, isMaker: false})
+      return true
+    })
+    .catch(function(error) {
       var errorCode = error.code;
       var errorMessage = error.message;
 			if (errorCode === 'auth/wrong-password') {

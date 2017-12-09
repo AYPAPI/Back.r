@@ -95,10 +95,9 @@ class LoginScreen extends Component {
           createUser(user_name, user_email)
           .then((data) => {
             createSettings(user_email)
+            navigate("Explore", {name: user_name, email: user_email, isMaker: false});
           })
-
           console.log(user.email)
-          navigate("Explore", {name: user_name, email: user_email, isMaker: false});
         }).catch((error) => {
           // Handle Errors here.
           console.log(error)
@@ -109,18 +108,26 @@ class LoginScreen extends Component {
 
   }
 
-
-
  login(navigate){
+    var email = this.state.email
+    var name = ""
+
     firebase.auth().signInWithEmailAndPassword(this.state.email,this.state.password).then(function(user) {
       console.log('successfully logged in ' + JSON.stringify(user))
       console.log("User's email = " + user.email)
-
-      navigate("Explore", {name: "", email: user.email, isMaker: false});
-
       this.load = true
+      email = user.email
+      getUser(email)
+      .then((user)=> {
+        name = user.name
+      })
+    })
+    //Wait to navigate so Explore knows that user is inserted into database.
+    .then((data) => {
+      navigate("Explore", {name: name, email: email, isMaker: false});
       return true
-    }).catch(function(error) {
+    })
+    .catch(function(error) {
       var errorCode = error.code
       var errorMessage = error.message
 			if (errorCode === 'auth/wrong-password') {
@@ -133,7 +140,6 @@ class LoginScreen extends Component {
       return false
     });
 	}
-
 
   success(navigate){
     //var promise = new Promise(this.login).then(function(value){console.log(value)})
