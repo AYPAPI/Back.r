@@ -258,7 +258,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
                 matches.push(swipedEmail)
 
                 request.post({
-                    url: url + "channels",
+                    url: url + "twilio/channels",
                     json: true,
                     body: channel
                 }, function(err, res) {
