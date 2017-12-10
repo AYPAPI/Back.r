@@ -253,7 +253,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
                   headers: {
                   'Accept': 'application/json',
                   'Content-Type': 'application/json',
-                  }
+                },
                   body: JSON.stringify(channel)
                 }).then(function(response) {
                   return response.json()
