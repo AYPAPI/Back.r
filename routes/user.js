@@ -132,8 +132,8 @@ router.post("/swipe", function(req, res){
     var swipedName = req.body.swipedName;
     var name = req.body.name;
 
-    db.addSwipe(email, isMaker, swipedEmail, swipedRight, name, swipedName, database,function(user){
-      res.json(req.body);
+    db.addSwipe(email, isMaker, swipedEmail, swipedRight, name, swipedName, database, function(user){
+      res.json(req.status);
     });
 });
 

@@ -179,11 +179,10 @@ class ExploreScreen extends Component {
     cardStack = []
 
     var cardIsMaker = !isMaker
-    var totalCount = this.state.emailList.length
 
     for(var i = 0; i < this.state.emailList.length; i++) {
       //Get data for current card in stack.
-      getUser(this.state.emailList[i])
+      await getUser(this.state.emailList[i])
       .then((data) => {
         var shortbio = data.shortbio
         var userName = data.name
@@ -193,7 +192,7 @@ class ExploreScreen extends Component {
             console.log("Inside getBacker for getPotential matches " + data)
             cardStack.push({name: userName, email: data.email, shortbio:
                               shortbio, longbio: data.longbio, icons: data.icons, isMaker: cardIsMaker, title: data.title})
-            if(cardStack.length === totalCount) {
+            if(cardStack.length === this.state.emailList.length) {
               this.setState({"loadingCards": false})
               this.setState({"cardStack": cardStack})
               console.log(cardStack)
@@ -205,7 +204,7 @@ class ExploreScreen extends Component {
             console.log("inside getMaker " + data)
             cardStack.push({name: userName, email: data.email, shortbio:
                               shortbio, longbio: data.longbio, icons: data.icons, isMaker: cardIsMaker, title: data.title})
-            if(cardStack.length === totalCount) {
+            if(cardStack.length === this.state.emailList.length) {
               this.setState({"loadingCards": false})
               this.setState({"cardStack": cardStack})
               console.log(cardStack)

@@ -176,10 +176,11 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
   var matches;
   var swipedEmailMatches;
   var query = 'SELECT * FROM ' + tablename + ' WHERE email = \'' + email + '\''
-
+  console.log(query)
     client.query(query, function(err, res) {
       if (err) throw err;
       rows = res.rows
+      console.log("made it past first query!")
       if (rows.length === 0) {
         console.log('user does not exist')
         return
@@ -192,6 +193,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
           swipedright.push(swipedEmail)
         }
         let query2 = 'UPDATE ' + tablename + ' SET swipedright = $1, swipedon = $2 WHERE email = $3'
+        console.log(query2)
         client.query(query2,[swipedright, swipedon, email], function(err, res) {
           if (err) throw err;
           callback("Updated swipe")
@@ -206,9 +208,9 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
             swipedEmailMatches = rows[0].matches
             if (swipedright.includes(email)){
               if (!matches.includes(swipedEmail)){
-                  var friendlyName = name + "/" + swipedName
-                  var uniquename = email + swipedEmail
-                  var description = 'Channel between ' + name + "and " + swipedName
+                  //var friendlyName = name + "/" + swipedName
+                  //var uniquename = email + swipedEmail
+                  //var description = 'Channel between ' + name + "and " + swipedName
               /*  var channel = {
                   "channel" : {
                     "description": description,
