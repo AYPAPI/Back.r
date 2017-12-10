@@ -170,7 +170,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
     tablename = 'backer';
   }
   console.log(email + " " + isMaker + " " + swipedEmail + " " + swipedRight + " " + name + " " + swipedName)
-  
+
   var swipedright;
   var swipedon;
   var matches;
