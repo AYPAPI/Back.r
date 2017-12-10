@@ -2,7 +2,6 @@
 // All functions will be in the form of: module.exports.[function_name]
 // so they can be accessed from outside the file.
 
-
 // Connect to the remote database
 module.exports.connect = function() {
   const pg = require('pg');
@@ -170,6 +169,8 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
   } else {
     tablename = 'backer';
   }
+  console.log(email + " " + isMaker + " " + swipedEmail + " " + swipedRight + " " + name + " " + swipedName)
+  
   var swipedright;
   var swipedon;
   var matches;
@@ -221,11 +222,11 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
                     "name" : name
                   }
                 }*/
-              console.log(channel)
+              //console.log(channel)
               matches.push(swipedEmail)
 
 /*
-              var createChannelTest = function (ext) {
+            /*  var createChannelTest = function (ext) {
                 request.post({
                   url: url + ext,
                   json: true,
@@ -243,7 +244,9 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
                   }
                   console.log(output)
                 });
-              }*/
+              }
+                });*/
+
               if (!swipedEmailMatches.includes(email)) {
                 swipedEmailMatches.push(email)
               }

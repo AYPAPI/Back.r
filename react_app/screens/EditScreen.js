@@ -179,10 +179,11 @@ class EditScreen extends Component {
   }
 
   userDoneEditing() {
+    const { name, email, isMaker } = this.props.navigation.state.params
+
     this.editProfile(this.state.shortbio)
     this.editMakerBacker(this.state.longbio, this.state.title)
 
-    const name = this.props.navigation.state.params.name
     console.log("inside userDone " + this.state)
     if(isErr) {
       alert("failure for editing data for " + name + ":(")
@@ -191,7 +192,7 @@ class EditScreen extends Component {
         'Edit Success',
         'Saved changes for ' + name + '!',
         [
-          {text: 'Back to Profile', onPress: () => this.props.navigation.goBack()}
+          {text: 'Back to Profile', onPress: () => this.props.navigation.navigate('MyProfile', {name: name, email: email, isMaker: isMaker})}
         ],
         { cancelable: false }
       )
@@ -206,6 +207,7 @@ class EditScreen extends Component {
       materials: false,
       knowledge: false,
       manpower: false,
+      icons: [],
       name: "",
       collaborators: false,
       longbio: "",
@@ -217,13 +219,13 @@ class EditScreen extends Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     const {email, isMaker, name} = this.props.navigation.state.params
     this.setState({"name": name})
     self = this //Set global self for rendering header props.
 
     //Set userProfile in state to get current name and shortbio.
-    getUser(email)
+    await getUser(email)
     .then((data) => {
       this.setState({
         "userProfile": data,
@@ -234,34 +236,29 @@ class EditScreen extends Component {
     });
 
     if(isMaker) {
-      getMaker(email)
+      await getMaker(email)
       .then((data) => {
         this.setState({
-          "makerBacker": data,
-        })
-        this.setState({
-          "longbio": data.longbio
+          "longbio": data.longbio,
+          "icons": data.icons,
+          "makerBacker": data
         })
       });
     } else {
-      getBacker(email)
+      await getBacker(email)
       .then((data) => {
         this.setState({
-          "makerBacker": data,
-        })
-        this.setState({
-          "longbio": data.longbio
-        }),
-        this.setState({
-          "title": data.title
+          "longbio": data.longbio,
+          "icons": data.icons,
+          "makerBacker": data
         })
       });
     }
   }
 
   static navigationOptions = ({ navigation }) => {
-  user = navigation.state.params;
-  isMaker = navigation.state.params.isMaker;
+  const {isMaker} = navigation.state.params
+
   var profileText = ""
   if(isMaker) {
     profileText = "Maker"
@@ -446,7 +443,8 @@ class EditScreen extends Component {
             </View>
             <Switch
               onValueChange={(value) => this.setState({"knowledge": value})}
-              value = {this.state.knowledge} />
+            //  value = {this.state.icons[2]}
+              value = {this.state.knowledge}/>
           </View>
 
           <Divider style={styles.dividerStyle}/>
