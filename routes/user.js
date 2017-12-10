@@ -53,8 +53,6 @@ router.patch('/backer', function(req,res) {
 
   console.log(backerLongBio)
 
-  console.log("Inside updateBacker in user.js " + makerPhotos)
-
   db.updateProfile(email,backerLongBio,backerPhotos,backerIcon,backerTitle,database,'backer',function(message) {
     var status = message
     res.json(status)
