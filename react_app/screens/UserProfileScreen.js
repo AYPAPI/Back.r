@@ -81,8 +81,20 @@ const styles = {
 };
 
 class UserProfileScreen extends Component {
-    static navigationOptions = ({ navigation }) => {};
-  render() {
+  static navigationOptions = ({ navigation }) => {
+    const { userName } = navigation.state.params;
+    return {
+      title: userName,
+      headerLeft: (
+          <Icon
+            name='message-text-outline'
+            type='material-community'
+            iconStyle={styles.headerIcon}
+            onPress={ () => navigation.goBack() }
+          />
+      ),
+    };
+  };  render() {
 
     const { navigate } = this.props.navigation;
     const {userEmail, userName, userIsMaker, title, longbio, icons} =

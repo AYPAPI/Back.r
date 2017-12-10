@@ -5,6 +5,7 @@ import {
     StyleSheet,
     TouchableHighlight,
     Image,
+    Alert
 } from 'react-native';
 import { Icon, Text, Card } from 'react-native-elements';
 import Swiper from 'react-native-swiper-animated';
