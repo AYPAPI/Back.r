@@ -100,7 +100,7 @@ TwilioLib.prototype.getChannel = function(client, channel_name, callback) {
 }
 
 function getOtherUser(friendlyName, identity) {
-	var names = friendlyName.split("&")
+	var names = friendlyName.split("/")
 	if (names[0] === identity) {
     return names[1]
   } else { return names[0] }
