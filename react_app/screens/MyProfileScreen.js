@@ -135,6 +135,7 @@ class MyProfileScreen extends Component {
             updateIsMaker(true, this.state.email)
         }
     }
+
     setProfileState() {
       const {email} = this.props.navigation.state.params
 
@@ -186,7 +187,7 @@ class MyProfileScreen extends Component {
       };
 };
 
-  componentDidMount() {
+  async componentDidMount() {
     const { name, email, isMaker} = this.props.navigation.state.params
     globalIsMaker = isMaker
     this.setState({"isMaker": isMaker})
@@ -205,7 +206,7 @@ class MyProfileScreen extends Component {
       })
     });
     //Set Maker/Backer profile using this.state.makerBacker as dependency.
-    this.setProfileState()
+    await this.setProfileState()
   }
 
   render() {
@@ -227,7 +228,7 @@ class MyProfileScreen extends Component {
                               source={profilePhoto}
                               onPress={()=>navigate('UserProfile',
                               {userName: name, userEmail: email, userIsMaker: isMaker, name:name, email: email, isMaker: isMaker, shortbio:
-                                this.state.userProfile.shortbio, longbio:
+                                this.state.userProfile.title, longbio:
                                 this.state.makerBacker.longbio})}
                               />
                       </View>
@@ -267,7 +268,8 @@ class MyProfileScreen extends Component {
 
                     <View style={styles.textContainer}>
                       <Text style={[styles.backerTitle, this.state.isMaker && styles.makerTitle]}>
-                          {this.state.userProfile.shortbio}
+                          {this.state.makerBacker.title}
+
                       </Text>
                       <Text style={styles.subTitleStyle}>
                           {name}

@@ -154,7 +154,7 @@ class EditScreen extends Component {
 
   }
 
-  editMakerBacker(longbio) {
+  editMakerBacker(longbio, title) {
     const { email, isMaker } = this.props.navigation.state.params
 
     let icons = [this.state.money, this.state.materials, this.state.knowledge,
@@ -167,15 +167,15 @@ class EditScreen extends Component {
     //  newPhotosArr.push(photosToAdd[i])
 
     if(isMaker) {
-      updateMakerProfile(longbio, [], icons, email)
+      updateMakerProfile(longbio, [], icons, email, this.state.title)
     } else {
-      updateBackerProfile(longbio, [], icons, email)
+      updateBackerProfile(longbio, [], icons, email, this.state.title)
     }
   }
 
   userDoneEditing() {
     this.editProfile(this.state.shortbio)
-    this.editMakerBacker(this.state.longbio)
+    this.editMakerBacker(this.state.longbio, this.state.title)
 
     const name = this.props.navigation.state.params.name
     console.log("inside userDone " + this.state)
@@ -206,8 +206,9 @@ class EditScreen extends Component {
       longbio: "",
       shortbio: "",
       photos: [],
+      title: "",
       makerBacker: {},
-      userProfile: {}
+      userProfile: {},
     };
   }
 
@@ -245,6 +246,9 @@ class EditScreen extends Component {
         })
         this.setState({
           "longbio": data.longbio
+        }),
+        this.setState({
+          "title": data.title
         })
       });
     }
@@ -276,7 +280,6 @@ class EditScreen extends Component {
     ),
   };
 };
-
 
   render() {
 
@@ -332,6 +335,8 @@ class EditScreen extends Component {
 
           <TextInput style={styles.inputStyle}
           maxLength={30}
+          onChangeText = {(text) => this.setState({"title":text})}
+          value={this.state.title}
           />
 
           <Text style={styles.inputText}>
@@ -354,7 +359,8 @@ class EditScreen extends Component {
             height={100}
             maxLength={160}
             onChangeText = {(text) => this.setState({"shortbio":text})}
-            value={ this.state.shortbio }/>
+            value={ this.state.shortbio }
+            />
 
             <Text style={styles.inputText}>
                 An in-depth description...

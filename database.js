@@ -2,6 +2,7 @@
 // All functions will be in the form of: module.exports.[function_name]
 // so they can be accessed from outside the file.
 
+
 // Connect to the remote database
 module.exports.connect = function() {
   const pg = require('pg');
@@ -67,7 +68,7 @@ module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,
 
 //create the maker and backer profiles
 module.exports.createUserProfile = function (longbio,photos,icons,email,tablename,
-                                             swipedRight,matches,swipedOn,client){
+                                             swipedRight,matches,swipedOn,title,client){
   let check = 'SELECT email FROM ' + tablename + ' WHERE email = \'' + email + '\''
   client.query(check, function(err,res) {
     rows = res.rows
@@ -75,8 +76,8 @@ module.exports.createUserProfile = function (longbio,photos,icons,email,tablenam
       console.log('user already in database')
       return
     }
-    let query = 'INSERT INTO ' + tablename + ' (longbio,photos,icons,email,swipedright,matches,swipedon) values ($1,$2,$3,$4,$5,$6,$7)';
-    client.query(query,[longbio,photos,icons,email,swipedRight,matches,swipedOn], function(err,res) {
+    let query = 'INSERT INTO ' + tablename + ' (longbio,photos,icons,email,swipedright,matches,swipedon,title) values ($1,$2,$3,$4,$5,$6,$7,$8)';
+    client.query(query,[longbio,photos,icons,email,swipedRight,matches,swipedOn,title], function(err,res) {
       if (err) throw err;
       else{
         console.log('inserted ' + email + ' into Maker/Backer')
@@ -125,9 +126,12 @@ module.exports.updateUser = function(email,shortbio,client,callback){
 }
 
 //update maker and backer profile
-module.exports.updateProfile = function(email,longbio,photos,icons,client,tablename,callback){
-  let query = 'UPDATE ' + tablename + ' SET longbio = $1, photos = $2, icons = $3 WHERE email = $4'
-  client.query(query, [longbio,photos,icons,email], function(err,res) {
+module.exports.updateProfile = function(email,longbio,photos,icons,title,client,tablename,callback){
+  let query = 'UPDATE ' + tablename + ' SET longbio = $1, photos = $2, icons = $3, title = $4 WHERE email = $5'
+
+  console.log("Inside updateProfile " + longbio)
+
+  client.query(query, [longbio,photos,icons,title,email], function(err,res) {
     if (err) throw err;
     console.log('Updated ' + tablename + ' profile');
     callback("Updated " + tablename + ' profile');
@@ -151,14 +155,15 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
         "icons":rows[0].icons,
         "swipedright":rows[0].swipedright,
         "matches":rows[0].matches,
-        "swipedon":rows[0].swipedon
+        "swipedon":rows[0].swipedon,
+        "title": rows[0].title,
 			}
       callback(obj);
     })
 }
 
 //db.addSwipedOn(email, isMaker, swipedEmail);
-module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, client, callback) {
+module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, name, swipedName, client, callback) {
   var tablename;
   if (isMaker == true) {
     tablename = 'maker';
@@ -170,6 +175,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
   var matches;
   var swipedEmailMatches;
   var query = 'SELECT * FROM ' + tablename + ' WHERE email = \'' + email + '\''
+
     client.query(query, function(err, res) {
       if (err) throw err;
       rows = res.rows
@@ -199,20 +205,23 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
             swipedEmailMatches = rows[0].matches
             if (swipedright.includes(email)){
               if (!matches.includes(swipedEmail)){
-              /*  var test_channel = {
+                  var friendlyName = name + "/" + swipedName
+                  var uniquename = email + swipedEmail
+                  var description = 'Channel between ' + name + "and " + swipedName
+              /*  var channel = {
                   "channel" : {
-                    "description": "This is a test channel",
-                    "friendlyName": "vinnie/vylana", //TODO - two names
-                    "uniqueName": "test_channel2", //MUST BE UNIQUE emails
-                    "identity" : "vinnie@gmail", //Swiper email
+                    "description": description,
+                    "friendlyName": friendlyName, //TODO - two names
+                    "uniqueName": uniqueName, //MUST BE UNIQUE emails
+                    "identity" : email, //Swiper email
                     "endpointId": "61553df94c234a691130ab9d3438b074"
                   },
                   "other_user" : {
-                    "email": "vylana@gmail.com",
-                    "name" : "vylana"
+                    "email": swipedEmail,
+                    "name" : name
                   }
                 }*/
-
+              console.log(channel)
               matches.push(swipedEmail)
 
 

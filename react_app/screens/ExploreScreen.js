@@ -199,7 +199,7 @@ class ExploreScreen extends Component {
           .then((data) => {
             console.log("Inside getBacker for getPotential matches " + data)
             cardStack.push({name: userName, email: data.email, shortbio:
-                              shortbio, longbio: data.longbio, icons: data.icons, isMaker: cardIsMaker})
+                              shortbio, longbio: data.longbio, icons: data.icons, isMaker: cardIsMaker, title: data.title})
             if(cardStack.length === totalCount) {
               this.setState({"loadingCards": false})
               this.setState({"cardStack": cardStack})
@@ -211,7 +211,7 @@ class ExploreScreen extends Component {
           .then((data) => {
             console.log("inside getMaker " + data)
             cardStack.push({name: userName, email: data.email, shortbio:
-                              shortbio, longbio: data.longbio, icons: data.icons, isMaker: cardIsMaker})
+                              shortbio, longbio: data.longbio, icons: data.icons, isMaker: cardIsMaker, title: data.title})
             if(cardStack.length === totalCount) {
               this.setState({"loadingCards": false})
               this.setState({"cardStack": cardStack})
@@ -277,7 +277,7 @@ class ExploreScreen extends Component {
       const newIndex = this.state.currentIndexInStack + 1
       this.setState({"currentIndexInStack": newIndex})
 
-      postSwipe(email, card.email, isMaker, bool)
+      postSwipe(email, card.email, isMaker, bool, name, card.name)
     }
 
     handleOnClick () {
@@ -286,7 +286,7 @@ class ExploreScreen extends Component {
       const userIsMaker = !isMaker
 
       this.props.navigation.navigate("UserProfile", {userEmail: card.email, userName: card.name,
-        userIsMaker: userIsMaker, shortbio: card.shortbio, longbio: card.longbio,
+        userIsMaker: userIsMaker, title: card.title, longbio: card.longbio,
         name: name, email: email, isMaker: isMaker})
     }
 
@@ -295,7 +295,6 @@ class ExploreScreen extends Component {
       if (this.state.loadingCards) {
         return <Expo.AppLoading />;
       }
-
         const { navigate } = this.props.navigation;
         const { name, email, isMaker } = this.props.navigation.state.params;
 
@@ -326,7 +325,7 @@ class ExploreScreen extends Component {
                                       <Text style={[styles.backerTitle, card.isMaker && styles.makerTitle]}
                                           onPress={ () => this.handleOnClick()}
                                           activeOpacity={0.5}>
-                                          {card.shortbio}
+                                          {card.title}
                                       </Text>
                                       <View style={styles.subTitleContainer}>
                                           <Text style={styles.subtitleText}>
