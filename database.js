@@ -1,10 +1,13 @@
 // This file contains databse functions.
 // All functions will be in the form of: module.exports.[function_name]
 // so they can be accessed from outside the file.
-
+// UPDATE backer SET swipedright = ARRAY[]::text[] WHERE email = 'sarahgymnast@yahoo.com'
 const url = "https://backr.herokuapp.com/"
 const request = require('request');
 const assert = require('assert')
+
+var delimiter = ": "
+var hot_bod = " with body = "
 
 function constructOutputString(res, body, ext) {
   return (res.request.method + " /" + ext + hot_bod + body + delimiter)
