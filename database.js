@@ -128,6 +128,9 @@ module.exports.updateUser = function(email,shortbio,client,callback){
 //update maker and backer profile
 module.exports.updateProfile = function(email,longbio,photos,icons,title,client,tablename,callback){
   let query = 'UPDATE ' + tablename + ' SET longbio = $1, photos = $2, icons = $3, title = $4 WHERE email = $5'
+
+  console.log("Inside updateProfile " + longbio)
+
   client.query(query, [longbio,photos,icons,title,email], function(err,res) {
     if (err) throw err;
     console.log('Updated ' + tablename + ' profile');
@@ -172,6 +175,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
   var matches;
   var swipedEmailMatches;
   var query = 'SELECT * FROM ' + tablename + ' WHERE email = \'' + email + '\''
+
     client.query(query, function(err, res) {
       if (err) throw err;
       rows = res.rows
