@@ -373,10 +373,15 @@ class EditScreen extends Component {
               onChangeText = {(text) => this.setState({"longbio":text})}
               value={ this.state.longbio }/>
 
-          <Text style={[styles.backerText, isMaker && styles.makerText]}>
-              How can you help?
-          </Text>
-
+              {isMaker ? (
+                  <Text style={[styles.backerText, isMaker && styles.makerText]}>
+                    What do you need?
+                  </Text>
+              ) : (
+                  <Text style={[styles.backerText, isMaker && styles.makerText]}>
+                    How can you help?
+                  </Text>
+              )}
           <Divider style={styles.dividerStyle}/>
 
           <View style={styles.switchSetting}>
