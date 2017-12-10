@@ -241,6 +241,7 @@ class EditScreen extends Component {
         this.setState({
           "longbio": data.longbio,
           "icons": data.icons,
+          "title": data.title,
           "makerBacker": data
         })
       });
@@ -250,6 +251,7 @@ class EditScreen extends Component {
         this.setState({
           "longbio": data.longbio,
           "icons": data.icons,
+          "title": data.title,
           "makerBacker": data
         })
       });
