@@ -51,7 +51,7 @@ router.patch('/backer', function(req,res) {
   var backerIcon = req.body.icons
   var backerTitle = req.body.title
 
-  console.log(backerlongBio)
+  console.log(backerLongBio)
 
   console.log("Inside updateBacker in user.js " + makerPhotos)
 
