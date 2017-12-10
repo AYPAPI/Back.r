@@ -153,7 +153,8 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
         "icons":rows[0].icons,
         "swipedright":rows[0].swipedright,
         "matches":rows[0].matches,
-        "swipedon":rows[0].swipedon
+        "swipedon":rows[0].swipedon,
+        "title": rows[0].title
 			}
       callback(obj);
     })
