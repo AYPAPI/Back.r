@@ -395,6 +395,10 @@ module.exports.getPotentialMatches = function(client,email,isMaker,callback){
               userList.splice(index,1)
             }
           }
+          var index = userList.indexOf(email)
+          if (index !== -1){
+            userList.splice(index,1)
+          }
           console.log(userList)
           callback(userList)
         })
