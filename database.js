@@ -263,7 +263,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
                    json: true,
                    body: channel
                  }, function (err, res) {
-                   output = constructOutputString(res, "test delete", ext)
+                   output = constructOutputString(res, "test delete", "channels")
                    try {
                      assert.equal(res.statusCode, 200)
                      assert.ok(JSON.stringify(res.body))
