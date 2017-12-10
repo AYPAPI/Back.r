@@ -25,6 +25,8 @@ import { lightGrey,
 import { headerIconSize } from '../assets/styles/size.js';
 
 var activeColor = backerBlue;
+var name;
+var email;
 
 //used to make random-sized messages
 function getRandomInt(min, max) {
@@ -33,7 +35,7 @@ function getRandomInt(min, max) {
 const url = "https://backr.herokuapp.com/"
 const getMessages = function(channel_name) {
   console.log("calling getMessages")
-  var req_url = url + 'twilio/channels/' + channel_name + "/messages?identity=vylana&endpointId=9998"
+  var req_url = url + 'twilio/channels/' + channel_name + "/messages?identity="+ email +"&endpointId=9998"
   return fetch( req_url, {
     method: 'GET',
     headers: {
@@ -50,7 +52,7 @@ const getMessages = function(channel_name) {
 
 const send_msg_to_twilio = function(channel_name, bod) {
   json_body = JSON.stringify({
-    'identity':'vylana',
+    'identity':email,
     'endpointId':9999,
     'messageBody':bod
   })
@@ -77,7 +79,7 @@ const convertMessages = function(res) {
   res.forEach(function(msg) {
     console.log("yo")
     var text = msg.body
-    var direction = msg.author === "vylana" ? "right" : "left"
+    var direction = msg.author === email ? "right" : "left"
     messages.push({
       direction: direction,
       text: text
@@ -170,6 +172,10 @@ export default class ThreadScreen extends Component {
   //scroll to bottom when first showing the view
   componentDidMount() {
     const self = this;
+    name = this.props.navigation.state.params.name
+    email = this.props.navigation.state.params.email
+
+
     setTimeout(function() {
       this.scrollView.scrollToEnd();
     }.bind(this))

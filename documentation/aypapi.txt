@@ -1,0 +1,9 @@
+facebook:
+user: bpaw.dev@gmail.com
+pw: aypapi
+
+gary@ucsd.edu
+pw:password
+
+ricko
+gary

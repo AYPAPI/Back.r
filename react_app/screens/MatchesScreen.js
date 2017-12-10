@@ -170,7 +170,7 @@ constructor(props) {
                   avatar={{uri:u.avatar}}
         		  subtitle={u.message}
                   activeOpacity={0.5}
-        		  onPress={() => navigate("Thread", {name: name, other_user: u.other_user, unique_name:u.unique_name})}
+        		  onPress={() => navigate("Thread", {name: name, email: email, other_user: u.other_user, unique_name:u.unique_name})}
                 />
               );
             })
