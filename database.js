@@ -2,7 +2,6 @@
 // All functions will be in the form of: module.exports.[function_name]
 // so they can be accessed from outside the file.
 
-
 // Connect to the remote database
 module.exports.connect = function() {
   const pg = require('pg');
