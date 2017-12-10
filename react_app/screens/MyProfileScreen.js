@@ -268,7 +268,8 @@ class MyProfileScreen extends Component {
 
                     <View style={styles.textContainer}>
                       <Text style={[styles.backerTitle, this.state.isMaker && styles.makerTitle]}>
-                          {this.state.userProfile.title}
+                          {this.state.makerBacker.title}
+
                       </Text>
                       <Text style={styles.subTitleStyle}>
                           {name}
