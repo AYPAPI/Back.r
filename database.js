@@ -279,7 +279,6 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
               });
         })
       }
-    }
   })
 }
 
