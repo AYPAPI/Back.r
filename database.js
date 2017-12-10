@@ -3,6 +3,7 @@
 // so they can be accessed from outside the file.
 
 const url = "https://backr.herokuapp.com/"
+const request = require('request');
 
 // Connect to the remote database
 module.exports.connect = function() {
@@ -248,16 +249,23 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
 
                 matches.push(swipedEmail)
 
-                fetch( url + 'twilio/channels', {
-                  method: 'POST',
-                  headers: {
-                  'Accept': 'application/json',
-                  'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify(channel)
-                }).then(function(response) {
-                  return response.json()
-                })
+                request.post({
+                    url: url + "channels",
+                    json: true,
+                    body: channel
+                }, function(err, res) {
+                  output = constructOutputString(res, "new channel", "channels")
+                  try {
+                    assert.equal(res.statusCode, 200)
+                    assert.ok(JSON.stringify(res.body))
+                    output += "O"
+                  }
+                  catch (err) {
+                    output += "X"
+                    output += "\n\t" + res.body
+                  }
+                  console.log(output)
+                });
                 }
 
               }
