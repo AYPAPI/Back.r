@@ -154,15 +154,15 @@ request.patch({
 //});
 
  // Get user settings
- request.get({
-   url: url + "user/settings?email=pi2@pie.com",
-   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
- }, function(err, res) {
-   if (res != null && res.body != null){
-     console.log("User's settings are : " + res.body);
-     console.log(JSON.stringify(res.body))
-   }
- });
+ // request.get({
+ //   url: url + "user/settings?email=pi2@pie.com",
+ //   json: true,   // <--Very important, otherwise it will be defaulted to HTML!!!
+ // }, function(err, res) {
+ //   if (res != null && res.body != null){
+ //     console.log("User's settings are : " + res.body);
+ //     console.log(JSON.stringify(res.body))
+ //   }
+ // });
 
 // var test_swipe = {
 //     "email":"test@aypapi.com",
@@ -207,7 +207,7 @@ request.patch({
 
 var test_null_token = {
   "token" : null,
-  "identity":"vinnie",
+  "identity":"sarahgymnast@yahoo.com",
   "endpointId":"61553df94c234a691130ab9d3438b074"
 }
 
@@ -237,9 +237,9 @@ var test_channel10 = {
 
 var test_message = {
   "token":null,
-  "identity":"vinnie",
+  "identity":"sarahgymnast@yahoo.com",
   "endpointId":"0",
-  "messageBody": "god so today this fucking weirdo tried to hand me a theta tau flyer"
+  "messageBody": "hi friend"
 }
 
 var test_message2 = {
@@ -272,24 +272,25 @@ var test_message2 = {
 // });
 
 /* GET: All channels */
-/*
-ext = "twilio/channels?identity=vylana&endpointId=9998"
+
+ext = "twilio/channels?name=Sarah Gemperle&email=sarahgymnast@yahoo.com&endpointId=9998"
 request.get({
   url: url + ext,
   json: true,
 }, function(err, res) {
-  output = constructOutputString(res, "test_null_token", ext)
-  try {
-    assert.equal(res.statusCode, 200)
-    assert.ok(('channels' in res.body))
-    assert.ok((res.body.channels instanceof Array))
-    console.log(res.body.channels)
-    output += "O"
-  } catch (err) {
-    output += "X"
-    output += "\n\t" + res.body
-  }
-  console.log(output)
+  if (err) console.log(err)
+  // output = constructOutputString(res, "test_null_token", ext)
+  // try {
+  //   assert.equal(res.statusCode, 200)
+  //   assert.ok(('channels' in res.body))
+  //   assert.ok((res.body.channels instanceof Array))
+  //   console.log(res.body.channels)
+  //   output += "O"
+  // } catch (err) {
+  //   output += "X"
+  //   output += "\n\t" + res.body
+  // }
+  console.log(res)
 });
 
 // ext = "twilio/channels"
@@ -311,31 +312,31 @@ request.get({
 //   }
 //   console.log(output)
 // });
-*/
+
 
 /* POST: Create a channel */
-ext = "twilio/channels"
-var createChannelTest = function(ext) {
-  request.post({
-      url: url + ext,
-      json: true,
-      body: test_channel10
-  }, function(err, res) {
-    output = constructOutputString(res, "test_channel10", ext)
-    try {
-      assert.equal(res.statusCode, 200)
-      assert.ok(JSON.stringify(res.body))
-      output += "O"
-    }
-    catch (err) {
-      output += "X"
-      output += "\n\t" + res.body
-    }
-    console.log(output)
-  });
-}
-
-createChannelTest(ext)
+// ext = "twilio/channels"
+// var createChannelTest = function(ext) {
+//   request.post({
+//       url: url + ext,
+//       json: true,
+//       body: test_channel10
+//   }, function(err, res) {
+//     output = constructOutputString(res, "test_channel10", ext)
+//     try {
+//       assert.equal(res.statusCode, 200)
+//       assert.ok(JSON.stringify(res.body))
+//       output += "O"
+//     }
+//     catch (err) {
+//       output += "X"
+//       output += "\n\t" + res.body
+//     }
+//     console.log(output)
+//   });
+// }
+//
+// createChannelTest(ext)
 
 /* DELETE: Delete Channel */
 // ext = "twilio/channels/test_channel2"

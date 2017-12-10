@@ -130,7 +130,7 @@ router.get('/channels/:channel_name/messages', function(req, res) {
 					});
 					res.status(200).json(message_bodies)
 				}).catch(function(err) {
-					res.status(500).send("BOY U A DUM DUM - ")
+					res.status(500).send(err)
 				})
 			} else {
 		    	console.log("Channel with uniqueName of " + req.body.channel_name + " could not be found :(")

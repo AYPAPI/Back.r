@@ -23,6 +23,7 @@ import { headerIconSize } from '../assets/styles/size.js';
 const url = "https://backr.herokuapp.com/"
 
 const getChannels = function(name, email) {
+  console.log(name, email)
   return fetch( url + 'twilio/channels?name=' + name + '&identity=' + email + '&endpointId=9998', {
     method: 'GET',
     headers: {

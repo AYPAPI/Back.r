@@ -43,7 +43,8 @@ const getMessages = function(channel_name) {
     'Content-Type': 'application/json',
     }
   }).then(function(response) {
-    console.log("getMessages returned: \n\t" + JSON.stringify(response))
+    console.log(response)
+    // console.log("getMessages returned: \n\t" + JSON.stringify(response))
     return response.json()
   }).catch(function(err) {
     console.log("error: " + err)
