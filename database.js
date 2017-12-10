@@ -248,7 +248,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
 
                 matches.push(swipedEmail)
 
-                return fetch( url + 'twilio/channels', {
+                fetch( url + 'twilio/channels', {
                   method: 'POST',
                   headers: {
                   'Accept': 'application/json',
@@ -278,7 +278,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
                 }
               });
         })
-      })
+      }
     }
   })
 }
