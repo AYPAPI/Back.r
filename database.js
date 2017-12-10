@@ -4,6 +4,7 @@
 
 const url = "https://backr.herokuapp.com/"
 const request = require('request');
+const assert = require('assert')
 
 // Connect to the remote database
 module.exports.connect = function() {
