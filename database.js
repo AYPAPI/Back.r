@@ -201,7 +201,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
         console.log(query2)
         client.query(query2,[swipedright, swipedon, email], function(err, res) {
           if (err) {
-            console.log("Error inside addSwipe")
+            console.log("Error inside addSwipe with matxches")
             throw err;
             return
           }
@@ -253,7 +253,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
                   headers: {
                   'Accept': 'application/json',
                   'Content-Type': 'application/json',
-                },
+                  },
                   body: JSON.stringify(channel)
                 }).then(function(response) {
                   return response.json()
@@ -262,7 +262,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
 
               }
             }
-          }
+          })
               client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2', [matches, email], function (err, res) {
                 if (err) {
                   console.log("Error inside addSwipe")
