@@ -231,7 +231,6 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
             swipedEmailMatches = rows[0].matches
             if (swipedright.includes(email)){
                 console.log("step 1!!")
-                return true
               if (!matches.includes(swipedEmail)){
                   console.log("step 2!!")
                 if (!swipedEmailMatches.includes(email)) {

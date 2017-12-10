@@ -270,13 +270,8 @@ class ExploreScreen extends Component {
       const newIndex = this.state.currentIndexInStack + 1
       this.setState({"currentIndexInStack": newIndex})
 
-      var ret = await postSwipe(email, card.email, isMaker, bool, name, card.name)
-      if(ret) {
-        Alert.alert(
-          'You found a Match!',
-          'Matched with ' + card.name,
-        )
-      }
+      await postSwipe(email, card.email, isMaker, bool, name, card.name)
+
 
       }
 
