@@ -250,7 +250,7 @@ exports.updateMakerProfile = (longbio, photos, icons, email, title) => {
 }
 
 //Updates user's backer profile. Updates longbio, photos, and icons.
-exports.updateBackerProfile =  (longbio, photos, icons, email) => {
+exports.updateBackerProfile =  (longbio, photos, icons, email, title) => {
   console.log("post update maker profile");
   fetch( url + 'user/backer', {
     method: 'PATCH',
@@ -262,7 +262,8 @@ exports.updateBackerProfile =  (longbio, photos, icons, email) => {
       longBio: longbio,
       email: email,
       photos: photos,
-      icons: icons
+      icons: icons,
+      title: title
     })
   }).then(function(response) {
     console.log("inside UPDATE BACKER PROFILE api util callback");
