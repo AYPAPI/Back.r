@@ -173,13 +173,6 @@ class ExploreScreen extends Component {
     }
   }
 
-  onUserPress(userEmail,userName, userShortBio, userLongBio) {
-    const { name, email, isMaker } = this.props.navigation.state.params
-    var userIsMaker = !isMaker
-
-    this.props.navigation.navigate("UserProfile", {userEmail: userEmail, userName:this.state.name, userIsMaker: userIsMaker, name: name, email: email, isMaker: isMaker, shortbio: userShortBio, longbio: userLongBio});
-  }
-
   async createCardStack() {
     const { name, email, isMaker } = this.props.navigation.state.params
 
@@ -287,7 +280,7 @@ class ExploreScreen extends Component {
 
       this.props.navigation.navigate("UserProfile", {userEmail: card.email, userName: card.name,
         userIsMaker: userIsMaker, title: card.title, longbio: card.longbio,
-        name: name, email: email, isMaker: isMaker})
+        name: name, email: email, isMaker: isMaker, icons: card.icons})
     }
 
     render() {

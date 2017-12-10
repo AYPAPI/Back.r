@@ -28,6 +28,7 @@ import { lightGrey,
 import { headerIconSize } from '../assets/styles/size.js';
 
 var activeColor = backerBlue
+var self = null
 
 const styles = StyleSheet.create({
     headerIcon: {
@@ -125,8 +126,7 @@ class SettingsScreen extends Component {
     this.state = {distance: 10, trueSwitchIsOn: true, blockedUsers: []}
   }
   static navigationOptions = ({ navigation }) => {
-  user = navigation.state.params;
-  isMaker = navigation.state.params.isMaker;
+  const { isMaker, name, email } = navigation.state.params;
   var profileText = ""
   if(isMaker) {
     profileText = "Maker"
@@ -139,7 +139,7 @@ class SettingsScreen extends Component {
      headerLeft: (
        <Button
         title="Cancel"
-        onPress={() => navigation.goBack()}
+        onPress={() => navigation.navigate("SignedIn", {name: name, email: email, isMaker: isMaker})}
       />
     ),
     headerTitle: "Edit " + profileText + " Settings",
@@ -154,6 +154,9 @@ class SettingsScreen extends Component {
 
   componentDidMount() {
     const {email, isMaker} = this.props.navigation.state.params
+
+    self = this
+
     getSettings(email)
       .then((data) => {
         //console.log("118" + data.isvisible == "true");
@@ -173,6 +176,7 @@ class SettingsScreen extends Component {
 
   render() {
     const { navigate } = this.props.navigation
+    const { isMaker, name, email } = this.props.navigation.state.params
 
       return (
 

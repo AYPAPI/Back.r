@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import {Text, View, StyleSheet} from 'react-native';
 import {Avatar, Icon, Button} from 'react-native-elements';
 import { getMaker, getBacker, getUser, updateIsMaker } from '../router/api.js';
+import { AsyncStorage } from 'react-native'
 
 //Method for logging out.
 import { onSignOut } from '../auth.js';
@@ -106,15 +107,18 @@ class MyProfileScreen extends Component {
 
   constructor(props) {
     super(props);
+
     this.state = {
       makerBacker: {},
       isMaker: false,
       editText: "Edit Backer Profile",
       buttonColor: backerBlue,
       switchText: "Switch to Maker",
-      userProfile: {}
+      userProfile: {},
+      icons: []
     }
   }
+
     toggleIsMaker() {
         if(this.state.isMaker){
             this.setState({'isMaker': false}); //Update our screen state.
@@ -144,13 +148,16 @@ class MyProfileScreen extends Component {
         .then((data) => {
           this.setState({
             "makerBacker": data,
+            "icons": data.icons
           })
+
         });
       } else {
         getBacker(email)
         .then((data) => {
           this.setState({
             "makerBacker": data,
+            "icons": data.icons
           })
         });
       }
@@ -199,11 +206,12 @@ class MyProfileScreen extends Component {
     }
 
     //Get user for shortbio and name.
-    getUser(email)
+    await getUser(email)
     .then((data) => {
       this.setState({
         "userProfile": data,
       })
+
     });
     //Set Maker/Backer profile using this.state.makerBacker as dependency.
     await this.setProfileState()
@@ -211,9 +219,11 @@ class MyProfileScreen extends Component {
 
   render() {
 
+
     const { navigate } = this.props.navigation;
     const { name, email } = this.props.navigation.state.params;
     const isMaker = globalIsMaker
+    const icons = this.state.icons
     console.log("inside my Profile " + email)
     const currProfile = this.state.makerBacker;
 
@@ -227,43 +237,45 @@ class MyProfileScreen extends Component {
                               activeOpacity={0.7}
                               source={profilePhoto}
                               onPress={()=>navigate('UserProfile',
-                              {userName: name, userEmail: email, userIsMaker: isMaker, name:name, email: email, isMaker: isMaker, shortbio:
+                              {userName: name, userEmail: email, userIsMaker: isMaker, name:name, email: email, isMaker: isMaker, title:
                                 this.state.userProfile.title, longbio:
-                                this.state.makerBacker.longbio})}
+                                this.state.makerBacker.longbio, icons: icons })}
                               />
                       </View>
 
                       <View style={styles.iconsContainer}>
+                      { icons[0] && (
                           <Icon iconStyle={styles.iconStyle}
-                              name='circle-o'
-                              type='font-awesome'
-                              color={moneyGreen}
-                              size={15}
-                              onPress={() => alert("Money")} />
+                          name='circle-o'
+                          type='font-awesome'
+                          color='#59C129'
+                          size={15}
+                          onPress={() => alert("Money")} />
+                        )}
+                      { icons[1] && (
+                        <Icon iconStyle={styles.iconStyle}
+                        name='circle-o'
+                        type='font-awesome'
+                        color='#EF2074'
+                        size={15}
+                        onPress={() => alert("Money")} />
+                        )}
+                        { icons[2] && (
                           <Icon iconStyle={styles.iconStyle}
-                              name='circle-o'
-                              type='font-awesome'
-                              color={materialsOrange}
-                              size={15}
-                              onPress={() => alert("Materials")} />
+                          name='circle-o'
+                          type='font-awesome'
+                          color='#FC8A2D'
+                          size={15}
+                          onPress={() => alert("Money")} />
+                          )}
+                        { icons[3] && (
                           <Icon iconStyle={styles.iconStyle}
-                              name='circle-o'
-                              type='font-awesome'
-                              color={knowledgePurple}
-                              size={15}
-                              onPress={() => alert("Knowledge")} />
-                          <Icon iconStyle={styles.iconStyle}
-                              name='circle-o'
-                              type='font-awesome'
-                              color={manpowerRed}
-                              size={15}
-                              onPress={() => alert("Manpower")} />
-                          <Icon iconStyle={styles.iconStyle}
-                              name='circle-o'
-                              type='font-awesome'
-                              color={backerBlue}
-                              size={15}
-                              onPress={() => alert("Collaboration")} />
+                          name='circle-o'
+                          type='font-awesome'
+                          color='#57C4DD'
+                          size={15}
+                          onPress={() => alert("Money")} />
+                          )}
                       </View>
 
                     <View style={styles.textContainer}>

@@ -85,7 +85,7 @@ class UserProfileScreen extends Component {
   render() {
 
     const { navigate } = this.props.navigation;
-    const {userEmail, userName, userIsMaker, title, longbio} =
+    const {userEmail, userName, userIsMaker, title, longbio, icons} =
               this.props.navigation.state.params
 
     return (
@@ -106,30 +106,38 @@ class UserProfileScreen extends Component {
                         {userName}
                     </Text>
                     <View style={styles.iconsContainer}>
+                    { icons[0] && (
                         <Icon iconStyle={styles.iconStyle}
-                            name='circle-o'
-                            type='font-awesome'
-                            color='#59C129'
-                            size={15}
-                            onPress={() => alert("Money")} />
-                            <Icon iconStyle={styles.iconStyle}
-                            name='circle-o'
-                            type='font-awesome'
-                            color='#EF2074'
-                            size={15}
-                            onPress={() => alert("Money")} />
-                            <Icon iconStyle={styles.iconStyle}
-                            name='circle-o'
-                            type='font-awesome'
-                            color='#FC8A2D'
-                            size={15}
-                            onPress={() => alert("Money")} />
-                            <Icon iconStyle={styles.iconStyle}
-                            name='circle-o'
-                            type='font-awesome'
-                            color='#57C4DD'
-                            size={15}
-                            onPress={() => alert("Money")} />
+                        name='circle-o'
+                        type='font-awesome'
+                        color='#59C129'
+                        size={15}
+                        onPress={() => alert("Money")} />
+                      )}
+                    { icons[1] && (
+                      <Icon iconStyle={styles.iconStyle}
+                      name='circle-o'
+                      type='font-awesome'
+                      color='#EF2074'
+                      size={15}
+                      onPress={() => alert("Money")} />
+                      )}
+                      { icons[2] && (
+                        <Icon iconStyle={styles.iconStyle}
+                        name='circle-o'
+                        type='font-awesome'
+                        color='#FC8A2D'
+                        size={15}
+                        onPress={() => alert("Money")} />
+                        )}
+                      { icons[3] && (
+                        <Icon iconStyle={styles.iconStyle}
+                        name='circle-o'
+                        type='font-awesome'
+                        color='#57C4DD'
+                        size={15}
+                        onPress={() => alert("Money")} />
+                        )}
                     </View>
                 </View>
             </View>
