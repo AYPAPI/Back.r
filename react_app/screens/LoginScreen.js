@@ -3,7 +3,6 @@ import { Text, View, Image, StyleSheet, NativeModules } from 'react-native';
 import { Card, Button, FormLabel, FormInput } from 'react-native-elements';
 import { createUser, getUser, createSettings } from '../router/api.js';
 
-
 import { Font } from 'expo';
 
 import { onSignIn } from '../auth.js';

@@ -131,6 +131,8 @@ class SettingsScreen extends Component {
   }
 
   render() {
+    const { navigate } = this.props.navigation
+
       return (
 
       <ScrollView style={styles.container}>
