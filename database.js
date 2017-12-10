@@ -220,11 +220,10 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
                     "name" : name
                   }
                 }*/
-              console.log(channel)
+              //console.log(channel)
               matches.push(swipedEmail)
 
-
-              var createChannelTest = function (ext) {
+            /*  var createChannelTest = function (ext) {
                 request.post({
                   url: url + ext,
                   json: true,
@@ -241,7 +240,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
                     output += "\n\t" + res.body
                   }
                   console.log(output)
-                });
+                });*/
               }
               if (!swipedEmailMatches.includes(email)) {
                 swipedEmailMatches.push(email)
