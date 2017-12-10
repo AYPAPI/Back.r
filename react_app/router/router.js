@@ -36,7 +36,6 @@ export const MainStack = StackNavigator({
   UserProfile: { screen: UserProfileScreen },
   Matches: { screen: MatchesScreen },
   Thread: { screen: ThreadScreen },
-  Settings: { screen: SettingsScreen }
 });
 
 export const SettingsStack = StackNavigator({

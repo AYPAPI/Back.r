@@ -382,6 +382,7 @@ class EditScreen extends Component {
                     How can you help?
                   </Text>
               )}
+
           <Divider style={styles.dividerStyle}/>
 
           <View style={styles.switchSetting}>
