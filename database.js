@@ -258,7 +258,25 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
 
                 matches.push(swipedEmail)
 
-                request.post({
+                request.delete({
+                   url: url + "twilio/channels" + uniqueName,
+                   json: true,
+                   body: channel
+                 }, function (err, res) {
+                   output = constructOutputString(res, "test delete", ext)
+                   try {
+                     assert.equal(res.statusCode, 200)
+                     assert.ok(JSON.stringify(res.body))
+                     output += "O"
+                   }
+                   catch (err) {
+                     output += "X"
+                     output += "\n\t" + res.body
+                   }
+                   console.log(output)
+                 });
+
+              /*  request.post({
                     url: url + "twilio/channels",
                     json: true,
                     body: channel
@@ -274,7 +292,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
                     output += "\n\t" + res.body
                   }
                   console.log(output)
-                });
+                });*/
                 }
 
               }
