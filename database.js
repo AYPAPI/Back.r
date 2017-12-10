@@ -246,7 +246,8 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
                     "friendlyName": friendlyName, //TODO - two names
                     "uniqueName": uniqueName, //MUST BE UNIQUE emails
                     "identity" : email, //Swiper email
-                    "endpointId": "61553df94c234a691130ab9d3438b074"
+                    "endpointId": "61553df94c234a691130ab9d3438b074",
+                    "token": null
                   },
                   "other_user" : {
                     "email": swipedEmail,
