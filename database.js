@@ -2,6 +2,8 @@
 // All functions will be in the form of: module.exports.[function_name]
 // so they can be accessed from outside the file.
 
+const url = "https://backr.herokuapp.com/"
+
 // Connect to the remote database
 module.exports.connect = function() {
   const pg = require('pg');
@@ -164,10 +166,13 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
 //db.addSwipedOn(email, isMaker, swipedEmail);
 module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, name, swipedName, client, callback) {
   var tablename;
+  var swipedTablename;
   if (isMaker == true) {
     tablename = 'maker';
+    swipedTablename = 'backer';
   } else {
     tablename = 'backer';
+    swipedTablename = 'maker';
   }
   console.log(email + " " + isMaker + " " + swipedEmail + " " + swipedRight + " " + name + " " + swipedName)
 
@@ -195,10 +200,19 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
         let query2 = 'UPDATE ' + tablename + ' SET swipedright = $1, swipedon = $2 WHERE email = $3'
         console.log(query2)
         client.query(query2,[swipedright, swipedon, email], function(err, res) {
-          if (err) throw err;
+          if (err) {
+            console.log("Error inside addSwipe")
+            throw err;
+            return
+          }
           callback("Updated swipe")
-          query = 'SELECT * FROM ' + tablename + ' WHERE email = \'' + swipedEmail + '\''
+          query = 'SELECT * FROM ' + swipedTablename + ' WHERE email = \'' + swipedEmail + '\''
           client.query(query,function(err, res){
+            if (err) {
+              console.log("Error inside addSwipe")
+              throw err;
+              return
+            }
             rows = res.rows
             if (rows.length === 0){
               console.log('swipedEmail does not exist')
@@ -207,11 +221,17 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
             swipedright = rows[0].swipedright
             swipedEmailMatches = rows[0].matches
             if (swipedright.includes(email)){
+                console.log("step 1!!")
               if (!matches.includes(swipedEmail)){
-                  //var friendlyName = name + "/" + swipedName
-                  //var uniquename = email + swipedEmail
-                  //var description = 'Channel between ' + name + "and " + swipedName
-              /*  var channel = {
+                  console.log("step 2!!")
+                if (!swipedEmailMatches.includes(email)) {
+                  swipedEmailMatches.push(email)
+
+                var friendlyName = name + "/" + swipedName
+                var uniqueName = email + "&" + swipedEmail
+                var description = 'Channel between ' + name + "and " + swipedName
+
+                var channel = {
                   "channel" : {
                     "description": description,
                     "friendlyName": friendlyName, //TODO - two names
@@ -221,50 +241,48 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
                   },
                   "other_user" : {
                     "email": swipedEmail,
-                    "name" : name
+                    "name" : swipedName
                   }
-                }*/
-              //console.log(channel)
-              matches.push(swipedEmail)
+                }
+                console.log(channel)
 
-/*
-            /*  var createChannelTest = function (ext) {
-                request.post({
-                  url: url + ext,
-                  json: true,
-                  body: test_channel
-                }, function (err, res) {
-                  output = constructOutputString(res, "test_channel", ext)
-                  try {
-                    assert.equal(res.statusCode, 200)
-                    assert.ok(JSON.stringify(res.body))
-                    output += "O"
-                  }
-                  catch (err) {
-                    output += "X"
-                    output += "\n\t" + res.body
-                  }
-                  console.log(output)
-                });
-              }
-                });*/
+                matches.push(swipedEmail)
 
-              if (!swipedEmailMatches.includes(email)) {
-                swipedEmailMatches.push(email)
+                return fetch( url + 'twilio/channels', {
+                  method: 'POST',
+                  headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                  }
+                  body: JSON.stringify(channel)
+                }).then(function(response) {
+                  return response.json()
+                })
+                }
+
               }
-              client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2', [matches, email], function (err, res) {
-                if (err) throw err;
-              });
-              client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2', [swipedEmailMatches, swipedEmail], function (err, res) {
-                if (err) throw err;
-              });
             }
           }
+              client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2', [matches, email], function (err, res) {
+                if (err) {
+                  console.log("Error inside addSwipe")
+                  throw err;
+                  return
+                }
+              });
+              client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2', [swipedEmailMatches, swipedEmail], function (err, res) {
+                if (err) {
+                  console.log("Error inside addSwipe")
+                  throw err;
+                  return
+                }
+              });
         })
       })
     }
   })
 }
+
 module.exports.createSettings = function(isVisible, blockedUsers, email, client) {
   var tablename = 'settings'
   let check = 'SELECT email FROM ' + tablename + ' WHERE email = \'' + email + '\''
