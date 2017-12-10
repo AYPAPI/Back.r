@@ -197,7 +197,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
       console.log("made it past first query!")
       if (rows.length === 0) {
         console.log('user does not exist')
-        return
+        return false
       }
       swipedright = rows[0].swipedright;
       swipedon = rows[0].swipedon;
@@ -212,7 +212,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
           if (err) {
             console.log("Error inside addSwipe with matxches")
             throw err;
-            return
+            return false
           }
           callback("Updated swipe")
           query = 'SELECT * FROM ' + swipedTablename + ' WHERE email = \'' + swipedEmail + '\''
@@ -220,12 +220,12 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
             if (err) {
               console.log("Error inside addSwipe")
               throw err;
-              return
+              return false
             }
             rows = res.rows
             if (rows.length === 0){
               console.log('swipedEmail does not exist')
-              return
+              return false
             }
             swipedright = rows[0].swipedright
             swipedEmailMatches = rows[0].matches
@@ -284,7 +284,9 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
                 if (err) {
                   console.log("Error inside addSwipe")
                   throw err;
-                  return
+                  return false
+                } else {
+                  return true
                 }
               });
               client.query('UPDATE ' + tablename + ' SET matches = $1 WHERE email = $2', [swipedEmailMatches, swipedEmail], function (err, res) {
@@ -292,6 +294,8 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
                   console.log("Error inside addSwipe")
                   throw err;
                   return
+                } else {
+                  return true
                 }
               });
         })
