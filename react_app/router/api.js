@@ -18,7 +18,8 @@ exports.createUser = async (name, email) => {
         icons: [false, false, false, false, false],
         swipedright: [],
         matches: [],
-        swipedon: []
+        swipedon: [],
+        title: "Create a Title in Edit Profile"
       },
       backer: {
         longBio: "",
@@ -26,7 +27,8 @@ exports.createUser = async (name, email) => {
         icons: [false, false, false, false, false],
         swipedright: [],
         matches: [],
-        swipedon: []
+        swipedon: [],
+        title: "Create a Title in Edit Profile"
       }
     },
   }
@@ -129,7 +131,7 @@ exports.getPotentialMatches = async (email, isMaker) => {
 }
 
 //Add to the swipe array for swiped right and swiped on.
-exports.postSwipe = (email, swipedEmail, isMaker, swipedRight, name, swipedName) => {
+exports.postSwipe = (email, swipedEmail, isMaker, swipedRight) => {
   //Eric
   console.log("posting swipe");
   fetch( url + 'user/swipe', {
@@ -142,9 +144,7 @@ exports.postSwipe = (email, swipedEmail, isMaker, swipedRight, name, swipedName)
       email: email,
       swipedEmail: swipedEmail,
       isMaker: isMaker,
-      swipedRight: swipedRight,
-      name: name,
-      swipedName: swipedName
+      swipedRight: swipedRight
       })
   }).then(function(response) {
     console.log("inside postSwipe api util callback");
@@ -222,7 +222,7 @@ exports.updateProfile = (email, shortbio) => {
 }
 
 //Updates user's maker profile. Updates longbio, photos, and icons.
-exports.updateMakerProfile = (longbio, photos, icons, email) => {
+exports.updateMakerProfile = (longbio, photos, icons, email, title) => {
   console.log("post update maker profile");
   console.log("inside updateBackerProfile " + photos)
 

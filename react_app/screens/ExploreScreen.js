@@ -194,13 +194,12 @@ class ExploreScreen extends Component {
       .then((data) => {
         var shortbio = data.shortbio
         var userName = data.name
-        var title = data.title
         if(isMaker) {
           getBacker(data.email)
           .then((data) => {
             console.log("Inside getBacker for getPotential matches " + data)
             cardStack.push({name: userName, email: data.email, shortbio:
-                              shortbio, longbio: data.longbio, icons: data.icons, isMaker: cardIsMaker, title: title})
+                              shortbio, longbio: data.longbio, icons: data.icons, isMaker: cardIsMaker, title: data.title})
             if(cardStack.length === totalCount) {
               this.setState({"loadingCards": false})
               this.setState({"cardStack": cardStack})
@@ -212,7 +211,7 @@ class ExploreScreen extends Component {
           .then((data) => {
             console.log("inside getMaker " + data)
             cardStack.push({name: userName, email: data.email, shortbio:
-                              shortbio, longbio: data.longbio, icons: data.icons, isMaker: cardIsMaker, title: title})
+                              shortbio, longbio: data.longbio, icons: data.icons, isMaker: cardIsMaker, title: data.title})
             if(cardStack.length === totalCount) {
               this.setState({"loadingCards": false})
               this.setState({"cardStack": cardStack})

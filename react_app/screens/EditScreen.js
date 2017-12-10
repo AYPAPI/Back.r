@@ -149,7 +149,7 @@ class EditScreen extends Component {
 
   }
 
-  editMakerBacker(longbio) {
+  editMakerBacker(longbio, title) {
     const { email, isMaker } = this.props.navigation.state.params
 
     let icons = [this.state.money, this.state.materials, this.state.knowledge,
@@ -162,15 +162,15 @@ class EditScreen extends Component {
     //  newPhotosArr.push(photosToAdd[i])
 
     if(isMaker) {
-      updateMakerProfile(longbio, [], icons, email)
+      updateMakerProfile(longbio, [], icons, email, title)
     } else {
-      updateBackerProfile(longbio, [], icons, email)
+      updateBackerProfile(longbio, [], icons, email, title)
     }
   }
 
   userDoneEditing() {
     this.editProfile(this.state.shortbio)
-    this.editMakerBacker(this.state.longbio)
+    this.editMakerBacker(this.state.longbio, this.state.title)
 
     const name = this.props.navigation.state.params.name
     console.log("inside userDone " + this.state)
@@ -201,8 +201,9 @@ class EditScreen extends Component {
       longbio: "",
       shortbio: "",
       photos: [],
+      title: "",
       makerBacker: {},
-      userProfile: {}
+      userProfile: {},
     };
   }
 
@@ -240,6 +241,9 @@ class EditScreen extends Component {
         })
         this.setState({
           "longbio": data.longbio
+        }),
+        this.setState({
+          "title": data.title
         })
       });
     }
@@ -271,7 +275,6 @@ class EditScreen extends Component {
     ),
   };
 };
-
 
   render() {
 

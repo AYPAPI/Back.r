@@ -2,6 +2,8 @@
 // All functions will be in the form of: module.exports.[function_name]
 // so they can be accessed from outside the file.
 
+var twilio = require('../.json');
+
 // Connect to the remote database
 module.exports.connect = function() {
   const pg = require('pg');
@@ -158,7 +160,7 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
 }
 
 //db.addSwipedOn(email, isMaker, swipedEmail);
-module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, client, callback) {
+module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, name, swipedName, client, callback) {
   var tablename;
   if (isMaker == true) {
     tablename = 'maker';
@@ -199,20 +201,23 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, cl
             swipedEmailMatches = rows[0].matches
             if (swipedright.includes(email)){
               if (!matches.includes(swipedEmail)){
-              /*  var test_channel = {
+                  var friendlyName = name + "/" + swipedName
+                  var uniquename = email + swipedEmail
+                  var description = 'Channel between ' + name + "and " + swipedName
+              /*  var channel = {
                   "channel" : {
-                    "description": "This is a test channel",
-                    "friendlyName": "vinnie/vylana", //TODO - two names
-                    "uniqueName": "test_channel2", //MUST BE UNIQUE emails
-                    "identity" : "vinnie@gmail", //Swiper email
+                    "description": description,
+                    "friendlyName": friendlyName, //TODO - two names
+                    "uniqueName": uniqueName, //MUST BE UNIQUE emails
+                    "identity" : email, //Swiper email
                     "endpointId": "61553df94c234a691130ab9d3438b074"
                   },
                   "other_user" : {
-                    "email": "vylana@gmail.com",
-                    "name" : "vylana"
+                    "email": swipedEmail,
+                    "name" : name
                   }
                 }*/
-
+              console.log(channel)
               matches.push(swipedEmail)
 
 

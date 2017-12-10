@@ -87,8 +87,6 @@ router.post("/", function(req, res) {
   res.json(req.body);
 });
 
-
-
 // GET request to read user from database
 router.get('/', function(req, res) {
   var email = req.query && req.query.email
@@ -127,6 +125,8 @@ router.post("/swipe", function(req, res){
     var swipedEmail = req.body.swipedEmail;//email of user being swiped on
     var isMaker = req.body.isMaker;
     var swipedRight = req.body.swipedRight;//boolean val, true if swiped right
+    var swipedName = req.body.swipedName;
+    var name = req.body.name;
 
     db.addSwipe(email, isMaker, swipedEmail, swipedRight, database, function(user){
       res.json(req.body);
