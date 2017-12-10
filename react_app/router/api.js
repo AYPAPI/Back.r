@@ -234,10 +234,11 @@ exports.updateMakerProfile = (longbio, photos, icons, email, title) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      longBio: longbio,
+      lonBio: longbio,
       email: email,
       photos: photos,
-      icons: icons
+      icons: icons,
+      title: title
     })
   }).then(function(response) {
     console.log("inside UPDATE MAKER PROFILE api util callback");

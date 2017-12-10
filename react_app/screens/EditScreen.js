@@ -162,9 +162,9 @@ class EditScreen extends Component {
     //  newPhotosArr.push(photosToAdd[i])
 
     if(isMaker) {
-      updateMakerProfile(longbio, [], icons, email, title)
+      updateMakerProfile(longbio, [], icons, email, this.state.title)
     } else {
-      updateBackerProfile(longbio, [], icons, email, title)
+      updateBackerProfile(longbio, [], icons, email, this.state.title)
     }
   }
 
@@ -325,18 +325,16 @@ class EditScreen extends Component {
 
           <Text style={styles.inputText}>
               Your title...
-              onChangeText = {(text) => this.setState({"title":text})}
-              value={this.state.title}
           </Text>
 
           <TextInput style={styles.inputStyle}
           maxLength={30}
+          onChangeText = {(text) => this.setState({"title":text})}
+          value={this.state.title}
           />
 
           <Text style={styles.inputText}>
               Your name...
-              onChangeText = {(text) => this.setState({"name":text})}
-              value={this.state.name}
           </Text>
 
           <TextInput style={styles.inputStyle}
@@ -355,7 +353,8 @@ class EditScreen extends Component {
             height={100}
             maxLength={160}
             onChangeText = {(text) => this.setState({"shortbio":text})}
-            value={ this.state.shortbio }/>
+            value={ this.state.shortbio }
+            />
 
             <Text style={styles.inputText}>
                 An in-depth description...
