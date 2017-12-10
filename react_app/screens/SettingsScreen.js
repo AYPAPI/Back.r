@@ -133,12 +133,6 @@ class SettingsScreen extends Component {
   static navigationOptions = ({ navigation }) => {
   const { isMaker, name, email } = navigation.state.params;
   var profileText = ""
-  if(isMaker) {
-    profileText = "Maker"
-    activeColor = makerPurple
-  } else {
-    profileText = "Backer"
-  }
 
   return {
      headerLeft: (
@@ -150,7 +144,7 @@ class SettingsScreen extends Component {
              onPress={() => navigation.navigate("SignedIn", {name: name, email: email, isMaker: isMaker})}
              />
     ),
-    headerTitle: "Edit " + profileText + " Settings",
+    headerTitle: "Edit Account Settings",
     headerRight: (
         <Icon
             name='content-save'

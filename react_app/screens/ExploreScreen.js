@@ -270,7 +270,11 @@ class ExploreScreen extends Component {
       this.setState({"currentIndexInStack": newIndex})
 
       postSwipe(email, card.email, isMaker, bool, name, card.name)
-    }
+      Alert.alert(
+        'You found a Match!',
+        'Matched with ' + card.name,
+      )
+      }
 
     handleOnClick () {
       const { name, email, isMaker } = this.props.navigation.state.params;

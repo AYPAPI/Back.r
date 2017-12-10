@@ -22,8 +22,8 @@ import { headerIconSize } from '../assets/styles/size.js';
 
 const url = "https://backr.herokuapp.com/"
 
-const getChannels = function() {
-  return fetch( url + 'twilio/channels?name=name&identity=email@email.com&endpointId=9998', {
+const getChannels = function(name, email) {
+  return fetch( url + 'twilio/channels?name=' + name + '&identity=' + email + '&endpointId=9998', {
     method: 'GET',
     headers: {
     'Accept': 'application/json',
@@ -131,7 +131,9 @@ constructor(props) {
 }
   componentDidMount() {
     const self = this
-    getChannels().then((res) => {
+    const {name, email} = this.props.navigation.state.params
+
+    getChannels(name, email).then((res) => {
       if (res != null) {
         self.setState({ "users": res.channels })
         console.log(this.state.users)
@@ -168,7 +170,7 @@ constructor(props) {
                   avatar={{uri:u.avatar}}
         		  subtitle={u.message}
                   activeOpacity={0.5}
-        		  onPress={() => navigate("Thread", {user: user, other_user: u.other_user, unique_name:u.unique_name})}
+        		  onPress={() => navigate("Thread", {name: name, other_user: u.other_user, unique_name:u.unique_name})}
                 />
               );
             })

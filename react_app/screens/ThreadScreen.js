@@ -130,7 +130,7 @@ export default class ThreadScreen extends Component {
   }
 
   static navigationOptions = ({ navigation }) => {
-    const { user } = navigation.state.params.user;
+    const { user } = navigation.state.params.name;
     var other_user  = navigation.state.params.other_user;
     return {
       title: other_user,
