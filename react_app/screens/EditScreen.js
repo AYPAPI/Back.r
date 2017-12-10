@@ -50,10 +50,15 @@ async function UploadPhoto(){
 }
 
 const styles = {
-  headerIcon: {
-    color: lightGrey,
-    margin: 15,
-    fontSize: headerIconSize,
+  makerIcon: {
+      color: makerPurple,
+      margin: 15,
+      fontSize: headerIconSize,
+  },
+  backerIcon: {
+      color: backerBlue,
+      margin: 15,
+      fontSize: headerIconSize,
   },
   container: {
     flex: 1,
@@ -263,17 +268,23 @@ class EditScreen extends Component {
 
   return {
      headerLeft: (
-         <Button style={styles.headerIcon}
-          title="Back"
-          onPress={() => navigation.goBack()}
-        />
+        <Icon
+            name='arrow-down-bold'
+            type='material-community'
+            activeOpacity={0.5}
+            iconStyle={[styles.backerIcon, isMaker && styles.makerIcon]}
+            onPress={() => navigation.goBack()}
+            />
     ),
     headerTitle: "Edit " + profileText + " Profile",
     headerRight: (
-      <Button style={styles.headerIcon}
-       title="Done"
-       onPress={() => self.userDoneEditing()}
-     />
+       <Icon
+           name='content-save'
+           type='material-community'
+           activeOpacity={0.5}
+           iconStyle={[styles.backerIcon, isMaker && styles.makerIcon]}
+           onPress={() => self.userDoneEditing()}
+           />
     ),
   };
 };
