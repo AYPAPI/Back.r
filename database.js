@@ -2,7 +2,6 @@
 // All functions will be in the form of: module.exports.[function_name]
 // so they can be accessed from outside the file.
 
-var twilio = require('../.json');
 
 // Connect to the remote database
 module.exports.connect = function() {
@@ -154,7 +153,7 @@ module.exports.readUserProfile = function (email,tablename,client, callback) {
         "swipedright":rows[0].swipedright,
         "matches":rows[0].matches,
         "swipedon":rows[0].swipedon,
-        "title": rows[0].title
+        "title": rows[0].title,
 			}
       callback(obj);
     })
