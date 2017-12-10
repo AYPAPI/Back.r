@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, List, ListItem, Divider } from 'react-native-elements'
+import {Button, Divider, Icon, List, ListItem } from 'react-native-elements'
 import { getSettings, updateSettings } from '../router/api.js';
 import {
   Text,
@@ -30,10 +30,15 @@ import { headerIconSize } from '../assets/styles/size.js';
 var activeColor = backerBlue
 
 const styles = StyleSheet.create({
-    headerIcon: {
-      color: lightGrey,
-      margin: 15,
-      fontSize: headerIconSize,
+    makerIcon: {
+        color: makerPurple,
+        margin: 15,
+        fontSize: headerIconSize,
+    },
+    backerIcon: {
+        color: backerBlue,
+        margin: 15,
+        fontSize: headerIconSize,
     },
     container: {
         flex: 1,
@@ -137,17 +142,23 @@ class SettingsScreen extends Component {
 
   return {
      headerLeft: (
-       <Button
-        title="Cancel"
-        onPress={() => navigation.goBack()}
-      />
+         <Icon
+             name='arrow-down-bold'
+             type='material-community'
+             activeOpacity={0.5}
+             iconStyle={[styles.backerIcon, isMaker && styles.makerIcon]}
+             onPress={() => navigation.goBack()}
+             />
     ),
     headerTitle: "Edit " + profileText + " Settings",
     headerRight: (
-      <Button
-       title="Done"
-       onPress={() => self.userDoneEditing()}
-     />
+        <Icon
+            name='content-save'
+            type='material-community'
+            activeOpacity={0.5}
+            iconStyle={[styles.backerIcon, isMaker && styles.makerIcon]}
+            onPress={() => self.userDoneEditing()}
+            />
     ),
   };
 };
