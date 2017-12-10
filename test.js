@@ -221,16 +221,16 @@ var test_token = {
   "token" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCIsImN0eSI6InR3aWxpby1mcGE7dj0xIn0eyJqdGkiOiJTS2JjNTNkM2U1OTJkZjA2ZmIxZWRlYTgxNTc0MzIxMzBjLTE1MTE4OTI4NjYiLCJncmFudHMiOnsiaWRlbnRpdHkiOiJ2aW5uaWUiLCJjaGF0Ijp7InNlcnZpY2Vfc2lkIjoiSVM2MDhkYzFhMTgzMzE0YjY4YjU1MGE5N2Q2ZGI2MDA2YSIsImVuZHBvaW50X2lkIjoiSVM2MDhkYzFhMTgzMzE0YjY4YjU1MGE5N2Q2ZGI2MDA2YXZpbm5pZTYxNTUzZGY5NGMyMzRhNjkxMTMwYWI5ZDM0MzhiMDc0IiwicHVzaF9jcmVkZW50aWFsX3NpZCI6IkNSZTljNWVmZjI5ZTc0NDcwOWQ3ZGY4NzVmOGE3OTdiZjAifX0sImlhdCI6MTUxMTg5Mjg2NiwiZXhwIjoxNTExOTMyODY2LCJpc3MiOiJTS2JjNTNkM2U1OTJkZjA2ZmIxZWRlYTgxNTc0MzIxMzBjIiwic3ViIjoiQUNkYjE2Njc4NDA3NTcxNTBkYjNmMjBkNmM3MjQzMmRiMCJ9.-BVxPyQjvgmHZHGVuD_eVMnUQQfGmVEeST51zWgTEXc"
 }
 
-var test_channel = {
+var test_channel10 = {
   "channel" : {
     "description": "This is a test channel",
-    "friendlyName": "vinnie/vylana",
-    "uniqueName": "test_channel2",
-    "identity" : "vinnie",
+    "friendlyName": "sarah/vylana",
+    "uniqueName": "test_channel10",
+    "identity" : "sarahgymnast@yahoo.com",
     "endpointId": "61553df94c234a691130ab9d3438b074"
   },
   "other_user" : {
-    "email": "vylana@gmail.com",
+    "email": "vylanatrang@yahoo.com",
     "name": "vylana"
   }
 }
@@ -314,14 +314,14 @@ request.get({
 */
 
 /* POST: Create a channel */
-/*
+ext = "twilio/channels"
 var createChannelTest = function(ext) {
   request.post({
       url: url + ext,
       json: true,
-      body: test_channel
+      body: test_channel10
   }, function(err, res) {
-    output = constructOutputString(res, "test_channel", ext)
+    output = constructOutputString(res, "test_channel10", ext)
     try {
       assert.equal(res.statusCode, 200)
       assert.ok(JSON.stringify(res.body))
@@ -333,9 +333,9 @@ var createChannelTest = function(ext) {
     }
     console.log(output)
   });
-}*/
-// createChannelTest(ext)
+}
 
+createChannelTest(ext)
 
 /* DELETE: Delete Channel */
 // ext = "twilio/channels/test_channel2"

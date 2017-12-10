@@ -262,7 +262,7 @@ class ExploreScreen extends Component {
     };
 
     //Methods for handling card swiping.
-    handleSwipe (bool) {
+    async handleSwipe (bool) {
       const { name, email, isMaker } = this.props.navigation.state.params;
       const card = this.state.cardStack[this.state.currentIndexInStack]
 
@@ -270,7 +270,7 @@ class ExploreScreen extends Component {
       const newIndex = this.state.currentIndexInStack + 1
       this.setState({"currentIndexInStack": newIndex})
 
-      var ret = postSwipe(email, card.email, isMaker, bool, name, card.name)
+      var ret = await postSwipe(email, card.email, isMaker, bool, name, card.name)
       if(ret) {
         Alert.alert(
           'You found a Match!',
