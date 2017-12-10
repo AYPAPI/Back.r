@@ -36,7 +36,13 @@ export const MainStack = StackNavigator({
   UserProfile: { screen: UserProfileScreen },
   Matches: { screen: MatchesScreen },
   Thread: { screen: ThreadScreen },
+});
+
+export const SettingsStack = StackNavigator({
   Settings: { screen: SettingsScreen }
+}, {
+  header: "none",
+  mode: 'modal'
 });
 
 export const createRootNav = (signedIn = false) => {
@@ -47,6 +53,9 @@ export const createRootNav = (signedIn = false) => {
         },
         SignedOut: {
           screen: LoginStack,
+        },
+        Settings: {
+          screen: SettingsStack
         }
       },
       {

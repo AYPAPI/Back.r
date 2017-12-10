@@ -51,7 +51,7 @@ router.patch('/backer', function(req,res) {
   var backerIcon = req.body.icons
   var backerTitle = req.body.title
 
-  console.log("Inside updateBacker in user.js " + makerPhotos)
+  console.log(backerLongBio)
 
   db.updateProfile(email,backerLongBio,backerPhotos,backerIcon,backerTitle,database,'backer',function(message) {
     var status = message
@@ -91,8 +91,6 @@ router.post("/", function(req, res) {
   res.json(req.body);
 });
 
-
-
 // GET request to read user from database
 router.get('/', function(req, res) {
   var email = req.query && req.query.email
@@ -131,8 +129,10 @@ router.post("/swipe", function(req, res){
     var swipedEmail = req.body.swipedEmail;//email of user being swiped on
     var isMaker = req.body.isMaker;
     var swipedRight = req.body.swipedRight;//boolean val, true if swiped right
+    var swipedName = req.body.swipedName;
+    var name = req.body.name;
 
-    db.addSwipe(email, isMaker, swipedEmail, swipedRight, database, function(user){
+    db.addSwipe(email, swipedEmail, isMaker, swipedRight, database, swipedName, function(user){
       res.json(req.body);
     });
 });

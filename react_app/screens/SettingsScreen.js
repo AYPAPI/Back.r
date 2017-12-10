@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {Button, List, ListItem, Divider } from 'react-native-elements'
+import {Button, Divider, Icon, List, ListItem } from 'react-native-elements'
 import { getSettings, updateSettings } from '../router/api.js';
 import {
   Text,
@@ -24,12 +24,26 @@ import { lightGrey,
     backGroundWhite,
  } from '../assets/styles/colors.js';
 
+
+import { headerIconSize } from '../assets/styles/size.js';
+
+var activeColor = backerBlue
+
 const styles = StyleSheet.create({
+    makerIcon: {
+        color: makerPurple,
+        margin: 15,
+        fontSize: headerIconSize,
+    },
+    backerIcon: {
+        color: backerBlue,
+        margin: 15,
+        fontSize: headerIconSize,
+    },
     container: {
         flex: 1,
         flexDirection: 'column',
         backgroundColor: backGroundWhite,
-
     },
     settingsSection: {
         flexDirection: 'column',
@@ -39,12 +53,21 @@ const styles = StyleSheet.create({
         marginLeft: 10,
         marginRight: 10,
     },
-    headerText: {
+    backerText: {
         fontSize: 20,
         fontFamily: 'gotham-rounded',
         alignItems: 'flex-start',
         color: backerBlue,
         marginTop: 20,
+        marginLeft: 10,
+        marginRight: 10,
+    },
+    makerText: {
+        fontSize: 20,
+        fontFamily: 'gotham-rounded',
+        alignItems: 'flex-start',
+        marginTop: 20,
+        color: makerPurple,
         marginLeft: 10,
         marginRight: 10,
     },
@@ -71,7 +94,6 @@ const styles = StyleSheet.create({
     locationTextContainer: {
         flexDirection: 'row',
         justifyContent: 'space-between',
-
     },
     locationText: {
             fontSize: 16,
@@ -107,12 +129,42 @@ class SettingsScreen extends Component {
     const { navigate } = this.props.navigation;
     this.state = {distance: 10, trueSwitchIsOn: true, blockedUsers: []}
   }
-  static navigationOptions = ({ navigation }) => ({
-    title: `${navigation.state.params.user} Settings`
-  });
+  static navigationOptions = ({ navigation }) => {
+  user = navigation.state.params;
+  isMaker = navigation.state.params.isMaker;
+  var profileText = ""
+  if(isMaker) {
+    profileText = "Maker"
+    activeColor = makerPurple
+  } else {
+    profileText = "Backer"
+  }
+
+  return {
+     headerLeft: (
+         <Icon
+             name='arrow-down-bold'
+             type='material-community'
+             activeOpacity={0.5}
+             iconStyle={[styles.backerIcon, isMaker && styles.makerIcon]}
+             onPress={() => navigation.goBack()}
+             />
+    ),
+    headerTitle: "Edit " + profileText + " Settings",
+    headerRight: (
+        <Icon
+            name='content-save'
+            type='material-community'
+            activeOpacity={0.5}
+            iconStyle={[styles.backerIcon, isMaker && styles.makerIcon]}
+            onPress={() => self.userDoneEditing()}
+            />
+    ),
+  };
+};
 
   componentDidMount() {
-    const {email} = this.props.navigation.state.params
+    const {email, isMaker} = this.props.navigation.state.params
     getSettings(email)
       .then((data) => {
         //console.log("118" + data.isvisible == "true");
@@ -120,7 +172,7 @@ class SettingsScreen extends Component {
       })
   }
 
-  userDoneEditing(value)  {
+  userDoneEditing()  {
     const {email} = this.props.navigation.state.params
     updateSettings(email, [], this.state.visibleSwitch);
   }
@@ -136,8 +188,7 @@ class SettingsScreen extends Component {
       return (
 
       <ScrollView style={styles.container}>
-
-          <Text style={styles.headerText}>
+          <Text style={[styles.backerText, isMaker && styles.makerText]}>
               General Settings
           </Text>
 
@@ -168,7 +219,7 @@ class SettingsScreen extends Component {
 
           <Divider style={styles.dividerStyle}/>
 
-          <Text style={styles.headerText}>
+          <Text style={[styles.backerText, isMaker && styles.makerText]}>
               Location Settings
           </Text>
 
@@ -219,15 +270,7 @@ class SettingsScreen extends Component {
                   containerViewStyle={styles.buttonContainerStyle}
                 />
             </View>
-        <Button
-          width={85}
-          height={85}
-          activeOpacity={0.5}
-          title = 'Save'
-          onPress={()=> this.userDoneEditing()}
-        />
         </ScrollView>
-
     )
   }
 }

@@ -18,7 +18,8 @@ exports.createUser = async (name, email) => {
         icons: [false, false, false, false, false],
         swipedright: [],
         matches: [],
-        swipedon: []
+        swipedon: [],
+        title: "Create a Title in Edit Profile"
       },
       backer: {
         longBio: "",
@@ -26,7 +27,8 @@ exports.createUser = async (name, email) => {
         icons: [false, false, false, false, false],
         swipedright: [],
         matches: [],
-        swipedon: []
+        swipedon: [],
+        title: "Create a Title in Edit Profile"
       }
     },
   }
@@ -129,7 +131,7 @@ exports.getPotentialMatches = async (email, isMaker) => {
 }
 
 //Add to the swipe array for swiped right and swiped on.
-exports.postSwipe = (email, swipedEmail, isMaker, swipedRight) => {
+exports.postSwipe = (email, swipedEmail, isMaker, swipedRight, swipedName) => {
   //Eric
   console.log("posting swipe");
   fetch( url + 'user/swipe', {
@@ -141,6 +143,7 @@ exports.postSwipe = (email, swipedEmail, isMaker, swipedRight) => {
     body: JSON.stringify({
       email: email,
       swipedEmail: swipedEmail,
+      swipedName: swipedName,
       isMaker: isMaker,
       swipedRight: swipedRight
       })
@@ -220,7 +223,7 @@ exports.updateProfile = (email, shortbio) => {
 }
 
 //Updates user's maker profile. Updates longbio, photos, and icons.
-exports.updateMakerProfile = (longbio, photos, icons, email) => {
+exports.updateMakerProfile = (longbio, photos, icons, email, title) => {
   console.log("post update maker profile");
   console.log("inside updateBackerProfile " + photos)
 
@@ -231,10 +234,11 @@ exports.updateMakerProfile = (longbio, photos, icons, email) => {
       'Content-Type': 'application/json',
     },
     body: JSON.stringify({
-      longBio: longbio,
+      lonBio: longbio,
       email: email,
       photos: photos,
-      icons: icons
+      icons: icons,
+      title: title
     })
   }).then(function(response) {
     console.log("inside UPDATE MAKER PROFILE api util callback");
@@ -246,7 +250,7 @@ exports.updateMakerProfile = (longbio, photos, icons, email) => {
 }
 
 //Updates user's backer profile. Updates longbio, photos, and icons.
-exports.updateBackerProfile =  (longbio, photos, icons, email) => {
+exports.updateBackerProfile =  (longbio, photos, icons, email, title) => {
   console.log("post update maker profile");
   fetch( url + 'user/backer', {
     method: 'PATCH',
@@ -258,7 +262,8 @@ exports.updateBackerProfile =  (longbio, photos, icons, email) => {
       longBio: longbio,
       email: email,
       photos: photos,
-      icons: icons
+      icons: icons,
+      title: title
     })
   }).then(function(response) {
     console.log("inside UPDATE BACKER PROFILE api util callback");

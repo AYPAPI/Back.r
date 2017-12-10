@@ -81,23 +81,11 @@ const styles = {
 };
 
 class UserProfileScreen extends Component {
-    static navigationOptions = ({ navigation }) => {
-    return {
-        headerTitle: (
-            <Icon
-            name='chevron-down'
-            type='material-community'
-            iconStyle={styles.headerIcon}
-            onPress={ () => navigation.goBack() }
-            />
-        ),
-    };
-};
-
+    static navigationOptions = ({ navigation }) => {};
   render() {
 
     const { navigate } = this.props.navigation;
-    const {userEmail, userName, userIsMaker, shortbio, longbio} =
+    const {userEmail, userName, userIsMaker, title, longbio} =
               this.props.navigation.state.params
 
     return (
@@ -111,7 +99,7 @@ class UserProfileScreen extends Component {
 
             <View style={styles.descriptionContainer}>
                 <Text style={[styles.backerTitle, userIsMaker && styles.makerTitle]}>
-                    {shortbio}
+                    {title}
                 </Text>
                 <View style={styles.subTitleContainer}>
                     <Text style={styles.subtitleText}>

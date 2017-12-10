@@ -50,10 +50,15 @@ async function UploadPhoto(){
 }
 
 const styles = {
-  headerIcon: {
-    color: lightGrey,
-    margin: 15,
-    fontSize: headerIconSize,
+  makerIcon: {
+      color: makerPurple,
+      margin: 15,
+      fontSize: headerIconSize,
+  },
+  backerIcon: {
+      color: backerBlue,
+      margin: 15,
+      fontSize: headerIconSize,
   },
   container: {
     flex: 1,
@@ -96,6 +101,11 @@ const styles = {
   avatarContainer: {
     alignItems: 'center',
     marginTop: 10,
+  },
+  photoIcon: {
+      name:'camera',
+      type:'material-community',
+      size: 30
   },
   labelAndIcon: {
       flexDirection: 'row',
@@ -149,7 +159,7 @@ class EditScreen extends Component {
 
   }
 
-  editMakerBacker(longbio) {
+  editMakerBacker(longbio, title) {
     const { email, isMaker } = this.props.navigation.state.params
 
     let icons = [this.state.money, this.state.materials, this.state.knowledge,
@@ -162,15 +172,15 @@ class EditScreen extends Component {
     //  newPhotosArr.push(photosToAdd[i])
 
     if(isMaker) {
-      updateMakerProfile(longbio, [], icons, email)
+      updateMakerProfile(longbio, [], icons, email, this.state.title)
     } else {
-      updateBackerProfile(longbio, [], icons, email)
+      updateBackerProfile(longbio, [], icons, email, this.state.title)
     }
   }
 
   userDoneEditing() {
     this.editProfile(this.state.shortbio)
-    this.editMakerBacker(this.state.longbio)
+    this.editMakerBacker(this.state.longbio, this.state.title)
 
     const name = this.props.navigation.state.params.name
     console.log("inside userDone " + this.state)
@@ -201,8 +211,9 @@ class EditScreen extends Component {
       longbio: "",
       shortbio: "",
       photos: [],
+      title: "",
       makerBacker: {},
-      userProfile: {}
+      userProfile: {},
     };
   }
 
@@ -240,6 +251,9 @@ class EditScreen extends Component {
         })
         this.setState({
           "longbio": data.longbio
+        }),
+        this.setState({
+          "title": data.title
         })
       });
     }
@@ -257,21 +271,26 @@ class EditScreen extends Component {
 
   return {
      headerLeft: (
-       <Button style={styles.headerIcon}
-        title="Cancel"
-        onPress={() => navigation.goBack()}
-      />
+        <Icon
+            name='arrow-down-bold'
+            type='material-community'
+            activeOpacity={0.5}
+            iconStyle={[styles.backerIcon, isMaker && styles.makerIcon]}
+            onPress={() => navigation.goBack()}
+            />
     ),
     headerTitle: "Edit " + profileText + " Profile",
     headerRight: (
-      <Button style={styles.headerIcon}
-       title="Done"
-       onPress={() => self.userDoneEditing()}
-     />
+       <Icon
+           name='content-save'
+           type='material-community'
+           activeOpacity={0.5}
+           iconStyle={[styles.backerIcon, isMaker && styles.makerIcon]}
+           onPress={() => self.userDoneEditing()}
+           />
     ),
   };
 };
-
 
   render() {
 
@@ -294,6 +313,7 @@ class EditScreen extends Component {
                   height={175}
                   activeOpacity={0.5}
                   source={profilePhoto}
+                  icon={styles.photoIcon}
                   onPress={()=>navigate()}
                   />
                 <View style={styles.subPhotosContainer}>
@@ -302,7 +322,7 @@ class EditScreen extends Component {
                       width={85}
                       height={85}
                       activeOpacity={0.5}
-                      source={require('../assets/images/shuttle-01.jpg')}
+                      icon={styles.photoIcon}
                       onPress={()=>navigate()}
                   />
                   <Avatar
@@ -310,7 +330,7 @@ class EditScreen extends Component {
                       width={85}
                       height={85}
                       activeOpacity={0.5}
-                      icon={{name:'camera', type:'material-community', size: 30}}
+                      icon={styles.photoIcon}
                       onPress={()=>UploadPhoto()}
                       />
                   </View>
@@ -326,6 +346,8 @@ class EditScreen extends Component {
 
           <TextInput style={styles.inputStyle}
           maxLength={30}
+          onChangeText = {(text) => this.setState({"title":text})}
+          value={this.state.title}
           />
 
           <Text style={styles.inputText}>
@@ -348,7 +370,8 @@ class EditScreen extends Component {
             height={100}
             maxLength={160}
             onChangeText = {(text) => this.setState({"shortbio":text})}
-            value={ this.state.shortbio }/>
+            value={ this.state.shortbio }
+            />
 
             <Text style={styles.inputText}>
                 An in-depth description...
@@ -361,9 +384,15 @@ class EditScreen extends Component {
               onChangeText = {(text) => this.setState({"longbio":text})}
               value={ this.state.longbio }/>
 
-          <Text style={styles.headerText}>
-              How can you help?
-          </Text>
+              {isMaker ? (
+                  <Text style={[styles.backerText, isMaker && styles.makerText]}>
+                    What do you need?
+                  </Text>
+              ) : (
+                  <Text style={[styles.backerText, isMaker && styles.makerText]}>
+                    How can you help?
+                  </Text>
+              )}
 
           <Divider style={styles.dividerStyle}/>
 
