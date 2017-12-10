@@ -241,7 +241,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
                   }
                   console.log(output)
                 });*/
-              }
+              
               if (!swipedEmailMatches.includes(email)) {
                 swipedEmailMatches.push(email)
               }
