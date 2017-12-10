@@ -6,6 +6,10 @@ const url = "https://backr.herokuapp.com/"
 const request = require('request');
 const assert = require('assert')
 
+function constructOutputString(res, body, ext) {
+  return (res.request.method + " /" + ext + hot_bod + body + delimiter)
+}
+
 // Connect to the remote database
 module.exports.connect = function() {
   const pg = require('pg');
