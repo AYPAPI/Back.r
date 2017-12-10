@@ -325,6 +325,8 @@ class EditScreen extends Component {
 
           <Text style={styles.inputText}>
               Your title...
+              onChangeText = {(text) => this.setState({"title":text})}
+              value={this.state.title}
           </Text>
 
           <TextInput style={styles.inputStyle}
@@ -333,6 +335,8 @@ class EditScreen extends Component {
 
           <Text style={styles.inputText}>
               Your name...
+              onChangeText = {(text) => this.setState({"name":text})}
+              value={this.state.name}
           </Text>
 
           <TextInput style={styles.inputStyle}

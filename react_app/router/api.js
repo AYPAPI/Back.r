@@ -131,7 +131,7 @@ exports.getPotentialMatches = async (email, isMaker) => {
 }
 
 //Add to the swipe array for swiped right and swiped on.
-exports.postSwipe = (email, swipedEmail, isMaker, swipedRight) => {
+exports.postSwipe = (email, swipedEmail, isMaker, swipedRight, swipedName) => {
   //Eric
   console.log("posting swipe");
   fetch( url + 'user/swipe', {
@@ -143,6 +143,7 @@ exports.postSwipe = (email, swipedEmail, isMaker, swipedRight) => {
     body: JSON.stringify({
       email: email,
       swipedEmail: swipedEmail,
+      swipedName: swipedName,
       isMaker: isMaker,
       swipedRight: swipedRight
       })
