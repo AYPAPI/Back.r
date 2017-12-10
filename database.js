@@ -169,6 +169,8 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
   } else {
     tablename = 'backer';
   }
+  console.log(email + " " + isMaker + " " + swipedEmail + " " + swipedRight + " " + name + " " + swipedName)
+  
   var swipedright;
   var swipedon;
   var matches;
@@ -241,7 +243,7 @@ module.exports.addSwipe = function (email, isMaker, swipedEmail, swipedRight, na
                   }
                   console.log(output)
                 });*/
-              
+
               if (!swipedEmailMatches.includes(email)) {
                 swipedEmailMatches.push(email)
               }
