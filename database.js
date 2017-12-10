@@ -67,7 +67,7 @@ module.exports.createUser = function (name,age,email,isMaker,shortbio,tablename,
 
 //create the maker and backer profiles
 module.exports.createUserProfile = function (longbio,photos,icons,email,tablename,
-                                             swipedRight,matches,swipedOn,client){
+                                             swipedRight,matches,swipedOn,title,client){
   let check = 'SELECT email FROM ' + tablename + ' WHERE email = \'' + email + '\''
   client.query(check, function(err,res) {
     rows = res.rows
@@ -75,8 +75,8 @@ module.exports.createUserProfile = function (longbio,photos,icons,email,tablenam
       console.log('user already in database')
       return
     }
-    let query = 'INSERT INTO ' + tablename + ' (longbio,photos,icons,email,swipedright,matches,swipedon) values ($1,$2,$3,$4,$5,$6,$7)';
-    client.query(query,[longbio,photos,icons,email,swipedRight,matches,swipedOn], function(err,res) {
+    let query = 'INSERT INTO ' + tablename + ' (longbio,photos,icons,email,swipedright,matches,swipedon,title) values ($1,$2,$3,$4,$5,$6,$7,$8)';
+    client.query(query,[longbio,photos,icons,email,swipedRight,matches,swipedOn,title], function(err,res) {
       if (err) throw err;
       else{
         console.log('inserted ' + email + ' into Maker/Backer')
@@ -125,9 +125,9 @@ module.exports.updateUser = function(email,shortbio,client,callback){
 }
 
 //update maker and backer profile
-module.exports.updateProfile = function(email,longbio,photos,icons,client,tablename,callback){
-  let query = 'UPDATE ' + tablename + ' SET longbio = $1, photos = $2, icons = $3 WHERE email = $4'
-  client.query(query, [longbio,photos,icons,email], function(err,res) {
+module.exports.updateProfile = function(email,longbio,photos,icons,title,client,tablename,callback){
+  let query = 'UPDATE ' + tablename + ' SET longbio = $1, photos = $2, icons = $3, title = $4 WHERE email = $5'
+  client.query(query, [longbio,photos,icons,title,email], function(err,res) {
     if (err) throw err;
     console.log('Updated ' + tablename + ' profile');
     callback("Updated " + tablename + ' profile');

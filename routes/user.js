@@ -35,9 +35,10 @@ router.patch('/maker', function(req,res) {
   var makerLongBio = req.body.longBio
   var makerPhotos = req.body.photos
   var makerIcon = req.body.icons
+  var makerTitle = req.body.title
 
   console.log("Inside updateMaker in user.js " + makerPhotos)
-  db.updateProfile(email,makerLongBio,makerPhotos,makerIcon,database,'maker',function(message) {
+  db.updateProfile(email,makerLongBio,makerPhotos,makerIcon,makerTitle,database,'maker',function(message) {
     var status = message
     res.json(status)
   })
@@ -48,10 +49,11 @@ router.patch('/backer', function(req,res) {
   var backerLongBio = req.body.longBio
   var backerPhotos = req.body.photos
   var backerIcon = req.body.icons
+  var backerTitle = req.body.title
 
   console.log("Inside updateBacker in user.js " + makerPhotos)
 
-  db.updateProfile(email,backerLongBio,backerPhotos,backerIcon,database,'backer',function(message) {
+  db.updateProfile(email,backerLongBio,backerPhotos,backerIcon,backerTitle,database,'backer',function(message) {
     var status = message
     res.json(status)
   })
@@ -72,6 +74,7 @@ router.post("/", function(req, res) {
   var makerSwipedRight = req.body.profiles.maker.swipedright
   var makerMatches = req.body.profiles.maker.matches
   var makerSwipedOn = req.body.profiles.maker.swipedon
+  var makerTitle = req.body.profiles.maker.title
 
   var backerLongBio = req.body.profiles.backer.longBio
   var backerPhotos = req.body.profiles.backer.photos
@@ -79,11 +82,12 @@ router.post("/", function(req, res) {
   var backerSwipedRight = req.body.profiles.backer.swipedright
   var backerMatches = req.body.profiles.backer.matches
   var backerSwipedOn = req.body.profiles.backer.swipedon
+  var backerTitle = req.body.profiles.backer.title
   db.createUser(name,age,email,isMaker,shortBio,"users", database);
   db.createUserProfile(makerLongBio,makerPhotos,makerIcon,email,"maker",
-                       makerSwipedRight,makerMatches,makerSwipedOn, database)
+                       makerSwipedRight,makerMatches,makerSwipedOn,makerTitle,database)
   db.createUserProfile(backerLongBio,backerPhotos,backerIcon,email,"backer",
-                       backerSwipedRight,backerMatches,backerSwipedOn,database)
+                       backerSwipedRight,backerMatches,backerSwipedOn,backerTitle,database)
   res.json(req.body);
 });
 

@@ -22,7 +22,8 @@ function constructOutputString(res, body, ext) {
  			"icons":[true],
        "matches":[],
        "swipedright":[],
-       "swipedon":[]
+       "swipedon":[],
+       "title":"maker title"
  		},
  		"backer": {
  			"longBio":"I am a dumb investor, let me fund you",
@@ -30,7 +31,8 @@ function constructOutputString(res, body, ext) {
  			"icons":[true],
        "matches":[],
        "swipedright":[],
-       "swipedon":[]
+       "swipedon":[],
+       "title":"backer title"
  		}
  	}
  }
