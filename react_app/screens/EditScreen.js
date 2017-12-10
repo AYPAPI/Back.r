@@ -97,6 +97,11 @@ const styles = {
     alignItems: 'center',
     marginTop: 10,
   },
+  photoIcon: {
+      name:'camera',
+      type:'material-community',
+      size: 30
+  },
   labelAndIcon: {
       flexDirection: 'row',
       alignItems: 'flex-start',
@@ -257,10 +262,10 @@ class EditScreen extends Component {
 
   return {
      headerLeft: (
-       <Button style={styles.headerIcon}
-        title="Cancel"
-        onPress={() => navigation.goBack()}
-      />
+         <Button style={styles.headerIcon}
+          title="Back"
+          onPress={() => navigation.goBack()}
+        />
     ),
     headerTitle: "Edit " + profileText + " Profile",
     headerRight: (
@@ -294,6 +299,7 @@ class EditScreen extends Component {
                   height={175}
                   activeOpacity={0.5}
                   source={profilePhoto}
+                  icon={styles.photoIcon}
                   onPress={()=>navigate()}
                   />
                 <View style={styles.subPhotosContainer}>
@@ -302,7 +308,7 @@ class EditScreen extends Component {
                       width={85}
                       height={85}
                       activeOpacity={0.5}
-                      source={require('../assets/images/shuttle-01.jpg')}
+                      icon={styles.photoIcon}
                       onPress={()=>navigate()}
                   />
                   <Avatar
@@ -310,7 +316,7 @@ class EditScreen extends Component {
                       width={85}
                       height={85}
                       activeOpacity={0.5}
-                      icon={{name:'camera', type:'material-community', size: 30}}
+                      icon={styles.photoIcon}
                       onPress={()=>UploadPhoto()}
                       />
                   </View>
@@ -361,7 +367,7 @@ class EditScreen extends Component {
               onChangeText = {(text) => this.setState({"longbio":text})}
               value={ this.state.longbio }/>
 
-          <Text style={styles.headerText}>
+          <Text style={[styles.backerText, isMaker && styles.makerText]}>
               How can you help?
           </Text>
 

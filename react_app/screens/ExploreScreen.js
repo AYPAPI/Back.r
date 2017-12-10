@@ -305,6 +305,7 @@ class ExploreScreen extends Component {
             <Swiper
                   style={styles.wrapper}
                   showPagination={false}
+                  stackDepth={3}
                   smoothTransition
                   stack
                   dragDownToBack
@@ -315,6 +316,7 @@ class ExploreScreen extends Component {
               >
                             {this.state.cardStack.map((card, index) => (
                               <Card style={styles.card}
+                                  key={card.name}
                                   containerStyle={styles.cardContainer}
                                   image={firstCardPhoto}
                                   imageProps={styles.imagePropsStyle}

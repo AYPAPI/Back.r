@@ -81,19 +81,7 @@ const styles = {
 };
 
 class UserProfileScreen extends Component {
-    static navigationOptions = ({ navigation }) => {
-    return {
-        headerTitle: (
-            <Icon
-            name='chevron-down'
-            type='material-community'
-            iconStyle={styles.headerIcon}
-            onPress={ () => navigation.goBack() }
-            />
-        ),
-    };
-};
-
+    static navigationOptions = ({ navigation }) => {};
   render() {
 
     const { navigate } = this.props.navigation;

@@ -22,11 +22,11 @@ import { headerIconSize } from '../assets/styles/size.js';
 import FlipCard from 'react-native-flip-card'
 
 var profilePhoto = require('../assets/images/shuttle-01.jpg');
-var globalIsMaker = false
+var globalIsMaker = false;
 
 const Dimensions = require('Dimensions');
 const window = Dimensions.get('window');
-const globalIsMaker = false
+//const globalIsMaker = false;
 
 const styles = {
   headerIcon: {
@@ -121,13 +121,13 @@ class MyProfileScreen extends Component {
             this.setState({'buttonColor': backerBlue}); //Update our screen state.
             this.setState({'editText': "Edit Backer Profile"}); //Update our screen state.
             this.setState({'switchText': "Switch to Maker"}); //Update our screen state.
-            globalIsMaker = false //Update for nav options.
+            globalIsMaker = false;
             console.log(this.state.makerBacker)
             updateIsMaker(false, this.state.email) //Update in our database
         }
         else{
             this.setState({'isMaker': true});
-            globalIsMaker = true //Update for nav options.
+            globalIsMaker = true; //Update for nav options.
             this.setState({'buttonColor': makerPurple}); //Update our screen state.
             this.setState({'editText': "Edit Maker Profile"}); //Update our screen state.
             this.setState({'switchText': "Switch to Backer"}); //Update our screen state.
