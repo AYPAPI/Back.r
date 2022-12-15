@@ -15,6 +15,6 @@
     "react": "^16.1.1",
     "request": "^2.83.0",
     "twilio": "^3.6.5",
-    "twilio-chat": "^1.2.1"
+    "twilio-chat": "^6.0.0"
   }
 }
